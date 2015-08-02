@@ -1,0 +1,10 @@
+{
+  "name": "blog.simonecorsi.me",
+  "version": "0.0.1",
+  "authors": [
+    "Kirkhammetz <Neofrascati@hotmail.it>"
+  ],
+  "description": "personal blog",
+  "main": "app/index.html",
+  "license": "MIT"
+}
