@@ -1,5 +1,6 @@
 var express = require("express");
 var path = require("path");
+var dotenv = require("dotenv").load();
 
 module.exports = function(app){
 
@@ -7,8 +8,8 @@ module.exports = function(app){
 
 	//set app route global
 	global.appRoot = path.resolve(__dirname,"../");
-	console.log(global.appRoot);
 	
 	//load middleware ./middlewares/middlewares
 	require(global.appRoot + "/middlewares/middlewares")(app,express);
+
 }
