@@ -8,8 +8,6 @@ require("../controllers/install.js")(function(installed){
 
 module.exports = function(app,express){
 
-
-
 	//set static content folder
 	app.use( express.static(global.appRoot + "/public") );
 

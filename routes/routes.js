@@ -1,14 +1,8 @@
+require("../controllers/controllers")();
 module.exports = function(app,express){
 	
-	var home = {
-		title: "jsDen",
-		author: "Simone Corsi"
-	}
-
 	//home
-	app.get("/",function(req,res){
-		res.render("home", home);
-	});
+	app.get("/", homeCtrl);
 
 	//install
 	app.get("/install",function(req,res){
