@@ -4,8 +4,10 @@ var express = require("express"),
 	config  = require("./configs/config")(app),
 	fs 		= require("fs");
 
+
 // get routes
 var routes = require("./routes/routes")(app,express);
+
 
 app.listen(port, function(){
 	console.log("node on: " + port);

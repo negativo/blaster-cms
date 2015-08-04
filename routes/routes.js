@@ -6,5 +6,7 @@ module.exports = function(app,express){
 	app.get("/install", installCtrl);
 
 	//POST
-
+	app.post("/install/:data",function(req,res){
+		require("../controllers/install").install(req.body);
+	})
 }
