@@ -1,12 +1,10 @@
 require("../controllers/controllers")();
 module.exports = function(app,express){
 	
-	//home
+	//GET
 	app.get("/", homeCtrl);
+	app.get("/install", installCtrl);
 
-	//install
-	app.get("/install",function(req,res){
-		res.render("install");
-	});
+	//POST
 
 }
