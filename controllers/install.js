@@ -44,16 +44,16 @@ var blogSetup = {
 	install:function(user){
 		//file generated from this
 		var blogConfig = {
-			db:blogSetup.link,
+			db:crypto.encrypt(blogSetup.link),
 			title:user.blogName,
-			author: user.username,
+			author: user.username
 		}
 		var deferred = Q.defer();
 		mongoose.disconnect();
 		mongoose.connect(blogSetup.link+"/"+user.blogName,function(err){
 			if(!err){
 				blogSetup.link = blogSetup.link+"/"+user.blogName;
-				var hash = crypto.hash(user.password);
+				var hash = crypto.encrypt(user.password);
 				var x = new User({username:user.username, password: hash, admin:true, createdOn: Date.now() });
 				x.save(function(err){
 					if(err) console.log("first user install err:",err);
