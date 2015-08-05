@@ -8,18 +8,4 @@ module.exports = function(app,express){
 	app.use( express.static(global.appRoot + "/public") );
 	app.use(bodyParser());
 
-	//check if blog is installed
-	app.use(function(req,res,next){
-
-		install
-			.isInstalled()
-			.then(function(blogIsInstalled){
-				if (blogIsInstalled) next();
-				else{
-					res.redirect("/install");
-				}
-			});
-
-		next();
-	});
 }

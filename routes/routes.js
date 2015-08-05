@@ -21,9 +21,10 @@ module.exports = function(app,express){
 			});
 	});
 	app.post("/install/:data",function(req,res){
-		require("../controllers/install").getUserInfo(req.body)
+		installer.getUserInfo(req.body)
 		.then(function(data){
-			//console.log("promise install", data);
+			res.status(data.status);
+			res.send(data);
 		});
 	});
 }

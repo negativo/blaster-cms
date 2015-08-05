@@ -1,6 +1,5 @@
 var express = require("express");
 var path = require("path");
-var dotenv = require("dotenv").load();
 
 module.exports = function(app){
 

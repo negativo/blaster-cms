@@ -42,6 +42,12 @@ var blogSetup = {
 		if(data) return blogSetup.install(data);
 	},
 	install:function(user){
+		//file generated from this
+		var blogConfig = {
+			db:blogSetup.link,
+			title:user.blogName,
+			author: user.username,
+		}
 		var deferred = Q.defer();
 		mongoose.disconnect();
 		mongoose.connect(blogSetup.link+"/"+user.blogName,function(err){
@@ -57,7 +63,7 @@ var blogSetup = {
 					//console.log(exists);
 					if(!exists){
 						fs.open("./blog.config","w",function(file){});
-						fs.writeFile("./blog.config", JSON.stringify({ db: blogSetup.link }) ,function(err){
+						fs.writeFile("./blog.config", JSON.stringify(blogConfig) ,function(err){
 							if (err) console.log("write blog.config file error:",err)
 						});
 					}
