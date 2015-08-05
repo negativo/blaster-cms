@@ -54,8 +54,12 @@ var blogSetup = {
 			if(!err){
 				blogSetup.link = blogSetup.link+"/"+user.blogName;
 				var hash = crypto.encrypt(user.password);
-				var x = new User({username:user.username, password: hash, admin:true, createdOn: Date.now() });
-				x.save(function(err){
+				var u = new User({username:user.username, password: hash, admin:true, createdOn: Date.now() });
+				u.findOne({username:user.username},function(err,user){
+					if(err) deferred.reject({ msg:"User Exists", status:500 });
+					console.log(user);
+				})
+				u.save(function(err){
 					if(err) console.log("first user install err:",err);
 				});
 				//write config file
