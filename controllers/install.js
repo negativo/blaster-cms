@@ -70,6 +70,10 @@ var blogSetup = {
 							});
 						}
 					});
+					var b = new Blog({ title: user.blogName, createdOn: Date.now() });
+					b.save(function(err){
+						console.log("install.js, saving blog to database:", err);
+					})
 					deferred.resolve({ msg:"Installation OK ", status:200 });
 				});
 			}else{
