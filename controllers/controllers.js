@@ -6,12 +6,12 @@ module.exports = function(){
 		install.isInstalled().then(function(ex){
 			if(!ex) { 
 			 	res.render("install", {
-					title: process.env.BLOG_NAME + " - Installation"
+					title: req.render.header.title + " - Installation"
 				});
 			}
 			 else {
 				res.render("home", {
-					title: process.env.BLOG_NAME + " - Home"
+					title: req.render.header.title + " - Home"
 				});
 			 }
 		});	
@@ -21,12 +21,12 @@ module.exports = function(){
 		install.isInstalled().then(function(ex){
 			if(!ex) { 
 			 	res.render("install", {
-					title: process.env.BLOG_NAME + " - Installation"
+					title: req.render.header.title + " - Installation"
 				});
 			}
 			 else {
 				res.render("home", {
-					title: process.env.BLOG_NAME + " - Home"
+					title: req.render.header.title + " - Home"
 				});
 			 }
 		});

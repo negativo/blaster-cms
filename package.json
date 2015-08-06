@@ -28,6 +28,7 @@
     "grunt-bower-install": "^1.6.0",
     "grunt-contrib-cssmin": "^0.13.0",
     "grunt-contrib-less": "^1.0.1",
-    "grunt-contrib-watch": "^0.6.1"
+    "grunt-contrib-watch": "^0.6.1",
+    "morgan": "^1.6.1"
   }
 }
