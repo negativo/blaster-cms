@@ -23,8 +23,11 @@ module.exports = function(app,express){
 	app.post("/install/:data",function(req,res){
 		installer.getUserInfo(req.body)
 		.then(function(data){
-			res.status(data.status);
-			res.send(data);
+			///REDIRECT HOME
+		})
+		.fail(function(err){
+			res.status(err);
+			res.send(err);
 		});
 	});
 }

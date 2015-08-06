@@ -55,24 +55,23 @@ var blogSetup = {
 				blogSetup.link = blogSetup.link+"/"+user.blogName;
 				var hash = crypto.encrypt(user.password);
 				var u = new User({username:user.username, password: hash, admin:true, createdOn: Date.now() });
-				u.findOne({username:user.username},function(err,user){
-					if(err) deferred.reject({ msg:"User Exists", status:500 });
-					console.log(user);
-				})
-				u.save(function(err){
-					if(err) console.log("first user install err:",err);
+				User.findOne({ 'username': user.username }, function (err, person) {
+				  if (person) return deferred.reject({ msg:"User exists.", status:500 });
+					u.save(function(err){
+						if(err) console.log("first user install err:",err);
+					});
+					//write config file
+					fs.exists("./blog.config",function(exists){
+						//console.log(exists);
+						if(!exists){
+							fs.open("./blog.config","w",function(file){});
+							fs.writeFile("./blog.config", JSON.stringify(blogConfig) ,function(err){
+								if (err) console.log("write blog.config file error:",err)
+							});
+						}
+					});
+					deferred.resolve({ msg:"Installation OK ", status:200 });
 				});
-				//write config file
-				fs.exists("./blog.config",function(exists){
-					//console.log(exists);
-					if(!exists){
-						fs.open("./blog.config","w",function(file){});
-						fs.writeFile("./blog.config", JSON.stringify(blogConfig) ,function(err){
-							if (err) console.log("write blog.config file error:",err)
-						});
-					}
-				});
-				deferred.resolve({ msg:"Installation OK ", status:200 });
 			}else{
 				deferred.reject({ msg:err, status:500 });
 			}

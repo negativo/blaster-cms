@@ -6,7 +6,16 @@ var express = require("express"),
 	install = require("./controllers/install")
 	routes = require("./routes/routes")(app,express);
 
+//disable console.log()
+ 	
+
+if (process.env.DEBUG_MODE_ON==="false") {
+    console = console || {};
+    console.log = function(){};
+}
+
 
 app.listen(port, function(){
 	console.log("node on: " + port);
-});
+});	
+

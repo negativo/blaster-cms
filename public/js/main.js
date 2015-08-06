@@ -28,7 +28,7 @@
 						$formMongo.fadeOut();
 						$form.fadeIn();
 					} else{
-						$formMongo.find(".mongo-err").text("Error: Check you database reference.").fadeIn();
+						$formMongo.find(".mongo-err").html(data.msg).fadeIn();
 					}
 				});
 
@@ -42,14 +42,13 @@
 					password:$form.find(".password").val()
 				}
 
-				$.ajax({
-				  type: "POST",
-				  url: "/install/"+url,
-				  data:data,
-				  success: function(data){
-				  	console.log(data)
-				  }
+				$.post("/install/mongo"+url, data, function(response,status){
+					console.log()
+					console.log(status,response);
+					$form.find(".credential-err").html(response.msg).fadeIn();
+
 				});
+
 			});
 		}
 	}
