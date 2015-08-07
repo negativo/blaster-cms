@@ -43,9 +43,8 @@
 				}
 
 				$.post("/install/mongo"+url, data, function(response,status){
-					console.log()
-					console.log(status,response);
 					$form.find(".credential-err").html(response.msg).fadeIn();
+					if(status === "success" ) window.location.replace("/");
 
 				});
 

@@ -3,6 +3,7 @@ var __root = global.appRoot;
 var mongoose = require("mongoose");
 var Q = require("q");
 var crypto = require("../library/crypto");
+var shared = require("../configs/functions").shared;
 
 //get DB models
 var User = require("../models/user.js");
@@ -11,11 +12,7 @@ var Blog = require("../models/blog.js");
 var blogSetup = {
 	link:"",
 	isInstalled: function(){
-		var deferred = Q.defer();
-		fs.exists(__root + "/blog.config", function(exists){
-			return deferred.resolve(exists);
-		})
-		return deferred.promise;
+		return shared.isInstalled;
 	},
 	checkMongo:function(mongo){
 		//console.log("mongolink:",mongo);
@@ -56,24 +53,16 @@ var blogSetup = {
 				var hash = crypto.encrypt(user.password);
 				var u = new User({username:user.username, password: hash, admin:true, createdOn: Date.now() });
 				User.findOne({ 'username': user.username }, function (err, person) {
+				  //save user
 				  if (person) return deferred.reject({ msg:"User exists.", status:500 });
 					u.save(function(err){
 						if(err) console.log("first user install err:",err);
 					});
-					//write config file
-					fs.exists("./blog.config",function(exists){
-						//console.log(exists);
-						if(!exists){
-							fs.open("./blog.config","w",function(file){});
-							fs.writeFile("./blog.config", JSON.stringify(blogConfig) ,function(err){
-								if (err) console.log("write blog.config file error:",err)
-							});
-						}
-					});
+					//save blog info
 					var b = new Blog({ title: user.blogName, createdOn: Date.now() });
 					b.save(function(err){
 						console.log("install.js, saving blog to database:", err);
-					})
+					});
 					deferred.resolve({ msg:"Installation OK ", status:200 });
 				});
 			}else{
@@ -81,7 +70,6 @@ var blogSetup = {
 			}
 		});
 		return deferred.promise;
-
 	}
 
 }//endmodule

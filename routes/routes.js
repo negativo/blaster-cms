@@ -1,18 +1,11 @@
 var installer = require("../controllers/install");
+var shared = require("../configs/functions").shared;
 require("../controllers/controllers")();
 
 module.exports = function(app,express){
 
-	//req.render have data for views/partials
-
-	//debug
-	// app.get("*",function(req,res){
-	// 	console.log("routes.js", req);
-	// })
-
 	//GET
 	app.get("/", homeCtrl);
-	app.get("/install", installCtrl);
 
 	//POST
 	//////////Refactor in controller later
@@ -32,8 +25,12 @@ module.exports = function(app,express){
 		installer.getUserInfo(req.body)
 		.then(function(data){
 			///REDIRECT HOME
+			res.status(301);
+			shared.isInstalled = true;
+			res.redirect("/");
 		})
 		.fail(function(err){
+			shared.isInstalled = false;
 			res.status(err);
 			res.send(err);
 		});

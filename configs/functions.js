@@ -5,7 +5,7 @@ var install = require("../controllers/install");
 
 module.exports = {
 	shared: {
-		installed: false,
+		isInstalled: false,
 		header:{
 			title:"Blog",
 			author:"Author"

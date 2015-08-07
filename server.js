@@ -6,7 +6,6 @@ var express = require("express"),
 	install = require("./controllers/install");
 
 
-	config
 
 app.listen(port, function(){
 	console.log("node on: " + port);
