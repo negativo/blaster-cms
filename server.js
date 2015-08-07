@@ -5,8 +5,8 @@ var express = require("express"),
 	routes = require("./routes/routes")(app,express),
 	install = require("./controllers/install");
 
-var shared = require("./modules/shared");
 
+	config
 
 app.listen(port, function(){
 	console.log("node on: " + port);

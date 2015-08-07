@@ -4,13 +4,14 @@ var Q = require("q");
 var install = require("../controllers/install");
 
 module.exports = {
-	render:{
-			header:{
-				title:"Blog",
-				author:"Author"
-			},
-			footer:{},
-			local:{}
+	shared: {
+		installed: false,
+		header:{
+			title:"Blog",
+			author:"Author"
+		},
+		footer:{},
+		local:{},
 	},
 	refreshData: function(){
 		var deferred = Q.defer();

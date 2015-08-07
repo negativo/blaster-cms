@@ -14,7 +14,6 @@ module.exports = function(app){
 	    app.use(morgan("dev"));
 	}
 
-
 	//set app route global
 	global.appRoot = path.resolve(__dirname,"../");
 	
@@ -24,3 +23,4 @@ module.exports = function(app){
 	require(global.appRoot + "/middlewares/middlewares")(app,express);
 	
 }
+
