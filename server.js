@@ -5,6 +5,7 @@ var express = require("express"),
 	routes = require("./routes/routes")(app,express),
 	install = require("./controllers/install");
 
+var shared = require("./modules/shared");
 
 
 app.listen(port, function(){
