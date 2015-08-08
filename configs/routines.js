@@ -19,15 +19,21 @@ module.exports = function($ee){
 					//IF FILE IS EMPTY BUT MONGO IS CONNECTED FETCH CONFIG FROM DB
 					Configs.findOne(function(err,configs){
 						fs.writeFile(global.appRoot+"/bin/config.json", JSON.stringify(configs), function(err){
-
+							console.log("routines.js REFETCH:", err);
 						});
-						console.log("routines.js REFETCH:", configs);
 					});
 				}
 			});
 		}else if (change === "rename") {
-			//stand for DELETED
-			
+			fs.open(global.appRoot+"/bin/config.json","w");
+			if($F.shared.db_status === "connected") {
+				//IF FILE IS EMPTY BUT MONGO IS CONNECTED FETCH CONFIG FROM DB
+				Configs.findOne(function(err,configs){
+					fs.writeFile(global.appRoot+"/bin/config.json", JSON.stringify(configs), function(err){
+						console.log("routines.js REFETCH:", err);
+					});
+				});
+			}			
 		}
 	});
 }
