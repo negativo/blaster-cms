@@ -19,13 +19,13 @@ module.exports = function(app,express){
 	app.use(function(req,res,next){
 		//if blog is installed load global configs
 		fs.readFile(__root+"/bin/config.json","utf-8",function(err,file){
-			console.log("middlewares.js", file.length);
+			//console.log("middlewares.js", file.length);
 			if(file.length > 0) { 
 				var configs = JSON.parse(file);
 				//console.log("middlewares.js", configs);
 				$S = configs;
 				$F.syncConfig($S);
-				console.log("middlewares.js", $S);
+				//console.log("middlewares.js", $S);
 				next(); 
 			}
 			//if it's not installed install it.

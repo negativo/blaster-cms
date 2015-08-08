@@ -89,7 +89,10 @@ var that = module.exports = {
 		Configs.findOne({ "db_link": that.db_link},function(err,entry){
 			new Configs(configs).save(function(err){
 				if(err) console.log("functions.js updating configs error:", err);
-					else console.log("functions.js updating configs OK");
+				else {
+					that.shared = config;
+					console.log("functions.js updating configs OK");
+				}
 			});
 		});
 

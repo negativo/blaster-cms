@@ -7,6 +7,7 @@ module.exports = function(app,express){
 	//GET
 	app.get("/", homeCtrl);
 
+
 	//POST
 	//////////Refactor in controller later
 	app.post("/install/mongo",function(req,res){
@@ -33,4 +34,8 @@ module.exports = function(app,express){
 				res.send(err);
 			}); //if return err:null installation is ok
 	});
+
+	app.post("/blog/post",function(req,res){
+		console.log("routes.js", req.shared);
+	})
 }
