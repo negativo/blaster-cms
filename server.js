@@ -1,3 +1,8 @@
+
+// PERSONAL MODULES
+// $F for methods require("./configs/functions")
+// $S shared require("./configs/functions").shared;
+
 var express = require("express"),
 	app 	= express(),
 	port 	= 9001,
@@ -11,4 +16,3 @@ var $S = require("./configs/functions");
 app.listen(port, function(){
 	console.log("node on: " + port);
 });	
-

@@ -53,6 +53,7 @@ var that = module.exports = {
 			new Configs(that.shared)
 					.save(function(err){
 						console.log("functions.js blog data saving: ", err);
+						fs.writeFileSync(__root + "/bin/config.json", JSON.stringify(that.shared) );
 						deferred.resolve({message:"User&Blog Created", error:err});
 					})
 		};
