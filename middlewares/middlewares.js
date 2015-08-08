@@ -1,9 +1,9 @@
 var path = require("path");
 var bodyParser = require("body-parser");
 var fs = require("fs");
-var $F = require("../configs/functions");
-var $S = $F.shared;
 var __root = global.appRoot;
+var $F = require("../configs/functions"),
+	$S = $F.shared;
 
 
 module.exports = function(app,express){

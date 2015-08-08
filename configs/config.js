@@ -2,8 +2,10 @@ var express = require("express");
 var path = require("path");
 var	dotenv  = require("dotenv").load(); 
 var fs 		= require("fs");
+var $F = require("../configs/functions"),
+	$S = $F.shared;
 
-module.exports = function(app){
+module.exports = function(app,ee){
 	//DEBUG
 	////disable console.log()
 	if (process.env.DEBUG_MODE_ON==="false") {
@@ -15,11 +17,21 @@ module.exports = function(app){
 	}
 
 	//set app route global
-	global.appRoot = path.resolve(__dirname,"../");
+	__root = global.appRoot = path.resolve(__dirname,"../");
+
 	
 	app.set("view engine", "ejs");
 
-	//load middleware ./middlewares/middlewares
+	//GLOBAL DB CONNECTION&REFRESH
+	fs.readFile(__root+"/bin/config.json","utf-8",function(err,file){
+		if(file.length > 0) { 
+			var configs = JSON.parse(file);
+			$F.syncConfig(configs,ee);
+		}
+	});
+
+
+	// MIDDLEWARES
 	require(global.appRoot + "/middlewares/middlewares")(app,express);
 	
 }

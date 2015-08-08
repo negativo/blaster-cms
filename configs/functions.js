@@ -22,6 +22,7 @@ var that = module.exports = {
 		footer:{},
 		local:{},
 	},
+	sharedUpdate:function(newShared){ return that.shared = newShared; },
 	isInstalled: function(){ return that.shared.isInstalled; },
 	connectDatabase:function(){},
 	checkDatabase:function(mongo){
@@ -87,17 +88,16 @@ var that = module.exports = {
 		});
 		return deferred.promise;
 	},
-	syncConfig: function(configs){
+	syncConfig: function(configs,$ee){
 		mongoose.disconnect();
 		mongoose.connect(crypto.decrypt(configs.db_link),function(err){console.log("functions.js syncConfigs", err);});
 		Configs.findOne({ "db_link": that.db_link},function(err,entry){
 			new Configs(configs).save(function(err){
 				if(err) console.log("functions.js updating configs error:", err);
-					that.shared = config;
-					console.log("functions.js updating configs OK");
+					that.sharedUpdate(configs);
+					$ee.emit("configs_updated",configs);
 			});
 		});
-
 	}
 }
 //testing post parameters
