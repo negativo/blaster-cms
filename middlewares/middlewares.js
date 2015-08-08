@@ -1,8 +1,8 @@
 var path = require("path");
 var bodyParser = require("body-parser");
 var fs = require("fs");
-var $S = require("../configs/functions").shared;
 var $F = require("../configs/functions");
+var $S = $F.shared;
 var __root = global.appRoot;
 
 
@@ -19,13 +19,9 @@ module.exports = function(app,express){
 	app.use(function(req,res,next){
 		//if blog is installed load global configs
 		fs.readFile(__root+"/bin/config.json","utf-8",function(err,file){
-			//console.log("middlewares.js", file.length);
 			if(file.length > 0) { 
-				var configs = JSON.parse(file);
-				//console.log("middlewares.js", configs);
-				$S = configs;
+				$S = JSON.parse(file);
 				$F.syncConfig($S);
-				//console.log("middlewares.js", $S);
 				next(); 
 			}
 			//if it's not installed install it.
