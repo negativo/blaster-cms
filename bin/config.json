@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 {"_id":"55c563b7a26797c546fbfc01","isInstalled":true,"db_link":"9fb80f694f556c90efd5502c34384e9bbb31f4fd343a5e5a2e","admin":"asd","header":{"title":"jsDEN"},"__v":0}
+=======
+{"_id":"55c642151f52dac256984d72","isInstalled":true,"db_link":"9fb80f694f556c90efd5502c34384e9bbb31f4fd343a5e5a2e","db_status":"connected","user":{"admin":"Neofrascati","_id":"55c642151f52dac256984d71"},"header":{"title":"jsDEN"},"__v":0}
+>>>>>>> test

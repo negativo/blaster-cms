@@ -6,11 +6,13 @@
 var express = require("express"),
 	app 	= express(),
 	port 	= 9001,
-	config  = require("./configs/config")(app),
+	EventEmitter = require("events").EventEmitter,
+		$ee = new EventEmitter(),
+	config  = require("./configs/config")(app,$ee),
 	routes = require("./routes/routes")(app,express),
-	install = require("./controllers/install");
+	events = require("./configs/events")(app,$ee);
 
-var $S = require("./configs/functions");
+
 
 
 app.listen(port, function(){

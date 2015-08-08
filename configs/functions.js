@@ -11,6 +11,7 @@ var that = module.exports = {
 	shared: {
 		isInstalled: false,
 		db_link:"",
+		db_status:"",
 		user:{
 			admin:"",
 			_id:""
@@ -20,10 +21,17 @@ var that = module.exports = {
 			admin:function(){ return that.shared.user.admin; }
 		},
 		footer:{},
-		local:{},
+		local:{}
 	},
+	sharedUpdate:function(newShared){ return that.shared = newShared; },
 	isInstalled: function(){ return that.shared.isInstalled; },
-	connectDatabase:function(){},
+	connectDatabase:function(URI,$ee){ 
+		var options = { replset:{ socketOptions:{} }, server:{ socketOptions:{} } };
+		options.replset.socketOptions = { keepAlive: 1 };
+		options.server.socketOptions = { keepAlive: 1 };
+		mongoose.connect(URI, options); 
+		$ee.emit("mongo_global","mongo_global");
+	},
 	checkDatabase:function(mongo){
 		//console.log("mongolink:",mongo);
 		var testConnection = function(){
@@ -87,17 +95,16 @@ var that = module.exports = {
 		});
 		return deferred.promise;
 	},
-	syncConfig: function(configs){
-		mongoose.disconnect();
-		mongoose.connect(crypto.decrypt(configs.db_link),function(err){console.log("functions.js syncConfigs", err);});
-		Configs.findOne({ "db_link": that.db_link},function(err,entry){
-			new Configs(configs).save(function(err){
+	syncConfig: function(configs,$ee){
+		var link = that.db_link;
+		Configs.findOne({ "db_link": link},function(err,entry){
+			console.log("functions.js entry:", entry);
+			new Configs(configs).save(function(err,item){
 				if(err) console.log("functions.js updating configs error:", err);
-					that.shared = config;
-					console.log("functions.js updating configs OK");
+					$ee.emit("configs_updated",configs);
+					console.log("functions.js item:", item);
 			});
 		});
-
 	}
 }
 //testing post parameters
