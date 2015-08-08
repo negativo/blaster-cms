@@ -11,6 +11,7 @@ var that = module.exports = {
 	shared: {
 		isInstalled: false,
 		db_link:"",
+		db_status:"",
 		user:{
 			admin:"",
 			_id:""
@@ -20,7 +21,7 @@ var that = module.exports = {
 			admin:function(){ return that.shared.user.admin; }
 		},
 		footer:{},
-		local:{},
+		local:{}
 	},
 	sharedUpdate:function(newShared){ return that.shared = newShared; },
 	isInstalled: function(){ return that.shared.isInstalled; },
@@ -95,11 +96,13 @@ var that = module.exports = {
 		return deferred.promise;
 	},
 	syncConfig: function(configs,$ee){
-		Configs.findOne({ "db_link": that.db_link},function(err,entry){
+		var link = that.db_link;
+		Configs.findOne({ "db_link": link},function(err,entry){
 			console.log("functions.js entry:", entry);
-			new Configs(configs).save(function(err){
+			new Configs(configs).save(function(err,item){
 				if(err) console.log("functions.js updating configs error:", err);
 					$ee.emit("configs_updated",configs);
+					console.log("functions.js item:", item);
 			});
 		});
 	}

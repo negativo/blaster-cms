@@ -1,5 +1,6 @@
 var fs = require("fs");
 var $F = require("./functions");
+var Configs = require("../models/configs");
 
 module.exports = function($ee){
 
@@ -13,6 +14,15 @@ module.exports = function($ee){
 				if(file.length > 0) { 
 					var configs = JSON.parse(file);
 					$F.syncConfig(configs,$ee);
+				} 
+				if(file.length <= 0 && $F.shared.db_status === "connected") {
+					//IF FILE IS EMPTY BUT MONGO IS CONNECTED FETCH CONFIG FROM DB
+					Configs.findOne(function(err,configs){
+						fs.writeFile(global.appRoot+"/bin/config.json", JSON.stringify(configs), function(err){
+
+						});
+						console.log("routines.js REFETCH:", configs);
+					});
 				}
 			});
 		}else if (change === "rename") {
@@ -22,3 +32,4 @@ module.exports = function($ee){
 	});
 }
 
+//TO DO CASE, IF DATABSE IS DROPPED BUT FILE WITH CONF EXIST RECONFIGURE AUTOMATICALLI TABLES FROM IT

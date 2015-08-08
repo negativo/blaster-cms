@@ -1,5 +1,6 @@
 var $F = require("./functions");
 var db = require("mongoose").connection;
+var $S = $F.shared;
 
 module.exports = function(app,$ee){
 	// configuration object updated
@@ -20,10 +21,16 @@ module.exports = function(app,$ee){
 
 	db.on("open",function(){
 		console.log("events.js", "Mongo CONNECTED!");
+		$S.db_status = "connected";
+		console.log("Changing $S", $S)
+		$F.sharedUpdate($S);
 	});
 
 	db.on("close",function(){
 		console.log("events.js", "Mongo DISCONNECTED!");
+		$S.db_status = "disconnected";
+		console.log("Changing $S", $S)
+		$F.sharedUpdate($S);
 	});
 
 }
