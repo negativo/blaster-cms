@@ -23,6 +23,8 @@ module.exports = function(app,$ee){
 	
 	app.set("view engine", "ejs");
 
+	require("./routines")($ee);
+
 	//GLOBAL DB CONNECTION&REFRESH
 	fs.readFile(__root+"/bin/config.json","utf-8",function(err,file){
 		if(file.length > 0) { 

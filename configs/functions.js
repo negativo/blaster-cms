@@ -96,6 +96,7 @@ var that = module.exports = {
 	},
 	syncConfig: function(configs,$ee){
 		Configs.findOne({ "db_link": that.db_link},function(err,entry){
+			console.log("functions.js entry:", entry);
 			new Configs(configs).save(function(err){
 				if(err) console.log("functions.js updating configs error:", err);
 					$ee.emit("configs_updated",configs);

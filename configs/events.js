@@ -13,6 +13,11 @@ module.exports = function(app,$ee){
 		console.log("events.js", "mongo_global");
 	});
 
+	// configuration file change event
+	$ee.on("config_file_changed",function(message){
+		console.log("events.js", message);
+	})
+
 	db.on("open",function(){
 		console.log("events.js", "Mongo CONNECTED!");
 	});
