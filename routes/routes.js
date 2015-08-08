@@ -1,5 +1,5 @@
 var installer = require("../controllers/install");
-var shared = require("../configs/functions").shared;
+var $F = require("../configs/functions");
 require("../controllers/controllers")();
 
 module.exports = function(app,express){
@@ -11,7 +11,7 @@ module.exports = function(app,express){
 	//////////Refactor in controller later
 	app.post("/install/mongo",function(req,res){
 		//check if err is null in frontend
-		installer.checkMongo(req.body)
+		$F.checkDatabase(req.body)
 			.then(function(promise){
 				res.status(promise.status)
 				res.send(promise);
@@ -21,18 +21,16 @@ module.exports = function(app,express){
 				res.send(err);
 			});
 	});
-	app.post("/install/:data",function(req,res){
-		installer.getUserInfo(req.body)
-		.then(function(data){
-			///REDIRECT HOME
-			res.status(301);
-			shared.isInstalled = true;
-			res.redirect("/");
-		})
-		.fail(function(err){
-			shared.isInstalled = false;
-			res.status(err);
-			res.send(err);
-		});
+	app.post("/install/blog",function(req,res){
+		$F.installation(req.body)
+			.then(function(promise){
+				console.log("routes.js install promise", promise);
+				res.send(promise);
+			})
+			.fail(function(err){
+				console.log("routes.js install promise", err);
+
+				res.status(403).send(err);
+			}); //if return err:null installation is ok
 	});
 }

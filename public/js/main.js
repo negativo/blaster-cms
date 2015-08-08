@@ -28,7 +28,7 @@
 						$formMongo.fadeOut();
 						$form.fadeIn();
 					} else{
-						$formMongo.find(".mongo-err").html(data.msg).fadeIn();
+						$formMongo.find(".mongo-err").html(data.err.message).fadeIn();
 					}
 				});
 
@@ -37,14 +37,15 @@
 				e.preventDefault();
 				var url = $form.serialize();
 				var data = {
-					blogName:$form.find(".blogName").val(),
-					username:$form.find(".username").val(),
-					password:$form.find(".password").val()
+					title:$form.find(".blog-title").val(),
+					username:$form.find(".user-username").val(),
+					password:$form.find(".user-password").val()
 				}
 
-				$.post("/install/mongo"+url, data, function(response,status){
-					$form.find(".credential-err").html(response.msg).fadeIn();
-					if(status === "success" ) window.location.replace("/");
+				$.post("/install/blog", data, function(response,status){
+					console.log("main.js", response,status);
+					if(response.error) $form.find(".credential-err").html(response.error).fadeIn();
+					//if(status === "success" ) window.location.replace("/");
 
 				});
 

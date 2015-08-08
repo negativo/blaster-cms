@@ -1,42 +1,90 @@
 var mongoose = require("mongoose");
-var Blog = require("../models/blog.js");
-var Q = require("q");
-var install = require("../controllers/install");
+	fs = require("fs"),
+	Q = require("q"),
+	User = require("../models/user.js"),
+	Configs = require("../models/configs.js"),
+	__root = global.appRoot,
+	crypto = require("../library/crypto");
 
-module.exports = {
+
+var that = module.exports = {
 	shared: {
 		isInstalled: false,
+		db_link:"",
+		admin:"",
 		header:{
 			title:"Blog",
-			author:"Author"
+			admin:function(){ return that.shared.admin; }
 		},
 		footer:{},
 		local:{},
 	},
-	refreshData: function(){
-		var deferred = Q.defer();
-		Blog.findOne(function(err,blog){
-			if (!err) deferred.resolve(blog);
-				else deferred.reject(err);
-		});
-		return deferred.promise;
-	},
-	dbConnect:function(link){
-		var deferred = Q.defer();
-		mongoose.connect(link,function(err){
-			console.log("common.js MongoConnection:", err);
-			if (err) return deferred.reject(err);
-			return deferred.resolve("OK");
-		});
-		return deferred.promise;
-	},
-	isBlogInstalled:function(){
-		install.isInstalled()
-			.then(function(installed){
-				return installed;
-			})
-			.fail(function(installed){
-				return installed;
+	isInstalled: function(){ return that.shared.isInstalled; },
+	connectDatabase:function(){},
+	checkDatabase:function(mongo){
+		//console.log("mongolink:",mongo);
+		var testConnection = function(){
+			var deferred = Q.defer();
+			mongoose.connect(mongo.link,function(err){
+				//RESOLVE PROMISE
+				if (err) deferred.reject({ err: err, status: 400 });
+				if(!err) {
+					deferred.resolve({ err: null, status: 200 });
+					//if connection is right save link to reuse later
+					that.shared.db_link = crypto.encrypt(mongo.link);
+				}
+				mongoose.disconnect();
 			});
+			return deferred.promise;
+		}
+		return testConnection();		
+	},
+	installation:function(blog){
+		console.log("functions.js a:", blog);
+		var deferred = Q.defer();
+		var mongoLink = crypto.decrypt(that.shared.db_link);
+
+		//var P = { message:"", err:[] }
+		var saveBlogData = function(){
+			that.shared.admin = blog.username;
+			that.shared.header.title = blog.title;
+			that.shared.isInstalled = true;
+			//console.log("functions.js", that);
+			new Configs(that.shared)
+					.save(function(err){
+						console.log("functions.js blog data saving: ", err);
+						deferred.resolve({message:"User&Blog Created", error:err});
+					})
+		};
+		mongoose.disconnect();
+		console.log("functions.js", that.shared.db_link);
+		mongoose.connect("mongodb://localhost:27017/"+blog.title,function(err){
+			if(!err) console.log("functions.js", " connected to mongoDB");
+				else deferred.reject({error : err});
+
+
+			User.findOne({"username":blog.username},function(err,user){
+				if(user == null) {
+					//console.log("functions.js", user,"non esiste");
+					new User({username:blog.username, password:crypto.encrypt(blog.password), admin:true}).save(function(err){
+						if(err === null) {
+							saveBlogData();
+						}
+						if(err !== null )deferred.reject({error:err, message:"Problem creating user"});
+					});
+				} else{
+					//console.log("functions.js", user.username );
+					//REJECT USER EXISTS
+					deferred.reject({error:"User Exists", user: user.username});
+				}
+			});
+
+		});
+		return deferred.promise;
+	},
+	refreshData: function(){
+
 	}
 }
+//testing post parameters
+//curl -i -X POST -H 'Content-Type: application/json' -d '{"title": "jsDEN","username":"Neofrascati","password":"Stratomerder1290"}' http://localhost:9001/install/blog

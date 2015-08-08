@@ -4,6 +4,7 @@
 
 <div class="small-12">
 	<div class="small-6 small-offset-3">
+		<!--  Database Link -->
 		<form class="installation-form-mongo">
 			<label for="mongodbLink">mongoDB link</label>
 			<input type="text" name="mongodbLink" class="mongo-link">
@@ -11,14 +12,15 @@
 			<input type="submit" class="mongo-localhost" value="Localhost?">
 			<input type="submit" class="mongo-submit">
 		</form>
+		<!-- Blog title and User -->
 		<form class="installation-form-info">
 			<label for="blogName">Blog Name</label>
-			<input type="text" name="blogName" class="blogName">
+			<input type="text" name="blogName" class="blog-title">
 			<label for="blogName">Admin</label>
-			<input type="text" name="username" class="username">
+			<input type="text" name="username" class="user-username">
 			<label for="blogName">Password</label>
-			<input type="password" name="password" class="password">
-			<label style="display:none;" class="credential-err">error</label>
+			<input type="password" name="password" class="user-password">
+			<label style="display:none;" class="credential-err">Error</label>
 			<input type="submit" class="install-submit">
 		</form>
 	</div>

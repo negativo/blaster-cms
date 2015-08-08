@@ -5,6 +5,7 @@ var express = require("express"),
 	routes = require("./routes/routes")(app,express),
 	install = require("./controllers/install");
 
+var $S = require("./configs/functions");
 
 
 app.listen(port, function(){
