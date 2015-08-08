@@ -13,8 +13,7 @@ var express = require("express"),
 	events = require("./configs/events")(app,$ee);
 
 
-
-
+//FIRE IT UP
 app.listen(port, function(){
 	console.log("node on: " + port);
 });	

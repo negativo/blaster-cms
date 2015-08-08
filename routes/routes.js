@@ -1,4 +1,3 @@
-var installer = require("../controllers/install");
 var $F = require("../configs/functions");
 require("../controllers/controllers")();
 
