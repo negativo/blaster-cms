@@ -11,10 +11,13 @@ var that = module.exports = {
 	shared: {
 		isInstalled: false,
 		db_link:"",
-		admin:"",
+		user:{
+			admin:"",
+			_id:""
+		},
 		header:{
 			title:"Blog",
-			admin:function(){ return that.shared.admin; }
+			admin:function(){ return that.shared.user.admin; }
 		},
 		footer:{},
 		local:{},
@@ -46,7 +49,7 @@ var that = module.exports = {
 
 		//var P = { message:"", err:[] }
 		var saveBlogData = function(){
-			that.shared.admin = blog.username;
+			that.shared.user.admin = blog.username;
 			that.shared.header.title = blog.title;
 			that.shared.isInstalled = true;
 			//console.log("functions.js", that);
@@ -67,8 +70,9 @@ var that = module.exports = {
 			User.findOne({"username":blog.username},function(err,user){
 				if(user == null) {
 					//console.log("functions.js", user,"non esiste");
-					new User({username:blog.username, password:crypto.encrypt(blog.password), admin:true}).save(function(err){
+					new User({username:blog.username, password:crypto.encrypt(blog.password), admin:true}).save(function(err,user){
 						if(err === null) {
+							that.shared.user._id = user._id;
 							saveBlogData();
 						}
 						if(err !== null )deferred.reject({error:err, message:"Problem creating user"});
@@ -89,10 +93,8 @@ var that = module.exports = {
 		Configs.findOne({ "db_link": that.db_link},function(err,entry){
 			new Configs(configs).save(function(err){
 				if(err) console.log("functions.js updating configs error:", err);
-				else {
 					that.shared = config;
 					console.log("functions.js updating configs OK");
-				}
 			});
 		});
 
