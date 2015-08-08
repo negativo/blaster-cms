@@ -83,7 +83,15 @@ var that = module.exports = {
 		});
 		return deferred.promise;
 	},
-	refreshData: function(){
+	syncConfig: function(configs){
+		mongoose.disconnect();
+		mongoose.connect(crypto.decrypt(configs.db_link),function(err){console.log("functions.js syncConfigs", err);});
+		Configs.findOne({ "db_link": that.db_link},function(err,entry){
+			new Configs(configs).save(function(err){
+				if(err) console.log("functions.js updating configs error:", err);
+					else console.log("functions.js updating configs OK");
+			});
+		});
 
 	}
 }

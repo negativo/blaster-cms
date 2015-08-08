@@ -1,6 +1,5 @@
 var path = require("path");
 var bodyParser = require("body-parser");
-var install = require("../controllers/install");
 var fs = require("fs");
 var $S = require("../configs/functions").shared;
 var $F = require("../configs/functions");
@@ -25,6 +24,7 @@ module.exports = function(app,express){
 				var configs = JSON.parse(file);
 				//console.log("middlewares.js", configs);
 				$S = configs;
+				$F.syncConfig($S);
 				console.log("middlewares.js", $S);
 				next(); 
 			}
