@@ -97,7 +97,7 @@ var that = module.exports = {
 	},
 	syncConfig: function(configs,$ee){
 		var link = that.db_link;
-		//remove and save let's
+		//remove and save 
 		Configs.find().remove().exec();
 		new Configs(configs).save(function(err,item){
 			if(err) console.log("functions.js updating configs error:", err);
