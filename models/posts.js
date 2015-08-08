@@ -3,12 +3,15 @@ var User = require("./user");
 
 var Schema = mongoose.Schema;
 
-var UserSchema = new Schema({
-	_creator.{type: Schema.Types.ObjectId, ref:"User" }
-	username:String,
-	password:String,
+var PostSchema = new Schema({
+	postedBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    },
+	title:String,
+	body:String,
 	createdOn:Date,
-	admin:Boolean
+	status:String
 });
 
-module.exports = mongoose.model("user", UserSchema,"user");
+module.exports = mongoose.model("posts", PostSchema,"posts");

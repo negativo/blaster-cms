@@ -36,6 +36,6 @@ module.exports = function(app,express){
 	});
 
 	app.post("/blog/post",function(req,res){
-		console.log("routes.js", req.shared);
+		
 	})
 }
