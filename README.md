@@ -1,4 +1,5 @@
 # Node CMS
+(NoNameYet)
 
 ###Simple node powered CMS for blog, small website and who know.
 OpenSource NodeJS CMS Framework.
@@ -22,4 +23,14 @@ Next I'll work on posts system, starting from a very basic blog to add more func
 I'm testing a lot with curl request from now so views are completely missing, because I'm thinking ahead for views file strucutre to allow future custom template installation and switching, I'll add frontend sometimes in the future.
 
 ##changelog
-	see you later ;)
+	- installation fully working
+	- added basic template structure in views
+		-- home is the only one that get rendered apart, for now.
+
+##ToDos
+	- choose if stick to EJS or add Angular, probably I'll avoid using Angular this time.
+	- create pages collection when installing with a sample page inside
+		-- create page-template
+	- create post-template
+	- start creating user's admin panel
+	- ??? 
