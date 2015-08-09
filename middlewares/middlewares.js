@@ -20,7 +20,7 @@ module.exports = function(app,express,$ee){
 		//if blog is installed load global configs
 		console.log("middlewares.js", $F.isInstalled());
 		if($F.isInstalled()) {
-			res.render("pages/home", $S);
+			res.render("home", $S);
 		} else {
 			fs.readFile(__root+"/bin/config.json","utf-8",function(err,file){
 				if(file.length > 0) { 

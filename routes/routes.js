@@ -1,4 +1,5 @@
 var $F = require("../configs/functions");
+	$S = $F.shared;
 
 var ruotesControllers = require("../controllers/requests"),
 	POST = ruotesControllers.POST,
@@ -6,10 +7,19 @@ var ruotesControllers = require("../controllers/requests"),
 
 module.exports = function(app,express){
 
-	//GET
+	//GETs
+	//	
+	// DINAMIC ROUTING WORK IN PROGRESS
+	// app.get('/pages/*', function (req, res) {
+	//    Pages.find({ slug: req.url}, function (err, pageData) {
+	//        res.render('page-template', {
+	//            pageContent: pageData.content,
+	//            pageTitle: pageData.title
+	//        });
+	//    });
+	// });
 
-	//POST
-	//////////Refactor in controller later
+	//POSTs
 	app.post("/install/mongo", POST.install.mongo);
 	app.post("/install/blog", POST.install.cms);
 
