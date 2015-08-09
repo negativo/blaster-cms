@@ -20,7 +20,7 @@ module.exports = function(app,$ee){
 	//set app route global
 	__root = global.appRoot = path.resolve(__dirname,"../");
 
-	
+	app.set("views", __root + "/views/template");
 	app.set("view engine", "ejs");
 
 	require("./routines")($ee);

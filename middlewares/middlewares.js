@@ -29,7 +29,7 @@ module.exports = function(app,express,$ee){
 					next(); 
 				}
 				//if it's not installed install it.
-				if(req.method === 'GET' && file.length <= 0) { res.render("install", $S )}
+				if(req.method === 'GET' && file.length <= 0) { res.render("../install", $S )}
 				next();
 			});
 		}
