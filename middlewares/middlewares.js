@@ -1,12 +1,12 @@
 var path = require("path");
 var bodyParser = require("body-parser");
 var fs = require("fs");
-var $S = require("../configs/functions").shared;
-var $F = require("../configs/functions");
 var __root = global.appRoot;
+var $F = require("../configs/functions"),
+	$S = $F.shared;
 
 
-module.exports = function(app,express){
+module.exports = function(app,express,$ee){
 	//set static content folder	
 	app.use( express.static(global.appRoot + "/public") );
 	//global checks
@@ -18,20 +18,22 @@ module.exports = function(app,express){
 	});
 	app.use(function(req,res,next){
 		//if blog is installed load global configs
-		fs.readFile(__root+"/bin/config.json","utf-8",function(err,file){
-			console.log("middlewares.js", file.length);
-			if(file.length > 0) { 
-				var configs = JSON.parse(file);
-				//console.log("middlewares.js", configs);
-				$S = configs;
-				$F.syncConfig($S);
-				console.log("middlewares.js", $S);
-				next(); 
-			}
-			//if it's not installed install it.
-			if(req.method === 'GET' && file.length <= 0) { res.render("install", $S )}
-			next();
-		});
+		console.log("middlewares.js", $F.isInstalled());
+		if($F.isInstalled()) {
+			res.render("home", $S);
+		} else {
+			fs.readFile(__root+"/bin/config.json","utf-8",function(err,file){
+				if(file.length > 0) { 
+					$S = JSON.parse(file);
+					$F.syncConfig($S);
+					next(); 
+				}
+				//if it's not installed install it.
+				if(req.method === 'GET' && file.length <= 0) { res.render("../install", $S )}
+				next();
+			});
+		}
+
 		//check if user is logged
 		//	tobedone
 	});

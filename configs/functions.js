@@ -11,16 +11,27 @@ var that = module.exports = {
 	shared: {
 		isInstalled: false,
 		db_link:"",
-		admin:"",
+		db_status:"",
+		user:{
+			admin:"",
+			_id:""
+		},
 		header:{
 			title:"Blog",
-			admin:function(){ return that.shared.admin; }
+			admin:function(){ return that.shared.user.admin; }
 		},
 		footer:{},
-		local:{},
+		local:{}
 	},
+	sharedUpdate:function(newShared){ return that.shared = newShared; },
 	isInstalled: function(){ return that.shared.isInstalled; },
-	connectDatabase:function(){},
+	connectDatabase:function(URI,$ee){ 
+		var options = { replset:{ socketOptions:{} }, server:{ socketOptions:{} } };
+		options.replset.socketOptions = { keepAlive: 1 };
+		options.server.socketOptions = { keepAlive: 1 };
+		mongoose.connect(URI, options); 
+		$ee.emit("mongo_global","mongo_global");
+	},
 	checkDatabase:function(mongo){
 		//console.log("mongolink:",mongo);
 		var testConnection = function(){
@@ -46,7 +57,7 @@ var that = module.exports = {
 
 		//var P = { message:"", err:[] }
 		var saveBlogData = function(){
-			that.shared.admin = blog.username;
+			that.shared.user.admin = blog.username;
 			that.shared.header.title = blog.title;
 			that.shared.isInstalled = true;
 			//console.log("functions.js", that);
@@ -67,8 +78,9 @@ var that = module.exports = {
 			User.findOne({"username":blog.username},function(err,user){
 				if(user == null) {
 					//console.log("functions.js", user,"non esiste");
-					new User({username:blog.username, password:crypto.encrypt(blog.password), admin:true}).save(function(err){
+					new User({username:blog.username, password:crypto.encrypt(blog.password), admin:true}).save(function(err,user){
 						if(err === null) {
+							that.shared.user._id = user._id;
 							saveBlogData();
 						}
 						if(err !== null )deferred.reject({error:err, message:"Problem creating user"});
@@ -83,14 +95,14 @@ var that = module.exports = {
 		});
 		return deferred.promise;
 	},
-	syncConfig: function(configs){
-		mongoose.disconnect();
-		mongoose.connect(crypto.decrypt(configs.db_link),function(err){console.log("functions.js syncConfigs", err);});
-		Configs.findOne({ "db_link": that.db_link},function(err,entry){
-			new Configs(configs).save(function(err){
-				if(err) console.log("functions.js updating configs error:", err);
-					else console.log("functions.js updating configs OK");
-			});
+	syncConfig: function(configs,$ee){
+		var link = that.db_link;
+		//remove and save 
+		Configs.find().remove().exec();
+		new Configs(configs).save(function(err,item){
+			if(err) console.log("functions.js updating configs error:", err);
+				$ee.emit("configs_updated",configs);
+				console.log("functions.js item:", item);
 		});
 
 	}

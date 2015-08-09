@@ -5,5 +5,8 @@
     "Kirkhammetz <Neofrascati@hotmail.it>"
   ],
   "description": "personal blog",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "foundation": "~5.5.2"
+  }
 }
