@@ -6,12 +6,24 @@ var express = require("express"),
 	Post = require("../models/posts"),
 	Page = require("../models/pages");
 
-//Controllers
+//  DATA SENDER HELPER
+//	Pass original object from req.shared then 
+//	pass a string with the name of the property you want to add
+//	and then the data you want to add to the new property.
+var dataToViews = function(original,name,add){
+	var json = JSON.stringify(original);
+	var cloned = JSON.parse(json);
+	cloned[name] = add;
+	return JSON.stringify(cloned);
+}
 
+//Controllers
 var GET = {
 	homeCtrl: function(req,res){
-		var data = JSON.stringify(req.shared);
-		res.render("home", { viewData: data });
+		Post.find({},function(err,posts){
+			var data =  dataToViews(req.shared,"posts",posts);
+			res.render("home", { viewData: data })
+		});
 	},
 	pageCtrl:function (req, res) {
 		//from /page/name-page to name-page
