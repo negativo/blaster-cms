@@ -12,6 +12,7 @@ module.exports = function(app,$ee){
 			$ee.emit("config_file_changed","Warning: Configuration file changed by humans, error may occure")
 			fs.readFile(__root+"/bin/config.json","utf-8",function(err,file){
 				if(file.length > 0) { 
+					// FILE EXISTS AND IT'S NOT EMPTY CMS THEN IS INSTALLED.
 					var configs = JSON.parse(file);
 				} 
 				if(file.length <= 0 && app.get("mongo_db") ) {

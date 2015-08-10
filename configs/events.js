@@ -4,6 +4,17 @@ var $S = $F.shared;
 
 module.exports = function(app,$ee){
 	// configuration object updated
+	db.once("open",function(){
+		console.log("events.js", "Mongo checkConnection() returned true");
+		app.set("mongo_db",true);
+		//console.log("Changing $S", $S)
+	});
+
+	db.on("close",function(){
+		console.log("events.js", "Mongo DISCONNECTED!");
+		app.set("mongo_db",false);
+		//console.log("Changing $S", $S)
+	});
 	$ee.on("configs_updated",function(configs){
 	});
 
@@ -18,16 +29,5 @@ module.exports = function(app,$ee){
 		console.log("events.js", message);
 	})
 
-	db.on("open",function(){
-		console.log("events.js", "Mongo CONNECTED!");
-		app.set("mongo_db",true);
-		//console.log("Changing $S", $S)
-	});
-
-	db.on("close",function(){
-		console.log("events.js", "Mongo DISCONNECTED!");
-		app.set("mongo_db",false);
-		//console.log("Changing $S", $S)
-	});
 
 }

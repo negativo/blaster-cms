@@ -11,21 +11,10 @@ var mongoose = require("mongoose");
 
 var that = module.exports = {
 	shared: {
-		isInstalled: false,
 		db_link:"",
-		db_status:"",
-		user:{
-			admin:"",
-			_id:""
-		},
-		header:{
-			title:"Blog",
-			admin:function(){ return that.shared.user.admin; }
-		},
-		footer:{},
-		local:{}
+		admin:"",
+		title:""
 	},
-	//sharedUpdate:function(newShared,$ee){ console.log("functions.js >>", "UPDATING $S",newShared );return that.shared = newShared; },
 	connectDatabase:function(URI,$ee){ 
 		var options = { replset:{ socketOptions:{} }, server:{ socketOptions:{} } };
 		options.replset.socketOptions = { keepAlive: 1 };
@@ -36,6 +25,7 @@ var that = module.exports = {
 	checkDatabase:function(mongo){
 		//console.log("mongolink:",mongo);
 		var testConnection = function(){
+			console.log("functions.js", mongo);
 			var deferred = Q.defer();
 			mongoose.connect(mongo.link,function(err){
 				//RESOLVE PROMISE
@@ -43,7 +33,7 @@ var that = module.exports = {
 				if(!err) {
 					deferred.resolve({ err: null, status: 200 });
 					//if connection is right save link to reuse later
-					that.shared.db_link = crypto.encrypt(mongo.link);
+					that.shared.db_link = mongo.link;
 				}
 				mongoose.disconnect();
 			});
@@ -54,13 +44,13 @@ var that = module.exports = {
 	installation:function(cms){
 		console.log("functions.js a:", cms);
 		var deferred = Q.defer();
-		var mongoLink = crypto.decrypt(that.shared.db_link);
+		var mongoLink = that.shared.db_link;
 
 		//var P = { message:"", err:[] }
 		var saveBlogData = function(){
-			that.shared.user.admin = cms.username;
-			that.shared.header.title = cms.title;
-			that.shared.isInstalled = true;
+			that.shared.admin = cms.username;
+			that.shared.title = cms.title;
+			that.shared.db_link = crypto.encrypt(that.shared.db_link);
 			//console.log("functions.js", that);
 			new Configs(that.shared)
 					.save(function(err){
@@ -71,7 +61,7 @@ var that = module.exports = {
 		};
 		mongoose.disconnect();
 		console.log("functions.js", that.shared.db_link);
-		mongoose.connect("mongodb://localhost:27017/"+cms.title,function(err){
+		mongoose.connect(mongoLink,function(err){
 			if(!err) console.log("functions.js", " connected to mongoDB");
 				else deferred.reject({error : err});
 
@@ -81,7 +71,6 @@ var that = module.exports = {
 					//console.log("functions.js", user,"non esiste");
 					new User({username:cms.username, password:crypto.encrypt(cms.password), admin:true}).save(function(err,user){
 						if(err === null) {
-							that.shared.user._id = user._id;
 							//REFACTOR THIS REFACTOR THIS REFACTOR THIS <<<<<<<<<<<<<<<
 							new Post({title:String,
 								body:"Hello World!",
@@ -118,5 +107,3 @@ var that = module.exports = {
 		return deferred.promise;
 	}
 }
-//testing post parameters
-//curl -i -X POST -H 'Content-Type: application/json' -d '{"title": "jsDEN","username":"Neofrascati","password":"Stratomerder1290"}' http://localhost:9001/install/blog

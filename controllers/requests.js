@@ -36,7 +36,7 @@ var GET = {
 var POST = {
 	install:{
 		mongo:function(req,res){
-			console.log("requests.js MONGOLINK", req);
+			console.log("requests.js MONGOLINK", req.body);
 			//check if err is null in frontend
 			$F.checkDatabase(req.body)
 				.then(function(promise){
@@ -44,6 +44,7 @@ var POST = {
 					res.send(promise);
 				})
 				.fail(function(err){
+					console.log("requests.js MongoERROR:", err.err);
 					res.status(err);
 					res.send(err);
 				});
