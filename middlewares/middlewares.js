@@ -41,7 +41,11 @@ module.exports = function(app,express,$ee){
 		//retrieve data
 		getData()
 		.then(function(data){
-			req.shared = data;
+			var supp = JSON.stringify(data);
+			req.shared = JSON.parse(supp);
+			delete req.shared.db_link;
+			delete req.shared.__v;
+			delete req.shared._id;
 			console.log("middlewares.js PROMISE", data);
 			next();
 		})

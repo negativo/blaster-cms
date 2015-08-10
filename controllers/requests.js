@@ -16,24 +16,15 @@ var GET = {
 		var slug = req.url.replace("/pages","").substring(1).replace(/\//g, '-');
 		console.log("requests.js", slug );
 		Pages.findOne({ "slug": "sample-page"},function(err,page){
-			//console.log("requests.js", err,page);
-			// $S = req.shared;
-			// $S.title = page.title;
-			// $S.local = page;
-			console.log("requests.js", page);
-			var data = {}
+			var supp = JSON.stringify(req.shared);
+
+			var data = JSON.parse(supp);
 				data.page = page;
 				data = JSON.stringify(data);
-			console.log("requests.js", { viewData: data } );
+
 			res.render("page-template", { viewData: data } );
 
 		});
-	   // Page.find({ slug: req.url}, function (err, pageData) {
-	   //     res.render('page-template', {
-	   //         pageContent: pageData.content,
-	   //         pageTitle: pageData.title
-	   //     });
-	   // });
 	}
 };
 
