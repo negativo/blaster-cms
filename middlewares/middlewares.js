@@ -26,7 +26,6 @@ module.exports = function(app,express,$ee){
 		next();
 	});
 
-
 	app.use(function(req,res,next){
 		//if blog is installed load global configs
 		var getData = function(){
