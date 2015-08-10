@@ -18,10 +18,13 @@ module.exports = function(app,express){
 	//        });
 	//    });
 	// });
-
+	
+	app.get("/pages/*", GET.pageCtrl)
+	
+	app.get("/", GET.homeCtrl );
 	//POSTs
 	app.post("/install/mongo", POST.install.mongo);
-	app.post("/install/blog", POST.install.cms);
+	app.post("/install/cms", POST.install.cms);
 
 	app.post("/blog/post",function(req,res){
 		res.send("ciao");	
