@@ -65,7 +65,6 @@ var that = module.exports = {
 			if(!err) console.log("functions.js", " connected to mongoDB");
 				else deferred.reject({error : err});
 
-
 			User.findOne({"username":cms.username},function(err,user){
 				if(user == null) {
 					//console.log("functions.js", user,"non esiste");
