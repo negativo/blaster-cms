@@ -10,13 +10,20 @@ var Configs = require("../models/configs");
 module.exports = function(app,express,$ee){
 	//set static content folder	
 	app.use( express.static(global.appRoot + "/public") );
+	app.use("/admin",express.static(global.appRoot + "/private") );
 	//global checks
 	app.use(bodyParser());
-	// attach shared object in al req
-	// app.use(function(req,res,next){
-	// 	req.shared = $S;
-	// 	next();
-	// });
+
+	// Change view folder for admin private backend
+	app.use("/admin",function(req,res,next){
+		app.set("views", __root + "/admin");
+		res.render("panel");
+	});
+	// Change view folder public frontend
+	app.use("/*",function(req,res,next){
+		app.set("views", __root + "/views/template");
+		next();
+	})
 	app.use(function(req,res,next){
 		//if blog is installed load global configs
 		var getData = function(){

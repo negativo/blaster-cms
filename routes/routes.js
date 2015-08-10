@@ -20,6 +20,11 @@ module.exports = function(app,express){
 	// });
 	app.get("/404",function(req,res){
 		res.send("404");
+	});
+
+	app.get("/admin/panel",function(req,res){
+		// console.log("routes.js", "ADMIN PANEL");
+		// res.render("panel");
 	})
 	app.get("/pages/:page", GET.pageCtrl );
 	
@@ -31,3 +36,4 @@ module.exports = function(app,express){
 	app.post("/create/post", POST.create.post);
 	app.post("/create/page", POST.create.page);
 }
+
