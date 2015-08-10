@@ -7,10 +7,15 @@
 		},
 		events:function(){
 			$(".post").click(function(){
-				$.post("/blog/post",function(res,status){
-					console.log("main.js", res);
-				})
-			})
+				$.post("/create/post",function(res,status){
+					console.log("main.js postcreate", res);
+				});
+			});
+			$(".page").click(function(){
+				$.post("/create/page",function(res,status){
+					console.log("main.js pagecreate", res);
+				});
+			});
 		}
 	}
 

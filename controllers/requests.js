@@ -2,34 +2,30 @@ var $F = require("../configs/functions"),
 	User = require("../models/user"),
 	Configs = require("../models/configs"),
 	Post = require("../models/posts"),
-	Pages = require("../models/pages");
+	Page = require("../models/pages");
 //Controllers
 
 var GET = {
 	homeCtrl: function(req,res){
 		var data = JSON.stringify(req.shared);
-		//console.log("requests.js REQUEST OBJECT", { title: "data" } );
 		res.render("home", { viewData: data });
 	},
 	pageCtrl:function (req, res) {
 		//from /page/name-page to name-page
-		var slug = req.url.replace("/pages","").substring(1).replace(/\//g, '-');
-		console.log("requests.js", slug );
-		Pages.find({ "slug": "sample-page"},function(err,page){
-			//console.log("requests.js", err,page);
-			// $S = req.shared;
-			// $S.title = page.title;
-			// $S.local = page;
-			console.log("requests.js", req.shared);
-			res.render("page-template", req.shared);
+		//var slug = req.url.replace("/pages","").substring(1).replace(/\//g, '-');
+		//console.log("requests.js SLUG HERE>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", req.params );
+		var slug = req.params.page.toString();
+		Page.findOne({ "slug": slug },function(err,page){
+			//console.log("requests.js", page,err);
+			if(page === null) res.redirect("/404")
+			var supp = JSON.stringify(req.shared);
+			var data = JSON.parse(supp);
+				data.page = page;
+				data = JSON.stringify(data);
+
+			res.render("page-template", { viewData: data } );
 
 		});
-	   // Page.find({ slug: req.url}, function (err, pageData) {
-	   //     res.render('page-template', {
-	   //         pageContent: pageData.content,
-	   //         pageTitle: pageData.title
-	   //     });
-	   // });
 	}
 };
 
@@ -61,8 +57,41 @@ var POST = {
 					res.send(err);
 				}); //if return err:null installation is ok
 		}
-	}//install methods
+	},//install methods
+	create:{
+		post:function(req,res){
+			console.log("routes.js", "create_page request");
+			var r = Math.floor((Math.random() * 10) + 1);
+			new Post({
+				title:"sample-post"+r,
+				body:"Lorem ipsum dolor sit amet."+r,
+				publishedBy:{
+					date:Date.now()
+				},
+				status:"Published"
+			}).save();
+			res.send("postcreated:"+r);	
+		},
+		page:function(req,res){
+			console.log("routes.js", "create_page request");
+			var r = Math.floor((Math.random() * 10) + 1);
+			new Page({
+				slug:"sample-page"+r,
+				template:"page-template",
+				title:"Sample",
+				content:"Hi I'm page "+r+ " :)",
+				publishedBy:{
+					date:Date.now()
+				},
+				status:"published"
+			}).save();
+			res.send("pagecreate"+r);	
+		}
+	}
 };
+
+//REMOVE RANDOM GENERATED PAGE
+//AND POSTS AFTER TESTING END
 
 
 exports.GET = GET;
