@@ -10,7 +10,7 @@ var Configs = require("../models/configs");
 module.exports = function(app,express,$ee){
 	//set static content folder	
 	app.use( express.static(global.appRoot + "/public") );
-	app.use("/admin",express.static(global.appRoot + "/private") );
+	app.use("/admin", express.static(global.appRoot + "/private") );
 	//global checks
 	app.use(bodyParser());
 
@@ -23,7 +23,8 @@ module.exports = function(app,express,$ee){
 	app.use("/*",function(req,res,next){
 		app.set("views", __root + "/views/template");
 		next();
-	})
+	});
+
 	app.use(function(req,res,next){
 		//if blog is installed load global configs
 		var getData = function(){
