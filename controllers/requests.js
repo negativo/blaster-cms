@@ -77,16 +77,19 @@ var POST = {
 	create:{
 		post:function(req,res){
 			console.log("routes.js", "create_page request");
-			var r = Math.floor((Math.random() * 10) + 1);
+			//var r = Math.floor((Math.random() * 10) + 1);
+			console.log("POST DATA: ", req.body);
+
+			var post = req.body;
 			new Post({
-				title:"sample-post"+r,
-				body:"Lorem ipsum dolor sit amet."+r,
+				title: post.title,
+				body: post.body,
 				publishedBy:{
 					date:Date.now()
 				},
 				status:"Published"
 			}).save();
-			res.send("postcreated:"+r);	
+			res.send("postcreated");	
 		},
 		page:function(req,res){
 			console.log("routes.js", "create_page request");
