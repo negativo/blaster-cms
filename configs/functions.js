@@ -25,7 +25,7 @@ var that = module.exports = {
 		footer:{},
 		local:{}
 	},
-	sharedUpdate:function(newShared){ return that.shared = newShared; },
+	sharedUpdate:function(newShared,$ee){ console.log("functions.js >>", "UPDATING $S",newShared );return that.shared = newShared; },
 	isInstalled: function(){ return that.shared.isInstalled; },
 	connectDatabase:function(URI,$ee){ 
 		var options = { replset:{ socketOptions:{} }, server:{ socketOptions:{} } };
@@ -125,7 +125,7 @@ var that = module.exports = {
 		new Configs(configs).save(function(err,item){
 			if(err) console.log("functions.js updating configs error:", err);
 				$ee.emit("configs_updated",configs);
-				console.log("functions.js item:", item);
+				//console.log("functions.js item:", item);
 		});
 	}
 }

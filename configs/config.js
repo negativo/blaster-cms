@@ -21,6 +21,7 @@ module.exports = function(app,$ee){
 	__root = global.appRoot = path.resolve(__dirname,"../");
 
 	app.set("views", __root + "/views/template");
+	app.set("partials", __root + "/views/template/partials");
 	app.set("view engine", "ejs");
 
 	require("./routines")($ee);

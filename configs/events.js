@@ -6,7 +6,7 @@ module.exports = function(app,$ee){
 	// configuration object updated
 	$ee.on("configs_updated",function(configs){
 		$F.sharedUpdate(configs);
-		console.log("events.js", $F);
+		//console.log("events.js", $F);
 	});
 
 	// configuration object updated
@@ -22,14 +22,14 @@ module.exports = function(app,$ee){
 	db.on("open",function(){
 		console.log("events.js", "Mongo CONNECTED!");
 		$S.db_status = "connected";
-		console.log("Changing $S", $S)
+		//console.log("Changing $S", $S)
 		$F.sharedUpdate($S);
 	});
 
 	db.on("close",function(){
 		console.log("events.js", "Mongo DISCONNECTED!");
 		$S.db_status = "disconnected";
-		console.log("Changing $S", $S)
+		//console.log("Changing $S", $S)
 		$F.sharedUpdate($S);
 	});
 
