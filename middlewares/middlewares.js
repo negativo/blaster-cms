@@ -24,7 +24,6 @@ module.exports = function(app,express,$ee){
 			fs.readFile(__root+"/bin/config.json","utf-8",function(err,file){
 				if (req.method === "POST") { next(); };
 				if(req.method === 'GET' && file.length <= 0) { 
-					console.log("middlewares.js", "TESTTEST");
 					res.render("../install", {title:"CMS Installation"}); 
 				}
 				if(file.length > 0) { 
@@ -48,7 +47,7 @@ module.exports = function(app,express,$ee){
 		})
 		.fail(function(data){
 			console.log("middlewares.js REJECT", data);
-			req.shared.error = err;
+			//req.shared.error = err;
 			next();
 		});
 	

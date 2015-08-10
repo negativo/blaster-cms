@@ -15,13 +15,17 @@ var GET = {
 		//from /page/name-page to name-page
 		var slug = req.url.replace("/pages","").substring(1).replace(/\//g, '-');
 		console.log("requests.js", slug );
-		Pages.find({ "slug": "sample-page"},function(err,page){
+		Pages.findOne({ "slug": "sample-page"},function(err,page){
 			//console.log("requests.js", err,page);
 			// $S = req.shared;
 			// $S.title = page.title;
 			// $S.local = page;
-			console.log("requests.js", req.shared);
-			res.render("page-template", req.shared);
+			console.log("requests.js", page);
+			var data = {}
+				data.page = page;
+				data = JSON.stringify(data);
+			console.log("requests.js", { viewData: data } );
+			res.render("page-template", { viewData: data } );
 
 		});
 	   // Page.find({ slug: req.url}, function (err, pageData) {
