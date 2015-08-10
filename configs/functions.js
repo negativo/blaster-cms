@@ -25,8 +25,7 @@ var that = module.exports = {
 		footer:{},
 		local:{}
 	},
-	sharedUpdate:function(newShared,$ee){ console.log("functions.js >>", "UPDATING $S",newShared );return that.shared = newShared; },
-	isInstalled: function(){ return that.shared.isInstalled; },
+	//sharedUpdate:function(newShared,$ee){ console.log("functions.js >>", "UPDATING $S",newShared );return that.shared = newShared; },
 	connectDatabase:function(URI,$ee){ 
 		var options = { replset:{ socketOptions:{} }, server:{ socketOptions:{} } };
 		options.replset.socketOptions = { keepAlive: 1 };
