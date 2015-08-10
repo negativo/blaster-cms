@@ -6,14 +6,26 @@ module.exports = function(grunt) {
              options: {
                  paths: ["public/css"]
              },
-             files: {"public/css/main.css": "public/less/main.less"}
+             files: [{
+					expand: true,
+					cwd: 'public/less',
+					src: ['*.less'],
+					dest: 'public/css',
+					ext: '.css'
+			}]
          },
          production: {
              options: {
                  paths: ["public/css"],
                  cleancss: true
              },
-             files: {"public/css/main.css": "public/less/main.less"}
+             files: [{
+					expand: true,
+					cwd: 'public/less',
+					src: ['*.less'],
+					dest: 'public/css',
+					ext: '.css'
+			}]
          }
      },
 
@@ -34,7 +46,8 @@ module.exports = function(grunt) {
 			files:["public/less/*.less"],
 			tasks:["less","cssmin"],
 			options:{
-				spawn:false
+				spawn:false,
+				livereload:true
 			}
 		}
 	}   
