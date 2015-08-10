@@ -44,11 +44,10 @@
 					password:$form.find(".user-password").val()
 				}
 
-				$.post("/install/blog", data, function(response,status){
-					console.log("main.js", response,status);
+				$.post("/install/cms", data, function(response,status){
+					console.log("main.js", status, response);
 					if(response.error) $form.find(".credential-err").html(response.error).fadeIn();
-					//if(status === "success" ) window.location.replace("/");
-
+					if(response.isInstalled) window.location.replace("/");
 				});
 
 			});
