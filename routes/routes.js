@@ -26,7 +26,9 @@ module.exports = function(app,express){
 		// console.log("routes.js", "ADMIN PANEL");
 		// res.render("panel");
 	})
+	
 	app.get("/pages/:page", GET.pageCtrl );
+	app.get("/post/:title", GET.postCtrl );
 	
 	app.get("/", GET.homeCtrl );
 	//POSTs

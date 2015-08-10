@@ -42,6 +42,21 @@ var GET = {
 			res.render("page-template", { viewData: data } );
 
 		});
+	},
+	postCtrl:function (req, res) {
+		var title = req.params.title;
+		
+		Post.findOne({ "title": title },function(err,post){
+			//console.log("requests.js", page,err);
+			if(post === null) res.redirect("/404")
+			var supp = JSON.stringify(req.shared);
+			var data = JSON.parse(supp);
+				data.post = post;
+				data = JSON.stringify(data);
+
+			res.render("post-template", { viewData: data } );
+
+		});
 	}
 };
 
