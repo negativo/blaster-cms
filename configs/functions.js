@@ -71,7 +71,8 @@ var that = module.exports = {
 					new User({username:cms.username, password:crypto.encrypt(cms.password), admin:true}).save(function(err,user){
 						if(err === null) {
 							//REFACTOR THIS REFACTOR THIS REFACTOR THIS <<<<<<<<<<<<<<<
-							new Post({title:String,
+							new Post({
+								title:"Sample-post",
 								body:"Hello World!",
 								publishedBy:{
 									user:cms.username,

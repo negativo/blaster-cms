@@ -4,45 +4,38 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title> <%= title %> </title>
-	<link rel="stylesheet" href="css/main.min.css">
+	<link rel="stylesheet" href="css/installation.min.css">
 	<link rel="stylesheet" href="components/foundation/css/normalize.min.css">
 	<link rel="stylesheet" href="components/foundation/css/foundation.min.css">
-	<style>
-		body{text-align: center;}
-	</style>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
 </head>
 <body>
 
-<h1>BLOG INSTALLATION</h1>
-
-<div class="small-12">
-	<div class="small-6 small-offset-3">
+<div class="small-12 container">
+	<div class="small-6 small-offset-3 form-container">
+		<h1>NoNameYet CMS</h1>
+		<p>Let's install this bad boy!</p>
 		<!--  Database Link -->
 		<form class="installation-form-mongo">
-			<label for="mongodbLink">mongoDB link</label>
-			<input type="text" name="mongodbLink" class="mongo-link">
-			<label for="mongodbLink" style="display:none;" class="mongo-err">error</label>
+			<input autocomplete="off" type="text" name="mongodbLink" class="mongo-link" name="mongolink" placeholder="mongodb://localhost:12345/dbName">
+			<label class="err mongo-err">error</label>
+			<label class="spinner animated rotate"><i class="fa fa-spinner"></i></label>
 			<input type="submit" class="mongo-localhost" value="Localhost?">
-			<input type="submit" class="mongo-submit">
-			<label for="mongo-info">remenber to user this form:</label>
-			<label for="mongo-info">mongodb://localhost:xxxxx/dbName</label>
+			<input type="submit" class="mongo-submit" value="Check">
 		</form>
 		<!-- Blog title and User -->
 		<form class="installation-form-info">
-			<label for="blogName">Blog Name</label>
-			<input type="text" name="blogName" class="blog-title">
-			<label for="blogName">Admin</label>
-			<input type="text" name="username" class="user-username">
-			<label for="blogName">Password</label>
-			<input type="password" name="password" class="user-password">
-			<label style="display:none;" class="credential-err">Error</label>
+			<input autocomplete="off" type="text" name="blogName" placeholder="Website Name" class="blog-title">
+			<input autocomplete="off" type="text" name="username" placeholder="Admin Username" class="user-username">
+			<input autocomplete="off" type="password" name="password" placeholder="Password" class="user-password">
+			
+			<label class="err credential-err">Error</label>
+			<label class="spinner animated rotate"><i class="fa fa-spinner"></i></label>
 			<input type="submit" class="install-submit">
 		</form>
 	</div>
 </div>
-
-
-
 
 	<script src="components/jquery/dist/jquery.min.js"></script>
 	<script src="components/foundation/js/foundation.min.js"></script>
