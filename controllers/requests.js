@@ -1,9 +1,34 @@
-var $F = require("../configs/functions");
+var $F = require("../configs/functions"),
+	$S = $F.shared;
+	User = require("../models/user"),
+	Configs = require("../models/configs"),
+	Post = require("../models/posts"),
+	Pages = require("../models/pages");
 //Controllers
 
 var GET = {
 	homeCtrl: function(req,res){
 		res.render("home", req.shared);
+	},
+	pageCtrl:function (req, res) {
+		//from /page/name-page to name-page
+		var slug = req.url.replace("/pages","").substring(1).replace(/\//g, '-');
+		console.log("requests.js", slug );
+		Pages.find({ "slug": "sample-page"},function(err,page){
+			//console.log("requests.js", err,page);
+			$S = req.shared;
+			$S.title = page.title;
+			$S.local = page;
+			console.log("requests.js REQ.SHARED ", req.shared);
+			res.render("page-template", req.shared);
+
+		});
+	   // Page.find({ slug: req.url}, function (err, pageData) {
+	   //     res.render('page-template', {
+	   //         pageContent: pageData.content,
+	   //         pageTitle: pageData.title
+	   //     });
+	   // });
 	}
 };
 
@@ -25,6 +50,7 @@ var POST = {
 			$F.installation(req.body)
 				.then(function(promise){
 					console.log("request.js install promise", promise);
+					promise.isInstalled = true;
 					res.send(promise);
 				})
 				.fail(function(err){

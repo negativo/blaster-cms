@@ -1,8 +1,10 @@
 var mongoose = require("mongoose");
 	fs = require("fs"),
 	Q = require("q"),
-	User = require("../models/user.js"),
-	Configs = require("../models/configs.js"),
+	User = require("../models/user"),
+	Configs = require("../models/configs"),
+	Post = require("../models/posts"),
+	Page = require("../models/pages"),	
 	__root = global.appRoot,
 	crypto = require("../library/crypto");
 
@@ -50,15 +52,15 @@ var that = module.exports = {
 		}
 		return testConnection();		
 	},
-	installation:function(blog){
-		console.log("functions.js a:", blog);
+	installation:function(cms){
+		console.log("functions.js a:", cms);
 		var deferred = Q.defer();
 		var mongoLink = crypto.decrypt(that.shared.db_link);
 
 		//var P = { message:"", err:[] }
 		var saveBlogData = function(){
-			that.shared.user.admin = blog.username;
-			that.shared.header.title = blog.title;
+			that.shared.user.admin = cms.username;
+			that.shared.header.title = cms.title;
 			that.shared.isInstalled = true;
 			//console.log("functions.js", that);
 			new Configs(that.shared)
@@ -70,17 +72,38 @@ var that = module.exports = {
 		};
 		mongoose.disconnect();
 		console.log("functions.js", that.shared.db_link);
-		mongoose.connect("mongodb://localhost:27017/"+blog.title,function(err){
+		mongoose.connect("mongodb://localhost:27017/"+cms.title,function(err){
 			if(!err) console.log("functions.js", " connected to mongoDB");
 				else deferred.reject({error : err});
 
 
-			User.findOne({"username":blog.username},function(err,user){
+			User.findOne({"username":cms.username},function(err,user){
 				if(user == null) {
 					//console.log("functions.js", user,"non esiste");
-					new User({username:blog.username, password:crypto.encrypt(blog.password), admin:true}).save(function(err,user){
+					new User({username:cms.username, password:crypto.encrypt(cms.password), admin:true}).save(function(err,user){
 						if(err === null) {
 							that.shared.user._id = user._id;
+							//REFACTOR THIS REFACTOR THIS REFACTOR THIS <<<<<<<<<<<<<<<
+							new Post({title:String,
+								body:"Hello World!",
+								publishedBy:{
+									user:cms.username,
+									date:Date.now()
+								},
+								status:"published"
+							}).save();
+							new Page({
+								slug:"sample-page",
+								template:"page-template",
+								title:"Sample",
+								content:"Hi I'm a page :)",
+								publishedBy:{
+									user:cms.user,
+									date:Date.now()
+								},
+								status:"published"
+							}).save();
+							//REFACTOR THIS REFACTOR THIS REFACTOR THIS <<<<<<<<<<<<<<<
 							saveBlogData();
 						}
 						if(err !== null )deferred.reject({error:err, message:"Problem creating user"});
@@ -104,7 +127,6 @@ var that = module.exports = {
 				$ee.emit("configs_updated",configs);
 				console.log("functions.js item:", item);
 		});
-
 	}
 }
 //testing post parameters

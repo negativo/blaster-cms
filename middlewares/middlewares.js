@@ -4,6 +4,7 @@ var fs = require("fs");
 var __root = global.appRoot;
 var $F = require("../configs/functions"),
 	$S = $F.shared;
+var Configs = require("../models/configs");
 
 
 module.exports = function(app,express,$ee){
@@ -18,9 +19,13 @@ module.exports = function(app,express,$ee){
 	});
 	app.use(function(req,res,next){
 		//if blog is installed load global configs
-		console.log("middlewares.js", $F.isInstalled());
+		console.log("middlewares.js is installed:", $F.isInstalled());
 		if($F.isInstalled()) {
-			res.render("home", $S);
+			//res.render("home", $S);
+			Configs.findOne({},function(err,conf){
+				req.shared = $S = conf;
+			})
+			next();
 		} else {
 			fs.readFile(__root+"/bin/config.json","utf-8",function(err,file){
 				if(file.length > 0) { 
