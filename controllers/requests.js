@@ -1,8 +1,11 @@
-var $F = require("../configs/functions"),
+var express = require("express"),
+	app 	= express(),
+	$F = require("../configs/functions"),
 	User = require("../models/user"),
 	Configs = require("../models/configs"),
 	Post = require("../models/posts"),
 	Page = require("../models/pages");
+
 //Controllers
 
 var GET = {
@@ -15,6 +18,7 @@ var GET = {
 		//var slug = req.url.replace("/pages","").substring(1).replace(/\//g, '-');
 		//console.log("requests.js SLUG HERE>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", req.params );
 		var slug = req.params.page.toString();
+		
 		Page.findOne({ "slug": slug },function(err,page){
 			//console.log("requests.js", page,err);
 			if(page === null) res.redirect("/404")

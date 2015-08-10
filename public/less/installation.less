@@ -63,7 +63,7 @@
 }
 
 .transition{
-	transition: ease-out .5s !important;
+	transition: ease-out .2s !important;
 }
 
 
@@ -111,8 +111,12 @@ button,input{
 		margin-top: 5px;
 		width: 150px;
 		padding: 10px;
-		background: fade(@primaryTextColor,70%);
+		background: fade(@primaryTextColor,60%);
 		color:@textPrimaryColor;
+		&:focus,&:hover{
+			box-shadow: inset 0px -3px 0px fade(@primaryTextColor,80%) !important	;
+			.transition;
+		}
 	}
 	input[type="text"],input[type="email"],input[type="password"]{
 		border-radius: 0px !important;
