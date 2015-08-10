@@ -1,0 +1,13 @@
+
+<script src="components/jquery/dist/jquery.js"></script>
+<script src="components/sir-trevor-js/sir-trevor.js"></script>
+<script>
+  new SirTrevor.Editor({ el: $('.js-st-instance') });
+  $("form").submit(function(e){
+  	e.preventDefault();
+  	var x = SirTrevor.getInstance(0).store.retrieve();
+  	console.log("footer.ejs", x);
+  });
+</script>
+</body>
+</html>
