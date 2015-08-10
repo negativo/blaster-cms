@@ -10,27 +10,31 @@ I'm building this to have a framework to start with when doing small blog and we
 
 
 ###Ongoing
-Installation process from now takes MongoDB credentials and website basic info&user 
-and craetes collections and keep them in sync between filesystem and mongo.
-
 The server filestructure seems good but maybe I'll change it later, I'm refactoring things everyday because I find a better way to do something.
 
 Gonna implement a local node&npm /bin packed to it, the idea is to be easy to deploy on
 every ubuntu machine, but we will see if this project become somehow usefull.
 
-Next I'll work on posts system, starting from a very basic blog to add more functionality later.
-
-I'm testing a lot with curl request from now so views are completely missing, because I'm thinking ahead for views file strucutre to allow future custom template installation and switching, I'll add frontend sometimes in the future.
+Basic is done, now I'll work on implementing admin capabilities and adding passport for admin session login, maybe I'll extend it for other user too, user Schema predisposed to have admin:true/false
 
 ##changelog
-	- installation fully working
-	- added basic template structure in views
-		-- home is the only one that get rendered apart, for now.
+	- Refactored Installation (yep another time)
+		-- all db collection created on installation, sample document in Pages and Posts
+	- droppped shared obejct from db to config.json
+		-- they stay in sync, if file change db get's updated
+	- Templating redefined
+	- Dinamic route for pages that gets fetch for DB
+	- added base structure for admin area
+		-- admin area have a /private static folder
+		-- admin area have it's own views folder
 
 ##ToDos
 	- choose if stick to EJS or add Angular, probably I'll avoid using Angular this time.
-	- create pages collection when installing with a sample page inside
-		-- create page-template
-	- create post-template
-	- start creating user's admin panel
-	- ??? 
+		-- btw EJS won this time, it's a ton's of ajax call no need for angular.I hope.
+	- "Graphic-less" for now because I want to focus on Logic before doing base template graphic 
+	- time to do admin panel
+	- adding helper methods in function.js for frontend needs
+		-- adding common function to use while templating
+			-- that mean I have to write DOCS
+				-- I don't want to write DOCS
+					-- maybe I will do it later

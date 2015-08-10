@@ -8,5 +8,21 @@
 
 
 
+<div class="small-10 small-offset-1 container">
+	
+<!-- POST LOOP -->
+<% for (var i = 0; i < shared.posts.length; i++) { %>
+<div class="small-3 columns post-container" style="overflow:hidden;">
+	<a href="/post/<%=  shared.posts[i].title %>"><h4><%=  shared.posts[i].title %></h4></a>
+	<p><%-  shared.posts[i].body %></p>
+	<small><%=  new Date(shared.posts[i].publishedBy.date) %></small>
+	<small><%=  shared.posts[i].publishedBy.user %></small>
+</div>
+<% }; %>
+
+
+</div>
+
+
 <%- include("partials/footer") %>
 
