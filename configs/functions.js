@@ -116,16 +116,6 @@ var that = module.exports = {
 
 		});
 		return deferred.promise;
-	},
-	syncConfig: function(configs,$ee){
-		var link = that.db_link;
-		//remove and save 
-		Configs.find().remove().exec();
-		new Configs(configs).save(function(err,item){
-			if(err) console.log("functions.js updating configs error:", err);
-				$ee.emit("configs_updated",configs);
-				//console.log("functions.js item:", item);
-		});
 	}
 }
 //testing post parameters

@@ -30,7 +30,6 @@ module.exports = function(app,$ee){
 	fs.readFile(__root+"/bin/config.json","utf-8",function(err,file){
 		if(file.length > 0) { 
 			var configs = JSON.parse(file);
-			$F.syncConfig(configs,$ee);
 			$F.connectDatabase(crypto.decrypt(configs.db_link),$ee);
 		}
 	});

@@ -13,7 +13,6 @@ module.exports = function($ee){
 			fs.readFile(__root+"/bin/config.json","utf-8",function(err,file){
 				if(file.length > 0) { 
 					var configs = JSON.parse(file);
-					$F.syncConfig(configs,$ee);
 				} 
 				if(file.length <= 0 && $F.shared.db_status === "connected") {
 					//IF FILE IS EMPTY BUT MONGO IS CONNECTED FETCH CONFIG FROM DB
