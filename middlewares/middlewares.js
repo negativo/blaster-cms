@@ -34,7 +34,6 @@ module.exports = function(app,express,$ee){
 				}
 				//if it's not installed install it.
 			});
-
 			return deferred.promise;			
 		}
 
@@ -46,7 +45,7 @@ module.exports = function(app,express,$ee){
 			delete req.shared.db_link;
 			delete req.shared.__v;
 			delete req.shared._id;
-			console.log("middlewares.js PROMISE", data);
+			//console.log("middlewares.js PROMISE", data);
 			next();
 		})
 		.fail(function(data){

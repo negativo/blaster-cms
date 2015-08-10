@@ -18,15 +18,16 @@ module.exports = function(app,express){
 	//        });
 	//    });
 	// });
-	
-	app.get("/pages/*", GET.pageCtrl)
+	app.get("/404",function(req,res){
+		res.send("404");
+	})
+	app.get("/pages/:page", GET.pageCtrl );
 	
 	app.get("/", GET.homeCtrl );
 	//POSTs
 	app.post("/install/mongo", POST.install.mongo);
 	app.post("/install/cms", POST.install.cms);
 
-	app.post("/blog/post",function(req,res){
-		res.send("ciao");	
-	})
+	app.post("/create/post", POST.create.post);
+	app.post("/create/page", POST.create.page);
 }
