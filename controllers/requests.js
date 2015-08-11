@@ -6,8 +6,6 @@ var express = require("express"),
 	Post = require("../models/posts"),
 	Page = require("../models/pages");
 
-
-
 //Controllers
 var GET = {
 	homeCtrl: function(req,res){
@@ -68,8 +66,7 @@ var POST = {
 	},//install methods
 	create:{
 		post:function(req,res){
-			console.log("routes.js", "create_page request");
-			//var r = Math.floor((Math.random() * 10) + 1);
+			console.log("routes.js", "/create/post request");
 			console.log("POST DATA: ", req.body);
 			var post = req.body;
 			new Post({

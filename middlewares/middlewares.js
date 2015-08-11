@@ -3,8 +3,7 @@ var Q 	= require("q");
 var bodyParser = require("body-parser");
 var fs = require("fs");
 var __root = global.appRoot;
-var $F = require("../configs/functions"),
-	$S = $F.shared;
+var $F = require("../configs/functions");
 var Configs = require("../models/configs");
 
 module.exports = function(app,express,$ee){
@@ -45,7 +44,6 @@ module.exports = function(app,express,$ee){
 			});
 			return deferred.promise;			
 		}
-
 		//retrieve data
 		getData()
 		.then(function(data){
@@ -62,11 +60,7 @@ module.exports = function(app,express,$ee){
 			//req.shared.error = err;
 			next();
 		});
-	
 		//check if user is logged
 		//	tobedone
 	});
 }
-
-
-//
