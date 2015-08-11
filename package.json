@@ -30,6 +30,7 @@
     "grunt-contrib-less": "^1.0.1",
     "grunt-contrib-watch": "^0.6.1",
     "morgan": "^1.6.1",
+    "request": "^2.60.0",
     "winston": "^1.0.1"
   }
 }
