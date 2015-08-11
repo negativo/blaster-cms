@@ -6,56 +6,33 @@ var express = require("express"),
 	Post = require("../models/posts"),
 	Page = require("../models/pages");
 
-//  DATA SENDER HELPER
-//	Pass original object from req.shared then 
-//	pass a string with the name of the property you want to add
-//	and then the data you want to add to the new property.
-var dataToViews = function(original,name,add){
-	var json = JSON.stringify(original);
-	var cloned = JSON.parse(json);
-	cloned[name] = add;
-	return JSON.stringify(cloned);
-}
+
 
 //Controllers
 var GET = {
 	homeCtrl: function(req,res){
 		Post.find({},function(err,posts){
-			var data =  dataToViews(req.shared,"posts",posts);
+			var data =  $F.dataParser(req.shared,"posts",posts);
 			res.render("home", { viewData: data })
 		});
 	},
 	pageCtrl:function (req, res) {
-		//from /page/name-page to name-page
-		//var slug = req.url.replace("/pages","").substring(1).replace(/\//g, '-');
-		//console.log("requests.js SLUG HERE>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", req.params );
-		var slug = req.params.page.toString();
-		
+		var slug = req.params.page.toString();	
 		Page.findOne({ "slug": slug },function(err,page){
 			//console.log("requests.js", page,err);
 			if(page === null) res.redirect("/404")
-			var supp = JSON.stringify(req.shared);
-			var data = JSON.parse(supp);
-				data.page = page;
-				data = JSON.stringify(data);
-
+			var data =  $F.dataParser(req.shared,"page",page);
 			res.render("page-template", { viewData: data } );
 
 		});
 	},
 	postCtrl:function (req, res) {
 		var title = req.params.title;
-		
 		Post.findOne({ "title": title },function(err,post){
 			//console.log("requests.js", page,err);
 			if(post === null) res.redirect("/404")
-			var supp = JSON.stringify(req.shared);
-			var data = JSON.parse(supp);
-				data.post = post;
-				data = JSON.stringify(data);
-
+			var data =  $F.dataParser(req.shared,"post",post);
 			res.render("post-template", { viewData: data } );
-
 		});
 	}
 };
@@ -94,7 +71,6 @@ var POST = {
 			console.log("routes.js", "create_page request");
 			//var r = Math.floor((Math.random() * 10) + 1);
 			console.log("POST DATA: ", req.body);
-
 			var post = req.body;
 			new Post({
 				title: post.title,

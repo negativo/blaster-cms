@@ -8,16 +8,7 @@ var ruotesControllers = require("../controllers/requests"),
 module.exports = function(app,express){
 
 	//GETs
-	//	
-	// DINAMIC ROUTING WORK IN PROGRESS
-	// app.get('/pages/*', function (req, res) {
-	//    Pages.find({ slug: req.url}, function (err, pageData) {
-	//        res.render('page-template', {
-	//            pageContent: pageData.content,
-	//            pageTitle: pageData.title
-	//        });
-	//    });
-	// });
+
 	app.get("/404",function(req,res){
 		res.send("404");
 	});
@@ -29,8 +20,9 @@ module.exports = function(app,express){
 	
 	app.get("/pages/:page", GET.pageCtrl );
 	app.get("/post/:title", GET.postCtrl );
-	
 	app.get("/", GET.homeCtrl );
+
+
 	//POSTs
 	app.post("/install/mongo", POST.install.mongo);
 	app.post("/install/cms", POST.install.cms);
