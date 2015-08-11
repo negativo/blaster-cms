@@ -17,11 +17,7 @@ var GET = {
 		});
 	},
 	pageCtrl:function (req, res) {
-		//from /page/name-page to name-page
-		//var slug = req.url.replace("/pages","").substring(1).replace(/\//g, '-');
-		//console.log("requests.js SLUG HERE>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", req.params );
-		var slug = req.params.page.toString();
-		
+		var slug = req.params.page.toString();	
 		Page.findOne({ "slug": slug },function(err,page){
 			//console.log("requests.js", page,err);
 			if(page === null) res.redirect("/404")
