@@ -35,7 +35,7 @@ var GET = {
 		Post.findOne({ "title": title },function(err,post){
 			//console.log("requests.js", page,err);
 			if(post === null) res.redirect("/404")
-			var data =  $F.dataParser(req.shared,"posts",posts);
+			var data =  $F.dataParser(req.shared,"post",post);
 			res.render("post-template", { viewData: data } );
 		});
 	}
@@ -75,7 +75,6 @@ var POST = {
 			console.log("routes.js", "create_page request");
 			//var r = Math.floor((Math.random() * 10) + 1);
 			console.log("POST DATA: ", req.body);
-
 			var post = req.body;
 			new Post({
 				title: post.title,
