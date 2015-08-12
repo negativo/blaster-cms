@@ -16,6 +16,11 @@ var GET = {
 		var data =  $F.dataParser(req.shared);
 		var currentUser = $F.dataParser(req.user);
 		res.render("panel", { backend: data, currentUser: currentUser });
+	},
+	postsCtrl:function(req,res){
+		var data =  $F.dataParser(req.shared);
+		var currentUser = $F.dataParser(req.user);
+		res.render("panel", { backend: data, currentUser: currentUser });
 	}
 };
 

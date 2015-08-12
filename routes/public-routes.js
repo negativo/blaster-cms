@@ -1,8 +1,7 @@
 var $F = require("../configs/functions");
-	$S = $F.shared;
 var passport = require("passport");
 
-var ruotesControllers = require("../controllers/publicRequest"),
+var ruotesControllers = require("../controllers/public-request"),
 	POST = ruotesControllers.POST,
 	GET = ruotesControllers.GET;
 
@@ -15,8 +14,10 @@ module.exports = function(app,express){
 	});
 	
 	
-	app.get("/page/:page", GET.pageCtrl );
-	app.get("/post/:title", GET.postCtrl );
+	app.get("/page/:page", GET.singlePageCtrl );
+	app.get("/post/:title", GET.singlePostCtrl );
+	app.get("/get/posts", GET.allPostsCtrl );
+	app.get("/get/pages", GET.allPagesCtrl );
 	app.get("/", GET.homeCtrl );
 
 

@@ -15,7 +15,7 @@ var GET = {
 			res.render(req.templates["home-template"], { viewData: data })
 		});
 	},
-	pageCtrl:function (req, res) {
+	singlePageCtrl:function (req, res) {
 		var slug = req.params.page.toString();	
 		Page.findOne({ "slug": slug },function(err,page){
 			//console.log("requests.js", page,err);
@@ -25,13 +25,25 @@ var GET = {
 
 		});
 	},
-	postCtrl:function (req, res) {
+	singlePostCtrl:function (req, res) {
 		var title = req.params.title;
 		Post.findOne({ "title": title },function(err,post){
 			//console.log("requests.js", page,err);
 			if(post === null) res.redirect("/404")
 			var data =  $F.dataParser(req.shared,"post",post);
 			res.render(req.templates["post-template"], { viewData: data } );
+		});
+	},
+	allPostsCtrl:function(req,res){
+		Post.find({}, function(err, posts){
+			if(posts !== null) return res.status(200).send(posts);
+			res.status(404).send("No posts found");
+		});
+	},
+	allPagesCtrl:function(req,res){
+		Page.find({}, function(err, pages){
+			if(pages !== null) return res.status(200).send(pages);
+			res.status(404).send("No pages found");
 		});
 	}
 };
