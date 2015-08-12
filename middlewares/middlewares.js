@@ -1,29 +1,41 @@
 var path = require("path");
-var Q 	= require("q");
-var bodyParser = require("body-parser");
-var fs = require("fs");
-var __root = global.appRoot;
-var $F = require("../configs/functions");
-var Configs = require("../models/configs");
+	Q 	= require("q"),
+	bodyParser = require("body-parser"),
+	fs = require("fs"),
+	__root = global.appRoot,
+	$F = require("../configs/functions"),
+	Configs = require("../models/configs"),
+	cookieParser = require("cookie-parser"),
+	session = require("express-session"),
+	passport = require("passport");
+	//get strategies
+	require("../lib/login-strategy")(passport);
 
 module.exports = function(app,express,$ee){
+
 	//set static content folder	
 	app.use( express.static(global.appRoot + "/public") );
 	app.use( express.static(global.appRoot + "/CMS_API") );
 	app.use("/pages", express.static(global.appRoot + "/public") );
 	app.use("/admin", express.static(global.appRoot + "/private") );
-	//global checks
+	app.use(cookieParser());
 	app.use(bodyParser());
+	//logins
+	app.use(session({ secret: 'WeGonnaConqueryTheFuckinWorldISwearIt' }));
+	app.use(passport.initialize());
+	app.use(passport.session());
 
-	// Change view folder for admin private backend
-	app.use("/admin",function(req,res,next){
-		app.set("views", __root + "/admin");
-		res.render("panel");
-	});
+
 	// Change view folder public frontend
 	app.use("/*",function(req,res,next){
 		app.set("views", __root + "/views/template");
 		next();
+	});
+	// Change view folder for admin private backend
+	app.use("/admin",function(req,res,next){
+		app.set("views", __root + "/admin");
+		next();
+		//res.render("panel");
 	});
 
 	app.use(function(req,res,next){

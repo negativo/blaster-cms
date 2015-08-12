@@ -2,7 +2,7 @@ var express = require("express");
 var path = require("path");
 var	dotenv  = require("dotenv").load(); 
 var fs 		= require("fs");
-var crypto  = require("../library/crypto");
+var crypto  = require("../lib/crypto");
 var $F = require("../configs/functions");
 
 module.exports = function(app,$ee){

@@ -6,7 +6,7 @@ var mongoose = require("mongoose");
 	Post = require("../models/posts"),
 	Page = require("../models/pages"),	
 	__root = global.appRoot,
-	crypto = require("../library/crypto");
+	crypto = require("../lib/crypto");
 
 
 var that = module.exports = {

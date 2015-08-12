@@ -1,5 +1,6 @@
 var $F = require("../configs/functions");
 	$S = $F.shared;
+var passport = require("passport");
 
 var ruotesControllers = require("../controllers/requests"),
 	POST = ruotesControllers.POST,
@@ -14,11 +15,19 @@ module.exports = function(app,express){
 	});
 
 	app.get("/admin/panel",function(req,res){
-		// console.log("routes.js", "ADMIN PANEL");
-		// res.render("panel");
-	})
+		res.render("panel");
+	});
+
+	//login with local
+	app.get("/admin/login",function(req,res){
+		res.render("login");
+	});
+	app.post("/admin/login", passport.authenticate('local'), function(req,res){
+		res.status(200).json({ err:undefined });
+	});
 	
-	app.get("/:page", GET.pageCtrl );
+	
+	app.get("/page/:page", GET.pageCtrl );
 	app.get("/post/:title", GET.postCtrl );
 	app.get("/", GET.homeCtrl );
 
