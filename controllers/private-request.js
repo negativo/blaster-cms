@@ -21,7 +21,7 @@ var GET = {
 	},
 	postsPageCtrl:function(req,res){
 		console.log("private-request.js", "GOT REQUEST FOR POSTS >>> CALLING API");
-		http( base_url + "/get/posts", function (error, response, body) {
+		http( base_url + "/api/posts", function (error, response, body) {
 			if (!error && response.statusCode == 200) {
 				res.send(body);
 			}
@@ -29,7 +29,7 @@ var GET = {
 	},
 	pagesPageCtrl:function(req,res){
 		console.log("private-request.js", "GOT REQUEST FOR PAGES >>> CALLING API");
-		http( base_url + "/get/pages", function (error, response, body) {
+		http( base_url + "/api/pages", function (error, response, body) {
 			if (!error && response.statusCode == 200) {
 				res.send(body);
 			}
@@ -37,7 +37,7 @@ var GET = {
 	},
 	usersPageCtrl:function(req,res){
 		console.log("private-request.js", "GOT REQUEST FOR USERS >>> CALLING API");
-		http( base_url + "/get/users", function (error, response, body) {
+		http( base_url + "/api/users", function (error, response, body) {
 			if (!error && response.statusCode == 200) {
 				res.send(body);
 			}
@@ -45,7 +45,8 @@ var GET = {
 	},
 	configurationsPageCtrl:function(req,res){
 		console.log("private-request.js", "GOT REQUEST FOR CONFIGURATIONS >>> CALLING API");
-		http( base_url + "/get/configurations", function (error, response, body) {
+		http( base_url + "/api/configurations", function (error, response, body) {
+			console.log("private-request.js >>>>>>>>>>>>>", req.isAuthenticated() );
 			if (!error && response.statusCode == 200) {
 				res.send(body);
 			}
@@ -56,6 +57,7 @@ var GET = {
 var POST = {
 	loginCtrl:function(req,res){
 		//console.log("routes.js", req.session);
+		console.log("private-request.js", req.login);
 		res.json({ err:undefined });
 	}
 };

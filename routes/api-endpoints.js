@@ -8,18 +8,20 @@ var ruotesControllers = require("../controllers/api-request"),
 
 module.exports = function(app,express){
 	
+	//add this middle to avoid curl request
+	// own server request will be checked in controller
 	var AreYouAuthorized = function(req,res,next){
 		if(req.isAuthenticated()) next();
 			else res.status(401).send("Unauthorized")
 	}
 
 	//PUBLIC ENDPOINTS
-	app.get("/get/posts", GET.allPostsCtrl );
-	app.get("/get/pages", GET.allPagesCtrl );
+	app.get("/api/posts", GET.allPostsCtrl );
+	app.get("/api/pages", GET.allPagesCtrl );
 	
 	//PRIVATE ENDPOINTSs
-	app.get("/get/users", AreYouAuthorized , GET.usersCtrl );
-	app.get("/get/configurations", AreYouAuthorized , GET.configsCtrl );
+	app.get("/api/users", AreYouAuthorized , GET.usersCtrl );
+	app.get("/api/configurations", AreYouAuthorized , GET.configsCtrl );
 
 }
 

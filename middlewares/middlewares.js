@@ -23,7 +23,8 @@ module.exports = function(app,express,$ee){
 	app.use(session({ secret: 'WeGonnaConqueryTheFuckinWorldISwearIt' }));
 	app.use(passport.initialize());
 	app.use(passport.session());
-    
+
+
     //specific route check if user is logged to avoid curl req to the server
     app.use("/admin", function(req,res,next){
     	if (req.url === "/login") return next();

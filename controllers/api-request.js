@@ -23,13 +23,13 @@ var GET = {
 		});
 	},
 	usersCtrl:function(req,res){
-		User.find({}, function(err, user){
+		User.findOne({}, function(err, user){
 			if(user !== null) return res.status(200).send(user);
 			res.status(404).send("No user found");
 		});
 	},
 	configsCtrl:function(req,res){
-		Configs.find({}, function(err, configs){
+		Configs.findOne({}, function(err, configs){
 			if(configs !== null) return res.status(200).send(configs);
 			res.status(404).send("No configs found");
 		});
