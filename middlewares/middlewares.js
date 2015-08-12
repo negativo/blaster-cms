@@ -27,7 +27,7 @@ module.exports = function(app,express,$ee){
     //specific route check if user is logged to avoid curl req to the server
     app.use("/admin", function(req,res,next){
     	if (req.url === "/login") return next();
-		if(req.session && req.user) return next();
+		if(req.session && req.user && req.isAuthenticated() ) return next();
 		res.redirect("/admin/login");
     });
 

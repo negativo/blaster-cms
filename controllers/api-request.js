@@ -10,6 +10,7 @@ var express = require("express"),
 //Controllers
 var GET = {
 	allPostsCtrl:function(req,res){
+		console.log("api-request.js", "GOT REQUEST FOR POSTS");
 		Post.find({}, function(err, posts){
 			if(posts !== null) return res.status(200).send(posts);
 			res.status(404).send("No posts found");

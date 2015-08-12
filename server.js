@@ -8,12 +8,11 @@ var express = require("express"),
 	port 	= 9001,
 	EventEmitter = require("events").EventEmitter,
 		$ee = new EventEmitter(),
-	config  = require("./configs/config")(app,$ee),
+	events = require("./configs/events")(app,$ee),
+	config  = require("./configs/config")(app,$ee,port),
 	publicRoutes = require("./routes/public-routes")(app,express),
-	dashboardRoutes = require("./routes/private-routes")(app,express),
-	apiEndpoints = require("./routes/api-endpoints")(app,express),
-	events = require("./configs/events")(app,$ee);
-
+	privateRoutes = require("./routes/private-routes")(app,express),
+	apiEndpoints = require("./routes/api-endpoints")(app,express);
 
 
 //FIRE IT UP

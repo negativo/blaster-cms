@@ -8,9 +8,13 @@ var ruotesControllers = require("../controllers/private-request"),
 module.exports = function(app,express){
 
 	//GETS
-	app.get("/admin/login", GET.loginCtrl );
-	app.get("/admin/panel", GET.dashboardCtrl );
-	app.get("/admin/posts", GET.postsCtrl );
+	app.get("/admin/login", GET.loginPageCtrl );
+	app.get("/admin/panel", GET.dashboardPageCtrl );
+	app.get("/admin/posts", GET.postsPageCtrl );
+	app.get("/admin/pages", GET.pagesPageCtrl );
+	app.get("/admin/users", GET.usersPageCtrl );
+	app.get("/admin/configurations", GET.configurationsPageCtrl );
+
 
 
 	//POSTS	
