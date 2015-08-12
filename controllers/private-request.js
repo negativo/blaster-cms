@@ -53,6 +53,17 @@ var GET = {
 				res.render("configs", { backend: data, currentUser: currentUser });
 			}
 		});
+	},
+	//CRUD
+	editPostCtrl:function(req,res){
+			var data =  $F.dataParser(req.shared);
+			var currentUser = $F.dataParser(req.user);
+			res.render("edit-post", { backend: data, currentUser: currentUser });
+	},
+	editPageCtrl:function(req,res){
+			var data =  $F.dataParser(req.shared);
+			var currentUser = $F.dataParser(req.user);
+			res.render("edit-page", { backend: data, currentUser: currentUser });
 	}
 };
 

@@ -1,0 +1,19 @@
+<%- include("./partials/header") %>
+<%  dashboard = JSON.parse(backend); %>
+<%  user = JSON.parse(currentUser); %>
+
+	<%- include("./partials/sidebar") %>
+        
+	
+<div id="page-wrapper" style="height:100vh;">
+
+    <div class="container-fluid">  
+        <%- include("./partials/editor") %>
+    </div>
+    <!-- /.container-fluid -->
+</div>
+<!-- /#page-wrapper -->
+
+
+<%- include("./partials/footer") %>
+
