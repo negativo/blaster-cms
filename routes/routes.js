@@ -14,18 +14,11 @@ module.exports = function(app,express){
 		res.send("404");
 	});
 
-	app.get("/admin/panel",function(req,res){
-		res.render("panel");
-	});
+	app.get("/admin/panel", GET.dashboardCtrl );
 
 	//login with local
-	app.get("/admin/login",function(req,res){
-		res.render("login");
-	});
-	app.post("/admin/login", passport.authenticate('local'), function(req,res){
-		console.log("routes.js", req.session);
-		res.json({ err:undefined });
-	});
+	app.get("/admin/login", GET.loginCtrl );
+	app.post("/admin/login", passport.authenticate('local'),  POST.loginCtrl );
 	
 	
 	app.get("/page/:page", GET.pageCtrl );

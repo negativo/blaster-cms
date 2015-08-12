@@ -33,10 +33,22 @@ var GET = {
 			var data =  $F.dataParser(req.shared,"post",post);
 			res.render(req.templates["post-template"], { viewData: data } );
 		});
+	},
+	loginCtrl:function(req,res){
+		res.render("login" );
+	},
+	dashboardCtrl:function(req,res){
+		var data =  $F.dataParser(req.shared);
+		var currentUser = $F.dataParser(req.user);
+		res.render("panel", { backend: data, currentUser: currentUser });
 	}
 };
 
 var POST = {
+	loginCtrl:function(req,res){
+		//console.log("routes.js", req.session);
+		res.json({ err:undefined });
+	},
 	install:{
 		mongo:function(req,res){
 			console.log("requests.js MONGOLINK", req.body);
