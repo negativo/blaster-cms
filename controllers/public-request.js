@@ -1,5 +1,6 @@
 var express = require("express"),
 	app 	= express(),
+	toSlug = require('to-slug-case'),
 	$F = require("../configs/functions"),
 	User = require("../models/user"),
 	Configs = require("../models/configs"),
@@ -95,11 +96,12 @@ var POST = {
 		page:function(req,res){
 			console.log("routes.js", "create_page request");
 			var r = Math.floor((Math.random() * 10) + 1);
+			var page = req.body;
 			new Page({
-				slug:"sample-page"+r,
+				slug:toSlug(page.title),
 				template:"page-template",
-				title:"Sample",
-				content:"Hi I'm page "+r+ " :)",
+				title: page.title,
+				content: page.body,
 				publishedBy:{
 					date:Date.now()
 				},

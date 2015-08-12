@@ -14,6 +14,7 @@ var that = module.exports = {
 		db_link:"",
 		admin:"",
 		title:"",
+		siteTemplate:"template",
 		templates:{
 					"home-template":"home-template",
 					"page-template":"page-template",
