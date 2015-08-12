@@ -3,18 +3,39 @@
 <%  user = JSON.parse(currentUser); %>
 
 	<%- include("./partials/sidebar") %>
-        
-	
-    <div id="page-wrapper">
+    
 
-        <div class="container-fluid">
-            <%= JSON.stringify(dashboard.posts) %>
+    <div id="page-wrapper" style="height:100vh;">
+
+        <div class="container-fluid">  
+            
+            <h1>Posts</h1>
+             <button type="button" class="btn btn-primary"><i class="fa fa-fw fa-plus"></i> Add new post</button>
+            <br><br>
+
+            <!-- Table -->
+            <table class="table table-striped">
+            <tr>
+                <th>#</th>
+                <th>Title</th>
+                <th>Published</th>
+                <th>Author</th>
+                <th>Date</th>
+            </tr>
+            <% for (var i = 0; i < dashboard.posts.length; i++) { %>
+                <tr>
+                    <td><%=  i %></td>
+                    <td><%=  dashboard.posts[i].title %></td>
+                    <td><%=  dashboard.posts[i].status %></td>
+                    <td><%=  dashboard.posts[i].publishedBy.user %></td>
+                    <td><%=  dashboard.posts[i].publishedBy.date %></td>
+                </tr>
+            <% }; %>
+          </table>
         </div>
         <!-- /.container-fluid -->
-
     </div>
     <!-- /#page-wrapper -->
-
-
+    
 <%- include("./partials/footer") %>
 

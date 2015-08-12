@@ -5,13 +5,31 @@
 	<%- include("./partials/sidebar") %>
         
 	
-    <div id="page-wrapper">
+    <div id="page-wrapper" style="height:100vh;">
 
-        <div class="container-fluid">
-            <%= JSON.stringify(dashboard.pages) %>
+        <div class="container-fluid">  
+            <%= JSON.stringify(dashboard.pages)  %>
+            <h1>Pages</h1>
+             <button type="button" class="btn btn-primary"><i class="fa fa-fw fa-plus"></i> Add new pages</button>
+            <br><br>
+
+            <!-- Table -->
+            <table class="table table-striped">
+            <tr>
+                <th>#</th>
+                <th>Title</th>
+                <th>Status</th>
+            </tr>
+            <% for (var i = 0; i < dashboard.pages.length; i++) { %>
+                <tr>
+                    <td><%=  i %></td>
+                    <td><%=  dashboard.pages[i].title %></td>
+                    <td><%=  dashboard.pages[i].status %></td>
+                </tr>
+            <% }; %>
+          </table>
         </div>
         <!-- /.container-fluid -->
-
     </div>
     <!-- /#page-wrapper -->
 
