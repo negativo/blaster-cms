@@ -43,6 +43,11 @@ module.exports = function(app,express,$ee){
 		next();
 		//res.render("panel");
 	});
+	app.use("/api",function(req,res,next){
+		app.set("views", __root + "/admin");
+		next();
+		//res.render("panel");
+	});
 
 	app.use(function(req,res,next){
 		//if blog is installed load global configs
