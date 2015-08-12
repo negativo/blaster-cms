@@ -10,6 +10,7 @@ var express = require("express"),
 		$ee = new EventEmitter(),
 	config  = require("./configs/config")(app,$ee),
 	routes = require("./routes/routes")(app,express),
+	dashboardRoutes = require("./routes/dashboard-routes")(app,express),
 	events = require("./configs/events")(app,$ee);
 
 
