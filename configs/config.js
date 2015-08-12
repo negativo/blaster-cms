@@ -24,7 +24,6 @@ module.exports = function(app,$ee,port){
 	global.base_url = "http://127.0.0.1:"+port;
 
 	app.set("views", __root + "/views/template");
-	app.set("partials", __root + "/views/template/partials");
 	app.set("view engine", "ejs");
 
 	require("./routines")(app,$ee);

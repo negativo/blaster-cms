@@ -1,6 +1,7 @@
 var express = require("express"),
 	app 	= express(),
 	$F = require("../configs/functions"),
+	fs = require("fs"),
 	Users = require("../models/user"),
 	Configs = require("../models/configs"),
 	Posts = require("../models/posts"),
@@ -61,9 +62,21 @@ var GET = {
 			res.render("edit-post", { backend: data, currentUser: currentUser });
 	},
 	editPageCtrl:function(req,res){
-			var data =  $F.dataParser(req.shared);
-			var currentUser = $F.dataParser(req.user);
-			res.render("edit-page", { backend: data, currentUser: currentUser });
+			// search for -page-template.ejs suffixed file to use them as template
+			// fs.readdir( __dirname + "/views/" + global.siteTemplate , function(err, files){
+			// 	var r = /\-page-template.[0-9a-z]+$/i;
+			// 	for (var i = 0; i < files.length; i++) {
+			// 		var x = files[i].match(r);
+			// 		console.log("server.js", x);
+			// 	};	
+			// });
+
+			Configs.findOne({},{ siteTemplate:1 }, function(err, templates){
+				if(templates === null) return;
+				var data =  $F.dataParser(req.shared,"templates",templates);
+				var currentUser = $F.dataParser(req.user);
+				res.render("edit-page", { backend: data, currentUser: currentUser });
+			});
 	}
 };
 

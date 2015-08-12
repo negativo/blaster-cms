@@ -15,7 +15,11 @@ var express = require("express"),
 	apiEndpoints = require("./routes/api-endpoints")(app,express);
 
 
+
+
+
 //FIRE IT UP
 app.listen(port, function(){
 	console.log("node on: " + port);
+
 });	

@@ -1,13 +1,26 @@
 <%- include("./partials/header") %>
 <%  dashboard = JSON.parse(backend); %>
 <%  user = JSON.parse(currentUser); %>
+<%  editor = "page"; %>
 
 <%- include("./partials/sidebar") %>
 	
 <div id="page-wrapper" style="height:100vh;">
 
+	<%= JSON.stringify(dashboard.templates) %>
+
+	<%= templates = dashboard.templates.templates; %>
+
     <div class="container-fluid">  
         <%- include("./partials/editor") %>
+
+        <h4>templates</h4>
+        <select name="templates" id="page-templates">
+        	<option value="page-template">page-template</option>
+<!-- 			<% for( t in templates) {%>
+	         	<option value="<%=  templates[t] %>"><%=  templates[t] %></option>
+			<% }; %> -->
+        </select>
     </div>
     <!-- /.container-fluid -->
 </div>

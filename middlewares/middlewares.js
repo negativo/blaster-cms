@@ -24,25 +24,21 @@ module.exports = function(app,express,$ee){
 	app.use(passport.initialize());
 	app.use(passport.session());
 
-
+	// Change view folder public frontend
+	// change configs template on mongo to change template if you have others
+	app.use("/*",function(req,res,next){
+		app.set("views", __root + "/views/template");
+		next();
+	});
+    
     //specific route check if user is logged to avoid curl req to the server
     app.use("/admin", function(req,res,next){
+		app.set("views", __root + "/admin");
     	if (req.url === "/login") return next();
 		if(req.session && req.user && req.isAuthenticated() ) return next();
 		res.redirect("/admin/login");
     });
 
-	// Change view folder public frontend
-	app.use("/*",function(req,res,next){
-		app.set("views", __root + "/views/template");
-		next();
-	});
-	// Change view folder for admin private backend
-	app.use("/admin",function(req,res,next){
-		app.set("views", __root + "/admin");
-		next();
-		//res.render("panel");
-	});
 
 
 	app.use(function(req,res,next){
@@ -56,6 +52,7 @@ module.exports = function(app,express,$ee){
 				}
 				if(file.length > 0) { 
 					Configs.findOne({},function(err,configs){
+						// global.siteTemplate = configs.siteTemplate;
 						if (err) deferred.reject({error:"Can't retrieve data from DB"});
 						if (configs) deferred.resolve(configs);
 					});
@@ -86,4 +83,6 @@ module.exports = function(app,express,$ee){
 		//check if user is logged
 		//	tobedone
 	});
+
+
 }

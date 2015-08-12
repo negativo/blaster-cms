@@ -21,12 +21,14 @@
                 <th>#</th>
                 <th>Title</th>
                 <th>Status</th>
+                <th>Preview</th>
             </tr>
             <% for (var i = 0; i < dashboard.pages.length; i++) { %>
                 <tr>
                     <td><%=  i %></td>
                     <td><%=  dashboard.pages[i].title %></td>
                     <td><%=  dashboard.pages[i].status %></td>
+                    <td><a href="/page/<%=  dashboard.pages[i].slug %>"><i class="fa fa-fw fa-eye"></i></a></td>
                 </tr>
             <% }; %>
           </table>
