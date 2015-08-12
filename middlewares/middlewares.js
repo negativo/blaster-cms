@@ -15,7 +15,7 @@ module.exports = function(app,express,$ee){
 
 	//set static content folder	
 	app.use( express.static(global.appRoot + "/public") );
-	app.use( express.static(global.appRoot + "/CMS_API") );
+	// app.use( express.static(global.appRoot + "/CMS_API") );
 	app.use("/pages", express.static(global.appRoot + "/public") );
 	app.use("/admin", express.static(global.appRoot + "/private") );
 	app.use(cookieParser());
@@ -26,9 +26,10 @@ module.exports = function(app,express,$ee){
 	app.use(passport.session());
     
     //specific route check if user is logged to avoid curl req to the server
-    app.use("/admin/panel", function(req,res,next){
+    app.use("/admin", function(req,res,next){
+    	if (req.url === "/login") return next();
 		if(req.user) return next();
-		res.status(401).send("Unauthorized");
+		res.redirect("/admin/login");
 		next();
     });
 
