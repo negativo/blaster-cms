@@ -20,6 +20,7 @@
     "express": "^4.13.2",
     "mongoose": "^4.1.0",
     "passport": "^0.2.2",
+    "passport-local": "^1.0.0",
     "path": "^0.11.14",
     "q": "^1.4.1"
   },
@@ -29,6 +30,8 @@
     "grunt-contrib-cssmin": "^0.13.0",
     "grunt-contrib-less": "^1.0.1",
     "grunt-contrib-watch": "^0.6.1",
-    "morgan": "^1.6.1"
+    "morgan": "^1.6.1",
+    "request": "^2.60.0",
+    "winston": "^1.0.1"
   }
 }
