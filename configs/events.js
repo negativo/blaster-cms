@@ -24,7 +24,11 @@ module.exports = function(app,$ee){
 	// configuration file change event
 	$ee.on("config_file_changed",function(message){
 		console.log("events.js", message);
-	})
+	});
+
+	$ee.on("login_event",function(message){
+		console.log("events.js", message);
+	});
 
 
 }

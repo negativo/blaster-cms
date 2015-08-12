@@ -8,8 +8,6 @@ var path = require("path");
 	cookieParser = require("cookie-parser"),
 	session = require("express-session"),
 	passport = require("passport");
-	//get strategies
-	require("../lib/login-strategy")(passport);
 
 module.exports = function(app,express,$ee){
 
@@ -21,6 +19,7 @@ module.exports = function(app,express,$ee){
 	app.use(cookieParser());
 	app.use(bodyParser());
 	//logins
+	require("../lib/login-strategy")(passport,$ee);
 	app.use(session({ secret: 'WeGonnaConqueryTheFuckinWorldISwearIt' }));
 	app.use(passport.initialize());
 	app.use(passport.session());
@@ -28,9 +27,8 @@ module.exports = function(app,express,$ee){
     //specific route check if user is logged to avoid curl req to the server
     app.use("/admin", function(req,res,next){
     	if (req.url === "/login") return next();
-		if(req.user) return next();
+		if(req.session && req.user) return next();
 		res.redirect("/admin/login");
-		next();
     });
 
 	// Change view folder public frontend

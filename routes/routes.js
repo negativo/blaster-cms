@@ -23,7 +23,7 @@ module.exports = function(app,express){
 		res.render("login");
 	});
 	app.post("/admin/login", passport.authenticate('local'), function(req,res){
-		console.log("routes.js", req.user);
+		console.log("routes.js", req.session);
 		res.json({ err:undefined });
 	});
 	
