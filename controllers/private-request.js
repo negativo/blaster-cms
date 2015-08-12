@@ -4,7 +4,8 @@ var express = require("express"),
 	User = require("../models/user"),
 	Configs = require("../models/configs"),
 	Post = require("../models/posts"),
-	Page = require("../models/pages");
+	Page = require("../models/pages"),
+	http = require("request");
 
 	
 //Controllers
@@ -18,9 +19,7 @@ var GET = {
 		res.render("panel", { backend: data, currentUser: currentUser });
 	},
 	postsCtrl:function(req,res){
-		var data =  $F.dataParser(req.shared);
-		var currentUser = $F.dataParser(req.user);
-		res.render("panel", { backend: data, currentUser: currentUser });
+		console.log("private-request.js", "got req ");
 	}
 };
 
@@ -31,8 +30,6 @@ var POST = {
 	}
 };
 
-//REMOVE RANDOM GENERATED PAGE
-//AND POSTS AFTER TESTING END
 
 
 exports.GET = GET;

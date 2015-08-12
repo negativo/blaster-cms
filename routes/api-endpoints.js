@@ -12,7 +12,7 @@ module.exports = function(app,express){
 	app.get("/get/configs", function(req,res,next){
 		if(req.isAuthenticated()) next();
 			else res.status(401).send("Unauthorized")
-	},GET.configsCtrl );
+	}, GET.configsCtrl );
 
 }
 

@@ -9,7 +9,6 @@ var express = require("express"),
 	
 //Controllers
 var GET = {
-
 	allPostsCtrl:function(req,res){
 		Post.find({}, function(err, posts){
 			if(posts !== null) return res.status(200).send(posts);
