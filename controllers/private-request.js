@@ -1,11 +1,10 @@
 var express = require("express"),
 	app 	= express(),
 	$F = require("../configs/functions"),
-	User = require("../models/user"),
+	Users = require("../models/user"),
 	Configs = require("../models/configs"),
-	Post = require("../models/posts"),
-	Page = require("../models/pages"),
-	http = require("request");
+	Posts = require("../models/posts"),
+	Pages = require("../models/pages");
 
 var base_url = global.base_url;
 	
@@ -20,16 +19,40 @@ var GET = {
 		res.render("panel", { backend: data, currentUser: currentUser });
 	},
 	postsPageCtrl:function(req,res){
-		res.send("ToBeDone");
+		Posts.find({}, function(err, posts){
+			if(posts !== null && req.isAuthenticated() ) {
+				var data =  $F.dataParser(req.shared,"posts",posts);
+				var currentUser = $F.dataParser(req.user);
+				res.render("posts", { backend: data, currentUser: currentUser });
+			}
+		});
 	},
 	pagesPageCtrl:function(req,res){
-		res.send("ToBeDone");
+		Pages.find({}, function(err, pages){
+			if(pages !== null && req.isAuthenticated() ) {
+				var data =  $F.dataParser(req.shared,"pages",pages);
+				var currentUser = $F.dataParser(req.user);
+				res.render("pages", { backend: data, currentUser: currentUser });
+			}
+		});
 	},
 	usersPageCtrl:function(req,res){
-		res.send("ToBeDone");
+		Users.findOne({}, function(err, users){
+			if(users !== null && req.isAuthenticated() ) {
+				var data =  $F.dataParser(req.shared,"users",users);
+				var currentUser = $F.dataParser(req.user);
+				res.render("users", { backend: data, currentUser: currentUser });
+			}
+		});
 	},
 	configurationsPageCtrl:function(req,res){
-		res.send("ToBeDone");
+		Configs.findOne({}, function(err, configs){
+			if(configs !== null && req.isAuthenticated() ) {
+				var data =  $F.dataParser(req.shared,"configs",configs);
+				var currentUser = $F.dataParser(req.user);
+				res.render("configs", { backend: data, currentUser: currentUser });
+			}
+		});
 	}
 };
 
