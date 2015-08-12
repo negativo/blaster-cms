@@ -24,7 +24,13 @@ module.exports = function(app,express,$ee){
 	app.use(session({ secret: 'WeGonnaConqueryTheFuckinWorldISwearIt' }));
 	app.use(passport.initialize());
 	app.use(passport.session());
-
+    
+    //specific route check if user is logged to avoid curl req to the server
+    app.use("/admin/panel", function(req,res,next){
+		if(req.user) return next();
+		res.status(401).send("Unauthorized");
+		next();
+    });
 
 	// Change view folder public frontend
 	app.use("/*",function(req,res,next){
