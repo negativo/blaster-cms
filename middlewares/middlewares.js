@@ -9,6 +9,7 @@ var Configs = require("../models/configs");
 module.exports = function(app,express,$ee){
 	//set static content folder	
 	app.use( express.static(global.appRoot + "/public") );
+	app.use( express.static(global.appRoot + "/CMS_API") );
 	app.use("/pages", express.static(global.appRoot + "/public") );
 	app.use("/admin", express.static(global.appRoot + "/private") );
 	//global checks
@@ -52,7 +53,6 @@ module.exports = function(app,express,$ee){
 			delete req.shared.db_link;
 			delete req.shared.__v;
 			delete req.shared._id;
-			//console.log("middlewares.js PROMISE", data);
 			next();
 		})
 		.fail(function(data){

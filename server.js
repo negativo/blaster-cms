@@ -10,7 +10,8 @@ var express = require("express"),
 		$ee = new EventEmitter(),
 	config  = require("./configs/config")(app,$ee),
 	routes = require("./routes/routes")(app,express),
-	events = require("./configs/events")(app,$ee);
+	events = require("./configs/events")(app,$ee),
+	API = require("./utils/api");
 
 
 
