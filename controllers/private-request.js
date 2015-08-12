@@ -22,19 +22,34 @@ var GET = {
 	postsPageCtrl:function(req,res){
 		console.log("private-request.js", "GOT REQUEST FOR POSTS >>> CALLING API");
 		http( base_url + "/get/posts", function (error, response, body) {
-			console.log("private-request.js", error);
-			console.log("private-request.js", response);
-			console.log("private-request.js", body);
+			if (!error && response.statusCode == 200) {
+				res.send(body);
+			}
 		});
 	},
 	pagesPageCtrl:function(req,res){
-		res.send("ToBeDone");
+		console.log("private-request.js", "GOT REQUEST FOR PAGES >>> CALLING API");
+		http( base_url + "/get/pages", function (error, response, body) {
+			if (!error && response.statusCode == 200) {
+				res.send(body);
+			}
+		});
 	},
 	usersPageCtrl:function(req,res){
-		res.send("ToBeDone");
+		console.log("private-request.js", "GOT REQUEST FOR USERS >>> CALLING API");
+		http( base_url + "/get/users", function (error, response, body) {
+			if (!error && response.statusCode == 200) {
+				res.send(body);
+			}
+		});
 	},
 	configurationsPageCtrl:function(req,res){
-		res.send("ToBeDone");
+		console.log("private-request.js", "GOT REQUEST FOR CONFIGURATIONS >>> CALLING API");
+		http( base_url + "/get/configurations", function (error, response, body) {
+			if (!error && response.statusCode == 200) {
+				res.send(body);
+			}
+		});
 	}
 };
 

@@ -22,6 +22,12 @@ var GET = {
 			res.status(404).send("No pages found");
 		});
 	},
+	usersCtrl:function(req,res){
+		User.find({}, function(err, user){
+			if(user !== null) return res.status(200).send(user);
+			res.status(404).send("No user found");
+		});
+	},
 	configsCtrl:function(req,res){
 		Configs.find({}, function(err, configs){
 			if(configs !== null) return res.status(200).send(configs);
