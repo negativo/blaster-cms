@@ -6,12 +6,13 @@ var express = require("express"),
 	Post = require("../models/posts"),
 	Page = require("../models/pages");
 
+	
 //Controllers
 var GET = {
 	homeCtrl: function(req,res){
 		Post.find({},function(err,posts){
 			var data =  $F.dataParser(req.shared,"posts",posts);
-			res.render("home", { viewData: data })
+			res.render(req.templates["home-template"], { viewData: data })
 		});
 	},
 	pageCtrl:function (req, res) {
@@ -20,7 +21,7 @@ var GET = {
 			//console.log("requests.js", page,err);
 			if(page === null) res.redirect("/404")
 			var data =  $F.dataParser(req.shared,"page",page);
-			res.render("page-template", { viewData: data } );
+			res.render(req.templates["page-template"], { viewData: data } );
 
 		});
 	},
@@ -30,7 +31,7 @@ var GET = {
 			//console.log("requests.js", page,err);
 			if(post === null) res.redirect("/404")
 			var data =  $F.dataParser(req.shared,"post",post);
-			res.render("post-template", { viewData: data } );
+			res.render(req.templates["post-template"], { viewData: data } );
 		});
 	}
 };

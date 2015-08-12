@@ -13,7 +13,12 @@ var that = module.exports = {
 	shared: {
 		db_link:"",
 		admin:"",
-		title:""
+		title:"",
+		templates:{
+					"home-template":"home-template",
+					"page-template":"page-template",
+					"post-template":"post-template"
+		}
 	},
 	connectDatabase:function(URI,$ee){ 
 		var options = { replset:{ socketOptions:{} }, server:{ socketOptions:{} } };

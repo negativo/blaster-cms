@@ -18,7 +18,7 @@ module.exports = function(app,express){
 		// res.render("panel");
 	})
 	
-	app.get("/pages/:page", GET.pageCtrl );
+	app.get("/:page", GET.pageCtrl );
 	app.get("/post/:title", GET.postCtrl );
 	app.get("/", GET.homeCtrl );
 

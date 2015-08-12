@@ -30,7 +30,7 @@ module.exports = function(app,express,$ee){
 		//if blog is installed load global configs
 		var getData = function(){
 			var deferred = Q.defer();
-			fs.readFile(__root+"/bin/config.json","utf-8",function(err,file){
+			fs.readFile(__root + "/bin/config.json","utf-8",function(err,file){
 				if (req.method === "POST") { next(); };
 				if(req.method === 'GET' && file.length <= 0) { 
 					res.render("../install", {title:"CMS Installation"}); 
@@ -49,10 +49,14 @@ module.exports = function(app,express,$ee){
 		getData()
 		.then(function(data){
 			var supp = JSON.stringify(data);
+			//contain posts and pages and website info
 			req.shared = JSON.parse(supp);
+			//contain templates choice
+			req.templates = req.shared.templates;
 			delete req.shared.db_link;
 			delete req.shared.__v;
 			delete req.shared._id;
+			//set template config object
 			next();
 		})
 		.fail(function(data){
