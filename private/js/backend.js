@@ -2,47 +2,67 @@
 	var backend = {
 		init:function(){
 			backend.ui.init();
-			backend.plugins.init();
-			backend.events.init();
+			backend.request.init();
 		},
 		ui:{
 			init:function(){}
 		},
 		plugins:{
-			init:function(){
-				backend.plugins.editor();
-			},
+			// pass init function as $.fn so we can call wherever we want it.
 			editor:function(){
 				CKEDITOR.replace( 'editor1' );
-				// new SirTrevor.Editor({ 
-				// 	el: $('.js-st-instance'),  
-				// 	blockTypes: ["Text", "Image"] ,
-				// });
-				
 			}
 		},
-		events:{
+		request:{
 			init:function(){
-				backend.events.savePost();
+				backend.request.editorGetData();
+				backend.request.login();
 			},
-			savePost:function(){
-				$(".post-editor").submit(function(e){
+			login:function(){
+				$(".login-form").submit(function(e){
+					e.preventDefault();
+					var data = {
+						username: $("#username").val().trim(),
+						password: $("#password").val().trim()
+					};
+					$.post("/admin/login", data, function(err, res){
+						console.log("backend.js", res);
+						if( res.err ) console.log("backend.js", res.err);
+						if( !res.err ) window.location.replace("/admin/panel");
+					});
+				});
+			},
+			editorGetData:function(){
+				$(".editor").submit(function(e){
 					e.preventDefault();	
-					// var x = SirTrevor.getInstance(0).store.retrieve();
-					var title = $(".post-title").val();
-					var body = CKEDITOR.instances.editor1.getData().trim();
-					body = body.replace(/^\s*\n/gm, "") ;
+					var contentType = $(".editor").attr("id");
+					var title = $(".editor-title").val();
+					var body = CKEDITOR.instances.editor1.getData();
 					var data = {
 						title: title,
 						body: body
 					}
-					$.post("/create/post", data,function(res,status){
-						console.log(res);
-					});
-					console.log("footer.ejs", body);
+					console.log("backend.js", contentType);
+					if(contentType === "editor-post"){
+						$.post("/create/post", data,function(res,status){
+							console.log(res);
+						});
+					} 
+					if(contentType === "editor-page"){
+						$.post("/create/page", data,function(res,status){
+							console.log(res);
+						});
+					} 
+					
+
 				});
 			}
 		}
 	}
 	backend.init();
+
+	//global jquery methods
+	$.fn.initEditor = function(){
+		return backend.plugins.editor();
+	};
 })(jQuery)

@@ -2,11 +2,10 @@ var express = require("express");
 var path = require("path");
 var	dotenv  = require("dotenv").load(); 
 var fs 		= require("fs");
-var crypto  = require("../library/crypto");
-var $F = require("../configs/functions"),
-	$S = $F.shared;
+var crypto  = require("../lib/crypto");
+var $F = require("../configs/functions");
 
-module.exports = function(app,$ee){
+module.exports = function(app,$ee,port){
 	//DEBUG
 	////disable console.log()
 	if (process.env.DEBUG_MODE_ON==="false") {
@@ -19,11 +18,12 @@ module.exports = function(app,$ee){
 
 	app.set("mongo_db",false);
 
+
 	//set app route global
 	__root = global.appRoot = path.resolve(__dirname,"../");
+	global.base_url = "http://127.0.0.1:"+port;
 
 	app.set("views", __root + "/views/template");
-	app.set("partials", __root + "/views/template/partials");
 	app.set("view engine", "ejs");
 
 	require("./routines")(app,$ee);

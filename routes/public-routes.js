@@ -1,7 +1,7 @@
 var $F = require("../configs/functions");
-	$S = $F.shared;
+var passport = require("passport");
 
-var ruotesControllers = require("../controllers/requests"),
+var ruotesControllers = require("../controllers/public-request"),
 	POST = ruotesControllers.POST,
 	GET = ruotesControllers.GET;
 
@@ -12,14 +12,12 @@ module.exports = function(app,express){
 	app.get("/404",function(req,res){
 		res.send("404");
 	});
-
-	app.get("/admin/panel",function(req,res){
-		// console.log("routes.js", "ADMIN PANEL");
-		// res.render("panel");
-	})
 	
-	app.get("/pages/:page", GET.pageCtrl );
-	app.get("/post/:title", GET.postCtrl );
+	
+	app.get("/page/:page", GET.singlePageCtrl );
+	app.get("/post/:title", GET.singlePostCtrl );
+	app.get("/get/posts", GET.allPostsCtrl );
+	app.get("/get/pages", GET.allPagesCtrl );
 	app.get("/", GET.homeCtrl );
 
 

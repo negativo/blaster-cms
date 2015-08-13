@@ -6,14 +6,20 @@ var mongoose = require("mongoose");
 	Post = require("../models/posts"),
 	Page = require("../models/pages"),	
 	__root = global.appRoot,
-	crypto = require("../library/crypto");
+	crypto = require("../lib/crypto");
 
 
 var that = module.exports = {
 	shared: {
 		db_link:"",
 		admin:"",
-		title:""
+		title:"",
+		siteTemplate:"template",
+		templates:{
+					"home-template":"home-template",
+					"page-template":"page-template",
+					"post-template":"post-template"
+		}
 	},
 	connectDatabase:function(URI,$ee){ 
 		var options = { replset:{ socketOptions:{} }, server:{ socketOptions:{} } };
@@ -111,9 +117,14 @@ var that = module.exports = {
 		//	Pass original object from req.shared then 
 		//	pass a string with the name of the property you want to add
 		//	and then the data you want to add to the new property.
-		var json = JSON.stringify(original);
-		var cloned = JSON.parse(json);
-		cloned[name] = add;
-		return JSON.stringify(cloned);
+		//  var json = JSON.stringify(original);
+		//  var cloned = JSON.parse(json);
+		//  cloned[name] = add;
+		//  return JSON.stringify(cloned);
+		//  console.log("functions.js", Object.isExtensible(original));
+		if( name && add ) original[name] = add;
+		return JSON.stringify(original);
+
+		
 	}
 }

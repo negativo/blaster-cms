@@ -1,38 +1,50 @@
 var express = require("express"),
 	app 	= express(),
+	toSlug = require('to-slug-case'),
 	$F = require("../configs/functions"),
 	User = require("../models/user"),
 	Configs = require("../models/configs"),
 	Post = require("../models/posts"),
 	Page = require("../models/pages");
 
-
-
+	
 //Controllers
 var GET = {
 	homeCtrl: function(req,res){
 		Post.find({},function(err,posts){
 			var data =  $F.dataParser(req.shared,"posts",posts);
-			res.render("home", { viewData: data })
+			res.render(req.templates["home-template"], { viewData: data })
 		});
 	},
-	pageCtrl:function (req, res) {
+	singlePageCtrl:function (req, res) {
 		var slug = req.params.page.toString();	
 		Page.findOne({ "slug": slug },function(err,page){
 			//console.log("requests.js", page,err);
 			if(page === null) res.redirect("/404")
 			var data =  $F.dataParser(req.shared,"page",page);
-			res.render("page-template", { viewData: data } );
+			res.render(req.templates["page-template"], { viewData: data } );
 
 		});
 	},
-	postCtrl:function (req, res) {
+	singlePostCtrl:function (req, res) {
 		var title = req.params.title;
 		Post.findOne({ "title": title },function(err,post){
 			//console.log("requests.js", page,err);
 			if(post === null) res.redirect("/404")
 			var data =  $F.dataParser(req.shared,"post",post);
-			res.render("post-template", { viewData: data } );
+			res.render(req.templates["post-template"], { viewData: data } );
+		});
+	},
+	allPostsCtrl:function(req,res){
+		Post.find({}, function(err, posts){
+			if(posts !== null) return res.status(200).send(posts);
+			res.status(404).send("No posts found");
+		});
+	},
+	allPagesCtrl:function(req,res){
+		Page.find({}, function(err, pages){
+			if(pages !== null) return res.status(200).send(pages);
+			res.status(404).send("No pages found");
 		});
 	}
 };
@@ -68,8 +80,7 @@ var POST = {
 	},//install methods
 	create:{
 		post:function(req,res){
-			console.log("routes.js", "create_page request");
-			//var r = Math.floor((Math.random() * 10) + 1);
+			console.log("routes.js", "/create/post request");
 			console.log("POST DATA: ", req.body);
 			var post = req.body;
 			new Post({
@@ -85,11 +96,12 @@ var POST = {
 		page:function(req,res){
 			console.log("routes.js", "create_page request");
 			var r = Math.floor((Math.random() * 10) + 1);
+			var page = req.body;
 			new Page({
-				slug:"sample-page"+r,
+				slug:toSlug(page.title),
 				template:"page-template",
-				title:"Sample",
-				content:"Hi I'm page "+r+ " :)",
+				title: page.title,
+				content: page.body,
 				publishedBy:{
 					date:Date.now()
 				},
