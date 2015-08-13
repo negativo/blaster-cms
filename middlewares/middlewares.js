@@ -14,7 +14,7 @@ module.exports = function(app,express,$ee){
 	//set static content folder	
 	app.use( express.static(global.appRoot + "/public") );
 	// app.use( express.static(global.appRoot + "/CMS_API") );
-	app.use("/pages", express.static(global.appRoot + "/public") );
+	//app.use("/pages", express.static(global.appRoot + "/public") );
 	app.use("/admin", express.static(global.appRoot + "/private") );
 	app.use(cookieParser());
 	app.use(bodyParser());
@@ -76,13 +76,11 @@ module.exports = function(app,express,$ee){
 		// change configs template on mongo to change template if you have others
 		// SE SCAPOCCIANO RIMETTILI PRIMA DEL CHECK AL DB TUTTI E TRE
 		app.use("/*",function(req,res,next){
+			app.use( express.static(__root + "/views/" + global.theme) );
 			app.set("views", __root + "/views/" + global.theme );
 			next();
 		});
-		app.use("/page",function(req,res,next){
-			app.set("views", __root + "/views/template");
-			next();
-		});
+
 
 	    //specific route check if user is logged to avoid curl req to the server
 	    app.use("/admin", function(req,res,next){
