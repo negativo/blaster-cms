@@ -8,13 +8,18 @@ var express = require("express"),
 	port 	= 9001,
 	EventEmitter = require("events").EventEmitter,
 		$ee = new EventEmitter(),
-	config  = require("./configs/config")(app,$ee),
-	routes = require("./routes/routes")(app,express),
-	events = require("./configs/events")(app,$ee);
+	events = require("./configs/events")(app,$ee),
+	config  = require("./configs/config")(app,$ee,port),
+	publicRoutes = require("./routes/public-routes")(app,express),
+	privateRoutes = require("./routes/private-routes")(app,express),
+	apiEndpoints = require("./routes/api-endpoints")(app,express);
+
+
 
 
 
 //FIRE IT UP
 app.listen(port, function(){
 	console.log("node on: " + port);
+
 });	

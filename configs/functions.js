@@ -6,7 +6,7 @@ var mongoose = require("mongoose");
 	Post = require("../models/posts"),
 	Page = require("../models/pages"),	
 	__root = global.appRoot,
-	crypto = require("../library/crypto");
+	crypto = require("../lib/crypto");
 
 
 var that = module.exports = {
@@ -14,6 +14,7 @@ var that = module.exports = {
 		db_link:"",
 		admin:"",
 		title:"",
+		siteTemplate:"template",
 		templates:{
 					"home-template":"home-template",
 					"page-template":"page-template",
@@ -121,7 +122,7 @@ var that = module.exports = {
 		//  cloned[name] = add;
 		//  return JSON.stringify(cloned);
 		//  console.log("functions.js", Object.isExtensible(original));
-		original[name] = add;
+		if( name && add ) original[name] = add;
 		return JSON.stringify(original);
 
 		
