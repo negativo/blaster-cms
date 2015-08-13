@@ -24,9 +24,6 @@ module.exports = function(app,express,$ee){
 	app.use(passport.initialize());
 	app.use(passport.session());
 
-
-
-
 	app.use( express.static(__root + "/views/installer/assets") );
 	app.use(function(req,res,next){
 		//if blog is installed load global configs
