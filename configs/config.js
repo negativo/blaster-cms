@@ -30,7 +30,7 @@ module.exports = function(app,$ee,port){
 
 	require("./routines")(app,$ee);
 
-	//GLOBAL DB CONNECTION&REFRESH
+	// *Get Configs on server start if cms is installed
 	fs.readFile(__root+"/bin/config.json","utf-8",function(err,file){
 		if(file.length > 0) { 
 			var configs = JSON.parse(file);			

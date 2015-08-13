@@ -1,25 +1,19 @@
 <%- include("partials/header") %>
 
+<header class="small-8 small-offset-2 home">
+	<h1>js.DEN</h1><span class="subtitle">(yetAnotherDevelopersBlog)</span>
+	<nav>
+		<a href="#">About</a>
+		<a href="#">Node</a>
+		<a href="#">Angular</a>
+		<a href="#">Javascript</a>
+		<a href="#">Snippets</a>
+	</nav>
+</header>
 
-<h1><%= shared.title %> </h1>
-<p>new location</p>
-<button class="post">generate POST</button>
-<button class="page">generate PAGE</button>
-
-
-<div class="small-10 small-offset-1 container">
-	
-<!-- POST LOOP -->
-<% for (var i = 0; i < shared.posts.length; i++) { %>
-<div class="small-3 columns post-container" style="overflow:hidden;">
-	<a href="/post/<%=  shared.posts[i].title %>"><h4><%=  shared.posts[i].title %></h4></a>
-	<p><%-  shared.posts[i].body %></p>
-	<small><%=  new Date(shared.posts[i].publishedBy.date) %></small>
-	<small><%=  shared.posts[i].publishedBy.user %></small>
-</div>
-<% }; %>
-
-
+<!-- POST SECTION -->
+<div class="small-8 small-offset-2 content">
+	<%- include("partials/post-loop") %>
 </div>
 
 <%- include("partials/footer") %>

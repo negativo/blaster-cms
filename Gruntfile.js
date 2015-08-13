@@ -4,26 +4,26 @@ module.exports = function(grunt) {
      less: {
          development: {
              options: {
-                 paths: ["public/css"]
+                 paths: ['views/template/css']
              },
              files: [{
 					expand: true,
-					cwd: 'public/less',
+					cwd: 'views/template/less',
 					src: ['*.less'],
-					dest: 'public/css',
+					dest: 'views/template/css',
 					ext: '.css'
 			}]
          },
          production: {
              options: {
-                 paths: ["public/css"],
+                 paths: ['views/template/css'],
                  cleancss: true
              },
              files: [{
 					expand: true,
-					cwd: 'public/less',
+					cwd: 'views/template/less',
 					src: ['*.less'],
-					dest: 'public/css',
+					dest: 'views/template/css',
 					ext: '.css'
 			}]
          }
@@ -33,9 +33,9 @@ module.exports = function(grunt) {
 	  target: {
 	    files: [{
 	      expand: true,
-	      cwd: 'public/css',
+	      cwd: 'views/template/css',
 	      src: ['*.css', '!*.min.css'],
-	      dest: 'public/css',
+	      dest: 'views/template/css',
 	      ext: '.min.css'
 	    }]
 	  }
@@ -43,7 +43,7 @@ module.exports = function(grunt) {
 	
 	watch:{
 		script:{
-			files:["public/less/*.less"],
+			files:['views/template/less/*.less'],
 			tasks:["less","cssmin"],
 			options:{
 				spawn:false,
