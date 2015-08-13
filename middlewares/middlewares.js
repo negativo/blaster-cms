@@ -27,6 +27,7 @@ module.exports = function(app,express,$ee){
 
 
 
+	app.use( express.static(__root + "/views/installer/assets") );
 	app.use(function(req,res,next){
 		//if blog is installed load global configs
 		var getData = function(){
@@ -34,7 +35,8 @@ module.exports = function(app,express,$ee){
 			fs.readFile(__root + "/bin/config.json","utf-8",function(err,file){
 				if (req.method === "POST") { next(); };
 				if(req.method === 'GET' && file.length <= 0) { 
-					res.render("../install", {title:"CMS Installation"}); 
+					app.set("views", __root + "/views/installer" );
+					res.render("install"); 
 				}
 				if(file.length > 0) { 
 					Configs.findOne({},function(err,configs){
