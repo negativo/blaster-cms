@@ -22,8 +22,9 @@ module.exports = function(app,$ee,port){
 	//set app route global
 	__root = global.appRoot = path.resolve(__dirname,"../");
 	global.base_url = "http://127.0.0.1:"+port;
+	global.theme = "template"
 
-	app.set("views", __root + "/views/template");
+	app.set("views", __root + "/views/" + global.theme);
 	app.set("view engine", "ejs");
 
 	require("./routines")(app,$ee);

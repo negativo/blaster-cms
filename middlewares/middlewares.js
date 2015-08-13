@@ -24,24 +24,6 @@ module.exports = function(app,express,$ee){
 	app.use(passport.initialize());
 	app.use(passport.session());
 
-	// Change view folder public frontend
-	// change configs template on mongo to change template if you have others
-	app.use("/*",function(req,res,next){
-		app.set("views", __root + "/views/template");
-		next();
-	});
-	app.use("/page",function(req,res,next){
-		app.set("views", __root + "/views/template");
-		next();
-	});
-
-    //specific route check if user is logged to avoid curl req to the server
-    app.use("/admin", function(req,res,next){
-		app.set("views", __root + "/admin");
-    	if (req.url === "/login") return next();
-		if(req.session && req.user && req.isAuthenticated() ) return next();
-		res.redirect("/admin/login");
-    });
 
 
 
@@ -56,7 +38,9 @@ module.exports = function(app,express,$ee){
 				}
 				if(file.length > 0) { 
 					Configs.findOne({},function(err,configs){
-						// global.siteTemplate = configs.siteTemplate;
+						var $c = JSON.stringify(configs);
+							$c = JSON.parse($c);
+						global.theme = $c.theme;
 						if (err) deferred.reject({error:"Can't retrieve data from DB"});
 						if (configs) deferred.resolve(configs);
 					});
@@ -88,5 +72,24 @@ module.exports = function(app,express,$ee){
 		//	tobedone
 	});
 
+		// Change view folder public frontend
+		// change configs template on mongo to change template if you have others
+		// SE SCAPOCCIANO RIMETTILI PRIMA DEL CHECK AL DB TUTTI E TRE
+		app.use("/*",function(req,res,next){
+			app.set("views", __root + "/views/" + global.theme );
+			next();
+		});
+		app.use("/page",function(req,res,next){
+			app.set("views", __root + "/views/template");
+			next();
+		});
+
+	    //specific route check if user is logged to avoid curl req to the server
+	    app.use("/admin", function(req,res,next){
+			app.set("views", __root + "/admin");
+	    	if (req.url === "/login") return next();
+			if(req.session && req.user && req.isAuthenticated() ) return next();
+			res.redirect("/admin/login");
+	    });
 
 }
