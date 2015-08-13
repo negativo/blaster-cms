@@ -30,7 +30,11 @@ module.exports = function(app,express,$ee){
 		app.set("views", __root + "/views/template");
 		next();
 	});
-    
+	app.use("/page",function(req,res,next){
+		app.set("views", __root + "/views/template");
+		next();
+	});
+
     //specific route check if user is logged to avoid curl req to the server
     app.use("/admin", function(req,res,next){
 		app.set("views", __root + "/admin");
