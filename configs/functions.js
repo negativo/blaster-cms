@@ -36,7 +36,7 @@ var that = module.exports = {
 			mongoose.connect(mongo.link,function(err){
 				//RESOLVE PROMISE
 				if (err) deferred.reject({ err: err, status: 400 });
-				if(!err) {
+				if (!err) {
 					deferred.resolve({ err: null, status: 200 });
 					//if connection is right save link to reuse later
 					that.shared.db_link = mongo.link;
@@ -61,7 +61,7 @@ var that = module.exports = {
 			new Configs(that.shared)
 					.save(function(err){
 						console.log("functions.js blog data saving: ", err);
-						fs.writeFileSync(__root + "/bin/config.json", JSON.stringify(that.shared) );
+						fs.writeFileSync(__root + "/bin/config.json", JSON.stringify({ db_link: that.shared.db_link }) );
 						deferred.resolve({message:"User&Blog Created", error:err});
 					})
 		};
