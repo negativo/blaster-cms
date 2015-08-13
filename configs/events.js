@@ -12,7 +12,9 @@ module.exports = function(app,$ee){
 		console.log("events.js", "Mongo DISCONNECTED!");
 		app.set("mongo_db",false);
 	});
-	$ee.on("configs_updated",function(configs){
+	$ee.on("configs_updated",function(configs, message){
+		global.theme = configs.theme;
+		console.log("events.js", message, configs );
 	});
 
 	// configuration object updated

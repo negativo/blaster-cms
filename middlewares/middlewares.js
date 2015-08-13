@@ -13,9 +13,9 @@ module.exports = function(app,express,$ee){
 
 	//set static content folder	
 	app.use( express.static(global.appRoot + "/public") );
-	// app.use( express.static(global.appRoot + "/CMS_API") );
-	//app.use("/pages", express.static(global.appRoot + "/public") );
+	app.use( express.static(__root + "/views/installer/assets") );
 	app.use("/admin", express.static(global.appRoot + "/private") );
+	//parsers
 	app.use(cookieParser());
 	app.use(bodyParser());
 	//logins
@@ -24,7 +24,6 @@ module.exports = function(app,express,$ee){
 	app.use(passport.initialize());
 	app.use(passport.session());
 
-	app.use( express.static(__root + "/views/installer/assets") );
 	app.use(function(req,res,next){
 		//if blog is installed load global configs
 		var getData = function(){
@@ -34,41 +33,36 @@ module.exports = function(app,express,$ee){
 				if(req.method === 'GET' && file.length <= 0) { 
 					app.set("views", __root + "/views/installer" );
 					res.render("install"); 
-				}
+				};
 				if(file.length > 0) { 
 					Configs.findOne({},function(err,configs){
-						var $c = JSON.stringify(configs);
-							$c = JSON.parse($c);
-						global.theme = $c.theme;
+						var cfg = JSON.stringify(configs);
+							cfg = JSON.parse(cfg);
+						global.theme = cfg.theme;
+						$ee.emit("configs_updated", cfg, "Configuration has been reloaded");
 						if (err) deferred.reject({error:"Can't retrieve data from DB"});
 						if (configs) deferred.resolve(configs);
 					});
 				}
-				//if it's not installed install it.
 			});
 			return deferred.promise;			
 		}
-		//retrieve data
+		//Get Promise and store data in req objects for easy accessibility
 		getData()
 		.then(function(data){
 			var supp = JSON.stringify(data);
-			//contain posts and pages and website info
 			req.shared = JSON.parse(supp);
-			//contain templates choice
 			req.templates = req.shared.templates;
+			req.theme = req.shared.theme;
 			delete req.shared.db_link;
 			delete req.shared.__v;
 			delete req.shared._id;
-			//set template config object
 			next();
 		})
 		.fail(function(data){
 			console.log("middlewares.js REJECT", data);
-			//req.shared.error = err;
 			next();
 		});
-		//check if user is logged
-		//	tobedone
 	});
 
 		// Change view folder public frontend
