@@ -25,44 +25,27 @@ module.exports = function(app,express,$ee){
 	app.use(passport.session());
 
 	app.use(function(req,res,next){
-		//if blog is installed load global configs
-		var getData = function(){
-			var deferred = Q.defer();
-			fs.readFile(__root + "/bin/config.json","utf-8",function(err,file){
-				if (req.method === "POST") { next(); };
-				if(req.method === 'GET' && file.length <= 0) { 
-					app.set("views", __root + "/views/installer" );
-					res.render("install"); 
-				};
-				if(file.length > 0) { 
-					Configs.findOne({},function(err,configs){
-						var cfg = JSON.stringify(configs);
-							cfg = JSON.parse(cfg);
-						global.theme = cfg.theme;
-						$ee.emit("configs_updated", cfg, "Configuration has been reloaded");
-						if (err) deferred.reject({error:"Can't retrieve data from DB"});
-						if (configs) deferred.resolve(configs);
-					});
-				}
+		console.log("middlewares.js >>> IS MONGO OK?", app.get("is_installed"));
+		if(req.method === 'GET' && app.get("is_installed") ) { 
+			Configs.findOne({},function(err,configs){
+				var cfg = JSON.stringify(configs);
+					cfg = JSON.parse(cfg);
+				global.theme = cfg.theme;
+				req.shared = cfg;
+				req.templates = cfg.templates;
+				req.theme = cfg.theme;
+				delete req.shared.db_link;
+				delete req.shared.__v;
+				delete req.shared._id;
+				$ee.emit("configs_updated", cfg, "Configuration has been reloaded");
+				next();			
 			});
-			return deferred.promise;			
 		}
-		//Get Promise and store data in req objects for easy accessibility
-		getData()
-		.then(function(data){
-			var supp = JSON.stringify(data);
-			req.shared = JSON.parse(supp);
-			req.templates = req.shared.templates;
-			req.theme = req.shared.theme;
-			delete req.shared.db_link;
-			delete req.shared.__v;
-			delete req.shared._id;
-			next();
-		})
-		.fail(function(data){
-			console.log("middlewares.js REJECT", data);
-			next();
-		});
+		if(!app.get("is_installed") ) { 
+			app.set("views", __root + "/views/installer" );
+			res.render("install"); 
+		};		
+		if (req.method === "POST") {next();}
 	});
 
 		// Change view folder public frontend

@@ -17,6 +17,7 @@ module.exports = function(app,$ee,port){
 	};
 
 	app.set("mongo_db",false);
+	app.set("is_installed",false);
 
 	//set app route global
 	__root = global.appRoot = path.resolve(__dirname,"../");
@@ -32,7 +33,7 @@ module.exports = function(app,$ee,port){
 	//GLOBAL DB CONNECTION&REFRESH
 	fs.readFile(__root+"/bin/config.json","utf-8",function(err,file){
 		if(file.length > 0) { 
-			var configs = JSON.parse(file);
+			var configs = JSON.parse(file);			
 			$F.connectDatabase(crypto.decrypt(configs.db_link),$ee);
 		}
 	});

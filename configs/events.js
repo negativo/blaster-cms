@@ -22,6 +22,7 @@ module.exports = function(app,$ee){
 	$ee.on("mongo_global",function(message){
 		console.log("events.js", "mongo_global");
 		app.set("mongo_db",true);
+		app.set("is_installed",true);
 	});
 
 	// configuration file change event

@@ -12,6 +12,7 @@ var mongoose = require("mongoose");
 var that = module.exports = {
 	shared: {
 		db_link:"",
+		isInstalled:false,
 		admin:"",
 		title:"",
 		theme:"template",
@@ -57,6 +58,7 @@ var that = module.exports = {
 			that.shared.admin = cms.username;
 			that.shared.title = cms.title;
 			that.shared.db_link = crypto.encrypt(that.shared.db_link);
+			that.shared.isInstalled = true;
 			//console.log("functions.js", that);
 			new Configs(that.shared)
 					.save(function(err){
