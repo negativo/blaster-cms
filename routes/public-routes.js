@@ -14,7 +14,8 @@ module.exports = function(app,express){
 	});
 	
 	
-	app.get("/page/:page", GET.singlePageCtrl );
+	app.get("/:page", GET.singlePageCtrl );
+	//app.get("/page/:page", GET.singlePageCtrl );
 	app.get("/post/:title", GET.singlePostCtrl );
 	app.get("/get/posts", GET.allPostsCtrl );
 	app.get("/get/pages", GET.allPagesCtrl );
