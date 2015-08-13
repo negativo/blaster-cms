@@ -78,6 +78,8 @@ var POST = {
 				}); //if return err:null installation is ok
 		}
 	},//install methods
+	// SAFE TO DELETE AFTER TESTINGS
+	// >>
 	create:{
 		post:function(req,res){
 			console.log("routes.js", "/create/post request");

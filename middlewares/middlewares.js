@@ -45,25 +45,24 @@ module.exports = function(app,express,$ee){
 			app.set("views", __root + "/views/installer" );
 			res.render("install"); 
 		};		
-		if (req.method === "POST") {next();}
+		if (req.method === "POST") { next(); }
 	});
 
-		// Change view folder public frontend
-		// change configs template on mongo to change template if you have others
-		// SE SCAPOCCIANO RIMETTILI PRIMA DEL CHECK AL DB TUTTI E TRE
-		app.use("/*",function(req,res,next){
-			app.use( express.static(__root + "/views/" + global.theme) );
-			app.set("views", __root + "/views/" + global.theme );
-			next();
-		});
+	// Change view folder public frontend
+	// change configs template on mongo to change template if you have others
+	// SE SCAPOCCIANO RIMETTILI PRIMA DEL CHECK AL DB TUTTI E TRE
+	app.use("/*",function(req,res,next){
+		app.use( express.static(__root + "/views/" + global.theme) );
+		app.set("views", __root + "/views/" + global.theme );
+		next();
+	});
 
-
-	    //specific route check if user is logged to avoid curl req to the server
-	    app.use("/admin", function(req,res,next){
-			app.set("views", __root + "/admin");
-	    	if (req.url === "/login") return next();
-			if(req.session && req.user && req.isAuthenticated() ) return next();
-			res.redirect("/admin/login");
-	    });
+    //specific route check if user is logged to avoid curl req to the server
+    app.use("/admin", function(req,res,next){
+		app.set("views", __root + "/admin");
+    	if (req.url === "/login") return next();
+		if(req.session && req.user && req.isAuthenticated() ) return next();
+		res.redirect("/admin/login");
+    });
 
 }
