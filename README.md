@@ -12,9 +12,9 @@ Templating is going to be easy, if you work on node adding custom logis too.
 That's what I need to bootstrap my works.
 
 ###Ongoing
-All the basics need are up, need to be refined.
+All the basic functions are working right now, need some stiling and a lot of page print data in JSON because I was too lazy.
+I need to set all the json data in their place.
 
-Te
 
 ##changelog
 	- Refactored Installation (yep another time*3)
