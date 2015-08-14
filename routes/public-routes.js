@@ -14,12 +14,12 @@ module.exports = function(app,express){
 	});
 	
 	
+	app.get("/", GET.homeCtrl );
 	app.get("/:page", GET.singlePageCtrl );
 	//app.get("/page/:page", GET.singlePageCtrl );
 	app.get("/post/:title", GET.singlePostCtrl );
 	app.get("/get/posts", GET.allPostsCtrl );
 	app.get("/get/pages", GET.allPagesCtrl );
-	app.get("/", GET.homeCtrl );
 
 
 	//POSTs
