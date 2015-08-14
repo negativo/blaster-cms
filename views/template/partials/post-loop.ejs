@@ -1,7 +1,8 @@
 <!-- POST LOOP -->
 <% for (var i = 0; i < posts.length; i++) { %>
 <div class="small-12 post-container">
-	<h4><a href="/post/<%=  posts[i].title %>"><%=  posts[i].title %></a></h4>
+<%=  posts[i].slug %>
+	<h4><a href="/post/<%=  posts[i].slug %>"><%=  posts[i].title %></a></h4>
 	<p><%-  posts[i].body %></p>
 	<div class="meta">
 		<small><strong><%=  posts[i].publishedBy.user %></strong></small>

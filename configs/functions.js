@@ -81,7 +81,8 @@ var that = module.exports = {
 						if(err === null) {
 							//REFACTOR THIS REFACTOR THIS REFACTOR THIS <<<<<<<<<<<<<<<
 							new Post({
-								title:"Sample-post",
+								title:"Sample post",
+								slug:"sample-post",
 								body:"Hello World!",
 								publishedBy:{
 									user:cms.username,

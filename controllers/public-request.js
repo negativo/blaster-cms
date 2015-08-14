@@ -14,23 +14,23 @@ var GET = {
 		Post.find({},function(err,posts){
 			var data =  $F.dataParser(req.shared,"posts",posts);
 			res.render(req.templates["home-template"], { viewData: data })
-		});
+		}).sort({ "publishedBy.date": -1 });
 	},
 	singlePageCtrl:function (req, res) {
 		var slug = req.params.page.toString();	
 		Page.findOne({ "slug": slug },function(err,page){
 			//console.log("requests.js", page,err);
-			if(page === null) res.redirect("/404")
+			if(page === null && req.url !== "/favicon.ico" ) res.redirect("/404");
 			var data =  $F.dataParser(req.shared,"page",page);
 			res.render(req.templates["page-template"], { viewData: data } );
 
 		});
 	},
 	singlePostCtrl:function (req, res) {
-		var title = req.params.title;
-		Post.findOne({ "title": title },function(err,post){
+		var slug = req.params.post;
+		Post.findOne({ "slug": slug },function(err,post){
 			//console.log("requests.js", page,err);
-			if(post === null) res.redirect("/404")
+			if(post === null) res.redirect("/404");
 			var data =  $F.dataParser(req.shared,"post",post);
 			res.render(req.templates["post-template"], { viewData: data } );
 		});

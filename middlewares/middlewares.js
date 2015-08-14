@@ -13,6 +13,7 @@ module.exports = function(app,express,$ee){
 
 	//set static content folder	
 	app.use( express.static(global.appRoot + "/public") );
+	app.use( express.static(global.appRoot + "/public") );
 	app.use( express.static(__root + "/views/installer/assets") );
 	app.use("/admin", express.static(global.appRoot + "/private") );
 	//parsers
@@ -23,6 +24,7 @@ module.exports = function(app,express,$ee){
 	app.use(session({ secret: 'WeGonnaConqueryTheFuckinWorldISwearIt' }));
 	app.use(passport.initialize());
 	app.use(passport.session());
+
 
 	app.use(function(req,res,next){
 		//console.log("middlewares.js >>> IS MONGO OK?", app.get("is_installed"));

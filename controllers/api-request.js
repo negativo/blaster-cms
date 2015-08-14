@@ -1,6 +1,7 @@
 var express = require("express"),
 	app 	= express(),
 	$F = require("../configs/functions"),
+	toSlug = require('to-slug-case'),
 	User = require("../models/user"),
 	Configs = require("../models/configs"),
 	Post = require("../models/posts"),
@@ -37,7 +38,39 @@ var GET = {
 };
 
 var POST = {
-
+	create:{
+		post:function(req,res){
+			console.log("routes.js", "/create/post request");
+			console.log("POST DATA: ", req.body);
+			var post = req.body;
+			new Post({
+				title: post.title,
+				slug: toSlug(post.title),
+				body: post.body,
+				publishedBy:{
+					date:Date.now()
+				},
+				status:"Published"
+			}).save();
+			res.send("postcreated");	
+		},
+		page:function(req,res){
+			console.log("routes.js", "create_page request");
+			var r = Math.floor((Math.random() * 10) + 1);
+			var page = req.body;
+			new Page({
+				slug:toSlug(page.title),
+				template:"page-template",
+				title: page.title,
+				content: page.body,
+				publishedBy:{
+					date:Date.now()
+				},
+				status:"published"
+			}).save();
+			res.send("pagecreate"+r);	
+		}
+	}
 };
 
 //REMOVE RANDOM GENERATED PAGE
