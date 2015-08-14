@@ -77,7 +77,7 @@ var that = module.exports = {
 			User.findOne({"username":cms.username},function(err,user){
 				if(user == null) {
 					//console.log("functions.js", user,"non esiste");
-					new User({ username:cms.username, password:crypto.bcrypt.encrypt(cms.password), admin:true }).save(function(err,user){
+					new User({ username:cms.username, password:crypto.bcrypt.encrypt(cms.password), admin:true, role:"admin" }).save(function(err,user){
 						if(err === null) {
 							//REFACTOR THIS REFACTOR THIS REFACTOR THIS <<<<<<<<<<<<<<<
 							new Post({

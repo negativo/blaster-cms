@@ -21,12 +21,12 @@
                 <th>Date</th>
             </tr>
             <% for (var i = 0; i < dashboard.posts.length; i++) { %>
-                <tr>
+                <tr onclick="$.fn.getData(<%= JSON.stringify(dashboard.posts[i]); %>)">
                     <td><%=  i %></td>
                     <td><%=  dashboard.posts[i].title %></td>
                     <td><%=  dashboard.posts[i].status %></td>
                     <td><%=  dashboard.posts[i].publishedBy.user %></td>
-                    <td><%=  dashboard.posts[i].publishedBy.date %></td>
+                    <td class="date"><%=  dashboard.posts[i].publishedBy.date %></td>
                 </tr>
             <% }; %>
           </table>

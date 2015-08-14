@@ -6,6 +6,7 @@ var UserSchema = new Schema({
 	username:String,
 	password:String,
 	createdOn:Date,
+	role:String,
 	admin:Boolean
 });
 

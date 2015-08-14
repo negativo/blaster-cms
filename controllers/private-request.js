@@ -43,7 +43,7 @@ var GET = {
 		});
 	},
 	usersPageCtrl:function(req,res){
-		Users.findOne({}, function(err, users){
+		Users.find({},{ password:0 }, function(err, users){
 			if(users !== null && req.isAuthenticated() ) {
 				var data =  $F.dataParser(req.shared,"users",users);
 				var currentUser = $F.dataParser(req.user);

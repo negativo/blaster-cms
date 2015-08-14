@@ -5,7 +5,11 @@
 			backend.request.init();
 		},
 		ui:{
-			init:function(){}
+			init:function(){
+				$( ".date" ).each(function( index ) {
+					$(this).text(moment($( this ).text(), "YYYYMMDDHH").fromNow());
+				});
+			}
 		},
 		plugins:{
 			// pass init function as $.fn so we can call wherever we want it.
@@ -70,6 +74,12 @@
 	}
 	backend.init();
 
+	//HELPERS
+	$.fn.getData = function(item){
+		var i = item;
+		console.log("backend.js", i);
+		return i;
+	}
 	//global jquery methods
 	$.fn.initEditor = function(){
 		return backend.plugins.editor();

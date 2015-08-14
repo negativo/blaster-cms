@@ -1,17 +1,27 @@
 <%- include("./partials/header") %>
 
-     
-	
-    <div id="page-wrapper">
+<div class="container-fluid">
+    <%= JSON.stringify(dashboard.users) %>
+<!-- non è un array per ora -->
+    <!-- Table -->
+    <table class="table table-striped">
+    <tr>
+        <th>#</th>
+        <th>User</th>
+        <th>Role</th>
+    </tr>
+    <% for (var i = 0; i < dashboard.users.length; i++) { %>
+        <tr onclick="$.fn.getData(<%= JSON.stringify(dashboard.users[i]); %>)">
+        	<td><%= i + 1 %></td>
+            <td><%= dashboard.users[i].username %></td>
+            <td><%= dashboard.users[i].admin %></td>
+        </tr>
+    <% }; %>
+  </table>			
 
-        <div class="container-fluid">
-            <%= JSON.stringify(dashboard.users) %>
-        </div>
-        <!-- /.container-fluid -->
 
-    </div>
-    <!-- /#page-wrapper -->
-
+</div>
+<!-- /.container-fluid -->
 
 <%- include("./partials/footer") %>
 
