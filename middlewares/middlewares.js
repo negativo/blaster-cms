@@ -25,9 +25,9 @@ module.exports = function(app,express,$ee){
 	app.use(passport.session());
 
 	app.use(function(req,res,next){
-		console.log("middlewares.js >>> IS MONGO OK?", app.get("is_installed"));
+		//console.log("middlewares.js >>> IS MONGO OK?", app.get("is_installed"));
 		if (req.method === "POST") { next(); }
-		if(req.method === 'GET' && app.get("is_installed") ) { 
+		if(req.method === 'GET' && app.get("mongo_db") ) { 
 			Configs.findOne({},function(err,configs){
 				var cfg = JSON.stringify(configs);
 					cfg = JSON.parse(cfg);
@@ -42,7 +42,7 @@ module.exports = function(app,express,$ee){
 				next();			
 			});
 		}
-		if(!app.get("is_installed") ) { 
+		if(req.method === 'GET' && !app.get("mongo_db") ) { 
 			app.set("views", __root + "/views/installer" );
 			res.render("install"); 
 		};		
