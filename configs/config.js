@@ -32,7 +32,7 @@ module.exports = function(app,$ee,port){
 
 	// *Get Configs on server start if cms is installed
 	fs.readFile(__root+"/bin/config.json","utf-8",function(err,file){
-		if(file.length > 0) { 
+		if(file && file.length > 0) { 
 			var configs = JSON.parse(file);			
 			$F.connectDatabase(crypto.decrypt(configs.db_link),$ee);
 		}

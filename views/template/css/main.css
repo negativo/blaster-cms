@@ -107,7 +107,7 @@ header.home nav a {
   font-size: 0.8em;
   margin-right: 10px;
   color: #787878;
-  transition: "color" ease-in 0.2s !important;
+  transition: color ease-in 0.2s !important;
 }
 header.home nav a:hover {
   color: #66d9ef;

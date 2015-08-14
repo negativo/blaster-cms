@@ -58,8 +58,8 @@
 	font-family: "Source Code Pro" !important;
 	font-weight: 300;
 }
-.trasition-fast(@prop){
-	transition:@prop ease-in .2s !important; 
+.trasition-fast{
+	transition:all ease-in .2s !important; 
 }
 
 .ornament{
@@ -122,7 +122,7 @@ header.home{
 			font-size: 0.8em;
 			margin-right: 10px;
 			color: @grey;
-			.trasition-fast("color");
+			.trasition-fast;
 			&:hover{
 				color:@cyan;
 			}
@@ -142,7 +142,7 @@ header.home{
 			padding: 0;
 		}
 		a{
-			.trasition-fast("color");
+			.trasition-fast;
 			&:hover{ color: @cyan; }
 		}
 		img{

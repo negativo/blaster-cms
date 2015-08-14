@@ -87,6 +87,7 @@ var POST = {
 			var post = req.body;
 			new Post({
 				title: post.title,
+				slug: toSlug(post.title),
 				body: post.body,
 				publishedBy:{
 					date:Date.now()

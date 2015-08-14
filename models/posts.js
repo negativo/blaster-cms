@@ -9,6 +9,7 @@ var PostSchema = new Schema({
  //        ref: 'User'
  //    },
 	title:String,
+	slug: String,
 	body:String,
 	publishedBy:{
 		user:String,

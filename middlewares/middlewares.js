@@ -26,6 +26,7 @@ module.exports = function(app,express,$ee){
 
 	app.use(function(req,res,next){
 		console.log("middlewares.js >>> IS MONGO OK?", app.get("is_installed"));
+		if (req.method === "POST") { next(); }
 		if(req.method === 'GET' && app.get("is_installed") ) { 
 			Configs.findOne({},function(err,configs){
 				var cfg = JSON.stringify(configs);
@@ -45,7 +46,6 @@ module.exports = function(app,express,$ee){
 			app.set("views", __root + "/views/installer" );
 			res.render("install"); 
 		};		
-		if (req.method === "POST") { next(); }
 	});
 
 	// Change view folder public frontend
