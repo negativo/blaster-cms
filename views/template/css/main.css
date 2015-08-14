@@ -46,6 +46,9 @@
   font-family: "Source Code Pro" !important;
   font-weight: 300;
 }
+.trasition-fast {
+  transition: all ease-in 0.2s !important;
+}
 .ornament {
   width: 100% !important;
   position: fixed;
@@ -107,7 +110,7 @@ header.home nav a {
   font-size: 0.8em;
   margin-right: 10px;
   color: #787878;
-  transition: color ease-in 0.2s !important;
+  transition: all ease-in 0.2s !important;
 }
 header.home nav a:hover {
   color: #66d9ef;
@@ -126,7 +129,7 @@ header.home nav a:hover {
   padding: 0;
 }
 .content .post-container a {
-  transition: "color" ease-in 0.2s !important;
+  transition: all ease-in 0.2s !important;
 }
 .content .post-container a:hover {
   color: #66d9ef;
