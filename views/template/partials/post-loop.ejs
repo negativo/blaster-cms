@@ -1,0 +1,13 @@
+<!-- POST LOOP -->
+<% for (var i = 0; i < shared.posts.length; i++) { %>
+<div class="small-12 post-container">
+	<h4><a href="/post/<%=  shared.posts[i].title %>"><%=  shared.posts[i].title %></a></h4>
+	<p><%-  shared.posts[i].body %></p>
+	<div class="meta">
+		<small><strong><%=  shared.posts[i].publishedBy.user %></strong></small>
+		<small class="date"><%=  shared.posts[i].publishedBy.date %></small>
+		
+	</div>
+</div>
+<% }; %>
+

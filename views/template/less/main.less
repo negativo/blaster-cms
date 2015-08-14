@@ -1,4 +1,167 @@
-.post-container{
-	height: 150px;
-	border:1px solid red;
+@import url(http://fonts.googleapis.com/css?family=Arvo:400,700);
+@import url(http://fonts.googleapis.com/css?family=Lato:400,700);
+@import url(http://fonts.googleapis.com/css?family=Source+Code+Pro:300,500);
+
+//Monokai
+@grey: #787878;
+@black: #272822;
+@magenta: #F92672;
+@cyan: #66D9EF;
+@green: #A6E22E;
+@orange: #FD971F;
+@white : white;
+
+.left{
+	float:left;
+}
+.right{
+	float:right;
+}
+.object{
+	color:@cyan;
+}
+.function{
+	color:@green;
+}
+.parameter{
+	color:@orange;
+}
+.statement{
+	color:@magenta;
+}
+.object-bg{
+	background:@cyan;
+}
+.function-bg{
+	background:@green;
+}
+.parameter-bg{
+	background:@orange;
+}
+.statement-bg{
+	background:@magenta;
+}
+//fonts
+.heading-font{
+	font-family: "Arvo" !important;
+	font-weight: 400;
+}
+.bold{
+	font-weight: 700 !important;
+}
+.text-font{
+	font-family: "Lato" !important;
+	font-weight: 400;
+}
+
+.code-font{
+	font-family: "Source Code Pro" !important;
+	font-weight: 300;
+}
+.trasition-fast(@prop){
+	transition:@prop ease-in .2s !important; 
+}
+
+.ornament{
+	width: 100% !important;
+	position: fixed;
+	top:0;
+	div{
+		height: 2px !important;
+		width: 25% !important;
+		padding: 0px !important;
+		margin: 0px !important;
+		float:left;
+	}
+	clear:both;
+}
+body{
+	.text-font;
+	font-size: 16px;
+	color:@black !important;
+}
+
+h1,h2,h3,h4,h5,h6{
+	.code-font;
+	.bold;
+
+}
+
+code{
+	.code-font;
+}
+
+a{
+	color: @black !important;
+	text-decoration: none;
+}
+.site-wrapper{
+
+}
+
+header.home{
+	text-align: left;
+	padding-top: 75px;
+    .code-font;  
+	h1{
+		.code-font;
+		margin: 0;
+		padding: 0;
+		font-size: 1.5em;
+		display: inline;
+		font-weight: bold;
+	}
+	span.subtitle{
+		margin: 0;
+		padding: 0;
+		font-size: 1.5em;
+	}
+
+	nav{
+		a{
+			font-size: 0.8em;
+			margin-right: 10px;
+			color: @grey;
+			.trasition-fast("color");
+			&:hover{
+				color:@cyan;
+			}
+		}
+	}
+
+}
+.content{
+	margin-top: 75px;
+	.post-container{
+		border-bottom:1px solid @grey;
+		margin-top: 35px;
+		text-align: left;	
+		h4{
+			font-size: 1.25em;
+			margin: 0;
+			padding: 0;
+		}
+		a{
+			.trasition-fast("color");
+			&:hover{ color: @cyan; }
+		}
+		img{
+			width: 100% !important;
+			height: auto !important;
+		}
+
+	}
+}
+
+footer{
+	margin-top: 50px !important;
+	color:@white;
+	background: @black;
+	clear:both;
+	padding: 25px !important;
+	line-height: 35px;
+	letter-spacing: 1px;
+	font-size: 0.9em;
+	.code-font;
+	.footer-container{ }
 }

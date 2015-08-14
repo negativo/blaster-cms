@@ -24,7 +24,7 @@
 				e.preventDefault();
 				$spinner.fadeIn();
 				var data = {
-					link: $formMongo.find("input").val()
+					link: $formMongo.find("input").val().trim()
 				}
 				$.post("/install/mongo", data, function(data,status){
 					console.log(status,data);

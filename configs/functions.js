@@ -12,6 +12,7 @@ var mongoose = require("mongoose");
 var that = module.exports = {
 	shared: {
 		db_link:"",
+		isInstalled:false,
 		admin:"",
 		title:"",
 		theme:"template",
@@ -36,7 +37,7 @@ var that = module.exports = {
 			mongoose.connect(mongo.link,function(err){
 				//RESOLVE PROMISE
 				if (err) deferred.reject({ err: err, status: 400 });
-				if(!err) {
+				if (!err) {
 					deferred.resolve({ err: null, status: 200 });
 					//if connection is right save link to reuse later
 					that.shared.db_link = mongo.link;
@@ -57,11 +58,12 @@ var that = module.exports = {
 			that.shared.admin = cms.username;
 			that.shared.title = cms.title;
 			that.shared.db_link = crypto.encrypt(that.shared.db_link);
+			that.shared.isInstalled = true;
 			//console.log("functions.js", that);
 			new Configs(that.shared)
 					.save(function(err){
 						console.log("functions.js blog data saving: ", err);
-						fs.writeFileSync(__root + "/bin/config.json", JSON.stringify(that.shared) );
+						fs.writeFileSync(__root + "/bin/config.json", JSON.stringify({ db_link: that.shared.db_link }) );
 						deferred.resolve({message:"User&Blog Created", error:err});
 					})
 		};
@@ -74,7 +76,7 @@ var that = module.exports = {
 			User.findOne({"username":cms.username},function(err,user){
 				if(user == null) {
 					//console.log("functions.js", user,"non esiste");
-					new User({username:cms.username, password:crypto.encrypt(cms.password), admin:true}).save(function(err,user){
+					new User({ username:cms.username, password:crypto.bcrypt.encrypt(cms.password), admin:true }).save(function(err,user){
 						if(err === null) {
 							//REFACTOR THIS REFACTOR THIS REFACTOR THIS <<<<<<<<<<<<<<<
 							new Post({
