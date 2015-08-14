@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title> Install CMS </title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/css/foundation.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="/css/installation.min.css">
+
+</head>
+<body>
+
+<div class="small-12 container">
+	<div class="small-6 small-offset-3 form-container">
+		<h1>NoNameYet CMS</h1>
+		<p>Let's install this bad boy!</p>
+		<!--  Database Link -->
+		<form class="installation-form-mongo">
+			<input autocomplete="off" type="text" name="mongodbLink" class="mongo-link" name="mongolink" placeholder="mongodb://localhost:12345/dbName">
+			<label class="err mongo-err">error</label>
+			<label class="spinner animated rotate"><i class="fa fa-spinner"></i></label>
+			<input type="submit" class="mongo-localhost" value="Localhost?">
+			<input type="submit" class="mongo-submit" value="Check">
+		</form>
+		<!-- Blog title and User -->
+		<form class="installation-form-info">
+			<input autocomplete="off" type="text" name="blogName" placeholder="Website Name" class="blog-title">
+			<input autocomplete="off" type="text" name="username" placeholder="Admin Username" class="user-username">
+			<input autocomplete="off" type="password" name="password" placeholder="Password" class="user-password">
+			
+			<label class="err credential-err">Error</label>
+			<label class="spinner animated rotate"><i class="fa fa-spinner"></i></label>
+			<input type="submit" class="install-submit">
+		</form>
+	</div>
+</div>
+
+	<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/js/foundation.min.js"></script>
+	<script src="/js/installation.js"></script>
+</body>
+</html>
+
