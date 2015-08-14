@@ -13,7 +13,6 @@ module.exports = function(app,express,$ee){
 
 	//set static content folder	
 	app.use( express.static(global.appRoot + "/public") );
-	app.use( express.static(global.appRoot + "/public") );
 	app.use( express.static(__root + "/views/installer/assets") );
 	app.use("/admin", express.static(global.appRoot + "/private") );
 	//parsers

@@ -12,7 +12,12 @@ var base_url = global.base_url;
 //Controllers
 var GET = {
 	loginPageCtrl:function(req,res){
-		res.render("login" );
+		//clean req shared before sending.
+		var data = req.shared;
+		for (prop in data) if( prop !== "title") delete data[prop];
+		data =  $F.dataParser(data,"class","login-page");
+		var currentUser = $F.dataParser({});
+		res.render("login", { backend: data, currentUser: currentUser } );
 	},
 	dashboardPageCtrl:function(req,res){
 		var data =  $F.dataParser(req.shared);

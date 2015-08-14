@@ -1,3 +1,6 @@
+<%  dashboard = JSON.parse(backend); %>
+<%  user = JSON.parse(currentUser); %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,7 +24,9 @@
 
     <!-- Custom Fonts -->
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    
+
+    <link rel="stylesheet" href="css/backend.min.css">
+
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -31,5 +36,12 @@
     <![endif]-->
 
 </head>
-<body>
+<% if(dashboard.class) { %>
+    <body class="<%= dashboard.class %>">
+<% } %>
+        
     <div id="wrapper">
+
+        <% if(dashboard.class !== "login-page" ) { %>
+            <%- include("navigation") %>
+        <% } %>

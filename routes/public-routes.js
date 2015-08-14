@@ -15,13 +15,17 @@ module.exports = function(app,express){
 	});
 	
 	app.get("/", GET.homeCtrl );
-	app.get("/:page", GET.singlePageCtrl );
+	//app.get("/:page", GET.singlePageCtrl );
+	app.get("/page/:page", GET.singlePageCtrl );
 	app.get("/post/:post", GET.singlePostCtrl );
-	//app.get("/page/:page", GET.singlePageCtrl );
 	
 	app.get("/get/posts", GET.allPostsCtrl );
 	app.get("/get/pages", GET.allPagesCtrl );
 
+	app.get("/logout",function(req,res){
+		req.logout();
+		res.redirect("/");
+	})
 
 	//POSTs
 	app.post("/install/mongo", POST.install.mongo);

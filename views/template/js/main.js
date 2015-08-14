@@ -13,7 +13,7 @@
 			commons:function(){
 				var $footer = $(".main-footer");
 
-					if ($(".site-wrapper").height() <= 500 ){
+					if ($(".site-wrapper").height() <= 550 ){
 						$footer.css({
 							"position":"fixed",
 							"bottom":"0px"
