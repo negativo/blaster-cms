@@ -1,5 +1,4 @@
 (function(){
-	
 	//BlogNameSpace
 	var app = {
 		init: function(){
@@ -13,12 +12,14 @@
 			},
 			commons:function(){
 				var $footer = $(".main-footer");
-				if ($("body").height() <= 1000 ){
-					$footer.css({
-						"position":"fixed",
-						"bottom":"0px"
-					});
-				}
+				// if ($("body").height() <= 1000 ){
+				// 	$footer.css({
+				// 		"position":"fixed",
+				// 		"bottom":"0px"
+				// 	});
+				// } else{
+				// 	$footer.css("position","static!important");
+				// }
 			},
 			date:function(){
 				$( ".date" ).each(function( index ) {
@@ -41,5 +42,6 @@
 	}
 
 	app.init();
-
 })(jQuery)
+
+

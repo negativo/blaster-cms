@@ -16,10 +16,10 @@ module.exports = function(app,express,$ee){
 	app.use( express.static(__root + "/views/installer/assets") );
 	app.use("/admin", express.static(global.appRoot + "/private") );
 	//parsers
-	app.use(cookieParser());
 	app.use(bodyParser());
 	//logins
 	require("../lib/login-strategy")(passport,$ee);
+	app.use(cookieParser());
 	app.use(session({ secret: 'WeGonnaConqueryTheFuckinWorldISwearIt' }));
 	app.use(passport.initialize());
 	app.use(passport.session());
