@@ -46,7 +46,8 @@
 				$spinner.fadeIn();
 				var url = $form.serialize();
 				var data = {
-					title:$form.find(".blog-title").val(),
+					title:$form.find(".site-title").val(),
+					subtitle:$form.find(".site-subtitle").val(),
 					username:$form.find(".user-username").val(),
 					password:$form.find(".user-password").val()
 				}

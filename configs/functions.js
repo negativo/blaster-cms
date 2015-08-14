@@ -57,6 +57,7 @@ var that = module.exports = {
 		var saveBlogData = function(){
 			that.shared.admin = cms.username;
 			that.shared.title = cms.title;
+			that.shared.subtitle = cms.subtitle;
 			that.shared.db_link = crypto.encrypt(that.shared.db_link);
 			that.shared.isInstalled = true;
 			//console.log("functions.js", that);
