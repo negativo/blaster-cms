@@ -42,6 +42,27 @@ h1,h2,h3,h4,h5,h6{
 			border:none;
 			outline:none;
 			padding:10px;
+			text-align: center;
+			&::-webkit-input-placeholder{
+				text-align: center;
+				font-weight: 500;
+			}
+			&::-moz-input-placeholder{
+				text-align: center;
+				font-weight: 500;
+			}
+			&::-ms-input-placeholder{
+				text-align: center;
+				font-weight: 500;
+			}
+			&::-o-input-placeholder{
+				text-align: center;
+				font-weight: 500;
+			}
+			&::input-placeholder{
+				text-align: center;
+				font-weight: 500;
+			}
 			&[type="submit"]{
 				background: darken(@darkPrimaryColor, 20%) !important;
 				color:white;

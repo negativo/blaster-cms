@@ -36,6 +36,27 @@ h6 {
   border: none;
   outline: none;
   padding: 10px;
+  text-align: center;
+}
+.login-page .login-form input::-webkit-input-placeholder {
+  text-align: center;
+  font-weight: 500;
+}
+.login-page .login-form input::-moz-input-placeholder {
+  text-align: center;
+  font-weight: 500;
+}
+.login-page .login-form input::-ms-input-placeholder {
+  text-align: center;
+  font-weight: 500;
+}
+.login-page .login-form input::-o-input-placeholder {
+  text-align: center;
+  font-weight: 500;
+}
+.login-page .login-form input::input-placeholder {
+  text-align: center;
+  font-weight: 500;
 }
 .login-page .login-form input[type="submit"] {
   background: #01466c !important;
