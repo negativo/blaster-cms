@@ -4,6 +4,17 @@
 	var app = {
 		init: function(){
 			app.events();
+			app.ui.init();
+		},
+		ui:{
+			init:function(){
+				app.ui.date();
+			},
+			date:function(){
+				$( ".date" ).each(function( index ) {
+					$(this).text(moment($( this ).text(), "YYYYMMDDHH").fromNow());
+				});
+			}
 		},
 		events:function(){
 			$(".post").click(function(){

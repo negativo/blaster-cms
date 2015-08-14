@@ -5,7 +5,8 @@
 	<p><%-  shared.posts[i].body %></p>
 	<div class="meta">
 		<small><strong><%=  shared.posts[i].publishedBy.user %></strong></small>
-		<small> - <%=  new Date(shared.posts[i].publishedBy.date) %></small>
+		<small class="date"><%=  shared.posts[i].publishedBy.date %></small>
+		
 	</div>
 </div>
 <% }; %>
