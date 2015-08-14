@@ -1,4 +1,7 @@
-<%  shared = JSON.parse(viewData); %>
+<%  shared = JSON.parse(viewData); 
+	if(shared.posts) posts = shared.posts;
+	if(shared.page) page = shared.page;
+%>
 <!DOCTYPE html>
 <html>
 <head>
