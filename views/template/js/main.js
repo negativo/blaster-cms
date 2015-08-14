@@ -8,7 +8,17 @@
 		},
 		ui:{
 			init:function(){
+				app.ui.commons();
 				app.ui.date();
+			},
+			commons:function(){
+				var $footer = $(".main-footer");
+				if ($("body").height() <= 1000 ){
+					$footer.css({
+						"position":"fixed",
+						"bottom":"0px"
+					});
+				}
 			},
 			date:function(){
 				$( ".date" ).each(function( index ) {
