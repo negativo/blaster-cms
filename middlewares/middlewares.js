@@ -58,6 +58,7 @@ module.exports = function(app,express,$ee){
 		next();
 	});
 
+
     //specific route check if user is logged to avoid curl req to the server
     app.use("/admin", function(req,res,next){
 		app.set("views", __root + "/admin");
@@ -65,5 +66,10 @@ module.exports = function(app,express,$ee){
 		if(req.session && req.user && req.isAuthenticated() ) return next();
 		res.redirect("/admin/login");
     });
+
+	app.use(function(req,res,next){
+		if (req.method === "GET" ) req.shared.isLoggedIn = req.isAuthenticated();
+		next();
+	});
 
 }

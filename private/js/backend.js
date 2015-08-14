@@ -19,6 +19,15 @@
 				backend.request.login();
 			},
 			login:function(){
+				var $bh = $(document).height();
+					$bh -= $(".form-container").height();
+					$bh /= 2;
+					$bh -= 20;
+
+				$(".form-container").css({
+					"margin-top": $bh
+				});
+				
 				$(".login-form").submit(function(e){
 					e.preventDefault();
 					var data = {

@@ -138,6 +138,18 @@ header.home nav a:hover {
   width: 100% !important;
   height: auto !important;
 }
+#admin-bar {
+  background: #272822;
+  color: white !important;
+  width: 100%;
+  height: 50px;
+  padding-left: 25px;
+  padding-right: 25px;
+}
+#admin-bar a {
+  line-height: 50px;
+  color: white !important;
+}
 footer {
   margin-top: 50px !important;
   color: white;
