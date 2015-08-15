@@ -64,14 +64,14 @@ var GET = {
 	createPostCtrl:function(req,res){
 			var data =  $F.dataParser(req.shared);
 			var currentUser = $F.dataParser(req.user);
-			res.render("edit-post", { backend: data, currentUser: currentUser });
+			res.render("editor", { backend: data, currentUser: currentUser, editor: "post" });
 	},
 	createPageCtrl:function(req,res){
 			Configs.findOne({},{ siteTemplate:1 }, function(err, templates){
 				if(templates === null) return;
-				var data =  $F.dataParser(req.shared,"templates",templates);
+				var data =  $F.dataParser(req.shared,"templates",["test","test2"]);
 				var currentUser = $F.dataParser(req.user);
-				res.render("edit-page", { backend: data, currentUser: currentUser });
+				res.render("editor", { backend: data, currentUser: currentUser, editor: "page" });
 			});
 	},
 	editSinglePage:function(req,res){
@@ -81,7 +81,7 @@ var GET = {
 				console.log("private-request.js", singlePage );
 				var data =  $F.dataParser(req.shared);
 				var currentUser = $F.dataParser(req.user);
-				res.render("edit-page", { backend: data, currentUser: currentUser, single: singlePage });
+				res.render("editor", { backend: data, currentUser: currentUser, editor:"page", single: singlePage });
 			});
 		}
 	}

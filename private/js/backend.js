@@ -74,7 +74,8 @@
 						$.post("/create/page", data,function(res,status){
 							console.log(res);
 						});
-					} else{
+					} 
+					if(contentType === "editor-page" && id ){
 						$.post("/admin/edit-page", data,function(res,status){
 							console.log(status);
 							if (status === "success") window.location.replace("/admin/pages");

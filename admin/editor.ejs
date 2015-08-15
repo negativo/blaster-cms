@@ -1,0 +1,28 @@
+<%- include("./partials/header") %>
+    
+<div id="page-wrapper">
+
+    <%= JSON.stringify(dashboard.templates) %>
+
+    <div class="container-fluid">  
+
+        <%- include("./partials/editor") %>
+
+        <% if (dashboard.templates) {
+            templates = dashboard.templates; %>
+                <h4>templates</h4>
+                <select name="templates" id="page-templates">
+                	<option value="page-template">page-template</option>
+        <!-- 			<% for( t in templates) {%>
+        	         	<option value="<%=  templates[t] %>"><%=  templates[t] %></option>
+        			<% }; %> -->
+                </select>
+        <% }; %>
+    </div>
+    <!-- /.container-fluid -->
+</div>
+<!-- /#page-wrapper -->
+
+
+<%- include("./partials/footer") %>
+
