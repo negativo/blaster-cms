@@ -26,7 +26,7 @@ var GET = {
 		res.render("panel", { backend: data, currentUser: currentUser });
 	},
 	postsPageCtrl:function(req,res){
-		Posts.find({}, function(err, posts){
+		Posts.find({},{ body:0 }, function(err, posts){
 			if(posts !== null && req.isAuthenticated() ) {
 				var data =  $F.dataParser(req.shared,"posts",posts);
 				var currentUser = $F.dataParser(req.user);

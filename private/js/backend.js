@@ -65,6 +65,10 @@
 					}
 					console.log("backend.js", data);
 					console.log("backend.js", contentType);
+					if(data.title == ""){
+						//DO SOME VALIDATION LATER
+						data.title = "My New Content";
+					}
 					if(contentType === "editor-post" && id === undefined){
 						$.post("/create/post", data,function(res,status){
 							console.log(res);
@@ -87,6 +91,7 @@
 							if (status === "success") window.location.replace("/admin/pages");
 						});
 					};
+					
 					
 
 				});
