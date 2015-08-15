@@ -38,6 +38,36 @@ var GET = {
 };
 
 var POST = {
+	install:{
+		mongo:function(req,res){
+			console.log("requests.js MONGOLINK", req.body);
+			//check if err is null in frontend
+			$F.checkDatabase(req.body)
+				.then(function(promise){
+					res.status(promise.status)
+					res.send(promise);
+				})
+				.fail(function(err){
+					console.log("requests.js MongoERROR:", err.err);
+					res.status(err);
+					res.send(err);
+				});
+		},
+		cms:function(req,res){
+			$F.installation(req.body)
+				.then(function(promise){
+					console.log("request.js install promise", promise);
+					promise.isInstalled = true;
+					res.send(promise);
+				})
+				.fail(function(err){
+					console.log("request.js install promise", err);
+					res.send(err);
+				}); //if return err:null installation is ok
+		}
+	},//install methods
+	// SAFE TO DELETE AFTER TESTINGS
+	// >>
 	create:{
 		post:function(req,res){
 			console.log("routes.js", "/create/post request");

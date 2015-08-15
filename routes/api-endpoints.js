@@ -20,5 +20,12 @@ module.exports = function(app,express){
 	app.get("/api/users", AreYouAuthorized , GET.usersCtrl );
 	app.get("/api/configurations", AreYouAuthorized , GET.configsCtrl );
 
+	//POSTs
+	app.post("/install/mongo", POST.install.mongo);
+	app.post("/install/cms", POST.install.cms);
+
+	app.post("/create/post", POST.create.post);
+	app.post("/create/page", POST.create.page);
+
 }
 

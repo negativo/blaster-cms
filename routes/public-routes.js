@@ -27,11 +27,11 @@ module.exports = function(app,express){
 		res.redirect("/");
 	})
 
-	//POSTs
-	app.post("/install/mongo", POST.install.mongo);
-	app.post("/install/cms", POST.install.cms);
+	// //POSTs
+	// app.post("/install/mongo", POST.install.mongo);
+	// app.post("/install/cms", POST.install.cms);
 
-	app.post("/create/post", api.POST.create.post);
-	app.post("/create/page", api.POST.create.page);
+	// app.post("/create/post", api.POST.create.post);
+	// app.post("/create/page", api.POST.create.page);
 }
 

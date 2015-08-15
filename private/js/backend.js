@@ -72,6 +72,7 @@
 					if(contentType === "editor-post" && id === undefined){
 						$.post("/create/post", data,function(res,status){
 							console.log(res);
+							if (status === "success") window.location.replace("/admin/posts");
 						});
 					};
 					if(contentType === "editor-post" && id ){
@@ -83,6 +84,7 @@
 					if(contentType === "editor-page" && id === undefined){
 						$.post("/create/page", data,function(res,status){
 							console.log(res);
+							if (status === "success") window.location.replace("/admin/pages");
 						});
 					};
 					if(contentType === "editor-page" && id ){
