@@ -69,18 +69,24 @@
 						$.post("/create/post", data,function(res,status){
 							console.log(res);
 						});
-					}
+					};
+					if(contentType === "editor-post" && id ){
+						$.post("/admin/edit-post", data,function(res,status){
+							console.log(status);
+							if (status === "success") window.location.replace("/admin/posts");
+						});
+					};
 					if(contentType === "editor-page" && id === undefined){
 						$.post("/create/page", data,function(res,status){
 							console.log(res);
 						});
-					} 
+					};
 					if(contentType === "editor-page" && id ){
 						$.post("/admin/edit-page", data,function(res,status){
 							console.log(status);
 							if (status === "success") window.location.replace("/admin/pages");
 						});
-					}
+					};
 					
 
 				});

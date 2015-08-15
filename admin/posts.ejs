@@ -6,7 +6,7 @@
         <div class="container-fluid">  
             <%= JSON.stringify(dashboard.posts)  %>
             <h1>Posts</h1>
-             <a href="/admin/create-post">
+             <a href="/admin/new-post">
              <button type="button" class="btn btn-primary"><i class="fa fa-fw fa-plus"></i> Add new post</button>
              </a>
             <br><br>
@@ -23,7 +23,7 @@
             <% for (var i = 0; i < dashboard.posts.length; i++) { %>
                 <tr onclick="$.fn.getData(<%= JSON.stringify(dashboard.posts[i]); %>)">
                     <td><%=  i %></td>
-                    <td><%=  dashboard.posts[i].title %></td>
+                    <td><a href="./edit-post/<%=  dashboard.posts[i]._id %>"><%=  dashboard.posts[i].title %></a></td>
                     <td><%=  dashboard.posts[i].status %></td>
                     <td><%=  dashboard.posts[i].publishedBy.user %></td>
                     <td class="date"><%=  dashboard.posts[i].publishedBy.date %></td>

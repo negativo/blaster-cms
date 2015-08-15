@@ -5,7 +5,8 @@ var express = require("express"),
 	Users = require("../models/user"),
 	Configs = require("../models/configs"),
 	Posts = require("../models/posts"),
-	Pages = require("../models/pages");
+	Pages = require("../models/pages"),
+	toSlug = require('to-slug-case');
 
 var base_url = global.base_url;
 	
@@ -74,6 +75,17 @@ var GET = {
 				res.render("editor", { backend: data, currentUser: currentUser, editor: "page" });
 			});
 	},
+	editSinglePost:function(req,res){
+		if( req.params.id ){
+			var postId = req.params.id;
+			Posts.findById( postId ,function(err,singlePost){
+				console.log("private-request.js", singlePost );
+				var data =  $F.dataParser(req.shared);
+				var currentUser = $F.dataParser(req.user);
+				res.render("editor", { backend: data, currentUser: currentUser, editor:"post", single: singlePost });
+			});
+		}
+	},	
 	editSinglePage:function(req,res){
 		if( req.params.id ){
 			var pageId = req.params.id;
@@ -92,6 +104,20 @@ var POST = {
 		//console.log("routes.js", req.session);
 		res.json({ err:undefined });
 	},
+	editSinglePost:function(req,res){
+		console.log("private-request.js", req.body);
+		var postId = req.body.id;
+		Posts.findById( postId ,function(err,singlePost){
+			console.log("private-request.js", singlePost );
+			singlePost.title = req.body.title;
+			singlePost.body = req.body.body;
+			singlePost.slug = toSlug(req.body.title);
+			singlePost.save(function(err){
+				if (err) throw err;
+				res.send(200);
+			});
+		});
+	},
 	editSinglePage:function(req,res){
 		console.log("private-request.js", req.body);
 		var pageId = req.body.id;
@@ -99,6 +125,7 @@ var POST = {
 			console.log("private-request.js", singlePage );
 			singlePage.title = req.body.title;
 			singlePage.content = req.body.body;
+			singlePage.slug = toSlug(req.body.title);
 			singlePage.save(function(err){
 				if (err) throw err;
 				res.send(200);
