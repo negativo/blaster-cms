@@ -61,12 +61,12 @@ var GET = {
 		});
 	},
 	//CRUD
-	createPostCtrl:function(req,res){
+	newPostCtrl:function(req,res){
 			var data =  $F.dataParser(req.shared);
 			var currentUser = $F.dataParser(req.user);
 			res.render("editor", { backend: data, currentUser: currentUser, editor: "post" });
 	},
-	createPageCtrl:function(req,res){
+	newPageCtrl:function(req,res){
 			Configs.findOne({},{ siteTemplate:1 }, function(err, templates){
 				if(templates === null) return;
 				var data =  $F.dataParser(req.shared,"templates",["test","test2"]);

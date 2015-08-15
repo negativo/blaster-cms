@@ -17,8 +17,8 @@ module.exports = function(app,express){
 	app.get("/admin/configurations", GET.configurationsPageCtrl );
 
 	//CRUD
-	app.get("/admin/create-post", GET.createPostCtrl );
-	app.get("/admin/create-page", GET.createPageCtrl );
+	app.get("/admin/new-post", GET.newPostCtrl );
+	app.get("/admin/new-page", GET.newPageCtrl );
 	app.get("/admin/edit-page/:id", GET.editSinglePage );
 
 
