@@ -1,10 +1,21 @@
-
-<div class="small-10 small-offset-1">
-	<h2>Post Creation</h2>
-	<form class="editor" id="editor-<%= editor %>">
-		<input type="text" name="title" placeholder="title" class="small-12 editor-title">
-		<textarea name="editor1"></textarea>
-		<!-- <textarea class="js-st-instance"></textarea> -->
-		<input type="submit">
-	</form>
-</div>
+<% if (locals.single) { %> 
+	<div class="small-10 small-offset-1">
+		<h2>Post Creation</h2>
+		<form class="editor" id="editor-<%= editor %>" data-id="<%= single._id %>">
+			<input type="text" name="title" placeholder="<%= single.title %>" value="<%= single.title %>" class="small-12 editor-title">
+			<textarea name="editor1"><%= single.content %></textarea>
+			<!-- <textarea class="js-st-instance"></textarea> -->
+			<input type="submit">
+		</form>
+	</div>
+<% } else { %>
+	<div class="small-10 small-offset-1">
+		<h2>Post Creation</h2>
+		<form class="editor" id="editor-<%= editor %>">
+			<input type="text" name="title" placeholder="title" class="small-12 editor-title">
+			<textarea name="editor1"></textarea>
+			<!-- <textarea class="js-st-instance"></textarea> -->
+			<input type="submit">
+		</form>
+	</div>
+<%}; %>

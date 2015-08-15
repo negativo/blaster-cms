@@ -1,14 +1,15 @@
 <%- include("./partials/header") %>
 <%  editor = "page"; %>
 
-	
-<div id="page-wrapper" style="height:100vh;">
+    
+<div id="page-wrapper">
 
-	<%= JSON.stringify(dashboard.templates) %>
+    <%= JSON.stringify(dashboard.templates) %>
 
-	<%= templates = dashboard.templates.templates; %>
+    <%= templates = dashboard.templates.templates; %>
 
     <div class="container-fluid">  
+
         <%- include("./partials/editor") %>
 
         <h4>templates</h4>

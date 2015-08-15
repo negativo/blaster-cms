@@ -17,14 +17,16 @@ module.exports = function(app,express){
 	app.get("/admin/configurations", GET.configurationsPageCtrl );
 
 	//CRUD
-	app.get("/admin/edit-post", GET.editPostCtrl );
-	app.get("/admin/edit-page", GET.editPageCtrl );
+	app.get("/admin/create-post", GET.createPostCtrl );
+	app.get("/admin/create-page", GET.createPageCtrl );
+	app.get("/admin/edit-page/:id", GET.editSinglePage );
 
 
 
 	//POSTS	
 	//login local
 	app.post("/admin/login", passport.authenticate('local'),  POST.loginCtrl );
+	app.post("/admin/edit-page", POST.editSinglePage );
 	
 
 }

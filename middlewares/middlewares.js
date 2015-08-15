@@ -14,7 +14,9 @@ module.exports = function(app,express,$ee){
 	//set static content folder	
 	app.use( express.static(global.appRoot + "/public") );
 	app.use( express.static(__root + "/views/installer/assets") );
-	app.use("/admin", express.static(global.appRoot + "/private") );
+	app.use("/admin/", express.static(global.appRoot + "/private") );
+	app.use("/admin/:sub/:sub2", express.static(global.appRoot + "/private") );
+	app.use("/admin/:sub/:sub2/:sub3", express.static(global.appRoot + "/private") );
 	//parsers
 	app.use(bodyParser());
 	//logins

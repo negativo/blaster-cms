@@ -34,7 +34,7 @@ var GET = {
 		});
 	},
 	pagesPageCtrl:function(req,res){
-		Pages.find({}, function(err, pages){
+		Pages.find({},{ content:0 }, function(err, pages){
 			if(pages !== null && req.isAuthenticated() ) {
 				var data =  $F.dataParser(req.shared,"pages",pages);
 				var currentUser = $F.dataParser(req.user);
@@ -61,27 +61,29 @@ var GET = {
 		});
 	},
 	//CRUD
-	editPostCtrl:function(req,res){
+	createPostCtrl:function(req,res){
 			var data =  $F.dataParser(req.shared);
 			var currentUser = $F.dataParser(req.user);
 			res.render("edit-post", { backend: data, currentUser: currentUser });
 	},
-	editPageCtrl:function(req,res){
-			// search for -page-template.ejs suffixed file to use them as template
-			// fs.readdir( __dirname + "/views/" + global.siteTemplate , function(err, files){
-			// 	var r = /\-page-template.[0-9a-z]+$/i;
-			// 	for (var i = 0; i < files.length; i++) {
-			// 		var x = files[i].match(r);
-			// 		console.log("server.js", x);
-			// 	};	
-			// });
-
+	createPageCtrl:function(req,res){
 			Configs.findOne({},{ siteTemplate:1 }, function(err, templates){
 				if(templates === null) return;
 				var data =  $F.dataParser(req.shared,"templates",templates);
 				var currentUser = $F.dataParser(req.user);
 				res.render("edit-page", { backend: data, currentUser: currentUser });
 			});
+	},
+	editSinglePage:function(req,res){
+		if( req.params.id ){
+			var pageId = req.params.id;
+			Pages.findById( pageId ,function(err,singlePage){
+				console.log("private-request.js", singlePage );
+				var data =  $F.dataParser(req.shared);
+				var currentUser = $F.dataParser(req.user);
+				res.render("edit-page", { backend: data, currentUser: currentUser, single: singlePage });
+			});
+		}
 	}
 };
 
@@ -89,6 +91,19 @@ var POST = {
 	loginCtrl:function(req,res){
 		//console.log("routes.js", req.session);
 		res.json({ err:undefined });
+	},
+	editSinglePage:function(req,res){
+		console.log("private-request.js", req.body);
+		var pageId = req.body.id;
+		Pages.findById( pageId ,function(err,singlePage){
+			console.log("private-request.js", singlePage );
+			singlePage.title = req.body.title;
+			singlePage.content = req.body.body;
+			singlePage.save(function(err){
+				if (err) throw err;
+				res.send(200);
+			});
+		});
 	}
 };
 

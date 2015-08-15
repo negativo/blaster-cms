@@ -13,23 +13,22 @@
 	<link rel="stylesheet" href="/components/foundation/css/foundation.min.css">
 </head>
 <body>
-
-
-<% if(shared.isLoggedIn) { %>
-	<%- include('../partials/admin-bar'); %>
-<% }; %>
-
-<div class="ornament">
-	<div class="object-bg"></div>
-	<div class="function-bg"></div>
-	<div class="parameter-bg"></div>
-	<div class="statement-bg"></div>
-</div>
-
+	<!-- admin bar -->
+	<% if(shared.isLoggedIn) { %>
+		<%- include('../partials/admin-bar'); %>
+	<% }; %>
+	<!-- colored stripes useless -->
+	<div class="ornament">
+		<div class="object-bg"></div>
+		<div class="function-bg"></div>
+		<div class="parameter-bg"></div>
+		<div class="statement-bg"></div>
+	</div>
+	<!-- MAIN WRAPPER -->
 	<div class="site-wrapper small-10 small-offset-1 medium-8 medium-offset-2 large-6 large-offset-3">
-
-	<header class="small-12 home">
-		<h1><a href="/"><%= shared.title %></h1></a><span class="subtitle"><%= shared.subtitle %></span>
-		
-		<%- include("../partials/nav") %>
-	</header>
+		<!-- HEADER -->
+		<header class="small-12 home">
+			<h1><a href="/"><%= shared.title %></h1></a><span class="subtitle"><%= shared.subtitle %></span>
+			<!-- NAVIGATION -->
+			<%- include("../partials/nav") %>
+		</header>

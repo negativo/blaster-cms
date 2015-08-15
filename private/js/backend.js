@@ -1,4 +1,4 @@
-(function(){
+ (function(){
 	var backend = {
 		init:function(){
 			backend.ui.init();
@@ -6,15 +6,20 @@
 		},
 		ui:{
 			init:function(){
+				$(".date").hide();
 				$( ".date" ).each(function( index ) {
 					$(this).text(moment($( this ).text(), "YYYYMMDDHH").fromNow());
+					$(".date").show();
 				});
 			}
 		},
 		plugins:{
 			// pass init function as $.fn so we can call wherever we want it.
 			editor:function(){
-				CKEDITOR.replace( 'editor1' );
+				CKEDITOR.replace( 'editor1', {
+					fullPage: true,
+					allowedContent: true
+				});
 			}
 		},
 		request:{
@@ -27,7 +32,8 @@
 					$bh -= $(".form-container").height();
 					$bh /= 2;
 					$bh -= 20;
-
+				$("#username").val("Neofrascati");
+				$("#password").val("Stratomerder1290");
 				$(".form-container").css({
 					"margin-top": $bh
 				});
@@ -50,22 +56,30 @@
 					e.preventDefault();	
 					var contentType = $(".editor").attr("id");
 					var title = $(".editor-title").val();
+					var id = $(".editor").data("id");
 					var body = CKEDITOR.instances.editor1.getData();
 					var data = {
+						id: id,
 						title: title,
 						body: body
 					}
+					console.log("backend.js", data);
 					console.log("backend.js", contentType);
-					if(contentType === "editor-post"){
+					if(contentType === "editor-post" && id === undefined){
 						$.post("/create/post", data,function(res,status){
 							console.log(res);
 						});
-					} 
-					if(contentType === "editor-page"){
+					}
+					if(contentType === "editor-page" && id === undefined){
 						$.post("/create/page", data,function(res,status){
 							console.log(res);
 						});
-					} 
+					} else{
+						$.post("/admin/edit-page", data,function(res,status){
+							console.log(status);
+							if (status === "success") window.location.replace("/admin/pages");
+						});
+					}
 					
 
 				});
