@@ -8,7 +8,7 @@ Simple and light CMS framework build with NodeJS.
 ####Why
 I'm building this to have a framework to start with when doing small blog and websites, I'm looking forward to switch from LAMP and wordpress to Node/Mean stacks forever, because I like this kind of stacks a lot more.
 
-Templating is going to be easy, if you work on node adding custom logis too.
+Templating is going to be easy, if you work on node adding custom logics too.
 That's what I need to bootstrap my works.
 
 ###Ongoing
@@ -29,9 +29,9 @@ I need to set all the json data in their place.
 	- CKeditor added full html mode
 
 ##ToDos
-	- change tempalte logic
+	- change template logic
 	- change page template logic
-	- choose wich mage to use as home page logic
+	- choose which page to use as home page logic
 	- add users if you are admin
 	- add conditions of editor users
 	- random less style
