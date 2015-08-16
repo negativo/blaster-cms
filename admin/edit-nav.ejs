@@ -1,0 +1,40 @@
+<%- include("./partials/header") %>
+      
+	
+    <div id="page-wrapper">
+
+        <div class="container-fluid">
+            <%= JSON.stringify(dashboard.configs) %>
+            <%= JSON.stringify(dashboard.pages) %>
+            <h1>Navigation</h1>
+			<form role="form" class="col-md-6" id="navigation-form">
+				<div class="form-group navigation-link-container">
+					<% for(var i=0; i<dashboard.navigation.length; i++) {%>
+					   <div class="navigation-link-single">
+						   	<i class="fa fa-fw fa-remove remove-page-from-nav"></i>
+						   	<label for="text" contenteditable><%= dashboard.navigation[i].linkName %></label>
+						   	<input type="text" class="form-control navigation-link" value="<%= dashboard.navigation[i].link %>">
+					   </div>
+					<% } %>					
+				</div>
+				<div class="add-navigation-link add-link"><i class="fa fa-fw fa-plus"></i></div>
+
+				<button type="submit" class="btn btn-default">Submit</button>
+			</form>
+			<div class="col-md-4 add-pages-container">
+				<% for (var i = 0; i < dashboard.pages.length; i++) { %>
+					<div class="add-page" data-slug="<%= dashboard.pages[i].slug %>" data-title="<%= dashboard.pages[i].title %>">
+						<i class="fa fa-fw fa-plus add-page-to-nav"></i>
+						<span><%= dashboard.pages[i].title %></span>
+					</div>
+				<% }; %>
+			</div>
+        </div>
+        <!-- /.container-fluid -->
+
+    </div>
+    <!-- /#page-wrapper -->
+
+
+<%- include("./partials/footer") %>
+

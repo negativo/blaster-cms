@@ -42,7 +42,8 @@ module.exports = function(app,express,$ee){
 				delete req.shared.db_link;
 				delete req.shared.__v;
 				delete req.shared._id;
-				$ee.emit("configs_updated", cfg, "Configuration has been reloaded");
+				delete req.shared.templates;
+				$ee.emit("configs_updated", cfg, "Configuration has been attached to requestes");
 				next();			
 			});
 		}

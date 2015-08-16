@@ -1,7 +1,7 @@
+<%= JSON.stringify(navigation) %>
 <nav>
-	<a href="#">About</a>
-	<a href="#">Node</a>
-	<a href="#">Angular</a>
-	<a href="#">Javascript</a>
-	<a href="#">Snippets</a>
+<% for (var i = 0; i < navigation.length; i++) { 
+	if(navigation[i].display) { %>
+		<a href="<%= navigation[i].link %>"><%= navigation[i].linkName %></a>
+<% }};%>
 </nav>

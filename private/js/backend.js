@@ -32,6 +32,7 @@
 				backend.request.editorGetData();
 				backend.request.login();
 				backend.request.settings();
+				backend.request.navigation();
 			},
 			login:function(){
 				var $bh = $(document).height();
@@ -64,6 +65,11 @@
 					$socialLink = $(".social-link"),
 					getLinks = [];
 
+				$(".remove-sopcial-link").click(function(e){
+					e.preventDefault();	
+					$(this).parent().remove();
+				});	
+
 				$addLink.click(function(e){
 					$socialsContainer.append('<div><label for="text" contenteditable>Edit this</label><input type="text" class="form-control social-link"></div>');
 				});
@@ -77,7 +83,7 @@
 						}
 						getLinks.push(social);
 						//console.log("backend.js", getLinks);
-					})
+					});
 					var settings = {
 						siteTitle: $("#site-title").val().trim(),
 						subtitle: $("#site-subtitle").val().trim(),
@@ -87,9 +93,57 @@
 					console.log("backend.js", settings );
 					$.post("/admin/edit-configurations", settings ,function(res,status){
 						console.log("backend.js", res);
+						getLinks = [];
+						window.location.replace("configurations");
 					});
-					
 				});
+			},
+			navigation:function(){
+				var $addLink = $(".add-navigation-link"),
+					$navigationForm = $("#navigation-form")
+					$navigationsContainer = $(".navigation-link-container"),
+					$navigationLink = $(".navigation-link"),
+					$exPageWrap = $(".add-pages-container"),
+					getNavigation = { links:[] };
+				
+
+				$(".add-page-to-nav").click(function(e){
+					e.preventDefault();
+					var existings = {
+						slug: $(this).parent().data("slug"),
+						title: $(this).parent().data("title")
+					};
+					$navigationsContainer
+						.append('<div><label for="text" contenteditable>'+ existings.title +'</label><input type="text" class="form-control navigation-link" placeholder="'+ existings.title +'" value="'+ existings.slug +'"><i class="fa fa-fw fa-remove remove-page-from-nav"></i></div>');
+				});
+
+				$(".remove-page-from-nav").click(function(e){
+					e.preventDefault();	
+					$(this).parent().remove();
+				});				
+
+				$addLink.click(function(e){
+					$navigationsContainer.append('<div><label for="text" contenteditable>Edit Nav Name</label><input type="text" class="form-control navigation-link" placeholder="URL"></div>');
+				});		
+				$navigationForm.submit(function(e){
+					e.preventDefault();
+					$navigationsContainer.find(".navigation-link").each(function(i){
+						var navigation = {
+							linkName: $(this).prev().text().trim(),
+							link: $(this).val().trim(),
+							display:true
+						}
+						getNavigation.links.push(navigation);
+						//console.log("backend.js", getNavigation);
+					});
+					console.log("backend.js", getNavigation );
+					$.post("/admin/edit-nav", getNavigation ,function(res,status){
+						console.log("backend.js", res);
+						getNavigation.links = [];
+						window.location.replace("edit-nav");
+					});
+
+				});		
 			},
 			editorGetData:function(){
 				$(".editor").submit(function(e){

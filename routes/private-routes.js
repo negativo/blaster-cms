@@ -19,6 +19,7 @@ module.exports = function(app,express){
 	//CRUD
 	app.get("/admin/new-post", GET.newPostCtrl );
 	app.get("/admin/new-page", GET.newPageCtrl );
+	app.get("/admin/edit-nav", GET.editNavigation );
 	app.get("/admin/edit-post/:id", GET.editSinglePost );
 	app.get("/admin/edit-page/:id", GET.editSinglePage );
 
@@ -29,6 +30,7 @@ module.exports = function(app,express){
 	app.post("/admin/login", passport.authenticate('local'),  POST.loginCtrl );
 	app.post("/admin/edit-post", POST.editSinglePost );
 	app.post("/admin/edit-page", POST.editSinglePage );
+	app.post("/admin/edit-nav", POST.editNavigation );
 	app.post("/admin/edit-configurations", POST.editConfigurations );
 	
 

@@ -12,8 +12,9 @@ var express = require("express"),
 var GET = {
 	homeCtrl: function(req,res){
 		Post.find({},function(err,posts){
-			var data =  $F.dataParser(req.shared,"posts",posts);
-			res.render(req.templates["home-template"], { viewData: data })
+			var data =  $F.dataParser(req.shared,"posts",posts),
+				navigation =  $F.dataParser(req.navigation);
+			res.render(req.templates["home-template"], { viewData: data, navigation: navigation })
 		}).sort({ "publishedBy.date": -1 });
 	},
 	singlePageCtrl:function (req, res) {
@@ -21,8 +22,9 @@ var GET = {
 		Page.findOne({ "slug": slug },function(err,page){
 			//console.log("requests.js", page,err);
 			if(page === null && req.url !== "/favicon.ico" ) res.redirect("/404");
-			var data =  $F.dataParser(req.shared,"page",page);
-			res.render(req.templates["page-template"], { viewData: data } );
+			var data =  $F.dataParser(req.shared,"page",page),
+				navigation =  $F.dataParser(req.navigation);
+			res.render(req.templates["page-template"], { viewData: data, navigation: navigation } );
 
 		});
 	},
@@ -31,8 +33,9 @@ var GET = {
 		Post.findOne({ "slug": slug },function(err,post){
 			//console.log("requests.js", page,err);
 			if(post === null) res.redirect("/404");
-			var data =  $F.dataParser(req.shared,"post",post);
-			res.render(req.templates["post-template"], { viewData: data } );
+			var data =  $F.dataParser(req.shared,"post",post),
+				navigation =  $F.dataParser(req.navigation);
+			res.render(req.templates["post-template"], { viewData: data, navigation: navigation  } );
 		});
 	},
 	allPostsCtrl:function(req,res){

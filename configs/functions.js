@@ -126,6 +126,7 @@ var that = module.exports = {
 		//  cloned[name] = add;
 		//  return JSON.stringify(cloned);
 		//  console.log("functions.js", Object.isExtensible(original));
+		if(typeof original === String ){ original = JSON.parse(original); }
 		if( name && add ) original[name] = add;
 		return JSON.stringify(original);
 

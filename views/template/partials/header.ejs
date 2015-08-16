@@ -1,6 +1,8 @@
 <%  shared = JSON.parse(viewData); 
 	if(shared.posts) posts = shared.posts;
 	if(shared.page) page = shared.page;
+	if(shared.navigation) navigation = shared.navigation;
+	if(shared.links) links = shared.links;
 %>
 <!DOCTYPE html>
 <html>
@@ -32,3 +34,5 @@
 			<!-- NAVIGATION -->
 			<%- include("../partials/nav") %>
 		</header>
+
+<%= JSON.stringify(shared) %>

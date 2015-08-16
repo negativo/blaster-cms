@@ -9,13 +9,14 @@ var ConfigsSchema = Schema({
 	isInstalled : Boolean,
 	admin : String,
 	title : String,
+	subtitle : String,
 	theme : String,
 	templates : {
 		"home-template" : String,
 		"page-template" : String,
 		"post-template" : String
 	},
-	subtitle : String,
+	navigation:Array,
 	links: Array
 });
 

@@ -118,6 +118,20 @@ var GET = {
 				res.render("editor", { backend: data, currentUser: currentUser, editor:"page", single: singlePage });
 			});
 		}
+	},
+	editNavigation:function(req,res){
+		req.shared.title = req.shared.title + " Navigation";
+		req.shared.class = "edit-navigation";
+		Configs.findOne({},{ db_link:0, templates:0 }, function(err, configs){
+			Pages.find({},{ slug:1, title:1 },function(err,pages){
+				if(configs !== null && req.isAuthenticated() ) {
+					var data =  $F.dataParser(req.shared,"configs",configs),
+						data =  $F.dataParser(req.shared,"pages",pages);
+					var currentUser = $F.dataParser(req.user);
+					res.render("edit-nav", { backend: data, currentUser: currentUser });
+				}
+			});
+		});
 	}
 };
 
@@ -160,6 +174,7 @@ var POST = {
 
 			configs.title = req.body.siteTitle;
 			configs.subtitle = req.body.subtitle;
+			configs.links = [];
 			configs.links = req.body.links;
 			console.log("private-request.js", req.body);
 			configs.save(function(err){
@@ -169,8 +184,18 @@ var POST = {
 				});
 			});
 
+		res.send("success")
 		});
-		res.send("got it")
+		//res.send("success")
+	},
+	editNavigation:function(req,res){
+		console.log("private-request.js >>>>>>", req.body);
+		Configs.findOne({}, function(err, configs){
+			configs.navigation = [];
+			configs.navigation = req.body.links;
+			configs.save();
+			res.send("success");
+		});
 	}
 };
 

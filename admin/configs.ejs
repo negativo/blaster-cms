@@ -22,8 +22,15 @@
 				    <input type="text" class="form-control" id="admin-email" value="<%= user.email %>">
 				</div>
 				<h4>Social Links</h4>
-				<div class="form-group social-link-container"></div>
-				<div class="add-social-link"><i class="fa fa-fw fa-plus"></i></div>
+				<div class="form-group social-link-container">
+					<% for(var i=0; i<dashboard.links.length; i++) {%>
+					    <div class="social-link-single">
+					   <i class="fa fa-fw fa-remove remove-sopcial-link"></i>
+					   <label for="link" contenteditable><%= dashboard.links[i].website %></label>
+					   <input type="text" name="link" class="form-control social-link" value="<%= dashboard.links[i].link %>"></div>
+					<% } %>					
+				</div>
+				<div class="add-social-link add-link"><i class="fa fa-fw fa-plus"></i></div>
 
 				<button type="submit" class="btn btn-default">Submit</button>
 			</form>
