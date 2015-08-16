@@ -36,6 +36,11 @@ module.exports = function(app,express){
 	app.post("/admin/edit-user-profile", POST.editUserProfile );
 	app.post("/admin/edit-user-password", POST.editUserPassword );
 	
+	//use it later
+	var isAdmin = function(req,res,next){
+		if (req.user.role !== "admin") res.status(401).send("unauthorized");
+		next();
+	}
 
 }
 

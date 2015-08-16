@@ -2,7 +2,12 @@
 
 <div class="container-fluid">
     <%= JSON.stringify(dashboard.users) %>
-<!-- non è un array per ora -->
+    <h2>Posts</h2>
+    <% if (user.role === "admin") { %>
+        <a href="#">
+            <button type="button" class="btn btn-primary"><i class="fa fa-fw fa-plus"></i> Add new user</button>
+        </a>
+    <%};  %>
     <!-- Table -->
     <table class="table table-striped">
     <tr>

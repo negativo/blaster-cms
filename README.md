@@ -17,18 +17,24 @@ I need to set all the json data in their place.
 
 
 ##changelog
-	- Refactored Installation (yep another time*3)
-		-- simplified installation
-	- refactored isInstalled middleare
-		--simplified and less stressfull
-	- Templating redefined
-		-- added some .less
-	-- dashboard working need some css love
+	- dashboard functionality added:
+		-create/adit post
+		-create/edit page
+		-appearance>navigation edit
+		-users list and user profile
+			-change password
+		-configuration page
+			-configuration edit
+			-social links
+	- CKeditor added full html mode
 
 ##ToDos
-	- Style everything that's missing
-	- Configuration and User panel in dashboard
-	- Methods for configurations changes
-	- theme change methods
-	- adding a method that will prepend to header.ejs all the needed variables and methods 
-	  so when templating you wont need to do it youself.
+	- change tempalte logic
+	- change page template logic
+	- choose wich mage to use as home page logic
+	- add users if you are admin
+	- add conditions of editor users
+	- random less style
+	- upload photos
+		- media manager
+	- profile avatar
