@@ -40,8 +40,8 @@
     <body class="<%= dashboard.class %>">
 <% } %>
         
-
         <% if(dashboard.class !== "login-page" ) { %>
             <div id="wrapper">
             <%- include("navigation") %>
         <% } %>
+    <%= JSON.stringify(dashboard) %>

@@ -29,6 +29,7 @@ module.exports = function(app,express){
 	app.post("/admin/login", passport.authenticate('local'),  POST.loginCtrl );
 	app.post("/admin/edit-post", POST.editSinglePost );
 	app.post("/admin/edit-page", POST.editSinglePage );
+	app.post("/admin/edit-configurations", POST.editConfigurations );
 	
 
 }

@@ -23,12 +23,14 @@ var GET = {
 	},
 	dashboardPageCtrl:function(req,res){
 		req.shared.title = req.shared.title + " Dashboard";
+		req.shared.class = "dashboard-home";
 		var data =  $F.dataParser(req.shared);
 		var currentUser = $F.dataParser(req.user);
 		res.render("panel", { backend: data, currentUser: currentUser });
 	},
 	postsPageCtrl:function(req,res){
 		req.shared.title = req.shared.title + " Posts";
+		req.shared.class = "dashboard-posts";
 		Posts.find({},{ body:0 }, function(err, posts){
 			if(posts !== null && req.isAuthenticated() ) {
 				var data =  $F.dataParser(req.shared,"posts",posts);
@@ -39,6 +41,7 @@ var GET = {
 	},
 	pagesPageCtrl:function(req,res){
 		req.shared.title = req.shared.title + " Pages";
+		req.shared.class = "dashboard-pages";
 		Pages.find({},{ content:0 }, function(err, pages){
 			if(pages !== null && req.isAuthenticated() ) {
 				var data =  $F.dataParser(req.shared,"pages",pages);
@@ -49,6 +52,7 @@ var GET = {
 	},
 	usersPageCtrl:function(req,res){
 		req.shared.title = req.shared.title + " Users";
+		req.shared.class = "dashboard-users";
 		Users.find({},{ password:0 }, function(err, users){
 			if(users !== null && req.isAuthenticated() ) {
 				var data =  $F.dataParser(req.shared,"users",users);
@@ -59,23 +63,28 @@ var GET = {
 	},
 	configurationsPageCtrl:function(req,res){
 		req.shared.title = req.shared.title + " Configurations";
-		Configs.findOne({}, function(err, configs){
-			if(configs !== null && req.isAuthenticated() ) {
-				var data =  $F.dataParser(req.shared,"configs",configs);
-				var currentUser = $F.dataParser(req.user);
-				res.render("configs", { backend: data, currentUser: currentUser });
-			}
+		req.shared.class = "dashboard-configurations";
+		Users.findOne({},{ password:0 }, function(err, users){
+			Configs.findOne({},{ db_link:0, templates:0 }, function(err, configs){
+				if(configs !== null && req.isAuthenticated() ) {
+					var data =  $F.dataParser(req.shared,"configs",configs);
+					var currentUser = $F.dataParser(users);
+					res.render("configs", { backend: data, currentUser: currentUser });
+				}
+			});
 		});
 	},
 	//CRUD
 	newPostCtrl:function(req,res){
 		req.shared.title = req.shared.title + " New Post";
+			req.shared.class = "new-post";
 			var data =  $F.dataParser(req.shared);
 			var currentUser = $F.dataParser(req.user);
 			res.render("editor", { backend: data, currentUser: currentUser, editor: "post" });
 	},
 	newPageCtrl:function(req,res){
-		req.shared.title = req.shared.title + " New Page";
+			req.shared.title = req.shared.title + " New Page";
+			req.shared.class = "new-page";
 			Configs.findOne({},{ siteTemplate:1 }, function(err, templates){
 				if(templates === null) return;
 				var data =  $F.dataParser(req.shared,"templates",["test","test2"]);
@@ -89,6 +98,7 @@ var GET = {
 			Posts.findById( postId ,function(err,singlePost){
 				console.log("private-request.js", singlePost );
 				req.shared.title = singlePost.title + " edit";
+				req.shared.class = "edit-post";
 				var data =  $F.dataParser(req.shared);
 				var currentUser = $F.dataParser(req.user);
 				res.render("editor", { backend: data, currentUser: currentUser, editor:"post", single: singlePost });
@@ -102,6 +112,7 @@ var GET = {
 			Pages.findById( pageId ,function(err,singlePage){
 				console.log("private-request.js", singlePage );
 				req.shared.title = singlePage.title + " edit";
+				req.shared.class = "edit-page";
 				var data =  $F.dataParser(req.shared);
 				var currentUser = $F.dataParser(req.user);
 				res.render("editor", { backend: data, currentUser: currentUser, editor:"page", single: singlePage });
@@ -142,6 +153,24 @@ var POST = {
 				res.send(200);
 			});
 		});
+	},
+	editConfigurations:function(req,res){
+		console.log("private-request.js", req.body);
+		Configs.findOne({}, function(err, configs){
+
+			configs.title = req.body.siteTitle;
+			configs.subtitle = req.body.subtitle;
+			configs.links = req.body.links;
+			console.log("private-request.js", req.body);
+			configs.save(function(err){
+				Users.findOne({}, function(err,admin){ 
+					admin.email = req.body.email;
+					admin.save();
+				});
+			});
+
+		});
+		res.send("got it")
 	}
 };
 

@@ -6,26 +6,32 @@
 		},
 		ui:{
 			init:function(){
+				$body = $("body");
 				$(".date").hide();
 				$( ".date" ).each(function( index ) {
 					$(this).text(moment($( this ).text(), "YYYYMMDDHH").fromNow());
 					$(".date").show();
 				});
+				if ( $body.find(".editor").length ) backend.plugins.editor();
 			}
 		},
 		plugins:{
 			// pass init function as $.fn so we can call wherever we want it.
 			editor:function(){
+				$body = $("body");
+				$body.find(".editor").hide();
 				CKEDITOR.replace( 'editor1', {
 					fullPage: true,
 					allowedContent: true
 				});
+				$body.find(".editor").show();
 			}
 		},
 		request:{
 			init:function(){
 				backend.request.editorGetData();
 				backend.request.login();
+				backend.request.settings();
 			},
 			login:function(){
 				var $bh = $(document).height();
@@ -49,6 +55,40 @@
 						if( res.err ) console.log("backend.js", res.err);
 						if( !res.err ) window.location.replace("/admin/panel");
 					});
+				});
+			},
+			settings:function(){
+				var $addLink = $(".add-social-link"),
+					$settingsForm = $("#settings-form")
+					$socialsContainer = $(".social-link-container"),
+					$socialLink = $(".social-link"),
+					getLinks = [];
+
+				$addLink.click(function(e){
+					$socialsContainer.append('<div><label for="text" contenteditable>Edit this</label><input type="text" class="form-control social-link"></div>');
+				});
+
+				$settingsForm.submit(function(e){
+					e.preventDefault();
+					$socialsContainer.find(".social-link").each(function(i){
+						var social = {
+							website: $(this).prev().text().trim(),
+							link: $(this).val().trim()
+						}
+						getLinks.push(social);
+						//console.log("backend.js", getLinks);
+					})
+					var settings = {
+						siteTitle: $("#site-title").val().trim(),
+						subtitle: $("#site-subtitle").val().trim(),
+						email: $("#admin-email").val().trim(),
+						links: getLinks
+					};
+					console.log("backend.js", settings );
+					$.post("/admin/edit-configurations", settings ,function(res,status){
+						console.log("backend.js", res);
+					});
+					
 				});
 			},
 			editorGetData:function(){
@@ -108,8 +148,4 @@
 		console.log("backend.js", i);
 		return i;
 	}
-	//global jquery methods
-	$.fn.initEditor = function(){
-		return backend.plugins.editor();
-	};
 })(jQuery)
