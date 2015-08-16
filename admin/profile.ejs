@@ -1,8 +1,7 @@
 <%- include("./partials/header") %>
+<% profile = dashboard.profile %>
 
-<div class="container-fluid">
-
-    <% profile = dashboard.profile %>
+<div class="container-fluid profile-container" data-id="<%= profile._id %>">
 
     <%= JSON.stringify(profile)  %>
 
@@ -30,11 +29,17 @@
                 <option value="editor">editor</option>
             </select>
         </div>
-        <h4>Password Change</h4>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <div class="clearfix"></div>
+    <br>
+    <h2>Password Change</h2>
+    <hr>
+    <form role="form" class="col-md-4" id="user-profile-pwd">
         <div class="form-group">
-            <input type="password" class="form-control profile-old-pwd" placeholder="Old password">
-            <input type="password" class="form-control profile-new-pwd" placeholder="New password">
-            <input type="password" class="form-control profile-check-pwd" placeholder="Repeat new password">
+            <input type="text" class="form-control profile-old-pwd" placeholder="Old password">
+            <input type="text" class="form-control profile-new-pwd" placeholder="New password">
+            <input type="text" class="form-control profile-check-pwd" placeholder="Repeat new password">
             <label class="pwd-err">error</label>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>

@@ -29,6 +29,35 @@ var that = module.exports = {
 		mongoose.connect(URI, options); 
 		$ee.emit("mongo_global","mongo_global");
 	},
+	checkPwd:function(userId, password){
+		var deferred = Q.defer();
+		User.findById( userId, function(err,user){
+			if(!err) deferred.resolve(crypto.bcrypt.compare(password,user.password));
+			if(err) deferred.reject(err);
+		});
+		return deferred.promise;
+	},
+	changePwd:function(userId, password, newPwd){
+		var deferred = Q.defer();
+		User.findById( userId, function(err,user){
+			if(user) {
+				if(crypto.bcrypt.compare(password,user.password)){
+					user.password = crypto.bcrypt.encrypt(newPwd);
+					user.save(function(err,saved){
+						console.log("functions.js :47", err, saved);
+						if (err === null) deferred.resolve("Password changed");
+						if (err !== null) deferred.reject("error while saving " + err);
+					});
+				}else{
+					deferred.reject("current password incorrect ");
+				};
+			}
+			if(err) {
+				deferred.reject("user not found " + err);
+			}
+		});
+		return deferred.promise;
+	},
 	checkDatabase:function(mongo){
 		//console.log("mongolink:",mongo);
 		var testConnection = function(){

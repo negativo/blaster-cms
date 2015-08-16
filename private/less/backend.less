@@ -8,6 +8,7 @@
 @primaryTextColor:   #212121;
 @secondaryTextColor: #727272;
 @dividerColor:       #B6B6B6;
+@green: #4CAF50;
 
 .heading{
 	font-family: "Lato";
@@ -109,14 +110,19 @@ hr{
 .navigation-link-container{
 	.navigation-link-single {margin-top: 15px;}
 }
-#user-profile-form{
+#user-profile-form,#user-profile-pwd{
 	.pwd-err{
 		display:none;
 		width: 100%;
 		padding: 0px 10px;
 		text-transform: uppercase;
 		text-align: right !important;
-		color:red;
+		&.alert{
+			color: @accentColor;
+		}
+		&.success{
+			color: @green;
+		}
 	}
 	input{
 		margin: 10px 0px;

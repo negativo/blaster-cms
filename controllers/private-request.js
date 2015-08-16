@@ -19,7 +19,6 @@ var GET = {
 		for (prop in data) if( prop !== "title") delete data[prop];
 		data =  $F.dataParser(data,"class","login-page");
 		var currentUser = $F.dataParser({});
-		console.log("private-request.js", req.session);
 		res.render("login", { backend: data, currentUser: currentUser } );
 
 	},
@@ -204,7 +203,7 @@ var POST = {
 		//res.send("success")
 	},
 	editNavigation:function(req,res){
-		console.log("private-request.js >>>>>>", req.body);
+		console.log("private-request.js :206 >>>>", req.body);
 		Configs.findOne({}, function(err, configs){
 			configs.navigation = req.body.links;
 			if (configs.navigation === undefined ) {
@@ -219,7 +218,20 @@ var POST = {
 		});
 	},
 	editUserProfile:function(req,res){
-		res.send(req.body);
+		//oldPwd, newPwd, CheckPwd
+		var pwd = req.body;
+		$F.changePwd( pwd.id, pwd.oldPwd, pwd.newPwd )
+			.then(function(changePwd){
+				if(changePwd){
+					req.logout();
+					res.send({ message:changePwd, err:false})
+				}else{
+					res.send({ message:changePwd, err:true});
+				}
+			})
+			.fail(function(err){
+				res.send({ message:err, err:true})
+			});
 	}
 };
 

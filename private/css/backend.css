@@ -107,14 +107,23 @@ hr {
 .navigation-link-container .navigation-link-single {
   margin-top: 15px;
 }
-#user-profile-form .pwd-err {
+#user-profile-form .pwd-err,
+#user-profile-pwd .pwd-err {
   display: none;
   width: 100%;
   padding: 0px 10px;
   text-transform: uppercase;
   text-align: right !important;
-  color: red;
 }
-#user-profile-form input {
+#user-profile-form .pwd-err.alert,
+#user-profile-pwd .pwd-err.alert {
+  color: #ff5252;
+}
+#user-profile-form .pwd-err.success,
+#user-profile-pwd .pwd-err.success {
+  color: #4caf50;
+}
+#user-profile-form input,
+#user-profile-pwd input {
   margin: 10px 0px;
 }
