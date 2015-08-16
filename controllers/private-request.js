@@ -15,17 +15,20 @@ var GET = {
 	loginPageCtrl:function(req,res){
 		//clean req shared before sending.
 		var data = req.shared;
+			data.title = req.shared.title + " Login";
 		for (prop in data) if( prop !== "title") delete data[prop];
 		data =  $F.dataParser(data,"class","login-page");
 		var currentUser = $F.dataParser({});
 		res.render("login", { backend: data, currentUser: currentUser } );
 	},
 	dashboardPageCtrl:function(req,res){
+		req.shared.title = req.shared.title + " Dashboard";
 		var data =  $F.dataParser(req.shared);
 		var currentUser = $F.dataParser(req.user);
 		res.render("panel", { backend: data, currentUser: currentUser });
 	},
 	postsPageCtrl:function(req,res){
+		req.shared.title = req.shared.title + " Posts";
 		Posts.find({},{ body:0 }, function(err, posts){
 			if(posts !== null && req.isAuthenticated() ) {
 				var data =  $F.dataParser(req.shared,"posts",posts);
@@ -35,6 +38,7 @@ var GET = {
 		});
 	},
 	pagesPageCtrl:function(req,res){
+		req.shared.title = req.shared.title + " Pages";
 		Pages.find({},{ content:0 }, function(err, pages){
 			if(pages !== null && req.isAuthenticated() ) {
 				var data =  $F.dataParser(req.shared,"pages",pages);
@@ -44,6 +48,7 @@ var GET = {
 		});
 	},
 	usersPageCtrl:function(req,res){
+		req.shared.title = req.shared.title + " Users";
 		Users.find({},{ password:0 }, function(err, users){
 			if(users !== null && req.isAuthenticated() ) {
 				var data =  $F.dataParser(req.shared,"users",users);
@@ -53,6 +58,7 @@ var GET = {
 		});
 	},
 	configurationsPageCtrl:function(req,res){
+		req.shared.title = req.shared.title + " Configurations";
 		Configs.findOne({}, function(err, configs){
 			if(configs !== null && req.isAuthenticated() ) {
 				var data =  $F.dataParser(req.shared,"configs",configs);
@@ -63,11 +69,13 @@ var GET = {
 	},
 	//CRUD
 	newPostCtrl:function(req,res){
+		req.shared.title = req.shared.title + " New Post";
 			var data =  $F.dataParser(req.shared);
 			var currentUser = $F.dataParser(req.user);
 			res.render("editor", { backend: data, currentUser: currentUser, editor: "post" });
 	},
 	newPageCtrl:function(req,res){
+		req.shared.title = req.shared.title + " New Page";
 			Configs.findOne({},{ siteTemplate:1 }, function(err, templates){
 				if(templates === null) return;
 				var data =  $F.dataParser(req.shared,"templates",["test","test2"]);
@@ -80,6 +88,7 @@ var GET = {
 			var postId = req.params.id;
 			Posts.findById( postId ,function(err,singlePost){
 				console.log("private-request.js", singlePost );
+				req.shared.title = singlePost.title + " edit";
 				var data =  $F.dataParser(req.shared);
 				var currentUser = $F.dataParser(req.user);
 				res.render("editor", { backend: data, currentUser: currentUser, editor:"post", single: singlePost });
@@ -87,10 +96,12 @@ var GET = {
 		}
 	},	
 	editSinglePage:function(req,res){
+		req.shared.title = req.shared.title + " Configurations";
 		if( req.params.id ){
 			var pageId = req.params.id;
 			Pages.findById( pageId ,function(err,singlePage){
 				console.log("private-request.js", singlePage );
+				req.shared.title = singlePage.title + " edit";
 				var data =  $F.dataParser(req.shared);
 				var currentUser = $F.dataParser(req.user);
 				res.render("editor", { backend: data, currentUser: currentUser, editor:"page", single: singlePage });

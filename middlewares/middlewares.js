@@ -36,6 +36,7 @@ module.exports = function(app,express,$ee){
 					cfg = JSON.parse(cfg);
 				global.theme = cfg.theme;
 				req.shared = cfg;
+				req.shared.site = cfg.title;
 				req.templates = cfg.templates;
 				req.theme = cfg.theme;
 				delete req.shared.db_link;
