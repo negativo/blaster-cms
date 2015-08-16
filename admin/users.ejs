@@ -6,15 +6,17 @@
     <!-- Table -->
     <table class="table table-striped">
     <tr>
-        <th>#</th>
+        <th></th>
         <th>User</th>
         <th>Role</th>
+        <th>Email</th>
     </tr>
     <% for (var i = 0; i < dashboard.users.length; i++) { %>
-        <tr onclick="$.fn.getData(<%= JSON.stringify(dashboard.users[i]); %>)">
-        	<td><%= i + 1 %></td>
+        <tr>
+        	<td><a href="users/<%= dashboard.users[i]._id %>"><i class="fa fa-fw fa-cog fa-lg"></i></a></td>
             <td><%= dashboard.users[i].username %></td>
-            <td><%= dashboard.users[i].admin %></td>
+            <td><%= dashboard.users[i].role %></td>
+            <td><%= dashboard.users[i].email %></td>
         </tr>
     <% }; %>
   </table>			

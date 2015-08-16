@@ -71,7 +71,7 @@
 				});	
 
 				$addLink.click(function(e){
-					$socialsContainer.append('<div><label for="text" contenteditable>Edit this</label><input type="text" class="form-control social-link"></div>');
+					$socialsContainer.append('<div class="form-group"><label for="text" contenteditable>Edit this</label><input type="text" class="form-control social-link"></div>');
 				});
 
 				$settingsForm.submit(function(e){
@@ -114,7 +114,7 @@
 						title: $(this).parent().data("title")
 					};
 					$navigationsContainer
-						.append('<div><label for="text" contenteditable>'+ existings.title +'</label><input type="text" class="form-control navigation-link" placeholder="'+ existings.title +'" value="'+ existings.slug +'"><i class="fa fa-fw fa-remove remove-page-from-nav"></i></div>');
+						.append('<div class="form-group"><label for="text" contenteditable>'+ existings.title +'</label><input type="text" class="form-control navigation-link" placeholder="'+ existings.title +'" value="'+ existings.slug +'"><i class="fa fa-fw fa-remove remove-page-from-nav"></i></div>');
 				});
 
 				$(".remove-page-from-nav").click(function(e){
@@ -123,7 +123,7 @@
 				});				
 
 				$addLink.click(function(e){
-					$navigationsContainer.append('<div><label for="text" contenteditable>Edit Nav Name</label><input type="text" class="form-control navigation-link" placeholder="URL"></div>');
+					$navigationsContainer.append('<div class="form-group"><label for="text" contenteditable>Edit Nav Name</label><input type="text" class="form-control navigation-link" placeholder="URL"></div>');
 				});		
 				$navigationForm.submit(function(e){
 					e.preventDefault();

@@ -61,6 +61,19 @@ var GET = {
 			}
 		});
 	},
+	profileCtrl:function(req,res){
+		var userId = req.params.id;
+		Users.findById( userId, function(err, singleUser){
+			if(singleUser !== null && req.isAuthenticated() ) {
+				req.shared.title = singleUser.username + " Profile";
+				req.shared.class = singleUser.username.toLowerCase() + "-profile";
+				var data =  $F.dataParser(req.shared,"profile",singleUser);
+				var currentUser = $F.dataParser(req.user);
+				res.render("profile", { backend: data, currentUser: currentUser });
+			};
+		});
+
+	},
 	configurationsPageCtrl:function(req,res){
 		req.shared.title = req.shared.title + " Configurations";
 		req.shared.class = "dashboard-configurations";

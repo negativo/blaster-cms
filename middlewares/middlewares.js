@@ -17,6 +17,8 @@ module.exports = function(app,express,$ee){
 	app.use("/admin/", express.static(global.appRoot + "/private") );
 	app.use("/admin/:sub/:sub2", express.static(global.appRoot + "/private") );
 	app.use("/admin/:sub/:sub2/:sub3", express.static(global.appRoot + "/private") );
+	app.use("/admin/:sub/:sub2/:sub3/:sub4", express.static(global.appRoot + "/private") );
+	app.use("/admin/:sub/:sub2/:sub3/:sub4/:sub5", express.static(global.appRoot + "/private") );
 	//parsers
 	app.use(bodyParser());
 	//logins
@@ -55,7 +57,6 @@ module.exports = function(app,express,$ee){
 
 	// Change view folder public frontend
 	// change configs template on mongo to change template if you have others
-	// SE SCAPOCCIANO RIMETTILI PRIMA DEL CHECK AL DB TUTTI E TRE
 	app.use("/*",function(req,res,next){
 		app.use( express.static(__root + "/views/" + global.theme) );
 		app.set("views", __root + "/views/" + global.theme );

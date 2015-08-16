@@ -22,6 +22,9 @@ h6 {
   font-family: "Lato";
   font-weight: 500;
 }
+.form-group {
+  margin-top: 15px !important;
+}
 .login-page {
   background: #0288d1 !important;
   text-align: center;

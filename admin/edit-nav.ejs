@@ -8,9 +8,9 @@
             <%= JSON.stringify(dashboard.pages) %>
             <h1>Navigation</h1>
 			<form role="form" class="col-md-6" id="navigation-form">
-				<div class="form-group navigation-link-container">
+				<div class="navigation-link-container">
 					<% for(var i=0; i<dashboard.navigation.length; i++) {%>
-					   <div class="navigation-link-single">
+					   <div class="form-group navigation-link-single">
 						   	<i class="fa fa-fw fa-remove remove-page-from-nav"></i>
 						   	<label for="text" contenteditable><%= dashboard.navigation[i].linkName %></label>
 						   	<input type="text" class="form-control navigation-link" value="<%= dashboard.navigation[i].link %>">
