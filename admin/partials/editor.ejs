@@ -6,7 +6,7 @@ forgot to give the same name in creation I should refactor all reference now.., 
 		<form class="form editor" class="editor" id="editor-<%= editor %>" data-id="<%= single._id %>">
 			<div class="form-group">
 				<input type="text" name="title" placeholder="<%= single.title %>" value="<%= single.title %>" class="small-12 editor-title form-control">
-				<textarea name="editor1"><%= single.content ? single.content : single.body; %></textarea>
+				<textarea name="editor1"><%= single.body; %></textarea>
 				<!-- <textarea class="js-st-instance"></textarea> -->
 				<input type="submit">
 			</div>

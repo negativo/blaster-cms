@@ -107,7 +107,7 @@ var POST = {
 				slug:toSlug(page.title),
 				template:"page-template",
 				title: page.title,
-				content: page.body,
+				body: page.body,
 				publishedBy:{
 					date:Date.now()
 				},

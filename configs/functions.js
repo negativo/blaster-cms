@@ -123,7 +123,7 @@ var that = module.exports = {
 								slug:"sample-page",
 								template:"page-template",
 								title:"Sample",
-								content:"Hi I'm a page :)",
+								body:"Hi I'm a page :)",
 								publishedBy:{
 									user:cms.user,
 									date:Date.now()

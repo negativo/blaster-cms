@@ -6,7 +6,7 @@ var Page = new Schema({
 	slug:String,
 	template:String,
 	title:String,
-	content:String,
+	body:String,
 	publishedBy:{
 		user:String,
 		date:Date

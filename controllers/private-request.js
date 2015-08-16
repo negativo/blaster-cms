@@ -43,7 +43,7 @@ var GET = {
 	pagesPageCtrl:function(req,res){
 		req.shared.title = req.shared.title + " Pages";
 		req.shared.class = "dashboard-pages";
-		Pages.find({},{ content:0 }, function(err, pages){
+		Pages.find({},{ body:0 }, function(err, pages){
 			if(pages !== null && req.isAuthenticated() ) {
 				var data =  $F.dataParser(req.shared,"pages",pages);
 				var currentUser = $F.dataParser(req.user);
@@ -174,7 +174,7 @@ var POST = {
 		Pages.findById( pageId ,function(err,singlePage){
 			console.log("private-request.js", singlePage );
 			singlePage.title = req.body.title;
-			singlePage.content = req.body.body;
+			singlePage.body = req.body.body;
 			singlePage.slug = toSlug(req.body.title);
 			singlePage.save(function(err){
 				if (err) throw err;
