@@ -143,7 +143,6 @@
 					var settings = {
 						siteTitle: $("#site-title").val().trim(),
 						subtitle: $("#site-subtitle").val().trim(),
-						email: $("#admin-email").val().trim(),
 						links: getLinks
 					};
 					console.log("backend.js", settings );
@@ -244,8 +243,6 @@
 						});
 					};
 					
-					
-
 				});
 			}
 		}

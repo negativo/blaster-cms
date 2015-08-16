@@ -1,13 +1,8 @@
 <%- include("./partials/header") %>
-    
 <div id="page-wrapper">
-
     <%= JSON.stringify(dashboard.templates) %>
-
     <div class="container-fluid">  
-
         <%- include("./partials/editor") %>
-
         <% if (dashboard.templates) {
             templates = dashboard.templates; %>
                 <h4>templates</h4>
@@ -22,7 +17,5 @@
     <!-- /.container-fluid -->
 </div>
 <!-- /#page-wrapper -->
-
-
 <%- include("./partials/footer") %>
 
