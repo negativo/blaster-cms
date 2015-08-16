@@ -82,7 +82,7 @@ var GET = {
 			Configs.findOne({},{ db_link:0, templates:0 }, function(err, configs){
 				if(configs !== null && req.isAuthenticated() ) {
 					var data =  $F.dataParser(req.shared,"configs",configs);
-					var currentUser = $F.dataParser(users);
+					var currentUser = $F.dataParser(req.user);
 					res.render("configs", { backend: data, currentUser: currentUser });
 				}
 			});
@@ -192,10 +192,10 @@ var POST = {
 			configs.links = req.body.links;
 			console.log("private-request.js", req.body);
 			configs.save(function(err){
-				Users.findOne({}, function(err,admin){ 
-					admin.email = req.body.email;
-					admin.save();
-				});
+				// Users.findOne({}, function(err,admin){ 
+				// 	admin.email = req.body.email;
+				// 	admin.save();
+				// });
 			});
 
 		res.send("success")
@@ -218,6 +218,19 @@ var POST = {
 		});
 	},
 	editUserProfile:function(req,res){
+		//{id: "55d0dd911a5f1c41564a2734", username: "Neofrascati", name: "", email: "", role: "admin"}
+		var profile = req.body;
+		Users.findById( profile.id,function(err,user){
+			user.username = profile.username;
+			user.name = profile.name;
+			user.email = profile.email;
+			user.role = profile.role;
+			user.save(function(err){
+				if(err !== null ) res.send("sucess");
+			});
+		});
+	},
+	editUserPassword:function(req,res){
 		//oldPwd, newPwd, CheckPwd
 		var pwd = req.body;
 		$F.changePwd( pwd.id, pwd.oldPwd, pwd.newPwd )

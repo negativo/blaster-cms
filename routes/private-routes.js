@@ -34,6 +34,7 @@ module.exports = function(app,express){
 	app.post("/admin/edit-nav", POST.editNavigation );
 	app.post("/admin/edit-configurations", POST.editConfigurations );
 	app.post("/admin/edit-user-profile", POST.editUserProfile );
+	app.post("/admin/edit-user-password", POST.editUserPassword );
 	
 
 }

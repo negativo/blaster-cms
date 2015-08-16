@@ -61,9 +61,25 @@
 			},
 			profile:function(){
 				var $profilePwdForm = $("#user-profile-pwd"),
+					$profileForm = $("#user-profile-form"),
 					$profileId = $(".profile-container").data("id");
 
+				//CHANGE PROFILE INFO
+				$profileForm.submit(function(e){
+					e.preventDefault();
+					var profile = {
+						id: $profileId,
+						username: $("#profile-username").val(),
+						name: $("#profile-full-name").val(),
+						email: $("#profile-email").val(),
+						role: $("#profile-role").val()
+					}
+					$.post("/admin/edit-user-profile", profile, function(res,status){
+						console.log("backend.js :77", res);
+					});
+				});	
 
+				//CHANGE PASSWORD
 				$profilePwdForm.submit(function(e){
 					e.preventDefault();
 					$(".pwd-err").removeClass("alert success");
@@ -74,22 +90,8 @@
 						newPwd: $(".profile-new-pwd").val().trim(),
 						checkPwd: $(".profile-check-pwd").val().trim()
 					};
-					//console.log("backend.js", pwd);
-					//CHECKS
-					// if (pwd.oldPwd !== "" && pwd.newPwd !== pwd.CheckPwd && pwd.oldPwd !== pwd.newPwd){
-					// 	$.post("/admin/edit-user-profile",pwd ,function(res,status){
-					// 		console.log("backend.js :80", res);
-					// 		if(!res.err){
-					// 			$(".pwd-err").fadeIn().addClass("success").text(res.message);
-					// 		}else if(res !== "success"){
-					// 			$(".pwd-err").fadeIn().addClass("alert").text(res.message);
-					// 		}
-					// 	});
-					// }
-					// else{
-					// 	$(".pwd-err").fadeIn().addClass("alert").text("New passwords missmatch!");
-					// }
 
+					//validation then change it.
 					if(pwd.oldPwd === "" || pwd.newPwd === "" || pwd.checkPwd === "" ){
 						$(".pwd-err").fadeIn().addClass("alert").text("Can't be empty!");
 					} else if ( pwd.newPwd === pwd.oldPwd ) {
