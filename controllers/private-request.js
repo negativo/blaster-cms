@@ -191,8 +191,14 @@ var POST = {
 	editNavigation:function(req,res){
 		console.log("private-request.js >>>>>>", req.body);
 		Configs.findOne({}, function(err, configs){
-			configs.navigation = [];
 			configs.navigation = req.body.links;
+			if (configs.navigation === undefined ) {
+				configs.navigation = []; 
+			}else{
+				for (var i = 0; i < configs.navigation.length; i++) {
+					configs.navigation[i].link = "/page/"+configs.navigation[i].link;
+				};
+			};
 			configs.save();
 			res.send("success");
 		});

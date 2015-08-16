@@ -1,8 +1,9 @@
 <%- include("partials/header") %>
 
-<%= JSON.stringify(shared) %>
-<h1><%= shared.post.title  %></h1>
-<p><%- shared.post.body %></p>
+<div class="small-12">
+	<h1><%= shared.post.title  %></h1>
+	<div><%- shared.post.body %></div>
+</div>
 
 <%- include("partials/footer") %>
 
