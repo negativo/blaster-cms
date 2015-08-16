@@ -18,9 +18,14 @@ h3,
 h4,
 h5,
 h6 {
-  padding: 20px;
+  padding: 20px 0;
+  margin: 0;
   font-family: "Lato";
   font-weight: 500;
+}
+hr {
+  margin: 0;
+  padding: 0;
 }
 .form-group {
   margin-top: 15px !important;
@@ -101,4 +106,15 @@ h6 {
 }
 .navigation-link-container .navigation-link-single {
   margin-top: 15px;
+}
+#user-profile-form .pwd-err {
+  display: none;
+  width: 100%;
+  padding: 0px 10px;
+  text-transform: uppercase;
+  text-align: right !important;
+  color: red;
+}
+#user-profile-form input {
+  margin: 10px 0px;
 }

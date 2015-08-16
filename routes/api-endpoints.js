@@ -27,5 +27,6 @@ module.exports = function(app,express){
 	app.post("/create/post", POST.create.post);
 	app.post("/create/page", POST.create.page);
 
+
 }
 

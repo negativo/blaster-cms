@@ -2,20 +2,42 @@
 
 <div class="container-fluid">
 
-    <%= profile = dashboard.profile %>
+    <% profile = dashboard.profile %>
+
+    <%= JSON.stringify(profile)  %>
 
     <h2><%= profile.username %>'s Profile</h2>
     <hr>
 
     <form role="form" class="col-md-4" id="user-profile-form">
+        <h4>Basic Info</h4>
         <div class="form-group">
             <label for="text">Username</label>
             <input type="text" class="form-control" id="profile-username" value="<%= profile.username %>">
         </div>
         <div class="form-group">
-            <label for="text">Username</label>
-            <input type="text" class="form-control" id="profile-name" value="<%= profile.name %>">
+            <label for="text">Full Name</label>
+            <input type="text" class="form-control" id="profile-full-name" value="<%= profile.name %>">
         </div>
+        <div class="form-group">
+            <label for="email">email</label>
+            <input type="email" class="form-control" id="profile-email" value="<%= profile.email %>">
+        </div>
+        <div class="form-group">
+            <label for="role">Role</label>
+            <select name="role" id="profile-role" class="form-control">
+                <option value="admin">admin</option>
+                <option value="editor">editor</option>
+            </select>
+        </div>
+        <h4>Password Change</h4>
+        <div class="form-group">
+            <input type="password" class="form-control profile-old-pwd" placeholder="Old password">
+            <input type="password" class="form-control profile-new-pwd" placeholder="New password">
+            <input type="password" class="form-control profile-check-pwd" placeholder="Repeat new password">
+            <label class="pwd-err">error</label>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 
 </div>

@@ -33,6 +33,7 @@
 				backend.request.login();
 				backend.request.settings();
 				backend.request.navigation();
+				backend.request.profile();
 			},
 			login:function(){
 				var $bh = $(document).height();
@@ -56,6 +57,32 @@
 						if( res.err ) console.log("backend.js", res.err);
 						if( !res.err ) window.location.replace("/admin/panel");
 					});
+				});
+			},
+			profile:function(){
+				var $profileForm = $("#user-profile-form");
+
+
+				$profileForm.submit(function(e){
+					e.preventDefault();
+					$(".pwd-err").hide();
+					var pwd ={ 
+						oldPwd: $(".profile-old-pwd").val().trim(),
+						newPwd: $(".profile-new-pwd").val().trim(),
+						checkPwd: $(".profile-check-pwd").val().trim()
+					};
+
+					//CHECKS
+					if (pwd.oldPwd !== ""){
+						$.post("/admin/edit-user-profile",pwd ,function(res,status){
+							console.log(res);
+						});
+					}
+					// else if( pwd.oldPwd === pwd.newPwd ) {
+					// 	$(".pwd-err").fadeIn().text("Enter a new password");
+					// } else if(pwd.newPwd !== pwd.checkPwd) {
+					// 	$(".pwd-err").fadeIn().text("Text Missmatch");
+					// }
 				});
 			},
 			settings:function(){

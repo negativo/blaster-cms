@@ -100,6 +100,11 @@ var POST = {
 			}).save();
 			res.send("pagecreate"+r);	
 		}
+	},
+	checks:{
+		comparePwd:function(req,res){
+			req.send("");
+		}
 	}
 };
 

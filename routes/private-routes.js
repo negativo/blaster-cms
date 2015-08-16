@@ -33,6 +33,7 @@ module.exports = function(app,express){
 	app.post("/admin/edit-page", POST.editSinglePage );
 	app.post("/admin/edit-nav", POST.editNavigation );
 	app.post("/admin/edit-configurations", POST.editConfigurations );
+	app.post("/admin/edit-user-profile", POST.editUserProfile );
 	
 
 }

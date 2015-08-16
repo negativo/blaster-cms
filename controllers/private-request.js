@@ -19,7 +19,9 @@ var GET = {
 		for (prop in data) if( prop !== "title") delete data[prop];
 		data =  $F.dataParser(data,"class","login-page");
 		var currentUser = $F.dataParser({});
+		console.log("private-request.js", req.session);
 		res.render("login", { backend: data, currentUser: currentUser } );
+
 	},
 	dashboardPageCtrl:function(req,res){
 		req.shared.title = req.shared.title + " Dashboard";
@@ -63,7 +65,7 @@ var GET = {
 	},
 	profileCtrl:function(req,res){
 		var userId = req.params.id;
-		Users.findById( userId, function(err, singleUser){
+		Users.findById( userId,{password:0}, function(err, singleUser){
 			if(singleUser !== null && req.isAuthenticated() ) {
 				req.shared.title = singleUser.username + " Profile";
 				req.shared.class = singleUser.username.toLowerCase() + "-profile";
@@ -215,6 +217,9 @@ var POST = {
 			configs.save();
 			res.send("success");
 		});
+	},
+	editUserProfile:function(req,res){
+		res.send(req.body);
 	}
 };
 
