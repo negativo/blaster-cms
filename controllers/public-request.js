@@ -45,7 +45,7 @@ var GET = {
 		var slug = req.params.post;
 		Post.findOne({ "slug": slug },function(err,post){
 			//console.log("requests.js", page,err);
-			if(post === null) res.redirect("/404");
+			if(post === null) return res.redirect("/404");
 			req.shared.title = post.title + " - " + req.shared.title;
 			var data =  $F.dataParser(req.shared,"post",post),
 				navigation =  $F.dataParser(req.navigation);

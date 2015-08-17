@@ -9,6 +9,8 @@ var path = require("path");
 	session = require("express-session"),
 	passport = require("passport");
 
+
+
 module.exports = function(app,express,$ee){
 
 	//set static content folder	

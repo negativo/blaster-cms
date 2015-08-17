@@ -33,6 +33,7 @@
     "ejs": "^2.3.3",
     "express": "^4.13.2",
     "express-favicon": "^1.0.1",
+    "express-rewrite": "0.0.4",
     "express-session": "^1.11.3",
     "mongoose": "^4.1.0",
     "passport": "^0.2.2",

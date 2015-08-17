@@ -11,7 +11,9 @@ module.exports = function(app,express){
 
 	//GETs
 	app.get("/404",function(req,res){
-		res.send("404");
+		var data =  $F.dataParser(req.shared),
+		navigation =  $F.dataParser(req.navigation);
+		res.render( "404" , { viewData: data, navigation: navigation })
 	});
 	
 	app.get("/", GET.homeCtrl );
