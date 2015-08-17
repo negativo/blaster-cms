@@ -20,8 +20,9 @@ module.exports = function(app,express){
 	app.get("/page/:page", GET.singlePageCtrl );
 	app.get("/post/:post", GET.singlePostCtrl );
 	
-	app.get("/get/posts", GET.allPostsCtrl );
-	app.get("/get/pages", GET.allPagesCtrl );
+	//no used...	
+	// app.get("/get/posts", GET.allPostsCtrl );
+	// app.get("/get/pages", GET.allPagesCtrl );
 
 	app.get("/logout",function(req,res){
 		req.logout();

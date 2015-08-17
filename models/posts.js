@@ -17,7 +17,8 @@ var PostSchema = new Schema({
 		date:{ type: Date, default: Date.now() }
 	},
 	status:String,
-	type: { type:String, default: "post" }
+	type: { type:String, default: "post" },
+	tags: Array
 });
 
 module.exports = mongoose.model("posts", PostSchema);
