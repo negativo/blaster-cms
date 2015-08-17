@@ -92,8 +92,8 @@ var GET = {
 	newPostCtrl:function(req,res){
 		req.shared.title = req.shared.title + " New Post";
 			req.shared.class = "new-post";
-			var data =  $F.dataParser(req.shared);
-			var currentUser = $F.dataParser(req.user,"templates",req.postTempaltes);
+			var data =  $F.dataParser(req.shared,"templates",req.postTempaltes);
+			var currentUser = $F.dataParser(req.user);
 			res.render("editor", { backend: data, currentUser: currentUser, editor: "post" });
 	},
 	newPageCtrl:function(req,res){

@@ -1,1 +1,10 @@
-<h1>custom POST</h1>
+<%- include("partials/header") %>
+
+<div class="small-12">
+<h1>Im a custom one</h1>
+	<h1><%= shared.post.title  %></h1>
+	<div><%- shared.post.body %></div>
+</div>
+
+<%- include("partials/footer") %>
+
