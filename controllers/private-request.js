@@ -226,7 +226,9 @@ var POST = {
 			user.email = profile.email;
 			user.role = profile.role;
 			user.save(function(err){
-				if(err !== null ) res.send("sucess");
+				console.log("private-request.js :229", err);
+				if(err === null ) res.send("success");
+					else res.send("error")
 			});
 		});
 	},

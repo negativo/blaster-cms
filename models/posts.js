@@ -11,6 +11,7 @@ var PostSchema = new Schema({
 	title:String,
 	slug: String,
 	body:String,
+	template:String,
 	publishedBy:{
 		user:String,
 		date:Date

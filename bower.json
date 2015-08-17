@@ -8,6 +8,6 @@
   "license": "MIT",
   "dependencies": {
     "foundation": "~5.5.2",
-    "sir-trevor-js": "0.4.3"
+    "toastr": "~2.1.2"
   }
 }

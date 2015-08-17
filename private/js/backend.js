@@ -3,20 +3,20 @@
 		init:function(){
 			backend.ui.init();
 			backend.request.init();
+			backend.plugins.init();
 		},
 		ui:{
 			init:function(){
-				$body = $("body");
-				$(".date").hide();
-				$( ".date" ).each(function( index ) {
-					$(this).text(moment($( this ).text(), "YYYYMMDDHH").fromNow());
-					$(".date").show();
-				});
-				if ( $body.find(".editor").length ) backend.plugins.editor();
 			}
 		},
 		plugins:{
 			// pass init function as $.fn so we can call wherever we want it.
+			init:function(){
+				$body = $("body");
+				backend.plugins.momentjs();
+				backend.plugins.toastrjs();
+				if ( $body.find(".editor").length ) backend.plugins.editor();
+			},
 			editor:function(){
 				$body = $("body");
 				$body.find(".editor").hide();
@@ -25,6 +25,18 @@
 					allowedContent: true
 				});
 				$body.find(".editor").show();
+			},
+			momentjs:function(){
+				$body = $("body");
+				$(".date").hide();
+				$( ".date" ).each(function( index ) {
+					$(this).text(moment($( this ).text(), "YYYYMMDDHH").fromNow());
+					$(".date").show();
+				});
+			},
+			toastrjs:function(){
+				toastr.options.closeButton = true;
+				//toastr.options.progressBar = true;
 			}
 		},
 		request:{
@@ -75,7 +87,12 @@
 						role: $("#profile-role").val()
 					}
 					$.post("/admin/edit-user-profile", profile, function(res,status){
-						console.log("backend.js :77", res);
+						console.log("backend.js :90", res);
+						if (res === "success") {
+							toastr.success('Profile Changed!');
+						} else{
+							toastr.error('Error while changing profile');
+						}
 					});
 				});	
 
@@ -99,13 +116,14 @@
 					} else if ( pwd.newPwd !== pwd.checkPwd ) {
 						$(".pwd-err").fadeIn().addClass("alert").text("Passwords don't match!");
 					} else{
-						$.post("/admin/edit-user-profile",pwd ,function(res,status){
+						$.post("/admin/edit-user-password",pwd ,function(res,status){
 							console.log("backend.js :80", res);
 							if(!res.err){
 								$(".pwd-err").fadeIn().addClass("success").text(res.message + ", redirecting to login.");
+								toastr.success('Password changed!', 'Redirecting to login')
 								setTimeout(function(){
 									window.location.replace("/admin/panel");
-								},2000);
+								},2500);
 							}else if(res !== "success"){
 								$(".pwd-err").fadeIn().addClass("alert").text(res.message);
 							}
@@ -149,7 +167,8 @@
 					$.post("/admin/edit-configurations", settings ,function(res,status){
 						console.log("backend.js", res);
 						getLinks = [];
-						window.location.replace("configurations");
+						if (res === "success") toastr.success('Configurations Changed!');
+						//window.location.replace("configurations");
 					});
 				});
 			},
@@ -195,7 +214,10 @@
 					$.post("/admin/edit-nav", getNavigation ,function(res,status){
 						console.log("backend.js", res);
 						getNavigation.links = [];
-						window.location.replace("edit-nav");
+						toastr.success('Navigation Changed!');
+						console.log("backend.js :218", res);
+						setTimeout(function(){ window.location.replace("/admin/edit-nav"); }, 2000)
+						
 					});
 
 				});		
@@ -221,25 +243,37 @@
 					if(contentType === "editor-post" && id === undefined){
 						$.post("/create/post", data,function(res,status){
 							console.log(res);
-							if (status === "success") window.location.replace("/admin/posts");
+							if (status === "success") {
+								toastr.success("Post created!");
+								setTimeout(function() { window.location.replace("/admin/posts"); }, 1000);
+							}
 						});
 					};
 					if(contentType === "editor-post" && id ){
 						$.post("/admin/edit-post", data,function(res,status){
 							console.log(status);
-							if (status === "success") window.location.replace("/admin/posts");
+							if (status === "success") {
+								toastr.success("Post edited!");
+								setTimeout(function() { window.location.replace("/admin/posts"); }, 1000);
+							}
 						});
 					};
 					if(contentType === "editor-page" && id === undefined){
 						$.post("/create/page", data,function(res,status){
 							console.log(res);
-							if (status === "success") window.location.replace("/admin/pages");
+							if (status === "success") {
+								toastr.success("Page created!");
+								setTimeout(function() { window.location.replace("/admin/pages"); }, 1000);
+							}
 						});
 					};
 					if(contentType === "editor-page" && id ){
 						$.post("/admin/edit-page", data,function(res,status){
 							console.log(status);
-							if (status === "success") window.location.replace("/admin/pages");
+							if (status === "success") {
+								toastr.success("Page edited!");
+								setTimeout(function() { window.location.replace("/admin/pages"); }, 1000);
+							}
 						});
 					};
 					

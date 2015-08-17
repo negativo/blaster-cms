@@ -14,7 +14,7 @@ var GET = {
 		Post.find({},function(err,posts){
 			var data =  $F.dataParser(req.shared,"posts",posts),
 				navigation =  $F.dataParser(req.navigation);
-			res.render(req.templates["home-template"], { viewData: data, navigation: navigation })
+			res.render( req.templates["home-template"], { viewData: data, navigation: navigation })
 		}).sort({ "publishedBy.date": -1 });
 	},
 	singlePageCtrl:function (req, res) {
@@ -25,7 +25,7 @@ var GET = {
 			req.shared.title = page.title + " - " + req.shared.title;
 			var data =  $F.dataParser(req.shared,"page",page),
 				navigation =  $F.dataParser(req.navigation);
-			res.render(req.templates["page-template"], { viewData: data, navigation: navigation } );
+			res.render( page.template || req.templates["page-template"], { viewData: data, navigation: navigation } );
 
 		});
 	},
@@ -37,7 +37,7 @@ var GET = {
 			req.shared.title = post.title + " - " + req.shared.title;
 			var data =  $F.dataParser(req.shared,"post",post),
 				navigation =  $F.dataParser(req.navigation);
-			res.render(req.templates["post-template"], { viewData: data, navigation: navigation  } );
+			res.render( post.template || req.templates["post-template"], { viewData: data, navigation: navigation  } );
 		});
 	},
 	allPostsCtrl:function(req,res){
