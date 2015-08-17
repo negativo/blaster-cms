@@ -7,6 +7,7 @@
             templates = dashboard.templates; %>
                 <h4>templates</h4>
                 <div class="col-xs-4">
+                    <% if(!locals.single) single = "" %>
                     <select name="templates" id="templates-choice" class="form-control">
                     	<option value="<%= editor %>-template"  <%= single.template === editor+"-template" ? "selected": ""; %>  ><%= editor %>-template</option>
             			<% for( t in templates) {%>
