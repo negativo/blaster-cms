@@ -1,12 +1,12 @@
 <%- include("./partials/header") %>
 <div id="page-wrapper">
-    <%= JSON.stringify(dashboard.templates) %>
+<%= single ? JSON.stringify(single) : "" ; %>
     <div class="container-fluid">  
         <%- include("./partials/editor") %>
         <% if (dashboard.templates) {
             templates = dashboard.templates; %>
-                <h4>templates</h4>
-                <div class="col-xs-4">
+                <div class="col-md-6">
+                    <h5>Choose a template</h5>
                     <% if(!locals.single) single = "" %>
                     <select name="templates" id="templates-choice" class="form-control">
                     	<option value="<%= editor %>-template"  <%= single.template === editor+"-template" ? "selected": ""; %>  ><%= editor %>-template</option>
@@ -16,6 +16,17 @@
                     </select>
                 </div>
         <% }; %>
+        <% if (editor === "post"){ %>
+            <h5>Tags</h5>
+            <div class="col-md-6 fomr-group">
+                <input type="text" class="tags-input form-control">
+                <small> Comma separated tags</small>
+                <div class="tags">
+                    <%= single.tags ? single.tags : "" ; %>
+                </div>
+                
+            </div>
+        <% } %>
     </div>
     <!-- /.container-fluid -->
 </div>

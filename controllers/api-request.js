@@ -80,7 +80,8 @@ var POST = {
 					user: req.user.id,
 					date:Date.now()
 				},
-				status:"Published"
+				status:"Published",
+				tags: post.tags
 			}).save();
 			res.send("postcreated");	
 		},

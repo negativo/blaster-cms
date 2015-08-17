@@ -253,6 +253,9 @@
 
 			},
 			editorGetData:function(){
+				$(".tags-input").click(function(){
+					$(".tags-input").val().split(",")
+				});
 				$(".editor").submit(function(e){
 					e.preventDefault();	
 					var contentType = $(".editor").attr("id");
@@ -264,7 +267,8 @@
 						id: id,
 						title: title,
 						body: body,
-						template:template
+						template:template,
+						tags: $(".tags-input").val().split(",")
 					}
 					console.log("backend.js", data);
 					console.log("backend.js", contentType);

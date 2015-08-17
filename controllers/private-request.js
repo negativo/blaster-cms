@@ -175,14 +175,16 @@ var POST = {
 	},
 	editSinglePost:function(req,res){
 		console.log("private-request.js", req.body);
-		var postId = req.body.id;
+		var postId = req.body.id,
+			post = req.body;
 		Posts.findById( postId ,function(err,singlePost){
 			console.log("private-request.js", singlePost );
-			singlePost.title = req.body.title;
-			singlePost.body = req.body.body;
-			singlePost.slug = toSlug(req.body.title);
+			singlePost.title = post.title;
+			singlePost.body = post.body;
+			singlePost.slug = toSlug(post.title);
 			singlePost.publishedBy.user = req.user.id;
-			singlePost.template = req.body.template || "post-template",
+			singlePost.template = post.template || "post-template",
+			singlePost.tags = post.tags;
 			singlePost.save(function(err){
 				if (err) throw err;
 				res.send(200);
@@ -293,8 +295,6 @@ var POST = {
 		});
 	}
 };
-
-
 
 exports.GET = GET;
 exports.POST = POST;
