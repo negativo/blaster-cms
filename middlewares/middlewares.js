@@ -43,8 +43,9 @@ module.exports = function(app,express,$ee){
 				global.theme = cfg.theme;
 				req.shared = cfg;
 				req.shared.site = cfg.title;
-				//req.templates = cfg.templates;
 				req.theme = cfg.theme;
+				req.navigation = cfg.navigation;
+				req.links = cfg.links;
 				delete req.shared.db_link;
 				delete req.shared.__v;
 				delete req.shared._id;

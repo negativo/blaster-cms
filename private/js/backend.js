@@ -268,7 +268,7 @@
 						title: title,
 						body: body,
 						template:template,
-						tags: $(".tags-input").val().split(",")
+						tags: []
 					}
 					console.log("backend.js", data);
 					console.log("backend.js", contentType);
@@ -277,6 +277,7 @@
 						data.title = "My New Content";
 					}
 					if(contentType === "editor-post" && id === undefined){
+						data.tags = $(".tags-input").val().split(",");
 						$.post("/create/post", data,function(res,status){
 							console.log(res);
 							if (status === "success") {
@@ -286,6 +287,7 @@
 						});
 					};
 					if(contentType === "editor-post" && id ){
+						data.tags = $(".tags-input").val().split(",");
 						$.post("/admin/edit-post", data,function(res,status){
 							console.log(status);
 							if (status === "success") {
@@ -295,6 +297,7 @@
 						});
 					};
 					if(contentType === "editor-page" && id === undefined){
+						data.tags = [];
 						$.post("/create/page", data,function(res,status){
 							console.log(res);
 							if (status === "success") {
@@ -304,6 +307,7 @@
 						});
 					};
 					if(contentType === "editor-page" && id ){
+						data.tags = [];
 						$.post("/admin/edit-page", data,function(res,status){
 							console.log(status);
 							if (status === "success") {

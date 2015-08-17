@@ -24,7 +24,7 @@
 			},
 			date:function(){
 				$( ".date" ).each(function( index ) {
-					$(this).text(moment($( this ).text(), "YYYYMMDDHH").fromNow());
+					$(this).text(moment($( this ).text()).fromNow());
 				});
 			}
 		},

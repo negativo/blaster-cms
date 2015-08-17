@@ -14,9 +14,7 @@ var GET = {
 		//static homepage
 		if (req.shared.home === "home-template"){
 			Post.find({},function(err,posts){
-				var data =  $F.dataParser(req.shared,"posts",posts),
-					navigation =  $F.dataParser(req.navigation);
-				res.render( "home-template" , { viewData: data, navigation: navigation })
+				res.render( "home-template" , { shared:req.shared, navigation: req.navigation, posts: posts })
 			}).sort({ "publishedBy.date": -1 }).populate("publishedBy.user",{ password:0 });
 		}
 		// Render chosen page as homepage 
@@ -24,9 +22,7 @@ var GET = {
 			Page.findOne({ "_id": req.shared.home },function(err,page){
 				if(page === null && req.url !== "/favicon.ico" ) return res.redirect("/404");
 				req.shared.title = page.title + " - " + req.shared.title;
-				var data =  $F.dataParser(req.shared,"page",page),
-					navigation =  $F.dataParser(req.navigation);
-				res.render( page.template, { viewData: data, navigation: navigation } );
+				res.render( page.template, { shared:req.shared, navigation: req.navigation , page: page } );
 			});
 		}
 	},
@@ -36,21 +32,16 @@ var GET = {
 			console.log("requests.js", page,err);
 			if(page === null && req.url !== "/favicon.ico" ) return res.redirect("/404");
 			req.shared.title = page.title + " - " + req.shared.title;
-			var data =  $F.dataParser(req.shared,"page",page),
-				navigation =  $F.dataParser(req.navigation);
-			res.render( page.template, { viewData: data, navigation: navigation } );
+			res.render( page.template, { shared:req.shared, navigation: req.navigation , page: page } );
 		});
 	},
 	singlePostCtrl:function (req, res) {
 		var slug = req.params.post;
 		Post.findOne({ "slug": slug },function(err,post){
-			//console.log("requests.js", page,err);
 			if(post === null) return res.redirect("/404");
 			req.shared.title = post.title + " - " + req.shared.title;
-			var data =  $F.dataParser(req.shared,"post",post),
-				navigation =  $F.dataParser(req.navigation);
-			res.render( post.template, { viewData: data, navigation: navigation  } );
-		});
+			res.render( post.template, { shared:req.shared, navigation: req.navigation , post:post  });
+		}).populate("publishedBy.user",{ password:0 });
 	},
 	allPostsCtrl:function(req,res){
 		Post.find({}, function(err, posts){
