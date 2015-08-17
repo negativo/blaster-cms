@@ -161,6 +161,7 @@
 					var settings = {
 						siteTitle: $("#site-title").val().trim(),
 						subtitle: $("#site-subtitle").val().trim(),
+						home: $("#homepage").val(),
 						links: getLinks
 					};
 					console.log("backend.js", settings );

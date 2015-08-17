@@ -15,12 +15,7 @@ var that = module.exports = {
 		isInstalled:false,
 		admin:"",
 		title:"",
-		theme:"template",
-		templates:{
-					"home-template":"home-template",
-					"page-template":"page-template",
-					"post-template":"post-template"
-		}
+		theme:"template"
 	},
 	connectDatabase:function(URI,$ee){ 
 		var options = { replset:{ socketOptions:{} }, server:{ socketOptions:{} } };
@@ -152,8 +147,12 @@ var that = module.exports = {
 		//  cloned[name] = add;
 		//  return JSON.stringify(cloned);
 		//  console.log("functions.js", Object.isExtensible(original));
-		if(typeof original === String ){ original = JSON.parse(original); }
-		if( name && add ) original[name] = add;
+		if(typeof original === "string" ){ 
+			original = JSON.parse(original); 
+			if( name && add ) original[name] = add;
+		} else {
+			if( name && add ) original[name] = add;
+		}
 		return JSON.stringify(original);
 
 		

@@ -13,6 +13,7 @@
                 <th>#</th>
                 <th>Title</th>
                 <th>Status</th>
+                <th>Template</th>
                 <th>Preview</th>
             </tr>
             <% for (var i = 0; i < dashboard.pages.length; i++) { %>
@@ -20,7 +21,8 @@
                     <td><%=  i %></td>
                     <td><a href="./edit-page/<%=  dashboard.pages[i]._id %>"><%=  dashboard.pages[i].title %></a></td>
                     <td><%=  dashboard.pages[i].status %></td>
-                    <td><a href="/page/<%=  dashboard.pages[i].slug %>"><i class="fa fa-fw fa-eye"></i></a></td>
+                    <td><%=  dashboard.pages[i].template.replace("-page-template","") %></td>
+                    <td><a href="/page/<%=  dashboard.pages[i].slug %>" target="_blank"><i class="fa fa-fw fa-eye"></i></a></td>
 
                 </tr>
             <% }; %>

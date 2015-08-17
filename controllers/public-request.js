@@ -11,11 +11,24 @@ var express = require("express"),
 //Controllers
 var GET = {
 	homeCtrl: function(req,res){
-		Post.find({},function(err,posts){
-			var data =  $F.dataParser(req.shared,"posts",posts),
-				navigation =  $F.dataParser(req.navigation);
-			res.render( "home-template", { viewData: data, navigation: navigation })
-		}).sort({ "publishedBy.date": -1 });
+		//static homepage
+		if (req.shared.home === "home-template"){
+			Post.find({},function(err,posts){
+				var data =  $F.dataParser(req.shared,"posts",posts),
+					navigation =  $F.dataParser(req.navigation);
+				res.render( "home-template" , { viewData: data, navigation: navigation })
+			}).sort({ "publishedBy.date": -1 });
+		}
+		// Render chosen page as homepage 
+		else{
+			Page.findOne({ "slug": req.shared.home },function(err,page){
+				if(page === null && req.url !== "/favicon.ico" ) return res.redirect("/404");
+				req.shared.title = page.title + " - " + req.shared.title;
+				var data =  $F.dataParser(req.shared,"page",page),
+					navigation =  $F.dataParser(req.navigation);
+				res.render( page.template, { viewData: data, navigation: navigation } );
+			});
+		}
 	},
 	singlePageCtrl:function (req, res) {
 		var slug = req.params.page.toString();	
@@ -26,7 +39,6 @@ var GET = {
 			var data =  $F.dataParser(req.shared,"page",page),
 				navigation =  $F.dataParser(req.navigation);
 			res.render( page.template, { viewData: data, navigation: navigation } );
-
 		});
 	},
 	singlePostCtrl:function (req, res) {

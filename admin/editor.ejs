@@ -6,12 +6,14 @@
         <% if (dashboard.templates) {
             templates = dashboard.templates; %>
                 <h4>templates</h4>
-                <select name="templates" id="templates-choice">
-                	<option value="page-template">page-template</option>
-        			<% for( t in templates) {%>
-        	         	<option value="<%=  templates[t] %>"><%=  templates[t] %></option>
-        			<% }; %>
-                </select>
+                <div class="col-xs-4">
+                    <select name="templates" id="templates-choice" class="form-control">
+                    	<option value="page-template">page-template</option>
+            			<% for( t in templates) {%>
+            	         	<option value="<%=  templates[t] %>"><%=  templates[t] %></option>
+            			<% }; %>
+                    </select>
+                </div>
         <% }; %>
     </div>
     <!-- /.container-fluid -->

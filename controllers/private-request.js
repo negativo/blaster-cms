@@ -83,7 +83,10 @@ var GET = {
 				if(configs !== null && req.isAuthenticated() ) {
 					var data =  $F.dataParser(req.shared,"configs",configs);
 					var currentUser = $F.dataParser(req.user);
-					res.render("configs", { backend: data, currentUser: currentUser });
+					Pages.find({},{ body:0 },function(err, pages){
+						data = $F.dataParser(data, "pages", pages);
+						res.render("configs", { backend: data, currentUser: currentUser });
+					});
 				}
 			});
 		});
@@ -120,7 +123,6 @@ var GET = {
 		}
 	},	
 	editSinglePage:function(req,res){
-		req.shared.title = req.shared.title + " Configurations";
 		if( req.params.id ){
 			var pageId = req.params.id;
 			Pages.findById( pageId ,function(err,singlePage){
@@ -187,11 +189,11 @@ var POST = {
 	editConfigurations:function(req,res){
 		console.log("private-request.js", req.body);
 		Configs.findOne({}, function(err, configs){
-
 			configs.title = req.body.siteTitle;
 			configs.subtitle = req.body.subtitle;
 			configs.links = [];
 			configs.links = req.body.links;
+			configs.home = req.body.home;
 			console.log("private-request.js", req.body);
 			configs.save(function(err){
 				// Users.findOne({}, function(err,admin){ 
