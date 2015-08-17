@@ -1,0 +1,18 @@
+<%- include("./partials/header") %>
+
+<div id="page-wrapper">
+    <div class="container-fluid">
+        <h1>Custom CSS rules</h1>
+		<form role="form" class="col-md-6" id="custom-css-form">
+			<div class="form-group">
+				<textarea class="form-control custom-css" id="custom-css-area"><%= css %></textarea>
+			</div>
+			<button type="submit" class="btn btn-primary pull-right">Update</button>
+		</form>
+    </div>
+    <!-- /.container-fluid -->
+</div>
+<!-- /#page-wrapper -->
+
+<%- include("./partials/footer") %>
+

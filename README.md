@@ -18,23 +18,19 @@ I need to set all the json data in their place.
 
 ##changelog
 	- dashboard functionality added:
-		-create/adit post
-		-create/edit page
-		-appearance>navigation edit
-		-users list and user profile
-			-change password
-		-configuration page
-			-configuration edit
-			-social links
-	- CKeditor added full html mode
+		-choose post/page template
+			-- post and page template file must be name as such:
+				*-page-template.ejs
+				*-post-template.ejs
+		- change home page in setting you can use a page or a static one that is the home-template.ejs
+		- enhanced all crud operation around.
+	- enhanced a lot of small things I dont remenber.
 
 ##ToDos
-	- change template logic
-	- change page template logic
-	- choose which page to use as home page logic
-	- add users if you are admin
-	- add conditions of editor users
-	- random less style
-	- upload photos
-		- media manager
-	- profile avatar
+	- user registration
+		- user restriction Admin>Editor>Guest
+	- comments on posts
+		Should be guest
+	- add google analithycs script inserction on Configurations and append it in a file that get inculded in footer of the theme.
+	- add custom css collection
+	- create a starter blank template with all the things in place to start developing easily a theme.

@@ -15,7 +15,10 @@
 				$body = $("body");
 				backend.plugins.momentjs();
 				backend.plugins.toastrjs();
+				//page/post editor
 				if ( $body.find(".editor").length ) backend.plugins.editor();
+				// code editor
+				if ( $body.attr("class") === "edit-theme" ) backend.plugins.codemirror();
 			},
 			editor:function(){
 				$body = $("body");
@@ -37,6 +40,14 @@
 			toastrjs:function(){
 				toastr.options.closeButton = true;
 				//toastr.options.progressBar = true;
+			},
+			codemirror:function(){
+				var textarea = document.getElementById('custom-css-area');
+				var editor = CodeMirror.fromTextArea(textarea, {
+			    	lineNumbers: true,
+			    	mode:"css"
+			  	});
+			 	CODE_EDITOR = editor;
 			}
 		},
 		request:{
@@ -46,6 +57,7 @@
 				backend.request.settings();
 				backend.request.navigation();
 				backend.request.profile();
+				backend.request.editTheme();
 			},
 			login:function(){
 				var $bh = $(document).height();
@@ -225,6 +237,20 @@
 					});
 
 				});		
+			},
+			editTheme:function(){
+				var $form = $("#custom-css-form"),
+					$css = $(".custom-css");
+
+				$form.submit(function(e){
+					e.preventDefault();
+					var editor = CODE_EDITOR;					
+					var data = { css: editor.getValue() };
+					$.post("/admin/edit-theme", data, function(res,status){
+						console.log("backend.js :238", res);
+					});
+				});
+
 			},
 			editorGetData:function(){
 				$(".editor").submit(function(e){

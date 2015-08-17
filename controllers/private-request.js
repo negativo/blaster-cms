@@ -148,7 +148,24 @@ var GET = {
 				}
 			});
 		});
+	},
+	editTheme:function(req,res){
+		fs.readFile(global.appRoot + "/views/template/css/custom.css", "utf-8", function(err,file){
+			req.shared.title = req.shared.title + " Theme Edit";
+			req.shared.class = "edit-theme";
+			var data =  $F.dataParser(req.shared);
+			var currentUser = $F.dataParser(req.user);
+			res.render("edit-theme", { backend: data, currentUser: currentUser, css:file });
+		});
 	}
+
+	// blankCtrl:function(req,res){
+	// 	req.shared.title = req.shared.title + " Navigation";
+	// 	req.shared.class = "edit-navigation";
+	// 	var data =  $F.dataParser(req.shared);
+	// 	var currentUser = $F.dataParser(req.user);
+	// 	res.render("edit-theme", { backend: data, currentUser: currentUser });
+	// }
 };
 
 var POST = {
@@ -257,6 +274,12 @@ var POST = {
 			.fail(function(err){
 				res.send({ message:err, err:true})
 			});
+	},
+	editTheme:function(req,res){	
+		fs.writeFile(global.appRoot + "/views/template/css/custom.css", req.body.css , function(err){
+			if(err) return res.send(err);
+			res.send(req.body);
+		});
 	}
 };
 
