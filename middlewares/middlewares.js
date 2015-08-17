@@ -23,12 +23,6 @@ module.exports = function(app,express,$ee){
 	app.use("/admin/:sub/:sub2/:sub3/:sub4", express.static(global.appRoot + "/private") );
 	app.use("/admin/:sub/:sub2/:sub3/:sub4/:sub5", express.static(global.appRoot + "/private") );
 
-	app.use("/admin/", express.static(global.appRoot + "/bower") );
-	app.use("/admin/:sub/:sub2", express.static(global.appRoot + "/bower") );
-	app.use("/admin/:sub/:sub2/:sub3", express.static(global.appRoot + "/bower") );
-	app.use("/admin/:sub/:sub2/:sub3/:sub4", express.static(global.appRoot + "/bower") );
-	app.use("/admin/:sub/:sub2/:sub3/:sub4/:sub5", express.static(global.appRoot + "/bower") );
-
 	//parsers
 	app.use(bodyParser());
 	//logins
