@@ -17,7 +17,7 @@ var GET = {
 				var data =  $F.dataParser(req.shared,"posts",posts),
 					navigation =  $F.dataParser(req.navigation);
 				res.render( "home-template" , { viewData: data, navigation: navigation })
-			}).sort({ "publishedBy.date": -1 });
+			}).sort({ "publishedBy.date": -1 }).populate("publishedBy.user",{ password:0 });
 		}
 		// Render chosen page as homepage 
 		else{

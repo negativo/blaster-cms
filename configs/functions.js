@@ -110,7 +110,7 @@ var that = module.exports = {
 								slug:"sample-post",
 								body:"Hello World!",
 								publishedBy:{
-									user:cms.username,
+									user:user._id,
 								},
 								status:"published"
 							}).save();

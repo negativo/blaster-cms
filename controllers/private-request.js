@@ -38,7 +38,7 @@ var GET = {
 				var currentUser = $F.dataParser(req.user);
 				res.render("posts", { backend: data, currentUser: currentUser });
 			}
-		});
+		}).populate("publishedBy.user",{password:0});
 	},
 	pagesPageCtrl:function(req,res){
 		req.shared.title = req.shared.title + " Pages";
@@ -119,7 +119,7 @@ var GET = {
 				var data =  $F.dataParser(req.shared,"templates",req.postTempaltes);
 				var currentUser = $F.dataParser(req.user);
 				res.render("editor", { backend: data, currentUser: currentUser, editor:"post", single: singlePost });
-			});
+			}).populate("publishedBy.user",{password:0});;
 		}
 	},	
 	editSinglePage:function(req,res){
@@ -164,6 +164,7 @@ var POST = {
 			singlePost.title = req.body.title;
 			singlePost.body = req.body.body;
 			singlePost.slug = toSlug(req.body.title);
+			singlePost.publishedBy.user = req.user.id;
 			singlePost.template = req.body.template || "post-template",
 			singlePost.save(function(err){
 				if (err) throw err;
@@ -178,6 +179,7 @@ var POST = {
 			console.log("private-request.js", singlePage );
 			singlePage.title = req.body.title;
 			singlePage.body = req.body.body;
+			singlePage.publishedBy.user = req.user.id;
 			singlePage.slug = toSlug(req.body.title);
 			singlePage.template = req.body.template || "page-template",
 			singlePage.save(function(err){

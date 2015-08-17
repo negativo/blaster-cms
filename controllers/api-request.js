@@ -77,6 +77,7 @@ var POST = {
 				body: post.body,
 				template: post.template || "post-template",
 				publishedBy:{
+					user: req.user.id,
 					date:Date.now()
 				},
 				status:"Published"
@@ -93,6 +94,7 @@ var POST = {
 				body: page.body,
 				template: page.template || "page-template",
 				publishedBy:{
+					user: req.user.id,
 					date:Date.now()
 				},
 				status:"published"

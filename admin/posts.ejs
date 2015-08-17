@@ -23,7 +23,7 @@
                 <td><%=  i %></td>
                 <td><a href="./edit-post/<%=  dashboard.posts[i]._id %>"><%=  dashboard.posts[i].title %></a></td>
                 <td><%=  dashboard.posts[i].status %></td>
-                <td><%=  dashboard.posts[i].publishedBy.user %></td>
+                <td><%=  dashboard.posts[i].publishedBy.user.username %></td>
                 <td class="date"><%=  dashboard.posts[i].publishedBy.date %></td>
                 <td><%=  dashboard.posts[i].template.replace("-post-template","") %></td>
                 <td><a href="/post/<%=  dashboard.posts[i].slug %>" target="_blank" ><i class="fa fa-fw fa-eye"></i></a></td>

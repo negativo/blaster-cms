@@ -13,7 +13,7 @@ var PostSchema = new Schema({
 	body:String,
 	template: { type: String, default: "post-template" },
 	publishedBy:{
-		user:String,
+		user:{ type: Schema.Types.ObjectId, ref:"user" },
 		date:{ type: Date, default: Date.now() }
 	},
 	status:String,
