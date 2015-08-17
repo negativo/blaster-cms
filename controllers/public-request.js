@@ -21,7 +21,7 @@ var GET = {
 		}
 		// Render chosen page as homepage 
 		else{
-			Page.findOne({ "slug": req.shared.home },function(err,page){
+			Page.findOne({ "_id": req.shared.home },function(err,page){
 				if(page === null && req.url !== "/favicon.ico" ) return res.redirect("/404");
 				req.shared.title = page.title + " - " + req.shared.title;
 				var data =  $F.dataParser(req.shared,"page",page),

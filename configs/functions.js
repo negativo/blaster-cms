@@ -15,7 +15,8 @@ var that = module.exports = {
 		isInstalled:false,
 		admin:"",
 		title:"",
-		theme:"template"
+		theme:"template",
+		home:"home-template"
 	},
 	connectDatabase:function(URI,$ee){ 
 		var options = { replset:{ socketOptions:{} }, server:{ socketOptions:{} } };

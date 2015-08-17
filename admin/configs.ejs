@@ -1,6 +1,5 @@
 <%- include("./partials/header") %>
-      
-	
+
     <div id="page-wrapper">
 
         <div class="container-fluid">
@@ -23,8 +22,7 @@
 				    <select name="homepage" id="homepage" class="form-control">
 				    	<option value="home-template">Static</option>
 						<% for (var i = 0; i < dashboard.pages.length; i++) { %>
-							<option value="<%= dashboard.pages[i].slug %>"><%= dashboard.pages[i].title %></option>
-							
+							<option value="<%= dashboard.pages[i]._id %>"><%= dashboard.pages[i].title %></option>
 						<% }; %>
 				    </select>
 				</div> 
