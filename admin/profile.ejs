@@ -1,6 +1,5 @@
 <%- include("./partials/header") %>
 <% profile = dashboard.profile %>
-
 <div class="container-fluid profile-container" data-id="<%= profile._id %>">
 
     <%= JSON.stringify(profile)  %>
@@ -25,8 +24,8 @@
         <div class="form-group">
             <label for="role">Role</label>
             <select name="role" id="profile-role" class="form-control">
-                <option value="admin">admin</option>
-                <option value="editor">editor</option>
+                <option value="admin" <%= user.role === "admin" ? "selected" : "" ; %> >admin</option>
+                <option value="editor" <%= user.role === "editor" ? "selected" : "" ; %> >editor</option>
             </select>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>

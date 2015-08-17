@@ -18,6 +18,7 @@ var PostSchema = new Schema({
 	},
 	status:String,
 	type: { type:String, default: "post" },
+	//comments: { type: Schema.Types.ObjectId, ref:"comments" },
 	tags: Array
 });
 

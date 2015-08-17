@@ -202,9 +202,10 @@ var POST = {
 				// 	admin.email = req.body.email;
 				// 	admin.save();
 				// });
+				req.logout();
 			});
 
-		res.send("success")
+		
 		});
 		//res.send("success")
 	},
@@ -226,6 +227,7 @@ var POST = {
 	editUserProfile:function(req,res){
 		//{id: "55d0dd911a5f1c41564a2734", username: "Neofrascati", name: "", email: "", role: "admin"}
 		var profile = req.body;
+		console.log("private-request.js :230", profile);
 		Users.findById( profile.id,function(err,user){
 			user.username = profile.username;
 			user.name = profile.name;
@@ -235,7 +237,9 @@ var POST = {
 				console.log("private-request.js :229", err);
 				if(err === null ) res.send("success");
 					else res.send("error")
+				if(profile.usernameChanged === "true" ) req.logout();
 			});
+			if(profile.usernameChanged === "true" ) req.logout();
 		});
 	},
 	editUserPassword:function(req,res){
