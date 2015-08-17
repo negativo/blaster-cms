@@ -66,8 +66,6 @@ var POST = {
 				}); //if return err:null installation is ok
 		}
 	},//install methods
-	// SAFE TO DELETE AFTER TESTINGS
-	// >>
 	create:{
 		post:function(req,res){
 			console.log("routes.js", "/create/post request");
@@ -77,6 +75,7 @@ var POST = {
 				title: post.title,
 				slug: toSlug(post.title),
 				body: post.body,
+				template: post.template || "post-template",
 				publishedBy:{
 					date:Date.now()
 				},
@@ -86,24 +85,19 @@ var POST = {
 		},
 		page:function(req,res){
 			console.log("routes.js", "create_page request");
-			var r = Math.floor((Math.random() * 10) + 1);
 			var page = req.body;
 			new Page({
 				slug:toSlug(page.title),
 				template:"page-template",
 				title: page.title,
 				body: page.body,
+				template: page.template || "page-template",
 				publishedBy:{
 					date:Date.now()
 				},
 				status:"published"
 			}).save();
-			res.send("pagecreate"+r);	
-		}
-	},
-	checks:{
-		comparePwd:function(req,res){
-			req.send("");
+			res.send("pagecreate");	
 		}
 	}
 };

@@ -11,10 +11,10 @@ var PostSchema = new Schema({
 	title:String,
 	slug: String,
 	body:String,
-	template:String,
+	template: { type: String, default: "post-template" },
 	publishedBy:{
 		user:String,
-		date:Date
+		date:{ type: Date, default: Date.now() }
 	},
 	status:String
 });

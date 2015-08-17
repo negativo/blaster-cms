@@ -39,14 +39,31 @@ module.exports = function(app,express,$ee){
 				global.theme = cfg.theme;
 				req.shared = cfg;
 				req.shared.site = cfg.title;
-				req.templates = cfg.templates;
+				//req.templates = cfg.templates;
 				req.theme = cfg.theme;
 				delete req.shared.db_link;
 				delete req.shared.__v;
 				delete req.shared._id;
 				delete req.shared.templates;
+				//get all template files and attach it, get it on the backend
+				fs.readdir("./views/template",function(err, list){
+					var pageTemplate = [];
+					var postTempalte = [];
+					var pagePattern = /-page-template.ejs/i
+					var postPattern = /-post-template.ejs/i
+					for (var i = 0; i < list.length; i++) {
+						if ( list[i].match(pagePattern) ) {
+							pageTemplate.push( list[i].replace(/.ejs/g,"") );
+						};
+						if ( list[i].match(postPattern) ) {
+							postTempalte.push( list[i].replace(/.ejs/g,"") );
+						};
+					};
+					req.pageTemplates = pageTemplate;
+					req.postTempaltes = postTempalte;
 				$ee.emit("configs_updated", cfg, "Configuration has been attached to requestes");
 				next();			
+				});
 			});
 		}
 		if(req.method === 'GET' && !app.get("mongo_db") ) { 
@@ -54,6 +71,8 @@ module.exports = function(app,express,$ee){
 			res.render("install"); 
 		};		
 	});
+
+	//find templates
 
 	// Change view folder public frontend
 	// change configs template on mongo to change template if you have others

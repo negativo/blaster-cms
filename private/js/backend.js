@@ -229,10 +229,12 @@
 					var title = $(".editor-title").val();
 					var id = $(".editor").data("id");
 					var body = CKEDITOR.instances.editor1.getData();
+					var template = $("#templates-choice").val() || "page-template";
 					var data = {
 						id: id,
 						title: title,
-						body: body
+						body: body,
+						template:template
 					}
 					console.log("backend.js", data);
 					console.log("backend.js", contentType);

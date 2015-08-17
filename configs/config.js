@@ -38,8 +38,6 @@ module.exports = function(app,$ee,port){
 		}
 	});
 
-	console.log("config.js :41", "asdasdasd");
-
 	// MIDDLEWARES
 	require(global.appRoot + "/middlewares/middlewares")(app,express,$ee);
 	

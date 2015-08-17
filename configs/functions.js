@@ -115,18 +115,15 @@ var that = module.exports = {
 								body:"Hello World!",
 								publishedBy:{
 									user:cms.username,
-									date:Date.now()
 								},
 								status:"published"
 							}).save();
 							new Page({
 								slug:"sample-page",
-								template:"page-template",
 								title:"Sample",
 								body:"Hi I'm a page :)",
 								publishedBy:{
 									user:cms.user,
-									date:Date.now()
 								},
 								status:"published"
 							}).save();

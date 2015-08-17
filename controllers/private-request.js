@@ -93,7 +93,7 @@ var GET = {
 		req.shared.title = req.shared.title + " New Post";
 			req.shared.class = "new-post";
 			var data =  $F.dataParser(req.shared);
-			var currentUser = $F.dataParser(req.user);
+			var currentUser = $F.dataParser(req.user,"templates",req.postTempaltes);
 			res.render("editor", { backend: data, currentUser: currentUser, editor: "post" });
 	},
 	newPageCtrl:function(req,res){
@@ -101,7 +101,7 @@ var GET = {
 			req.shared.class = "new-page";
 			Configs.findOne({},{ siteTemplate:1 }, function(err, templates){
 				if(templates === null) return;
-				var data =  $F.dataParser(req.shared,"templates",["test","test2"]);
+				var data =  $F.dataParser(req.shared,"templates",req.pageTemplates);
 				var currentUser = $F.dataParser(req.user);
 				res.render("editor", { backend: data, currentUser: currentUser, editor: "page" });
 			});
@@ -113,7 +113,7 @@ var GET = {
 				console.log("private-request.js", singlePost );
 				req.shared.title = singlePost.title + " edit";
 				req.shared.class = "edit-post";
-				var data =  $F.dataParser(req.shared);
+				var data =  $F.dataParser(req.shared,"templates",req.postTempaltes);
 				var currentUser = $F.dataParser(req.user);
 				res.render("editor", { backend: data, currentUser: currentUser, editor:"post", single: singlePost });
 			});
@@ -127,7 +127,7 @@ var GET = {
 				console.log("private-request.js", singlePage );
 				req.shared.title = singlePage.title + " edit";
 				req.shared.class = "edit-page";
-				var data =  $F.dataParser(req.shared);
+				var data =  $F.dataParser(req.shared,"templates",req.pageTemplates);
 				var currentUser = $F.dataParser(req.user);
 				res.render("editor", { backend: data, currentUser: currentUser, editor:"page", single: singlePage });
 			});
@@ -162,6 +162,7 @@ var POST = {
 			singlePost.title = req.body.title;
 			singlePost.body = req.body.body;
 			singlePost.slug = toSlug(req.body.title);
+			singlePost.template = req.body.template || "post-template",
 			singlePost.save(function(err){
 				if (err) throw err;
 				res.send(200);
@@ -176,6 +177,7 @@ var POST = {
 			singlePage.title = req.body.title;
 			singlePage.body = req.body.body;
 			singlePage.slug = toSlug(req.body.title);
+			singlePage.template = req.body.template || "page-template",
 			singlePage.save(function(err){
 				if (err) throw err;
 				res.send(200);

@@ -4,17 +4,17 @@ var Schema = mongoose.Schema;
 
 var Page = new Schema({
 	slug:String,
-	template:String,
 	title:String,
 	body:String,
 	publishedBy:{
 		user:String,
-		date:Date
+		date:{ type: Date, default: Date.now() }
 	},
 	editedBy:{
 		user:String,
 		date:Date
 	},
+	template: { type: String, default: "page-template" },
 	status:String
 });
 

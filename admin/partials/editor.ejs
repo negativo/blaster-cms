@@ -2,7 +2,7 @@
 forgot to give the same name in creation I should refactor all reference now.., or keep the ternary operator, which seems nice -->
 <% if (locals.single) { %> 
 	<div class="small-10 small-offset-1">
-		<h2>Post Creation</h2>
+		<h2><%= editor %> Creation</h2>
 		<form class="form editor" class="editor" id="editor-<%= editor %>" data-id="<%= single._id %>">
 			<div class="form-group">
 				<input type="text" name="title" placeholder="<%= single.title %>" value="<%= single.title %>" class="small-12 editor-title form-control">
@@ -14,7 +14,7 @@ forgot to give the same name in creation I should refactor all reference now.., 
 	</div>
 <% } else { %>
 	<div class="small-10 small-offset-1">
-		<h2>Post Creation</h2>
+		<h2><%= editor %> Creation</h2>
 		<form class="editor" id="editor-<%= editor %>">
 			<div class="form-group">
 				<input type="text" name="title" placeholder="title" class="small-12 editor-title form-control">
