@@ -276,9 +276,20 @@ var POST = {
 			});
 	},
 	editTheme:function(req,res){	
-		fs.writeFile(global.appRoot + "/views/template/css/custom.css", req.body.css , function(err){
-			if(err) return res.send(err);
-			res.send(req.body);
+		fs.exists(global.appRoot + "/views/template/css/custom.css", function(exists){
+			if(!exists){
+				fs.open(global.appRoot + "/views/template/css/custom.css","w",function(err){
+					fs.writeFile(global.appRoot + "/views/template/css/custom.css", req.body.css , function(err){
+						if(err) return res.send(err);
+						res.send("success");
+					});
+				});
+			}else{
+				fs.writeFile(global.appRoot + "/views/template/css/custom.css", req.body.css , function(err){
+					if(err) return res.send(err);
+					res.send("success");
+				});
+			}
 		});
 	}
 };

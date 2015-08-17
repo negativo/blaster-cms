@@ -33,7 +33,7 @@
 				$body = $("body");
 				$(".date").hide();
 				$( ".date" ).each(function( index ) {
-					$(this).text(moment($( this ).text(), "YYYYMMDDHH").fromNow());
+					$(this).text(moment($( this ).text(), "YYYYMMDDHHmm").fromNow());
 					$(".date").show();
 				});
 			},
