@@ -1,12 +1,8 @@
 <%- include("./partials/header") %>
 <% profile = dashboard.profile %>
 <div class="container-fluid profile-container" data-id="<%= profile._id %>">
-
-    <%= JSON.stringify(profile)  %>
-
     <h2><%= profile.username %>'s Profile</h2>
     <hr>
-
     <form role="form" class="col-md-4" id="user-profile-form">
         <h4>Basic Info</h4>
         <div class="form-group">

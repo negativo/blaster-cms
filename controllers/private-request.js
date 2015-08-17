@@ -237,9 +237,9 @@ var POST = {
 				console.log("private-request.js :229", err);
 				if(err === null ) res.send("success");
 					else res.send("error")
-				if(profile.usernameChanged === "true" ) req.logout();
+				req.logout();
 			});
-			if(profile.usernameChanged === "true" ) req.logout();
+			req.logout();
 		});
 	},
 	editUserPassword:function(req,res){

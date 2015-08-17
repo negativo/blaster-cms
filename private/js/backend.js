@@ -74,8 +74,7 @@
 			profile:function(){
 				var $profilePwdForm = $("#user-profile-pwd"),
 					$profileForm = $("#user-profile-form"),
-					$profileId = $(".profile-container").data("id"),
-					$oldUsername = $("#profile-username").val();
+					$profileId = $(".profile-container").data("id");
 
 				//CHANGE PROFILE INFO
 				$profileForm.submit(function(e){
@@ -85,19 +84,15 @@
 						username: $("#profile-username").val(),
 						name: $("#profile-full-name").val(),
 						email: $("#profile-email").val(),
-						role: $("#profile-role").val(),
-						usernameChanged:false
+						role: $("#profile-role").val()
 					}
-					if( $oldUsername !== profile.username ){ profile.usernameChanged = true; }
 					$.post("/admin/edit-user-profile", profile, function(res,status){
 						console.log("backend.js :90", res);
 						if (res === "success") {
 							toastr.success('Profile Changed!');
-							if( $oldUsername !== profile.username ){ 
-								setTimeout(function(){
-									window.location.replace("/admin/panel");
-								},2000);
-							}	
+							setTimeout(function(){
+								window.location.replace("/admin/panel");
+							},2000);
 						} else{
 							toastr.error('Error while changing profile');
 						}

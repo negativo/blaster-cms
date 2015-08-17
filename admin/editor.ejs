@@ -8,9 +8,9 @@
                 <h4>templates</h4>
                 <div class="col-xs-4">
                     <select name="templates" id="templates-choice" class="form-control">
-                    	<option value="<%= editor %>-template"><%= editor %>-template</option>
+                    	<option value="<%= editor %>-template"  <%= single.template === editor+"-template" ? "selected": ""; %>  ><%= editor %>-template</option>
             			<% for( t in templates) {%>
-            	         	<option value="<%=  templates[t] %>"><%=  templates[t] %></option>
+            	         	<option value="<%=  templates[t] %>"  <%= single.template === templates[t] ? "selected": ""; %>  ><%=  templates[t] %></option>
             			<% }; %>
                     </select>
                 </div>
