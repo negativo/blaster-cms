@@ -15,7 +15,8 @@ var Page = new Schema({
 		date:Date
 	},
 	template: { type: String, default: "page-template" },
-	status:String
+	status:String,
+	type: { type:String, default: "page" }
 });
 
 module.exports = mongoose.model("pages", Page, "pages");

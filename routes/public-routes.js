@@ -17,7 +17,6 @@ module.exports = function(app,express){
 	});
 	
 	app.get("/", GET.homeCtrl );
-	//app.get("/:page", GET.singlePageCtrl );
 	app.get("/page/:page", GET.singlePageCtrl );
 	app.get("/post/:post", GET.singlePostCtrl );
 	

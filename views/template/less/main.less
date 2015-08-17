@@ -10,6 +10,7 @@
 @green: #A6E22E;
 @orange: #FD971F;
 @white : white;
+@purple: #A544FF;
 
 .left{
 	float:left;
@@ -18,28 +19,31 @@
 	float:right;
 }
 .object{
-	color:@cyan;
+	color:@cyan !important;
 }
 .function{
-	color:@green;
+	color:@green !important;
 }
 .parameter{
-	color:@orange;
+	color:@orange !important;
 }
 .statement{
-	color:@magenta;
+	color:@magenta !important;
+}
+.undefined, .null{
+	color:@purple !important;
 }
 .object-bg{
-	background:@cyan;
+	background:@cyan !important;
 }
 .function-bg{
-	background:@green;
+	background:@green !important;
 }
 .parameter-bg{
-	background:@orange;
+	background:@orange !important;
 }
 .statement-bg{
-	background:@magenta;
+	background:@magenta !important;
 }
 //fonts
 .heading-font{
@@ -86,11 +90,9 @@ h1,h2,h3,h4,h5,h6{
 	.bold;
 
 }
-
 code{
 	.code-font;
 }
-
 a{
 	color: @black !important;
 	text-decoration: none;
@@ -151,6 +153,10 @@ header.home{
 		}
 
 	}
+}
+.page-404{
+	text-align:center;
+	margin-top: 100px;
 }
 
 #admin-bar{
