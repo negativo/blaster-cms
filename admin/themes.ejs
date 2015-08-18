@@ -1,0 +1,19 @@
+<%- include("./partials/header") %>
+<%= JSON.stringify(dashboard) %>
+<div id="page-wrapper">
+    <div class="col-md-6 col-md-offset-3">
+		<form id="themes-form">
+			<select id="avaible-themes" class="form-control">
+				<% for (var i = 0; i < themes.length; i++) { %>
+					<option value="<%= themes[i] %>" <%= dashboard.theme === themes[i] ? "selected" : "" ; %>><%= themes[i] %></option>
+				<% }; %>
+			</select>
+			<button class="btn btn-primary form-control" type="submit">change</button>
+		</form>
+    </div>
+    <!-- /.container-fluid -->
+</div>
+<!-- /#page-wrapper -->
+
+<%- include("./partials/footer") %>
+
