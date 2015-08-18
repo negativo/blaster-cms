@@ -8,6 +8,7 @@
   "license": "MIT",
   "dependencies": {
     "foundation": "~5.5.2",
-    "toastr": "~2.1.2"
+    "toastr": "~2.1.2",
+    "momentjs": "~2.10.6"
   }
 }

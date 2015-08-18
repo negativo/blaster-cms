@@ -5,7 +5,8 @@ var express = require("express"),
 	User = require("../models/user"),
 	Configs = require("../models/configs"),
 	Post = require("../models/posts"),
-	Page = require("../models/pages");
+	Page = require("../models/pages"),
+	Comment = require("../models/comments");
 
 	
 //Controllers
@@ -72,27 +73,26 @@ var POST = {
 			console.log("POST DATA: ", req.body);
 			var post = req.body;
 			new Post({
-				title: post.title,
+				title: post.title || "Post Title",
 				slug: toSlug(post.title),
-				body: post.body,
+				body: post.body || "Post Body",
 				template: post.template || "post-template",
 				publishedBy:{
 					user: req.user.id,
 					date:Date.now()
 				},
-				status:"Published",
-				tags: post.tags
+				tags: post.tags || [],
+				status:"Published"
 			}).save();
-			res.send("postcreated");	
+			res.send("success");	
 		},
 		page:function(req,res){
 			console.log("routes.js", "create_page request");
 			var page = req.body;
 			new Page({
+				title: page.title || "Page Title" ,
 				slug:toSlug(page.title),
-				template:"page-template",
-				title: page.title,
-				body: page.body,
+				body: page.body || "Page Body" ,
 				template: page.template || "page-template",
 				publishedBy:{
 					user: req.user.id,
@@ -100,7 +100,18 @@ var POST = {
 				},
 				status:"published"
 			}).save();
-			res.send("pagecreate");	
+			res.send("success");	
+		},
+		comment:function(req,res){
+			var comment = req.body;
+			comment.comment = comment.comment.trim();
+			new Comment({
+				comment:comment.comment,
+				user:req.user.id,
+				post:comment.post
+			}).save(function(err){
+				if(err === null ) return res.send("success");
+			});
 		}
 	}
 };

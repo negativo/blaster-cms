@@ -14,7 +14,6 @@ module.exports = function(app,express){
 			else res.status(401).send("Unauthorized")
 	}
 
-	
 	app.get("/api/posts", AreYouAuthorized, GET.allPostsCtrl );
 	app.get("/api/pages", AreYouAuthorized, GET.allPagesCtrl );
 	app.get("/api/users", AreYouAuthorized , GET.usersCtrl );
@@ -26,7 +25,9 @@ module.exports = function(app,express){
 
 	app.post("/create/post", POST.create.post);
 	app.post("/create/page", POST.create.page);
+	app.post("/create/comment/", POST.create.comment);
 
 
 }
 
+Post.find({},{});

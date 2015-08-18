@@ -1,3 +1,4 @@
+console.log("main.js :1", shared);
 (function(){
 	//BlogNameSpace
 	var app = {
@@ -38,10 +39,11 @@
 					console.log("main.js pagecreate", res);
 				});
 			});
+			
 		}
 	}
 
 	app.init();
-})(jQuery)
+})(jQuery,shared)
 
 

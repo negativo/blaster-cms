@@ -1,0 +1,20 @@
+<% if(user.user){ %>
+<form action="/create/comment/" method="POST" class="small-12 comments">
+	<textarea name="comment" style="resize:none !important;">asdasda</textarea>
+	<input type="text" style="display:none;" name="post" value="<%= post.id %>">
+	<% if( locals.reply ) { %>
+		<input type="text" style="display:none;" name="reply" value="<%= comment.id %>">
+	<%	} %>
+	<button type="submit" class="button expand">Comment</button>
+</form>
+<% }else{ %>
+	<div class="small-12 text-center">
+		<h6>Login to comment</h6>
+		<form action="/admin/login" method="POST">
+			<input type="text" name="username">
+			<input type="password" name="password">
+			<input type="submit">
+		</form>
+	</div>
+<% } %>
+<hr>

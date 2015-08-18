@@ -4,10 +4,6 @@ var User = require("./user");
 var Schema = mongoose.Schema;
 
 var PostSchema = new Schema({
-	// postedBy: {
- //        type: mongoose.Schema.Types.ObjectId,
- //        ref: 'User'
- //    },
 	title:String,
 	slug: String,
 	body:String,
