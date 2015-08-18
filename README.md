@@ -17,20 +17,18 @@ I need to set all the json data in their place.
 
 
 ##changelog
-	- dashboard functionality added:
-		-choose post/page template
-			-- post and page template file must be name as such:
-				*-page-template.ejs
-				*-post-template.ejs
-		- change home page in setting you can use a page or a static one that is the home-template.ejs
-		- enhanced all crud operation around.
-	- enhanced a lot of small things I dont remenber.
+	- you can add some basic css from the dashboard in appearance > Custom CSS
+	- added tags to post
+	- refactored private/public routes controller, you now have 2 Constructor to build the render object with variables
+		each one have default values and you can add new one new Render(req, { newVar: value } )
+		you now have newVar eand all the default variables avaible in your ejs rendered file file
+		/lib/render-helper is the module
 
 ##ToDos
 	- user registration
 		- user restriction Admin>Editor>Guest
 	- comments on posts
-		Should be guest
+		Should be registered.
+		I don't know if creating it's own comments system or using Disqus
 	- add google analithycs script inserction on Configurations and append it in a file that get inculded in footer of the theme.
-	- add custom css collection
 	- create a starter blank template with all the things in place to start developing easily a theme.
