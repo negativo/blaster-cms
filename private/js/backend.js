@@ -189,7 +189,10 @@
 					$.post("/admin/edit-configurations", settings ,function(res,status){
 						console.log("backend.js", res);
 						getLinks = [];
-						if (res === "success") toastr.success('Configurations Changed!');
+						if (res === "success") {
+							toastr.success('Configurations Changed!');
+							setTimeout(function(){ window.location.replace("/admin/login"); }, 1500);
+						}
 						//window.location.replace("configurations");
 					});
 				});

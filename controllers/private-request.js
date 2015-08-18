@@ -195,14 +195,12 @@ var POST = {
 			configs.home = req.body.home;
 			console.log("private-request.js", req.body);
 			configs.save(function(err){
-				// Users.findOne({}, function(err,admin){ 
-				// 	admin.email = req.body.email;
-				// 	admin.save();
-				// });
-				req.logout();
+				if(!err) {
+					req.logout();
+					res.send("success");
+				}
+				
 			});
-
-		
 		});
 		//res.send("success")
 	},
