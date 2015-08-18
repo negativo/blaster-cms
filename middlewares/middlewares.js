@@ -32,7 +32,6 @@ module.exports = function(app,express,$ee){
 	app.use(passport.initialize());
 	app.use(passport.session());
 
-
 	app.use(function(req,res,next){
 		//console.log("middlewares.js >>> IS MONGO OK?", app.get("is_installed"));
 		if (req.method === "POST") { next(); }
@@ -77,8 +76,6 @@ module.exports = function(app,express,$ee){
 		};		
 	});
 
-	//find templates
-
 	// Change view folder public frontend
 	// change configs template on mongo to change template if you have others
 	app.use("/*",function(req,res,next){
@@ -96,10 +93,17 @@ module.exports = function(app,express,$ee){
 		res.redirect("/admin/login");
     });
 
+    //with this you get login status in frontend
 	app.use(function(req,res,next){
 		if (req.method === "GET" ) req.shared.isLoggedIn = req.isAuthenticated();
 		next();
 	});
 
+	//self explanatory
+	app.use(function(req,res,next){
+		if(req.url === "/admin/" && req.isAuthenticated() ) return res.redirect("/admin/panel");
+		if(req.url === "/admin/" && !req.isAuthenticated() ) return res.redirect("/admin/login");
+		next();
+	});
 
 }

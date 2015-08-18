@@ -124,9 +124,5 @@ var POST = {
 	}
 };
 
-//REMOVE RANDOM GENERATED PAGE
-//AND POSTS AFTER TESTING END
-
-
 exports.GET = GET;
 exports.POST = POST;
