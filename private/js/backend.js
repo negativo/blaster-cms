@@ -1,4 +1,4 @@
- (function(){
+(function(){
 	var backend = {
 		init:function(){
 			backend.ui.init();
@@ -7,6 +7,12 @@
 		},
 		ui:{
 			init:function(){
+				backend.ui.sidebar();
+			},
+			sidebar:function(){
+				// $(".side-nav").find("li").click(function(){
+				// 	console.log("backend.js :14", $(this));
+				// });
 			}
 		},
 		plugins:{
