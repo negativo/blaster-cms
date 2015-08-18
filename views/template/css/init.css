@@ -1,0 +1,170 @@
+@import url(http://fonts.googleapis.com/css?family=Arvo:400,700);
+@import url(http://fonts.googleapis.com/css?family=Lato:400,700);
+@import url(http://fonts.googleapis.com/css?family=Source+Code+Pro:300,500);
+.left {
+  float: left;
+}
+.right {
+  float: right;
+}
+.object {
+  color: #66d9ef !important;
+}
+.function {
+  color: #a6e22e !important;
+}
+.parameter {
+  color: #fd971f !important;
+}
+.statement {
+  color: #f92672 !important;
+}
+.undefined,
+.null {
+  color: #a544ff !important;
+}
+.object-bg {
+  background: #66d9ef !important;
+}
+.function-bg {
+  background: #a6e22e !important;
+}
+.parameter-bg {
+  background: #fd971f !important;
+}
+.statement-bg {
+  background: #f92672 !important;
+}
+.heading-font {
+  font-family: "Arvo" !important;
+  font-weight: 400;
+}
+.bold {
+  font-weight: 700 !important;
+}
+.text-font {
+  font-family: "Lato" !important;
+  font-weight: 400;
+}
+.code-font {
+  font-family: "Source Code Pro" !important;
+  font-weight: 300;
+}
+.trasition-fast {
+  transition: all ease-in 0.2s !important;
+}
+.ornament {
+  width: 100% !important;
+  clear: both;
+}
+.ornament div {
+  height: 3px !important;
+  width: 25% !important;
+  padding: 0px !important;
+  margin: 0px !important;
+  float: left;
+}
+body {
+  font-family: "Lato" !important;
+  font-weight: 400;
+  font-size: 16px;
+  color: #272822 !important;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Source Code Pro" !important;
+  font-weight: 300;
+  font-weight: 700 !important;
+}
+code {
+  font-family: "Source Code Pro" !important;
+  font-weight: 300;
+}
+a {
+  color: #272822 !important;
+  text-decoration: none;
+}
+header.home {
+  text-align: left;
+  padding-top: 75px;
+  font-family: "Source Code Pro" !important;
+  font-weight: 300;
+}
+header.home h1 {
+  font-family: "Source Code Pro" !important;
+  font-weight: 300;
+  margin: 0;
+  padding: 0;
+  font-size: 1.5em;
+  display: inline;
+  font-weight: bold;
+}
+header.home span.subtitle {
+  margin: 0;
+  padding: 0;
+  font-size: 1.5em;
+}
+header.home nav a {
+  font-size: 0.8em;
+  margin-right: 10px;
+  color: #787878;
+  transition: all ease-in 0.2s !important;
+}
+header.home nav a:hover {
+  color: #66d9ef;
+}
+.content {
+  margin-top: 75px;
+}
+.content .post-container {
+  border-bottom: 1px solid #787878;
+  margin-top: 35px;
+  text-align: left;
+}
+.content .post-container h4 {
+  font-size: 1.25em;
+  margin: 0;
+  padding: 0;
+}
+.content .post-container a {
+  transition: all ease-in 0.2s !important;
+}
+.content .post-container a:hover {
+  color: #66d9ef;
+}
+.content .post-container img {
+  width: 100% !important;
+  height: auto !important;
+}
+.page-404 {
+  text-align: center;
+  margin-top: 100px;
+}
+#admin-bar {
+  background: #272822;
+  color: white !important;
+  width: 100%;
+  height: 50px;
+  padding-left: 25px;
+  padding-right: 25px;
+}
+#admin-bar a {
+  line-height: 50px;
+  color: white !important;
+}
+footer {
+  margin-top: 50px !important;
+  color: white;
+  background: #272822;
+  clear: both;
+  padding: 25px !important;
+  line-height: 35px;
+  letter-spacing: 1px;
+  font-size: 0.9em;
+  font-family: "Source Code Pro" !important;
+  font-weight: 300;
+}

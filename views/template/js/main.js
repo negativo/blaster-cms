@@ -12,15 +12,14 @@
 			},
 			commons:function(){
 				var $footer = $(".main-footer");
-
-					if ($(".site-wrapper").height() <= 700 ){
-						$footer.css({
-							"position":"fixed",
-							"bottom":"0px"
-						});
-					} else{
-						$footer.css("position","static!important");
-					}
+				if ($(".site-wrapper").height() <= 700 ){
+					$footer.css({
+						"position":"fixed",
+						"bottom":"0px"
+					});
+				} else{
+					$footer.css("position","static!important");
+				}
 			},
 			date:function(){
 				$( ".date" ).each(function( index ) {
