@@ -52,20 +52,20 @@ module.exports = function(app,express,$ee){
 				delete req.shared.templates;
 				//get all template files and attach it, get it on the backend
 				fs.readdir("./views/template",function(err, list){
-					var pageTemplate = [];
-					var postTempalte = [];
+					var pageTemplates = [];
+					var postTemplates = [];
 					var pagePattern = /-page-template.ejs/i
 					var postPattern = /-post-template.ejs/i
 					for (var i = 0; i < list.length; i++) {
 						if ( list[i].match(pagePattern) ) {
-							pageTemplate.push( list[i].replace(/.ejs/g,"") );
+							pageTemplates.push( list[i].replace(/.ejs/g,"") );
 						};
 						if ( list[i].match(postPattern) ) {
-							postTempalte.push( list[i].replace(/.ejs/g,"") );
+							postTemplates.push( list[i].replace(/.ejs/g,"") );
 						};
 					};
-					req.pageTemplates = pageTemplate;
-					req.postTempaltes = postTempalte;
+					req.pageTemplates = pageTemplates;
+					req.postTemplates = postTemplates;
 				$ee.emit("configs_updated", cfg, "Configuration has been attached to requestes");
 				next();			
 				});

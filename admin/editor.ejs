@@ -2,19 +2,16 @@
 <div id="page-wrapper">
     <div class="container-fluid">  
         <%- include("./partials/editor") %>
-        <% if (dashboard.templates) {
-            templates = dashboard.templates; %>
-                <div class="col-md-6">
-                    <h5>Choose a template</h5>
-                    <% if(!locals.single) single = "" %>
-                    <select name="templates" id="templates-choice" class="form-control">
-                    	<option value="<%= editor %>-template"  <%= single.template === editor+"-template" ? "selected": ""; %>  ><%= editor %>-template</option>
-            			<% for( t in templates) {%>
-            	         	<option value="<%=  templates[t] %>"  <%= single.template === templates[t] ? "selected": ""; %>  ><%=  templates[t] %></option>
-            			<% }; %>
-                    </select>
-                </div>
-        <% }; %>
+        <div class="col-md-6">
+            <h5>Choose a template</h5>
+            <select name="templates" id="templates-choice" class="form-control">
+                <% if(!locals.single) single = "" %>
+            	<option value="<%= editor %>-template"  <%= single.template === editor+"-template" ? "selected": ""; %>  ><%= editor %>-template</option>
+    			<% for( t in templates) {%>
+    	         	<option value="<%=  templates[t] %>"  <%= single.template === templates[t] ? "selected": ""; %>  ><%=  templates[t] %></option>
+    			<% }; %>
+            </select>
+        </div>
         <% if (editor === "post"){ %>
             <h5>Tags</h5>
             <div class="col-md-6 fomr-group">

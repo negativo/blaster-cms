@@ -1,7 +1,7 @@
 <%- include("./partials/header") %>
 <div id="page-wrapper">
     <div class="container-fluid">  
-        <%= JSON.stringify(dashboard.posts)  %>
+        <%= JSON.stringify(posts)  %>
         <h2>Posts</h2>
         <a href="/admin/new-post">
             <button type="button" class="btn btn-primary"><i class="fa fa-fw fa-plus"></i> Add new post</button>
@@ -18,15 +18,15 @@
             <th>Template</th>
             <th>Preview</th>
         </tr>
-        <% for (var i = 0; i < dashboard.posts.length; i++) { %>
-            <tr onclick="$.fn.getData(<%= JSON.stringify(dashboard.posts[i]); %>)">
+        <% for (var i = 0; i < posts.length; i++) { %>
+            <tr onclick="$.fn.getData(<%= JSON.stringify(posts[i]); %>)">
                 <td><%=  i %></td>
-                <td><a href="./edit-post/<%=  dashboard.posts[i]._id %>"><%=  dashboard.posts[i].title %></a></td>
-                <td><%=  dashboard.posts[i].status %></td>
-                <td><%=  dashboard.posts[i].publishedBy.user.username %></td>
-                <td class="date"><%=  dashboard.posts[i].publishedBy.date %></td>
-                <td><%=  dashboard.posts[i].template.replace("-post-template","") %></td>
-                <td><a href="/post/<%=  dashboard.posts[i].slug %>" target="_blank" ><i class="fa fa-fw fa-eye"></i></a></td>
+                <td><a href="./edit-post/<%=  posts[i]._id %>"><%=  posts[i].title %></a></td>
+                <td><%=  posts[i].status %></td>
+                <td><%=  posts[i].publishedBy.user.username %></td>
+                <td class="date"><%=  posts[i].publishedBy.date %></td>
+                <td><%=  posts[i].template.replace("-post-template","") %></td>
+                <td><a href="/post/<%=  posts[i].slug %>" target="_blank" ><i class="fa fa-fw fa-eye"></i></a></td>
             </tr>
         <% }; %>
       </table>

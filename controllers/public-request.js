@@ -5,7 +5,8 @@ var express = require("express"),
 	User = require("../models/user"),
 	Configs = require("../models/configs"),
 	Post = require("../models/posts"),
-	Page = require("../models/pages");
+	Page = require("../models/pages"),
+	Render = require("../lib/render-helper").public;
 
 	
 //Controllers
@@ -14,7 +15,7 @@ var GET = {
 		//static homepage
 		if (req.shared.home === "home-template"){
 			Post.find({},function(err,posts){
-				res.render( "home-template" , { shared:req.shared, navigation: req.navigation, posts: posts })
+				res.render( "home-template" , new Render(req, { posts:posts }) )
 			}).sort({ "publishedBy.date": -1 }).populate("publishedBy.user",{ password:0 });
 		}
 		// Render chosen page as homepage 
@@ -22,7 +23,7 @@ var GET = {
 			Page.findOne({ "_id": req.shared.home },function(err,page){
 				if(page === null && req.url !== "/favicon.ico" ) return res.redirect("/404");
 				req.shared.title = page.title + " - " + req.shared.title;
-				res.render( page.template, { shared:req.shared, navigation: req.navigation , page: page } );
+				res.render( page.template, new Render(req, { page:page }) );
 			});
 		}
 	},
@@ -32,7 +33,7 @@ var GET = {
 			console.log("requests.js", page,err);
 			if(page === null && req.url !== "/favicon.ico" ) return res.redirect("/404");
 			req.shared.title = page.title + " - " + req.shared.title;
-			res.render( page.template, { shared:req.shared, navigation: req.navigation , page: page } );
+			res.render( page.template, new Render(req, { page:page }) );
 		});
 	},
 	singlePostCtrl:function (req, res) {
@@ -40,7 +41,7 @@ var GET = {
 		Post.findOne({ "slug": slug },function(err,post){
 			if(post === null) return res.redirect("/404");
 			req.shared.title = post.title + " - " + req.shared.title;
-			res.render( post.template, { shared:req.shared, navigation: req.navigation , post:post  });
+			res.render( post.template, new Render(req, { post:post }) );
 		}).populate("publishedBy.user",{ password:0 });
 	},
 	allPostsCtrl:function(req,res){
