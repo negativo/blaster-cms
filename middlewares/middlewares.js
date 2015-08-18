@@ -39,16 +39,18 @@ module.exports = function(app,express,$ee){
 			Configs.findOne({},function(err,configs){
 				var cfg = JSON.stringify(configs);
 					cfg = JSON.parse(cfg);
-				global.theme = cfg.theme;
-				req.shared = cfg;
-				req.shared.site = cfg.title;
-				req.theme = cfg.theme;
-				req.navigation = cfg.navigation;
-				req.links = cfg.links;
-				delete req.shared.db_link;
-				delete req.shared.__v;
-				delete req.shared._id;
-				delete req.shared.templates;
+					global.theme = cfg.theme;
+					req.shared = cfg;
+					req.shared.site = cfg.title;
+					req.theme = cfg.theme;
+					req.navigation = cfg.navigation;
+					req.links = cfg.links;
+					delete req.shared.navigation;
+					delete req.shared.db_link;
+					delete req.shared.__v;
+					delete req.shared._id;
+					delete req.shared.templates;
+				
 				//get all template files and attach it, get it on the backend
 				fs.readdir("./views/template",function(err, list){
 					var pageTemplates = [];
@@ -65,8 +67,11 @@ module.exports = function(app,express,$ee){
 					};
 					req.pageTemplates = pageTemplates;
 					req.postTemplates = postTemplates;
-				$ee.emit("configs_updated", cfg, "Configuration has been attached to requestes");
-				next();			
+					fs.readdir("./views/",function(err, list){
+						req.avaible_themes = list;
+						$ee.emit("configs_updated", cfg, "Configuration has been attached to requestes");
+						next();			
+					});
 				});
 			});
 		}
@@ -78,7 +83,8 @@ module.exports = function(app,express,$ee){
 
 	// Change view folder public frontend
 	// change configs template on mongo to change template if you have others
-	app.use("/*",function(req,res,next){
+	app.use("*",function(req,res,next){
+		console.log("middlewares.js :83", global.theme);
 		app.use( express.static(__root + "/views/" + global.theme) );
 		app.set("views", __root + "/views/" + global.theme );
 		next();

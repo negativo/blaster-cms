@@ -64,6 +64,7 @@
 				backend.request.navigation();
 				backend.request.profile();
 				backend.request.editTheme();
+				backend.request.chooseTheme();
 			},
 			login:function(){
 				var $bh = $(document).height();
@@ -257,6 +258,21 @@
 					});
 				});
 
+			},
+			chooseTheme:function(){
+				var $form = $("#themes-form");
+				$form.submit(function(e){
+					e.preventDefault();
+					var data = {
+						theme: $("#avaible-themes").val()
+					}
+					$.post("/admin/themes", data, function(res){
+						if(res === "success") {
+							toastr.success("Reload!","Theme changed");
+							setTimeout(function(){ window.location.replace("/"); }, 1500)
+						}
+					});
+				});
 			},
 			editorGetData:function(){
 				$(".tags-input").click(function(){

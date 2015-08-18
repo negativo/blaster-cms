@@ -27,7 +27,12 @@ var GET = {
 	dashboardPageCtrl:function(req,res){
 		req.shared.title = req.shared.title + " Dashboard";
 		req.shared.class = "dashboard-home";
-		res.render("panel", new Render(req, {}) );
+		Posts.find({}, function(err,posts){
+			Pages.find({}, function(err,pages){
+				res.render("panel", new Render(req, { postsNum: posts.length, pagesNum: pages.length }) );
+			})
+		})
+
 	},
 	postsPageCtrl:function(req,res){
 		req.shared.title = req.shared.title + " Posts";
@@ -73,7 +78,7 @@ var GET = {
 		Configs.findOne({},{ db_link:0, templates:0 }, function(err, configs){
 			if(configs !== null && req.isAuthenticated() ) {
 				Pages.find({},{ body:0 },function(err, pages){
-					res.render("configs", new Render(req, { configs:configs, pages: pages}) );
+					res.render("configs", new Render(req, { configs:configs, pages: pages }) );
 				});
 			}
 		});
@@ -130,6 +135,13 @@ var GET = {
 			req.shared.title = req.shared.title + " Theme Edit";
 			req.shared.class = "edit-theme";
 			res.render("edit-theme", new Render(req, { css:file }) );
+		});
+	},
+	themesCtrl:function(req,res){
+		fs.readFile(global.appRoot + "/views/template/css/custom.css", "utf-8", function(err,file){
+			req.shared.title = req.shared.title + " Choose themes";
+			req.shared.class = "choose-themes";
+			res.render("themes", new Render(req, { themes: req.avaible_themes }) );
 		});
 	}
 };
@@ -258,6 +270,15 @@ var POST = {
 					res.send("success");
 				});
 			}
+		});
+	},
+	themesCtrl:function(req,res){
+		Configs.findOne(function(err,configs){
+			configs.theme = req.body.theme;
+			configs.save(function(err){
+				if(!err) return res.send("success");
+				res.send("error")
+			});
 		});
 	}
 };

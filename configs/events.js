@@ -14,7 +14,7 @@ module.exports = function(app,$ee){
 		console.log("events.js", "app.get('mongo_db') returns ", app.get('mongo_db'));
 	});
 	$ee.on("configs_updated",function(configs, message){
-		global.theme = configs.theme;
+		//global.theme = configs.theme;
 		//console.log("events.js", message, configs );
 	});
 

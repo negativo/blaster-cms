@@ -11,6 +11,11 @@ var express = require("express"),
 	
 //Controllers
 var GET = {
+	fourOfourCtrl:function(req,res){
+		var data =  $F.dataParser(req.shared),
+		navigation =  $F.dataParser(req.navigation);
+		res.render( "404" , new Render(req,{}) );
+	},
 	homeCtrl: function(req,res){
 		//static homepage
 		if (req.shared.home === "home-template"){

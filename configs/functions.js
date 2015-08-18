@@ -15,7 +15,7 @@ var that = module.exports = {
 		isInstalled:false,
 		admin:"",
 		title:"",
-		theme:"template",
+		theme:"basic",
 		home:"home-template"
 	},
 	connectDatabase:function(URI,$ee){ 

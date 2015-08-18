@@ -1,0 +1,10 @@
+<%- include("partials/header") %>
+
+<div class="small-12">
+	<h1><%= post.title  %></h1>
+	<div><%- post.body %></div>
+	<small><%= post.publishedBy.user.username %> - <span class="date"><%= post.publishedBy.date %></span> - <%= post.tags %></small>
+	<hr>
+</div>
+<%- include("partials/footer") %>
+
