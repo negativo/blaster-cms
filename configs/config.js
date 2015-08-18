@@ -38,7 +38,6 @@ module.exports = function(app,$ee,port){
 		}
 	});
 
-
 	// MIDDLEWARES
 	require(global.appRoot + "/middlewares/middlewares")(app,express,$ee);
 	

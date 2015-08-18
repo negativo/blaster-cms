@@ -4,18 +4,19 @@ var Schema = mongoose.Schema;
 
 var Page = new Schema({
 	slug:String,
-	template:String,
 	title:String,
-	content:String,
+	body:String,
 	publishedBy:{
 		user:String,
-		date:Date
+		date:{ type: Date, default: Date.now() }
 	},
 	editedBy:{
 		user:String,
 		date:Date
 	},
-	status:String
+	template: { type: String, default: "page-template" },
+	status:String,
+	type: { type:String, default: "page" }
 });
 
 module.exports = mongoose.model("pages", Page, "pages");

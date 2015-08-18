@@ -1,20 +1,33 @@
 <%- include("./partials/header") %>
-<%  dashboard = JSON.parse(backend); %>
-<%  user = JSON.parse(currentUser); %>
 
-	<%- include("./partials/sidebar") %>
-        
-	
-    <div id="page-wrapper">
+<div class="container-fluid">
+    <h2>Posts</h2>
+    <% if (user.role === "admin") { %>
+        <a href="#">
+            <button type="button" class="btn btn-primary"><i class="fa fa-fw fa-plus"></i> Add new user</button>
+        </a>
+    <%};  %>
+    <!-- Table -->
+    <table class="table table-striped">
+    <tr>
+        <th></th>
+        <th>User</th>
+        <th>Role</th>
+        <th>Email</th>
+    </tr>
+    <% for (var i = 0; i < users.length; i++) { %>
+        <tr>
+        	<td><a href="users/<%= users[i]._id %>"><i class="fa fa-fw fa-user fa-lg"></i></a></td>
+            <td><%= users[i].username %></td>
+            <td><%= users[i].role %></td>
+            <td><%= users[i].email %></td>
+        </tr>
+    <% }; %>
+  </table>			
 
-        <div class="container-fluid">
-            <%= JSON.stringify(dashboard.users) %>
-        </div>
-        <!-- /.container-fluid -->
 
-    </div>
-    <!-- /#page-wrapper -->
-
+</div>
+<!-- /.container-fluid -->
 
 <%- include("./partials/footer") %>
 

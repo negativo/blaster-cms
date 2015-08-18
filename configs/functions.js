@@ -16,11 +16,7 @@ var that = module.exports = {
 		admin:"",
 		title:"",
 		theme:"template",
-		templates:{
-					"home-template":"home-template",
-					"page-template":"page-template",
-					"post-template":"post-template"
-		}
+		home:"home-template"
 	},
 	connectDatabase:function(URI,$ee){ 
 		var options = { replset:{ socketOptions:{} }, server:{ socketOptions:{} } };
@@ -28,6 +24,35 @@ var that = module.exports = {
 		options.server.socketOptions = { keepAlive: 1 };
 		mongoose.connect(URI, options); 
 		$ee.emit("mongo_global","mongo_global");
+	},
+	checkPwd:function(userId, password){
+		var deferred = Q.defer();
+		User.findById( userId, function(err,user){
+			if(!err) deferred.resolve(crypto.bcrypt.compare(password,user.password));
+			if(err) deferred.reject(err);
+		});
+		return deferred.promise;
+	},
+	changePwd:function(userId, password, newPwd){
+		var deferred = Q.defer();
+		User.findById( userId, function(err,user){
+			if(user) {
+				if(crypto.bcrypt.compare(password,user.password)){
+					user.password = crypto.bcrypt.encrypt(newPwd);
+					user.save(function(err,saved){
+						console.log("functions.js :47", err, saved);
+						if (err === null) deferred.resolve("Password changed");
+						if (err !== null) deferred.reject("error while saving " + err);
+					});
+				}else{
+					deferred.reject("current password incorrect ");
+				};
+			}
+			if(err) {
+				deferred.reject("user not found " + err);
+			}
+		});
+		return deferred.promise;
 	},
 	checkDatabase:function(mongo){
 		//console.log("mongolink:",mongo);
@@ -77,26 +102,24 @@ var that = module.exports = {
 			User.findOne({"username":cms.username},function(err,user){
 				if(user == null) {
 					//console.log("functions.js", user,"non esiste");
-					new User({ username:cms.username, password:crypto.bcrypt.encrypt(cms.password), admin:true }).save(function(err,user){
+					new User({ username:cms.username, password:crypto.bcrypt.encrypt(cms.password), admin:true, role:"admin" }).save(function(err,user){
 						if(err === null) {
 							//REFACTOR THIS REFACTOR THIS REFACTOR THIS <<<<<<<<<<<<<<<
 							new Post({
-								title:"Sample-post",
+								title:"Sample post",
+								slug:"sample-post",
 								body:"Hello World!",
 								publishedBy:{
-									user:cms.username,
-									date:Date.now()
+									user:user._id,
 								},
 								status:"published"
 							}).save();
 							new Page({
 								slug:"sample-page",
-								template:"page-template",
 								title:"Sample",
-								content:"Hi I'm a page :)",
+								body:"Hi I'm a page :)",
 								publishedBy:{
 									user:cms.user,
-									date:Date.now()
 								},
 								status:"published"
 							}).save();
@@ -125,7 +148,12 @@ var that = module.exports = {
 		//  cloned[name] = add;
 		//  return JSON.stringify(cloned);
 		//  console.log("functions.js", Object.isExtensible(original));
-		if( name && add ) original[name] = add;
+		if(typeof original === "string" ){ 
+			original = JSON.parse(original); 
+			if( name && add ) original[name] = add;
+		} else {
+			if( name && add ) original[name] = add;
+		}
 		return JSON.stringify(original);
 
 		

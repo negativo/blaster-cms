@@ -1,34 +1,27 @@
-<%- include("./partials/header") %>
-<%  dashboard = JSON.parse(backend); %>
-<%  user = JSON.parse(currentUser); %>
-
-	<%- include("./partials/sidebar") %>
-        
-	
-    <div id="page-wrapper" style="height:100vh;">
-
+<%- include("./partials/header") %>   
+    <div id="page-wrapper">
         <div class="container-fluid">  
-            <%= JSON.stringify(dashboard.pages)  %>
             <h1>Pages</h1>
-             <a href="/admin/edit-page">
-             <button type="button" class="btn btn-primary"><i class="fa fa-fw fa-plus"></i> Add new post</button>
+             <a href="/admin/new-page">
+                <button type="button" class="btn btn-primary"><i class="fa fa-fw fa-plus"></i> Add new post</button>
              </a>
             <br><br>
-
             <!-- Table -->
             <table class="table table-striped">
             <tr>
                 <th>#</th>
                 <th>Title</th>
                 <th>Status</th>
+                <th>Template</th>
                 <th>Preview</th>
             </tr>
-            <% for (var i = 0; i < dashboard.pages.length; i++) { %>
+            <% for (var i = 0; i < pages.length; i++) { %>
                 <tr>
                     <td><%=  i %></td>
-                    <td><%=  dashboard.pages[i].title %></td>
-                    <td><%=  dashboard.pages[i].status %></td>
-                    <td><a href="/page/<%=  dashboard.pages[i].slug %>"><i class="fa fa-fw fa-eye"></i></a></td>
+                    <td><a href="./edit-page/<%=  pages[i]._id %>"><%=  pages[i].title %></a></td>
+                    <td><%=  pages[i].status %></td>
+                    <td><%=  pages[i].template.replace("-page-template","") %></td>
+                    <td><a href="/page/<%=  pages[i].slug %>" target="_blank"><i class="fa fa-fw fa-eye"></i></a></td>
                 </tr>
             <% }; %>
           </table>

@@ -16,6 +16,5 @@ var express = require("express"),
 
 //FIRE IT UP
 app.listen(port, function(){
-	console.log("node on: " + port);
-
+	console.log("fire it up on port: " + port);
 });	

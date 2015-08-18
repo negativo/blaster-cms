@@ -14,6 +14,18 @@ module.exports = function(grunt) {
 					ext: '.css'
 			}]
          },
+         backend: {
+             options: {
+                 paths: ['private/css']
+             },
+             files: [{
+					expand: true,
+					cwd: 'private/less',
+					src: ['*.less'],
+					dest: 'private/css',
+					ext: '.css'
+			}]
+         },
          production: {
              options: {
                  paths: ['views/template/css'],
@@ -37,13 +49,21 @@ module.exports = function(grunt) {
 	      src: ['*.css', '!*.min.css'],
 	      dest: 'views/template/css',
 	      ext: '.min.css'
+	    },
+		{
+	      expand: true,
+	      cwd: 'private/css',
+	      src: ['*.css', '!*.min.css'],
+	      dest: 'private/css',
+	      ext: '.min.css'
 	    }]
 	  }
 	},
 	
+	
 	watch:{
 		script:{
-			files:['views/template/less/*.less'],
+			files:['views/template/less/*.less','private/less/*.less'],
 			tasks:["less","cssmin"],
 			options:{
 				spawn:false,

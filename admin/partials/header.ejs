@@ -1,3 +1,10 @@
+<!-- 
+    LOCALS VARIABLE
+        dashboard = shared cont
+        user = current user
+        posts = post list
+        pages = pages list
+-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,7 +15,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Admin</title>
+    <title><%= dashboard.title %></title>
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -16,12 +23,14 @@
     <!-- Custom CSS -->
     <link href="css/sb-admin.css" rel="stylesheet">
 
-    <!-- Morris Charts CSS -->
-    <link href="css/plugins/morris.css" rel="stylesheet">
-
     <!-- Custom Fonts -->
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    
+
+    <!-- CUSTOM CSSs and PLUGINs -->
+    <link rel="stylesheet" href="/components/toastr/toastr.min.css">
+    <link rel="stylesheet" href="css/backend.min.css">
+    <link rel="stylesheet" href="plugins/codemirror/codemirror.css">
+
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -31,5 +40,11 @@
     <![endif]-->
 
 </head>
-<body>
-    <div id="wrapper">
+<% if(dashboard.class) { %>
+    <body class="<%= dashboard.class %>">
+<% } %>
+        
+        <% if(dashboard.class !== "login-page" ) { %>
+            <div id="wrapper">
+            <%- include("navigation") %>
+        <% } %>

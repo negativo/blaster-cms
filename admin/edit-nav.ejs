@@ -1,0 +1,31 @@
+<%- include("./partials/header") %>
+    <div id="page-wrapper">
+        <div class="container-fluid">
+            <h1>Navigation</h1>
+			<form role="form" class="col-md-6" id="navigation-form">
+				<div class="navigation-link-container">
+					<% for(var i=0; i< navigation.length; i++) {%>
+					   <div class="form-group navigation-link-single">
+						   	<i class="fa fa-fw fa-remove remove-page-from-nav"></i>
+						   	<label for="text" contenteditable><%= navigation[i].linkName %></label>
+						   	<input type="text" class="form-control navigation-link" value="<%= navigation[i].link %>">
+					   </div>
+					<% } %>					
+				</div>
+				<div class="add-navigation-link add-link"><i class="fa fa-fw fa-plus"></i></div>
+				<button type="submit" class="btn btn-primary">Submit</button>
+			</form>
+			<div class="col-md-4 add-pages-container">
+				<% for (var i = 0; i < pages.length; i++) { %>
+					<div class="add-page" data-slug="<%= pages[i].slug %>" data-title="<%= pages[i].title %>">
+						<i class="fa fa-fw fa-plus add-page-to-nav"></i>
+						<span><%= pages[i].title %></span>
+					</div>
+				<% }; %>
+			</div>
+        </div>
+        <!-- /.container-fluid -->
+    </div>
+    <!-- /#page-wrapper -->
+<%- include("./partials/footer") %>
+

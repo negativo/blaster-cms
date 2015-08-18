@@ -14,18 +14,35 @@ module.exports = function(app,express){
 	app.get("/admin/posts", GET.postsPageCtrl );
 	app.get("/admin/pages", GET.pagesPageCtrl );
 	app.get("/admin/users", GET.usersPageCtrl );
+	app.get("/admin/users/:id", GET.profileCtrl );
 	app.get("/admin/configurations", GET.configurationsPageCtrl );
 
-	//CRUD
-	app.get("/admin/edit-post", GET.editPostCtrl );
-	app.get("/admin/edit-page", GET.editPageCtrl );
+	//VIEW WITH CRUD OPs
+	app.get("/admin/new-post", GET.newPostCtrl );
+	app.get("/admin/new-page", GET.newPageCtrl );
+	app.get("/admin/edit-nav", GET.editNavigation );
+	app.get("/admin/edit-theme", GET.editTheme );
+	app.get("/admin/edit-post/:id", GET.editSinglePost );
+	app.get("/admin/edit-page/:id", GET.editSinglePage );
 
 
 
 	//POSTS	
 	//login local
 	app.post("/admin/login", passport.authenticate('local'),  POST.loginCtrl );
+	app.post("/admin/edit-post", POST.editSinglePost );
+	app.post("/admin/edit-page", POST.editSinglePage );
+	app.post("/admin/edit-nav", POST.editNavigation );
+	app.post("/admin/edit-theme", POST.editTheme );
+	app.post("/admin/edit-configurations", POST.editConfigurations );
+	app.post("/admin/edit-user-profile", POST.editUserProfile );
+	app.post("/admin/edit-user-password", POST.editUserPassword );
 	
+	//use it later
+	var isAdmin = function(req,res,next){
+		if (req.user.role !== "admin") res.status(401).send("unauthorized");
+		next();
+	}
 
 }
 

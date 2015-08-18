@@ -5,35 +5,44 @@ var express = require("express"),
 	User = require("../models/user"),
 	Configs = require("../models/configs"),
 	Post = require("../models/posts"),
-	Page = require("../models/pages");
+	Page = require("../models/pages"),
+	Render = require("../lib/render-helper").public;
 
 	
 //Controllers
 var GET = {
 	homeCtrl: function(req,res){
-		Post.find({},function(err,posts){
-			var data =  $F.dataParser(req.shared,"posts",posts);
-			res.render(req.templates["home-template"], { viewData: data })
-		});
+		//static homepage
+		if (req.shared.home === "home-template"){
+			Post.find({},function(err,posts){
+				res.render( "home-template" , new Render(req, { posts:posts }) )
+			}).sort({ "publishedBy.date": -1 }).populate("publishedBy.user",{ password:0 });
+		}
+		// Render chosen page as homepage 
+		else{
+			Page.findOne({ "_id": req.shared.home },function(err,page){
+				if(page === null && req.url !== "/favicon.ico" ) return res.redirect("/404");
+				req.shared.title = page.title + " - " + req.shared.title;
+				res.render( page.template, new Render(req, { page:page }) );
+			});
+		}
 	},
 	singlePageCtrl:function (req, res) {
 		var slug = req.params.page.toString();	
 		Page.findOne({ "slug": slug },function(err,page){
-			//console.log("requests.js", page,err);
-			if(page === null) res.redirect("/404")
-			var data =  $F.dataParser(req.shared,"page",page);
-			res.render(req.templates["page-template"], { viewData: data } );
-
+			console.log("requests.js", page,err);
+			if(page === null && req.url !== "/favicon.ico" ) return res.redirect("/404");
+			req.shared.title = page.title + " - " + req.shared.title;
+			res.render( page.template, new Render(req, { page:page }) );
 		});
 	},
 	singlePostCtrl:function (req, res) {
-		var title = req.params.title;
-		Post.findOne({ "title": title },function(err,post){
-			//console.log("requests.js", page,err);
-			if(post === null) res.redirect("/404")
-			var data =  $F.dataParser(req.shared,"post",post);
-			res.render(req.templates["post-template"], { viewData: data } );
-		});
+		var slug = req.params.post;
+		Post.findOne({ "slug": slug },function(err,post){
+			if(post === null) return res.redirect("/404");
+			req.shared.title = post.title + " - " + req.shared.title;
+			res.render( post.template, new Render(req, { post:post }) );
+		}).populate("publishedBy.user",{ password:0 });
 	},
 	allPostsCtrl:function(req,res){
 		Post.find({}, function(err, posts){
@@ -104,7 +113,7 @@ var POST = {
 				slug:toSlug(page.title),
 				template:"page-template",
 				title: page.title,
-				content: page.body,
+				body: page.body,
 				publishedBy:{
 					date:Date.now()
 				},
@@ -114,10 +123,6 @@ var POST = {
 		}
 	}
 };
-
-//REMOVE RANDOM GENERATED PAGE
-//AND POSTS AFTER TESTING END
-
 
 exports.GET = GET;
 exports.POST = POST;

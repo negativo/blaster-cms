@@ -5,78 +5,132 @@ var express = require("express"),
 	Users = require("../models/user"),
 	Configs = require("../models/configs"),
 	Posts = require("../models/posts"),
-	Pages = require("../models/pages");
+	Pages = require("../models/pages"),
+	toSlug = require('to-slug-case'),
+	Render = require("../lib/render-helper").private;
 
 var base_url = global.base_url;
+
 	
 //Controllers
 var GET = {
+	views:{},
+	crud:{},
+	//VIEWS
 	loginPageCtrl:function(req,res){
-		res.render("login" );
+		for (prop in req.shared) if( prop !== "title") delete req.shared[prop];
+		req.shared.title = req.shared.title + " Login";
+		req.shared.class = "login-page";
+		res.render("login", new Render(req, {}) );
+
 	},
 	dashboardPageCtrl:function(req,res){
-		var data =  $F.dataParser(req.shared);
-		var currentUser = $F.dataParser(req.user);
-		res.render("panel", { backend: data, currentUser: currentUser });
+		req.shared.title = req.shared.title + " Dashboard";
+		req.shared.class = "dashboard-home";
+		res.render("panel", new Render(req, {}) );
 	},
 	postsPageCtrl:function(req,res){
-		Posts.find({}, function(err, posts){
+		req.shared.title = req.shared.title + " Posts";
+		req.shared.class = "dashboard-posts";
+		Posts.find({},{ body:0 }, function(err, posts){
 			if(posts !== null && req.isAuthenticated() ) {
-				var data =  $F.dataParser(req.shared,"posts",posts);
-				var currentUser = $F.dataParser(req.user);
-				res.render("posts", { backend: data, currentUser: currentUser });
+				res.render("posts", new Render(req, { posts: posts }) );
 			}
-		});
+		}).populate("publishedBy.user",{password:0});
 	},
 	pagesPageCtrl:function(req,res){
-		Pages.find({}, function(err, pages){
+		req.shared.title = req.shared.title + " Pages";
+		req.shared.class = "dashboard-pages";
+		Pages.find({},{ body:0 }, function(err, pages){
 			if(pages !== null && req.isAuthenticated() ) {
-				var data =  $F.dataParser(req.shared,"pages",pages);
-				var currentUser = $F.dataParser(req.user);
-				res.render("pages", { backend: data, currentUser: currentUser });
+				res.render("pages", new Render(req, { pages: pages }) );
 			}
 		});
 	},
 	usersPageCtrl:function(req,res){
-		Users.findOne({}, function(err, users){
+		req.shared.title = req.shared.title + " Users";
+		req.shared.class = "dashboard-users";
+		Users.find({},{ password:0 }, function(err, users){
 			if(users !== null && req.isAuthenticated() ) {
-				var data =  $F.dataParser(req.shared,"users",users);
-				var currentUser = $F.dataParser(req.user);
-				res.render("users", { backend: data, currentUser: currentUser });
-			}
+				res.render("users", new Render(req, { users: users }) );
+			};
 		});
+	},
+	profileCtrl:function(req,res){
+		var userId = req.params.id;
+		Users.findById( userId, {password:0}, function(err, profile){
+			if(profile !== null && req.isAuthenticated() ) {
+				req.shared.title = profile.username + " Profile";
+				req.shared.class = profile.username.toLowerCase() + "-profile";
+				res.render("profile", new Render(req, { profile: profile }) );
+			};
+		});
+
 	},
 	configurationsPageCtrl:function(req,res){
-		Configs.findOne({}, function(err, configs){
+		req.shared.title = req.shared.title + " Configurations";
+		req.shared.class = "dashboard-configurations";
+		Configs.findOne({},{ db_link:0, templates:0 }, function(err, configs){
 			if(configs !== null && req.isAuthenticated() ) {
-				var data =  $F.dataParser(req.shared,"configs",configs);
-				var currentUser = $F.dataParser(req.user);
-				res.render("configs", { backend: data, currentUser: currentUser });
+				Pages.find({},{ body:0 },function(err, pages){
+					res.render("configs", new Render(req, { configs:configs, pages: pages}) );
+				});
 			}
 		});
 	},
-	//CRUD
-	editPostCtrl:function(req,res){
-			var data =  $F.dataParser(req.shared);
-			var currentUser = $F.dataParser(req.user);
-			res.render("edit-post", { backend: data, currentUser: currentUser });
+	//CREATE/EDIT
+	newPostCtrl:function(req,res){
+		req.shared.title = req.shared.title + " New Post";
+			req.shared.class = "new-post";
+			res.render("editor", new Render(req, { editor: "post", templates:req.postTemplates }) );
 	},
-	editPageCtrl:function(req,res){
-			// search for -page-template.ejs suffixed file to use them as template
-			// fs.readdir( __dirname + "/views/" + global.siteTemplate , function(err, files){
-			// 	var r = /\-page-template.[0-9a-z]+$/i;
-			// 	for (var i = 0; i < files.length; i++) {
-			// 		var x = files[i].match(r);
-			// 		console.log("server.js", x);
-			// 	};	
-			// });
-
+	editSinglePost:function(req,res){
+		if( req.params.id ){
+			var postId = req.params.id;
+			Posts.findById( postId ,function(err,singlePost){
+				console.log("private-request.js", singlePost );
+				req.shared.title = singlePost.title + " edit";
+				req.shared.class = "edit-post";
+				res.render("editor", new Render(req, { editor: "post", single: singlePost, templates:req.postTemplates }) );
+			}).populate("publishedBy.user",{password:0});;
+		}
+	},	
+	newPageCtrl:function(req,res){
+			req.shared.title = req.shared.title + " New Page";
+			req.shared.class = "new-page";
 			Configs.findOne({},{ siteTemplate:1 }, function(err, templates){
 				if(templates === null) return;
-				var data =  $F.dataParser(req.shared,"templates",templates);
-				var currentUser = $F.dataParser(req.user);
-				res.render("edit-page", { backend: data, currentUser: currentUser });
+				res.render("editor", new Render(req, { editor: "page", templates:req.pageTemplates }) );
 			});
+	},
+	editSinglePage:function(req,res){
+		if( req.params.id ){
+			var pageId = req.params.id;
+			Pages.findById( pageId ,function(err,singlePage){
+				console.log("private-request.js", singlePage );
+				req.shared.title = singlePage.title + " edit";
+				req.shared.class = "edit-page";
+				res.render("editor", new Render(req, { editor: "page", single: singlePage, templates:req.pageTemplates }) );
+			});
+		}
+	},
+	editNavigation:function(req,res){
+		req.shared.title = req.shared.title + " Navigation";
+		req.shared.class = "edit-navigation";
+		Configs.findOne({},{ db_link:0, templates:0 }, function(err, configs){
+			Pages.find({},{ slug:1, title:1 },function(err,pages){
+				if(configs !== null && req.isAuthenticated() ) {
+					res.render("edit-nav", new Render(req, { pages: pages, navigation:configs.navigation }) );
+				};
+			});
+		});
+	},
+	editTheme:function(req,res){
+		fs.readFile(global.appRoot + "/views/template/css/custom.css", "utf-8", function(err,file){
+			req.shared.title = req.shared.title + " Theme Edit";
+			req.shared.class = "edit-theme";
+			res.render("edit-theme", new Render(req, { css:file }) );
+		});
 	}
 };
 
@@ -84,10 +138,129 @@ var POST = {
 	loginCtrl:function(req,res){
 		//console.log("routes.js", req.session);
 		res.json({ err:undefined });
+	},
+	editSinglePost:function(req,res){
+		console.log("private-request.js", req.body);
+		var postId = req.body.id,
+			post = req.body;
+		Posts.findById( postId ,function(err,singlePost){
+			console.log("private-request.js", singlePost );
+			singlePost.title = post.title;
+			singlePost.body = post.body;
+			singlePost.slug = toSlug(post.title);
+			singlePost.publishedBy.user = req.user.id;
+			singlePost.template = post.template || "post-template",
+			singlePost.tags = post.tags;
+			singlePost.save(function(err){
+				if (err) throw err;
+				res.send(200);
+			});
+		});
+	},
+	editSinglePage:function(req,res){
+		console.log("private-request.js", req.body);
+		var pageId = req.body.id;
+		Pages.findById( pageId ,function(err,singlePage){
+			console.log("private-request.js", singlePage );
+			singlePage.title = req.body.title;
+			singlePage.body = req.body.body;
+			singlePage.publishedBy.user = req.user.id;
+			singlePage.slug = toSlug(req.body.title);
+			singlePage.template = req.body.template || "page-template",
+			singlePage.save(function(err){
+				if (err) throw err;
+				res.send(200);
+			});
+		});
+	},
+	editConfigurations:function(req,res){
+		console.log("private-request.js", req.body);
+		Configs.findOne({}, function(err, configs){
+			configs.title = req.body.siteTitle;
+			configs.subtitle = req.body.subtitle;
+			configs.links = [];
+			configs.links = req.body.links;
+			configs.home = req.body.home;
+			console.log("private-request.js", req.body);
+			configs.save(function(err){
+				// Users.findOne({}, function(err,admin){ 
+				// 	admin.email = req.body.email;
+				// 	admin.save();
+				// });
+				req.logout();
+			});
+
+		
+		});
+		//res.send("success")
+	},
+	editNavigation:function(req,res){
+		console.log("private-request.js :206 >>>>", req.body);
+		Configs.findOne({}, function(err, configs){
+			configs.navigation = req.body.links;
+			if (configs.navigation === undefined ) {
+				configs.navigation = []; 
+			}else{
+				for (var i = 0; i < configs.navigation.length; i++) {
+					configs.navigation[i].link = "/page/"+configs.navigation[i].link;
+				};
+			};
+			configs.save();
+			res.send("success");
+		});
+	},
+	editUserProfile:function(req,res){
+		//{id: "55d0dd911a5f1c41564a2734", username: "Neofrascati", name: "", email: "", role: "admin"}
+		var profile = req.body;
+		console.log("private-request.js :230", profile);
+		Users.findById( profile.id,function(err,user){
+			user.username = profile.username;
+			user.name = profile.name;
+			user.email = profile.email;
+			user.role = profile.role;
+			user.save(function(err){
+				console.log("private-request.js :229", err);
+				if(err === null ) res.send("success");
+					else res.send("error")
+				req.logout();
+			});
+			req.logout();
+		});
+	},
+	editUserPassword:function(req,res){
+		//oldPwd, newPwd, CheckPwd
+		var pwd = req.body;
+		$F.changePwd( pwd.id, pwd.oldPwd, pwd.newPwd )
+			.then(function(changePwd){
+				if(changePwd){
+					req.logout();
+					res.send({ message:changePwd, err:false})
+				}else{
+					res.send({ message:changePwd, err:true});
+				}
+			})
+			.fail(function(err){
+				res.send({ message:err, err:true})
+			});
+	},
+	editTheme:function(req,res){	
+		fs.exists(global.appRoot + "/views/template/css/custom.css", function(exists){
+			if(!exists){
+				fs.open(global.appRoot + "/views/template/css/custom.css","w",function(err){
+					fs.writeFile(global.appRoot + "/views/template/css/custom.css", req.body.css , function(err){
+						if(err) return res.send(err);
+						res.send("success");
+					});
+				});
+			}else{
+				fs.writeFile(global.appRoot + "/views/template/css/custom.css", req.body.css , function(err){
+					if(err) return res.send(err);
+					res.send("success");
+				});
+			}
+		});
 	}
 };
-
-
 
 exports.GET = GET;
 exports.POST = POST;

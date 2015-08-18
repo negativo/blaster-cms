@@ -1,5 +1,4 @@
 (function(){
-	
 	//BlogNameSpace
 	var app = {
 		init: function(){
@@ -8,11 +7,23 @@
 		},
 		ui:{
 			init:function(){
+				app.ui.commons();
 				app.ui.date();
+			},
+			commons:function(){
+				var $footer = $(".main-footer");
+				if ($(".site-wrapper").height() <= 700 ){
+					$footer.css({
+						"position":"fixed",
+						"bottom":"0px"
+					});
+				} else{
+					$footer.css("position","static!important");
+				}
 			},
 			date:function(){
 				$( ".date" ).each(function( index ) {
-					$(this).text(moment($( this ).text(), "YYYYMMDDHH").fromNow());
+					$(this).text(moment($( this ).text()).fromNow());
 				});
 			}
 		},
@@ -31,5 +42,6 @@
 	}
 
 	app.init();
-
 })(jQuery)
+
+

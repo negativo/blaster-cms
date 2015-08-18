@@ -1,0 +1,130 @@
+@import url(http://fonts.googleapis.com/css?family=Lato:300,500);
+
+@darkPrimaryColor:   #0288D1;
+@primaryColor:       #03A9F4;
+@lightPrimaryColor:  #B3E5FC;
+@textPrimaryColor:   #FFFFFF;
+@accentColor:        #FF5252;
+@primaryTextColor:   #212121;
+@secondaryTextColor: #727272;
+@dividerColor:       #B6B6B6;
+@green: #4CAF50;
+
+.heading{
+	font-family: "Lato";
+	font-weight: 500;
+}
+
+.text{
+	font-family: "Lato";
+	font-weight: 300;
+}
+
+body{
+	background: white !important;
+	.text;
+}
+h1,h2,h3,h4,h5,h6{
+	padding:20px 0;
+	margin: 0;
+	.heading;
+}
+
+hr{
+	margin: 0;
+	padding: 0;
+}
+
+.form-group{
+	margin-top: 15px !important;
+}
+
+.login-page{
+	background: @darkPrimaryColor !important;
+	text-align: center;
+	margin: 0;padding: 0;
+	h1,h2,h3,h4,h5,h6{ color:white; }
+	.login-form{
+		input{
+			display: block;
+			margin:auto;
+			width: 300px;
+			height:50px;	
+			border:none;
+			outline:none;
+			padding:10px;
+			text-align: center;
+			&::-webkit-input-placeholder{
+				text-align: center;
+				font-weight: 500;
+			}
+			&::-moz-input-placeholder{
+				text-align: center;
+				font-weight: 500;
+			}
+			&::-ms-input-placeholder{
+				text-align: center;
+				font-weight: 500;
+			}
+			&::-o-input-placeholder{
+				text-align: center;
+				font-weight: 500;
+			}
+			&::input-placeholder{
+				text-align: center;
+				font-weight: 500;
+			}
+			&[type="submit"]{
+				background: darken(@darkPrimaryColor, 20%) !important;
+				color:white;
+				font-weight: 500;
+				text-transform: uppercase;
+				letter-spacing: 1px;
+				&:hover,&:focus{
+					box-shadow: inset 0 -5px 0px 0px darken(@darkPrimaryColor, 30%);
+					transition:all ease-in 0.5s;
+				}
+			}
+		}
+	}
+}
+
+.admin-bar{
+	height: 50px;
+	background: @primaryTextColor;
+}
+.add-link{
+	display:block;
+	width: 100%;
+	height:40px;
+	line-height: 40px;
+	color:@primaryTextColor;
+	border-radius: 5px;
+	margin-bottom: 20px;
+	text-align:center;
+	background: lighten(@secondaryTextColor , 40%);
+}
+.social-link-container{
+	.social-link-single {margin-top: 15px;}
+}
+.navigation-link-container{
+	.navigation-link-single {margin-top: 15px;}
+}
+#user-profile-form,#user-profile-pwd{
+	.pwd-err{
+		display:none;
+		width: 100%;
+		padding: 0px 10px;
+		text-transform: uppercase;
+		text-align: right !important;
+		&.alert{
+			color: @accentColor;
+		}
+		&.success{
+			color: @green;
+		}
+	}
+	input{
+		margin: 10px 0px;
+	}
+}
