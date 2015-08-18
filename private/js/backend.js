@@ -71,8 +71,7 @@
 					$bh -= $(".form-container").height();
 					$bh /= 2;
 					$bh -= 20;
-				$("#username").val("Neofrascati");
-				$("#password").val("Stratomerder1290");
+
 				$(".form-container").css({
 					"margin-top": $bh
 				});
