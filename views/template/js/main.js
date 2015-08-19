@@ -1,10 +1,10 @@
-console.log("main.js :1", shared);
 (function(){
 	//BlogNameSpace
 	var app = {
 		init: function(){
 			app.events();
 			app.ui.init();
+			app.request.init();
 		},
 		ui:{
 			init:function(){
@@ -28,22 +28,19 @@ console.log("main.js :1", shared);
 				});
 			}
 		},
+		request:{
+			init:function(){
+
+			}
+		},
 		events:function(){
-			$(".post").click(function(){
-				$.post("/create/post",function(res,status){
-					console.log("main.js postcreate", res);
-				});
-			});
-			$(".page").click(function(){
-				$.post("/create/page",function(res,status){
-					console.log("main.js pagecreate", res);
-				});
-			});
-			
+			$(".reply").click(function(){
+				$( this ).siblings(".reply-comment").fadeIn();
+			})
 		}
 	}
 
 	app.init();
-})(jQuery,shared)
+})(jQuery)
 
 

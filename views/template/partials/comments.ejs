@@ -1,20 +1,42 @@
-<% if(user.user){ %>
-<form action="/create/comment/" method="POST" class="small-12 comments">
-	<textarea name="comment" style="resize:none !important;">asdasda</textarea>
-	<input type="text" style="display:none;" name="post" value="<%= post.id %>">
-	<% if( locals.reply ) { %>
-		<input type="text" style="display:none;" name="reply" value="<%= comment.id %>">
-	<%	} %>
-	<button type="submit" class="button expand">Comment</button>
-</form>
-<% }else{ %>
-	<div class="small-12 text-center">
-		<h6>Login to comment</h6>
-		<form action="/admin/login" method="POST">
-			<input type="text" name="username">
-			<input type="password" name="password">
-			<input type="submit">
+<!-- COMMENTS -->
+<% 	comments = post.comments;
+	for (var i = 0; i < comments.length; i++) { %>
+	<div class="comment">
+
+		<h6><%= comments[i].user.username %></h6><small class="reply">reply</small>
+		<p><%= comments[i].comment %></p>
+		<div class="reply">
+			<% 	reply = comments[i].reply;
+				for (var j = 0; j < reply.length; j++) { %>	
+				<h6><%= reply[j].user.username %></h6>
+				<p><%= reply[j].comment %></p>
+			<% } %>
+		</div>
+		<hr>
+		<form action="/create/reply/" method="POST" class="small-12 reply-comment">
+			<textarea name="comment" style="resize:none !important;">asdasda</textarea>
+			<input type="text" style="display:none;" name="post_id" value="<%= post.id %>">
+			<input type="text" style="display:none;" name="parent_id" value="<%= comments[i].id %>">
+			<button type="submit" class="button expand">Comment</button>
 		</form>
 	</div>
+<% }; %>
+<hr>
+<!-- LOG OR COMMENT -->
+<% if(!user.user){ %>
+	<div class="small-12 text-center">
+		<h6>Login to comment</h6>
+		<form action="/admin/login" method="POST" class="login-box">
+			<input type="text" name="username" placeholder="username">
+			<input type="password" name="password" placeholder="password">
+			<input type="submit" value="Login">
+		</form>
+	</div>
+<% }else{ %>
+	<form action="/create/comment/" method="POST" class="small-12 post-comments">
+		<textarea name="comment" style="resize:none !important;">asdasda</textarea>
+		<input type="text" style="display:none;" name="post_id" value="<%= post.id %>">
+		<button type="submit" class="button expand">Comment</button>
+	</form>
 <% } %>
 <hr>

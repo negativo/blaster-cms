@@ -4,7 +4,7 @@ var Schema = mongoose.Schema;
 
 var UserSchema = new Schema({
 	username:String,
-	password:String,
+	password:{ type:String, select:false },
 	name:String,
 	email:String,
 	createdOn:Date,
@@ -12,4 +12,4 @@ var UserSchema = new Schema({
 	admin:Boolean
 });
 
-module.exports = mongoose.model("user", UserSchema,"user");
+module.exports = mongoose.model("User", UserSchema);

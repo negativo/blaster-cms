@@ -9,13 +9,14 @@ var PostSchema = new Schema({
 	body:String,
 	template: { type: String, default: "post-template" },
 	publishedBy:{
-		user:{ type: Schema.Types.ObjectId, ref:"user" },
+		user:{ type: Schema.Types.ObjectId, ref:"User" },
 		date:{ type: Date, default: Date.now() }
 	},
 	status:String,
 	type: { type:String, default: "post" },
 	//comments: { type: Schema.Types.ObjectId, ref:"comments" },
-	tags: Array
+	tags: Array,
+	comments:[{ type: Schema.ObjectId, ref:"Comment"}]
 });
 
-module.exports = mongoose.model("posts", PostSchema);
+module.exports = mongoose.model("Post", PostSchema);

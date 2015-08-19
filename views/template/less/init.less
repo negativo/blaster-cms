@@ -65,6 +65,12 @@
 .trasition-fast{
 	transition:all ease-in .2s !important; 
 }
+.trasition-slow{
+	transition:all ease-in .8s !important; 
+}
+.trasition{
+	transition:all ease-in .5s !important; 
+}
 
 .ornament{
 	width: 100% !important;
@@ -169,6 +175,21 @@ header.home{
 	a{
 		line-height: 50px;
 		color:white !important;
+	}
+}
+
+.login-box{
+	input{
+		background: none !important;
+		border:0 !important;
+		outline:0 !important;
+		text-align: center !important;
+		border-bottom: 1px solid @black !important;
+		box-shadow: none !important;
+		&:focus, &:hover{
+			.transition-fast;
+			border-bottom: 3px solid @black !important;
+		}
 	}
 }
 

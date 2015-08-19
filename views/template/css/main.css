@@ -53,6 +53,12 @@
 .trasition-fast {
   transition: all ease-in 0.2s !important;
 }
+.trasition-slow {
+  transition: all ease-in 0.8s !important;
+}
+.trasition {
+  transition: all ease-in 0.5s !important;
+}
 .ornament {
   width: 100% !important;
   clear: both;
@@ -156,6 +162,18 @@ header.home nav a:hover {
   line-height: 50px;
   color: white !important;
 }
+.login-box input {
+  background: none !important;
+  border: 0 !important;
+  outline: 0 !important;
+  text-align: center !important;
+  border-bottom: 1px solid #272822 !important;
+  box-shadow: none !important;
+}
+.login-box input:focus {
+  transition: all ease 1s;
+  border-bottom: 3px solid #272822 !important;
+}
 footer {
   margin-top: 50px !important;
   color: white;
@@ -167,4 +185,39 @@ footer {
   font-size: 0.9em;
   font-family: "Source Code Pro" !important;
   font-weight: 300;
+}
+.comment {
+  border-left: 1px solid grey;
+  margin: 20px 0;
+  padding-left: 10px !important;
+}
+.comment h6 {
+  display: inline-block;
+  margin-right: 10px;
+}
+.comment p {
+  padding: 5px !important;
+  margin: 0;
+}
+.comment small {
+  cursor: pointer;
+}
+.reply-comment {
+  display: none;
+}
+.reply {
+  border-left: 1px solid grey;
+  margin: 20px 0;
+  padding-left: 10px !important;
+}
+.reply h6 {
+  display: inline-block;
+  margin-right: 10px;
+}
+.reply p {
+  padding: 5px !important;
+  margin: 0;
+}
+.reply small {
+  cursor: pointer;
 }

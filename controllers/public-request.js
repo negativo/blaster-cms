@@ -6,6 +6,7 @@ var express = require("express"),
 	Configs = require("../models/configs"),
 	Post = require("../models/posts"),
 	Page = require("../models/pages"),
+	Comment = require("../models/comments"),
 	Render = require("../lib/render-helper").public;
 
 	
@@ -43,24 +44,24 @@ var GET = {
 	},
 	singlePostCtrl:function (req, res) {
 		var slug = req.params.post;
-		Post.findOne({ "slug": slug },function(err,post){
+		Post.findOne({ "slug": slug })
+		.populate("publishedBy.user",{ password:0 })
+		.populate("comments")
+		.exec(function(err,post){
 			if(post === null) return res.redirect("/404");
 			req.shared.title = post.title + " - " + req.shared.title;
-			res.render( post.template, new Render(req, { post:post }) );
-		}).populate("publishedBy.user",{ password:0 });
-	},
-	allPostsCtrl:function(req,res){
-		Post.find({}, function(err, posts){
-			if(posts !== null) return res.status(200).send(posts);
-			res.status(404).send("No posts found");
-		});
-	},
-	allPagesCtrl:function(req,res){
-		Page.find({}, function(err, pages){
-			if(pages !== null) return res.status(200).send(pages);
-			res.status(404).send("No pages found");
+			Comment.populate(post.comments,[{ path:"user", model:"User" },{ path:"reply", model:"Comment"}],function(err,parent){
+					post.comments.forEach(function(entry){
+						console.log("public-request.js :56", entry.reply);
+						Comment.populate(entry.reply,[{ path:"user", model:"User" }], function(err,parent){
+						res.render( post.template, new Render(req, { post:post }) );
+							
+						});
+					});
+			});
 		});
 	}
+
 };
 
 var POST = {

@@ -53,6 +53,12 @@
 .trasition-fast {
   transition: all ease-in 0.2s !important;
 }
+.trasition-slow {
+  transition: all ease-in 0.8s !important;
+}
+.trasition {
+  transition: all ease-in 0.5s !important;
+}
 .ornament {
   width: 100% !important;
   clear: both;
@@ -155,6 +161,18 @@ header.home nav a:hover {
 #admin-bar a {
   line-height: 50px;
   color: white !important;
+}
+.login-box input {
+  background: none !important;
+  border: 0 !important;
+  outline: 0 !important;
+  text-align: center !important;
+  border-bottom: 1px solid #272822 !important;
+  box-shadow: none !important;
+}
+.login-box input:focus {
+  transition: all ease 1s;
+  border-bottom: 3px solid #272822 !important;
 }
 footer {
   margin-top: 50px !important;

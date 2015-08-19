@@ -149,8 +149,7 @@ var GET = {
 var POST = {
 	loginCtrl:function(req,res){
 		//console.log("routes.js", req.session);
-		console.log("private-request.js :152", req.baseUrl);
-		res.redirect("/")
+		res.redirect("/");
 	},
 	editSinglePost:function(req,res){
 		console.log("private-request.js", req.body);
