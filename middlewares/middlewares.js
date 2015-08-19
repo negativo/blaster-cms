@@ -7,7 +7,8 @@ var path = require("path");
 	Configs = require("../models/configs"),
 	cookieParser = require("cookie-parser"),
 	session = require("express-session"),
-	passport = require("passport");
+	passport = require("passport"),
+	mongoose = require("mongoose");
 
 
 
@@ -28,7 +29,12 @@ module.exports = function(app,express,$ee){
 	//logins
 	require("../lib/login-strategy")(passport,$ee);
 	app.use(cookieParser());
-	app.use(session({ secret: 'WeGonnaConqueryTheFuckinWorldISwearIt' }));
+	app.use(session({ 
+		secret: 'WeGonnaConqueryTheFuckinWorldISwearIt',
+		store: require('mongoose-session')(mongoose),
+		cookie:{ maxAge: 3600000 } //change the session after dev 
+
+	}));
 	app.use(passport.initialize());
 	app.use(passport.session());
 

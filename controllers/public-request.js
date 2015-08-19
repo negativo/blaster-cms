@@ -21,7 +21,7 @@ var GET = {
 		//static homepage
 		if (req.shared.home === "home-template"){
 			Post.find({},function(err,posts){
-				res.render( "home-template" , new Render(req, { posts:posts }) )
+				res.render( "home-template" , new Render(req, { posts:posts, test:JSON.stringify(req.shared) }) )
 			}).sort({ "publishedBy.date": -1 }).populate("publishedBy.user",{ password:0 });
 		}
 		// Render chosen page as homepage 
@@ -45,19 +45,14 @@ var GET = {
 	singlePostCtrl:function (req, res) {
 		var slug = req.params.post;
 		Post.findOne({ "slug": slug })
-		.populate("publishedBy.user",{ password:0 })
+		.populate("publishedBy.user")
 		.populate("comments")
 		.exec(function(err,post){
 			if(post === null) return res.redirect("/404");
 			req.shared.title = post.title + " - " + req.shared.title;
-			Comment.populate(post.comments,[{ path:"user", model:"User" },{ path:"reply", model:"Comment"}],function(err,parent){
-					post.comments.forEach(function(entry){
-						console.log("public-request.js :56", entry.reply);
-						Comment.populate(entry.reply,[{ path:"user", model:"User" }], function(err,parent){
-						res.render( post.template, new Render(req, { post:post }) );
-							
-						});
-					});
+			Comment.populate(post.comments,[{ path:"user", model:"User" }], function(err,posts){
+				console.log("public-request.js :55", posts);
+				res.render( post.template, new Render(req, { post:post }) );
 			});
 		});
 	}

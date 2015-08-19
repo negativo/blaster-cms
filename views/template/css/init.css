@@ -50,13 +50,13 @@
   font-family: "Source Code Pro" !important;
   font-weight: 300;
 }
-.trasition-fast {
+.transition-fast {
   transition: all ease-in 0.2s !important;
 }
-.trasition-slow {
+.transition-slow {
   transition: all ease-in 0.8s !important;
 }
-.trasition {
+.transition {
   transition: all ease-in 0.5s !important;
 }
 .ornament {
@@ -170,8 +170,9 @@ header.home nav a:hover {
   border-bottom: 1px solid #272822 !important;
   box-shadow: none !important;
 }
-.login-box input:focus {
-  transition: all ease 1s;
+.login-box input:focus,
+.login-box input:hover {
+  transition: all ease-in 0.2s !important;
   border-bottom: 3px solid #272822 !important;
 }
 footer {

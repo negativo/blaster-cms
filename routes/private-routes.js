@@ -13,6 +13,7 @@ module.exports = function(app,express){
 	app.get("/admin/panel", GET.dashboardPageCtrl );
 	app.get("/admin/posts", GET.postsPageCtrl );
 	app.get("/admin/pages", GET.pagesPageCtrl );
+	app.get("/admin/comments", GET.commentsPageCtrl );
 	app.get("/admin/users", GET.usersPageCtrl );
 	app.get("/admin/users/:id", GET.profileCtrl );
 	app.get("/admin/configurations", GET.configurationsPageCtrl );

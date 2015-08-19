@@ -106,35 +106,43 @@ var POST = {
 			var comment = req.body;
 			comment.comment = comment.comment.trim();
 			console.log("api-request.js :108", comment);
-			new Comment({
-				comment: comment.comment,
-				user: req.user.id,
-				post_id: comment.post_id
-			}).save(function(err, comment){
-				console.log("api-request.js :114 SAVES", comment );
-				Post.findById( comment.post_id, function(err, post){
-					post.comments.push(comment._id);
-					post.save(function(err){
-						if(err === null ) return res.redirect("/post/"+post.slug);
+			if( req.user ){
+				new Comment({
+					comment: comment.comment,
+					user: req.user.id,
+					post_id: comment.post_id
+				}).save(function(err, comment){
+					console.log("api-request.js :114 SAVES", comment );
+					Post.findById( comment.post_id, function(err, post){
+						post.comments.push(comment._id);
+						post.save(function(err){
+							if(err === null ) return res.redirect("/post/"+post.slug);
+						});
 					});
 				});
-			});
+			}else{
+				res.send("log in before commenting")
+			}
 		},
 		reply:function(req,res){
 			var reply = req.body;
 			reply.comment = reply.comment.trim();
-			console.log("api-request.js :108", reply);
-			new Comment({
-				comment: reply.comment,
-				user: req.user.id
-			}).save(function(err, comment){
-				Comment.findById( reply.parent_id, function(err,parent){
-					parent.reply.push(comment._id);
-					parent.save(function(err){
-						if(err !== null) { }
-					});
-				})
-			});
+			if( req.user ){
+				console.log("api-request.js :108", reply);
+				new Comment({
+					comment: reply.comment,
+					user: req.user.id
+				}).save(function(err, comment){
+					Comment.findById( reply.parent_id, function(err,parent){
+						parent.reply.push(comment._id);
+						parent.save(function(err){
+							if(err !== null) { }
+						});
+					})
+				});
+			}else{
+				res.send("log in before commenting")
+			}
 		}
 	}
 };

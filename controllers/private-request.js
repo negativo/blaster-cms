@@ -47,13 +47,7 @@ var GET = {
 			res.render("panel", 
 				new Render(req, { postsNum: data[0].length, pagesNum: data[1].length, commentsNum: data[2].length, usersNum:data[3].length }) 
 			);
-		})
-		// Posts.find({}, function(err,posts){
-		// 	Pages.find({}, function(err,pages){
-		// 		res.render("panel", new Render(req, { postsNum: posts.length, pagesNum: pages.length }) );
-		// 	})
-		// })
-
+		});
 	},
 	postsPageCtrl:function(req,res){
 		req.shared.title = req.shared.title + " Posts";
@@ -71,6 +65,23 @@ var GET = {
 			if(pages !== null && req.isAuthenticated() ) {
 				res.render("pages", new Render(req, { pages: pages }) );
 			}
+		});
+	},
+	commentsPageCtrl:function(req,res){
+		req.shared.title = req.shared.title + " Comments";
+		req.shared.class = "dashboard-comments";
+		function getPosts(){
+			return Posts.find({});
+		};
+		function getComments(){
+			return Comments.find({}).populate("user");
+		};
+		Q.all([getPosts(),getComments()])
+		.then(function(data){
+			console.log("private-request.js :49", data);
+			res.render("comments", 
+				new Render(req, { posts: data[0], comments: data[1] })
+			);
 		});
 	},
 	usersPageCtrl:function(req,res){

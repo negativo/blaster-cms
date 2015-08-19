@@ -2,23 +2,8 @@
 <% 	comments = post.comments;
 	for (var i = 0; i < comments.length; i++) { %>
 	<div class="comment">
-
-		<h6><%= comments[i].user.username %></h6><small class="reply">reply</small>
+		<h6><%= comments[i].user.username %></h6>
 		<p><%= comments[i].comment %></p>
-		<div class="reply">
-			<% 	reply = comments[i].reply;
-				for (var j = 0; j < reply.length; j++) { %>	
-				<h6><%= reply[j].user.username %></h6>
-				<p><%= reply[j].comment %></p>
-			<% } %>
-		</div>
-		<hr>
-		<form action="/create/reply/" method="POST" class="small-12 reply-comment">
-			<textarea name="comment" style="resize:none !important;">asdasda</textarea>
-			<input type="text" style="display:none;" name="post_id" value="<%= post.id %>">
-			<input type="text" style="display:none;" name="parent_id" value="<%= comments[i].id %>">
-			<button type="submit" class="button expand">Comment</button>
-		</form>
 	</div>
 <% }; %>
 <hr>

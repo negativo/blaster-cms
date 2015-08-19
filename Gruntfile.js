@@ -69,6 +69,14 @@ module.exports = function(grunt) {
 				spawn:false,
 				livereload:true
 			}
+		},
+		ejs:{
+			files:['views/template/*.ejs','private/*.ejs','views/template/partials/*.ejs','private/partials/*.ejs'],
+			tasks:["less","cssmin"],
+			options:{
+				spawn:false,
+				livereload:true
+			}
 		}
 	}   
  });
