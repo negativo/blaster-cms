@@ -1,11 +1,13 @@
 var express = require("express"),
 	app 	= express(),
+	Q = require("q"),
 	$F = require("../configs/functions"),
 	fs = require("fs"),
-	Users = require("../models/user"),
 	Configs = require("../models/configs"),
 	Posts = require("../models/posts"),
 	Pages = require("../models/pages"),
+	Users = require("../models/user"),
+	Comments = require("../models/comments"),
 	toSlug = require('to-slug-case'),
 	Render = require("../lib/render-helper").private;
 
@@ -27,11 +29,30 @@ var GET = {
 	dashboardPageCtrl:function(req,res){
 		req.shared.title = req.shared.title + " Dashboard";
 		req.shared.class = "dashboard-home";
-		Posts.find({}, function(err,posts){
-			Pages.find({}, function(err,pages){
-				res.render("panel", new Render(req, { postsNum: posts.length, pagesNum: pages.length }) );
-			})
+		var getPages = function(){
+			return Posts.find({});
+		};
+		var getPosts = function(){
+			return Pages.find({});
+		};
+		var getComments = function(){
+			return Comments.find({});
+		};
+		var getUsers = function(){
+			return Users.find({});
+		};
+		Q.all([getPages(),getPosts(),getComments(), getUsers()])
+		.then(function(data){
+			console.log("private-request.js :49", data);
+			res.render("panel", 
+				new Render(req, { postsNum: data[0].length, pagesNum: data[1].length, commentsNum: data[2].length, usersNum:data[3].length }) 
+			);
 		})
+		// Posts.find({}, function(err,posts){
+		// 	Pages.find({}, function(err,pages){
+		// 		res.render("panel", new Render(req, { postsNum: posts.length, pagesNum: pages.length }) );
+		// 	})
+		// })
 
 	},
 	postsPageCtrl:function(req,res){
