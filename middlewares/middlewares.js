@@ -29,12 +29,12 @@ module.exports = function(app,express,$ee){
 	//logins
 	require("../lib/login-strategy")(passport,$ee);
 	app.use(cookieParser());
-	app.use(session({ 
-		secret: 'WeGonnaConqueryTheFuckinWorldISwearIt',
-		store: require('mongoose-session')(mongoose),
-		cookie:{ maxAge: 3600000 } //change the session after dev 
+	// app.use(session({ 
+	// 	secret: 'WeGonnaConqueryTheFuckinWorldISwearIt',
+	// 	store: require('mongoose-session')(mongoose),
+	// 	cookie:{ maxAge: 3600000 } //change the session after dev 
 
-	}));
+	// }));
 	app.use(passport.initialize());
 	app.use(passport.session());
 
