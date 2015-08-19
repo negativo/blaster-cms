@@ -257,7 +257,7 @@
 					var editor = CODE_EDITOR;					
 					var data = { css: editor.getValue() };
 					$.post("/admin/edit-theme", data, function(res,status){
-						console.log("backend.js :238", res);
+						if (res === "success") toastr.success("Custom CSS updated!");
 					});
 				});
 
@@ -348,7 +348,7 @@
 				//delete commment
 				$(".remove-comment").click(function(){
 					var $parent = $( this ).parent().parent();
-					var data = { action:"delete", id:$(this).data("id") };
+					var data = { action:"delete", id:$(this).data("id"), post_id: $(this).data("post-id") };
 					if (confirm("Deleted comment can't be restored are you sure? ") ){
 						$.post("/admin/edit-comment",data,function(res){
 							if (res === "success" ) {

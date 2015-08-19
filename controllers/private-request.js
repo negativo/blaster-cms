@@ -315,7 +315,15 @@ var POST = {
 		console.log("private-request.js :316", comment);
 		if( comment.action === "delete" ){
 			Comments.findById( comment.id ).remove(function(err){
-				res.send("success");
+				Posts.findById( comment.post_id, function(err,post){
+					if (post.comments.indexOf(comment.id) > -1) {
+					    post.comments.splice(post.comments.indexOf(comment.id), 1);
+					    
+					};
+					post.save(function(err){
+						if(err === null) res.send("success");
+					})
+				});
 			});
 		}else if ( comment.action === "update" ){
 			Comments.findById( comment.id, function(err,updateComment){

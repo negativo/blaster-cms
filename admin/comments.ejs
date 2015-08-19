@@ -1,5 +1,5 @@
 <%- include("./partials/header") %>
-<%= JSON.stringify(posts[0]._id); %>
+<%= posts %>
 <div id="page-wrapper">
     <div class="container-fluid">  
         <h2>Comments</h2>
@@ -9,7 +9,8 @@
             <th class="col-xs-2">Discussion</th>
             <th>Comments</th>
         </tr>
-        <% for (var i = 0; i < posts.length; i++) { %>
+        <% for (var i = 0; i < posts.length; i++) { 
+            if( posts[i].comments.length > 0) { %>
             <tr>
                 <td><a href="/post/<%=  posts[i].slug %>"><%=  posts[i].title %></a></td>
                 <td>
@@ -20,7 +21,7 @@
                             <span class="pull-right">
                                 <i class="fa fa-fw fa-floppy-o save-comment" data-id="<%= comments[j]._id %>"></i>
                                 <i class="fa fa-fw fa-pencil edit-comment"></i>
-                                <i class="fa fa-fw fa-remove remove-comment" data-id="<%= comments[j]._id %>"></i>
+                                <i class="fa fa-fw fa-remove remove-comment" data-id="<%= comments[j]._id %>" data-post-id="<%= posts[i]._id %>"></i>
                             </span>
                             <div class="clearfix"></div>
                             <div class="comment-body" data-id="<%= comments[j]._id %>" contenteditable><%= comments[j].comment %></div>
@@ -29,6 +30,7 @@
                     }; %>
                 </td>
             </tr>
+            <% } %>
         <% }; %>
       </table>
     </div>
