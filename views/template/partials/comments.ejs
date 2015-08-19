@@ -1,6 +1,5 @@
 <!-- COMMENTS -->
-<% 	comments = post.comments;
-	for (var i = 0; i < comments.length; i++) { %>
+<%	for (var i = 0; i < comments.length; i++) { %>
 	<div class="comment">
 		<h6><%= comments[i].user.username %></h6>
 		<p><%= comments[i].comment %></p>

@@ -25,6 +25,7 @@
 			date:function(){
 				$( ".date" ).each(function( index ) {
 					$(this).text(moment($( this ).text()).fromNow());
+					$( this ).fadeIn();
 				});
 			}
 		},
@@ -34,9 +35,6 @@
 			}
 		},
 		events:function(){
-			$(".reply").click(function(){
-				$( this ).siblings(".reply-comment").fadeIn();
-			})
 		}
 	}
 

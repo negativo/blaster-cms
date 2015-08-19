@@ -52,7 +52,7 @@ var GET = {
 			req.shared.title = post.title + " - " + req.shared.title;
 			Comment.populate(post.comments,[{ path:"user", model:"User" }], function(err,posts){
 				console.log("public-request.js :55", posts);
-				res.render( post.template, new Render(req, { post:post }) );
+				res.render( post.template, new Render(req, { post:post, comments: post.comments }) );
 			});
 		});
 	}

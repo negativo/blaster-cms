@@ -9,7 +9,7 @@ var CommentSchema = new Schema({
 	date: { type: Date, default: Date.now() },
 	user:{ type: Schema.Types.ObjectId, ref:"User" },
 	post_id:{ type: Schema.Types.ObjectId, ref:"Post" },
-	reply: [{ type: Schema.Types.ObjectId, ref:"Comment" }]
+	comments: [{ type: Schema.Types.ObjectId, ref:"Comment" }]
 });
 
 
