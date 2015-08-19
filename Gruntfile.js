@@ -9,7 +9,7 @@ module.exports = function(grunt) {
              files: [{
 					expand: true,
 					cwd: 'views/template/less',
-					src: ['*.less'],
+					src: ['main.less'],
 					dest: 'views/template/css',
 					ext: '.css'
 			}]
@@ -34,7 +34,7 @@ module.exports = function(grunt) {
              files: [{
 					expand: true,
 					cwd: 'views/template/less',
-					src: ['*.less'],
+					src: ['main.less'],
 					dest: 'views/template/css',
 					ext: '.css'
 			}]

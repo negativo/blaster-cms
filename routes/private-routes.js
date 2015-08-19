@@ -19,6 +19,7 @@ module.exports = function(app,express){
 	app.get("/admin/configurations", GET.configurationsPageCtrl );
 
 	//VIEW WITH CRUD OPs
+	// 	CREATE/EDIT
 	app.get("/admin/new-post", GET.newPostCtrl );
 	app.get("/admin/new-page", GET.newPageCtrl );
 	app.get("/admin/edit-nav", GET.editNavigation );
@@ -26,11 +27,10 @@ module.exports = function(app,express){
 	app.get("/admin/themes", GET.themesCtrl );
 	app.get("/admin/edit-post/:id", GET.editSinglePost );
 	app.get("/admin/edit-page/:id", GET.editSinglePage );
-
-
+	// 	DELETE
+	
 
 	//POSTS	
-	//login local
 	app.post("/admin/login", passport.authenticate('local'),  POST.loginCtrl );
 	app.post("/admin/edit-post", POST.editSinglePost );
 	app.post("/admin/edit-page", POST.editSinglePage );
@@ -40,6 +40,7 @@ module.exports = function(app,express){
 	app.post("/admin/edit-configurations", POST.editConfigurations );
 	app.post("/admin/edit-user-profile", POST.editUserProfile );
 	app.post("/admin/edit-user-password", POST.editUserPassword );
+	app.post("/admin/edit-comment", POST.editComment );
 	
 	//use it later
 	var isAdmin = function(req,res,next){

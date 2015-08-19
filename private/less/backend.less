@@ -10,6 +10,10 @@
 @dividerColor:       #B6B6B6;
 @green: #4CAF50;
 
+.transition{
+	transition:all ease-in 0.5s;
+}
+
 .heading{
 	font-family: "Lato";
 	font-weight: 500;
@@ -126,5 +130,38 @@ hr{
 	}
 	input{
 		margin: 10px 0px;
+	}
+}
+
+.comment{
+	padding: 10px 0;
+	clear:both;
+	border-bottom: 1px solid @dividerColor !important;
+	.remove-comment{
+		cursor: pointer;
+		.transition;
+		&:hover{
+			color: @accentColor;
+		}
+	}
+	.edit-comment{
+		cursor: pointer;
+		.transition;
+		&:hover{
+			color: @primaryColor;
+		}
+	}
+	.save-comment{
+		display:none;
+		cursor: pointer;
+		.transition;
+		&:hover{
+			color: @green;
+		}
+	}
+	.comment-body{
+		word-break: break-word;
+		padding: 5px;
+		margin:5px 0;
 	}
 }

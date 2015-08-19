@@ -97,9 +97,22 @@ a {
   color: #272822 !important;
   text-decoration: none;
 }
+#admin-bar {
+  background: #272822;
+  color: white !important;
+  width: 100%;
+  height: 50px;
+  padding-left: 25px;
+  padding-right: 25px;
+}
+#admin-bar a {
+  line-height: 50px;
+  color: white !important;
+}
 header.home {
   text-align: left;
   padding-top: 75px;
+  margin-bottom: 75px;
   font-family: "Source Code Pro" !important;
   font-weight: 300;
 }
@@ -126,8 +139,21 @@ header.home nav a {
 header.home nav a:hover {
   color: #66d9ef;
 }
-.content {
-  margin-top: 75px;
+footer {
+  margin-top: 50px !important;
+  color: white;
+  background: #272822;
+  clear: both;
+  padding: 25px !important;
+  line-height: 35px;
+  letter-spacing: 1px;
+  font-size: 0.9em;
+  font-family: "Source Code Pro" !important;
+  font-weight: 300;
+}
+.page-404 {
+  text-align: center;
+  margin-top: 100px;
 }
 .content .post-container {
   border-bottom: 1px solid #787878;
@@ -139,6 +165,9 @@ header.home nav a:hover {
   margin: 0;
   padding: 0;
 }
+.content .post-container p {
+  margin-top: 20px;
+}
 .content .post-container a {
   transition: all ease-in 0.2s !important;
 }
@@ -149,21 +178,38 @@ header.home nav a:hover {
   width: 100% !important;
   height: auto !important;
 }
-.page-404 {
-  text-align: center;
-  margin-top: 100px;
+.single-post .title {
+  font-size: 2em;
 }
-#admin-bar {
-  background: #272822;
-  color: white !important;
-  width: 100%;
-  height: 50px;
-  padding-left: 25px;
-  padding-right: 25px;
+.single-post .meta {
+  font-size: .75em !important;
 }
-#admin-bar a {
-  line-height: 50px;
-  color: white !important;
+.single-post .meta span {
+  margin-right: 10px;
+}
+.single-post .post-body {
+  margin-top: 25px !important;
+  font-size: 1em;
+  letter-spacing: 1px;
+  line-height: 120%;
+}
+.comment {
+  border-left: 2px solid grey;
+  margin: 20px 0;
+  padding-left: 10px !important;
+  word-break: break-word;
+}
+.comment h6 {
+  display: inline-block;
+  margin-right: 10px;
+}
+.comment p {
+  display: block;
+  padding: 10px !important;
+  margin: 0;
+}
+.comment small {
+  cursor: pointer;
 }
 .login-box input {
   background: none !important;
@@ -177,51 +223,4 @@ header.home nav a:hover {
 .login-box input:hover {
   transition: all ease-in 0.2s !important;
   border-bottom: 3px solid #272822 !important;
-}
-footer {
-  margin-top: 50px !important;
-  color: white;
-  background: #272822;
-  clear: both;
-  padding: 25px !important;
-  line-height: 35px;
-  letter-spacing: 1px;
-  font-size: 0.9em;
-  font-family: "Source Code Pro" !important;
-  font-weight: 300;
-}
-.comment {
-  border-left: 1px solid grey;
-  margin: 20px 0;
-  padding-left: 10px !important;
-}
-.comment h6 {
-  display: inline-block;
-  margin-right: 10px;
-}
-.comment p {
-  padding: 5px !important;
-  margin: 0;
-}
-.comment small {
-  cursor: pointer;
-}
-.reply-comment {
-  display: none;
-}
-.reply {
-  border-left: 1px solid grey;
-  margin: 20px 0;
-  padding-left: 10px !important;
-}
-.reply h6 {
-  display: inline-block;
-  margin-right: 10px;
-}
-.reply p {
-  padding: 5px !important;
-  margin: 0;
-}
-.reply small {
-  cursor: pointer;
 }

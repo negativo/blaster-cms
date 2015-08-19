@@ -63,6 +63,7 @@
 				backend.request.settings();
 				backend.request.navigation();
 				backend.request.profile();
+				backend.request.editComment();
 				backend.request.editTheme();
 				backend.request.chooseTheme();
 			},
@@ -341,6 +342,37 @@
 						});
 					};
 					
+				});
+			},
+			editComment:function(){
+				//delete commment
+				$(".remove-comment").click(function(){
+					var $parent = $( this ).parent().parent();
+					var data = { action:"delete", id:$(this).data("id") };
+					if (confirm("Deleted comment can't be restored are you sure? ") ){
+						$.post("/admin/edit-comment",data,function(res){
+							if (res === "success" ) {
+								toastr.success("Comment Removed!");
+								$parent.slideUp();
+							};
+						});
+					};
+				});
+				//edit comment
+				$(".comment-body").click(function(){
+					$(this).parent().find(".save-comment").fadeIn();
+				});
+				$(".edit-comment").click(function(){
+					$( this ).siblings(".save-comment").fadeIn();
+					$( this ).parent().parent().find(".comment-body").focus();
+				});
+				$(".save-comment").click(function(){
+					var $parent = $( this ).parent().parent(),
+						$comment = $parent.find(".comment-body");
+					var data = { action:"update", id:$comment.data("id").trim(), body: $comment.text() };
+					$.post("/admin/edit-comment", data, function(res){
+						if (res === "success" ) toastr.success("Comment edited!");
+					});
 				});
 			}
 		}

@@ -1,0 +1,100 @@
+@import url(http://fonts.googleapis.com/css?family=Arvo:400,700);
+@import url(http://fonts.googleapis.com/css?family=Lato:400,700);
+@import url(http://fonts.googleapis.com/css?family=Source+Code+Pro:300,500);
+
+.left{
+	float:left;
+}
+.right{
+	float:right;
+}
+.object{
+	color:@cyan !important;
+}
+.function{
+	color:@green !important;
+}
+.parameter{
+	color:@orange !important;
+}
+.statement{
+	color:@magenta !important;
+}
+.undefined, .null{
+	color:@purple !important;
+}
+.object-bg{
+	background:@cyan !important;
+}
+.function-bg{
+	background:@green !important;
+}
+.parameter-bg{
+	background:@orange !important;
+}
+.statement-bg{
+	background:@magenta !important;
+}
+//fonts
+.heading-font{
+	font-family: "Arvo" !important;
+	font-weight: 400;
+}
+.bold{
+	font-weight: 700 !important;
+}
+.text-font{
+	font-family: "Lato" !important;
+	font-weight: 400;
+}
+
+.code-font{
+	font-family: "Source Code Pro" !important;
+	font-weight: 300;
+}
+.transition-fast{
+	transition:all ease-in .2s !important; 
+}
+.transition-slow{
+	transition:all ease-in .8s !important; 
+}
+.transition{
+	transition:all ease-in .5s !important; 
+}
+
+.date{
+	display:none;
+}
+
+.ornament{
+	width: 100% !important;
+	// position: fixed;
+	// top:0;
+	div{
+		height: 3px !important;
+		width: 25% !important;
+		padding: 0px !important;
+		margin: 0px !important;
+		float:left;
+	}
+	clear:both;
+}
+body{
+	.text-font;
+	font-size: 16px;
+	color:@black !important;
+}
+
+h1,h2,h3,h4,h5,h6{
+	.code-font;
+	.bold;
+
+}
+
+code{
+	.code-font;
+}
+a{
+	color: @black !important;
+	text-decoration: none;
+}

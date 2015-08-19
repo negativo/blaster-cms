@@ -43,7 +43,6 @@ var GET = {
 		};
 		Q.all([getPages(),getPosts(),getComments(), getUsers()])
 		.then(function(data){
-			console.log("private-request.js :49", data);
 			res.render("panel", 
 				new Render(req, { postsNum: data[0].length, pagesNum: data[1].length, commentsNum: data[2].length, usersNum:data[3].length }) 
 			);
@@ -310,6 +309,23 @@ var POST = {
 				res.send("error")
 			});
 		});
+	},
+	editComment:function(req,res){
+		var comment = req.body;
+		console.log("private-request.js :316", comment);
+		if( comment.action === "delete" ){
+			Comments.findById( comment.id ).remove(function(err){
+				res.send("success");
+			});
+		}else if ( comment.action === "update" ){
+			Comments.findById( comment.id, function(err,updateComment){
+				updateComment.comment = comment.body;
+				updateComment.save(function(err){
+					console.log("private-request.js :324", err);
+					if(err === null ) return res.send("success");
+				})
+			});
+		}
 	}
 };
 

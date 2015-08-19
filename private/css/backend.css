@@ -1,4 +1,7 @@
 @import url(http://fonts.googleapis.com/css?family=Lato:300,500);
+.transition {
+  transition: all ease-in 0.5s;
+}
 .heading {
   font-family: "Lato";
   font-weight: 500;
@@ -126,4 +129,36 @@ hr {
 #user-profile-form input,
 #user-profile-pwd input {
   margin: 10px 0px;
+}
+.comment {
+  padding: 10px 0;
+  clear: both;
+  border-bottom: 1px solid #b6b6b6 !important;
+}
+.comment .remove-comment {
+  cursor: pointer;
+  transition: all ease-in 0.5s;
+}
+.comment .remove-comment:hover {
+  color: #ff5252;
+}
+.comment .edit-comment {
+  cursor: pointer;
+  transition: all ease-in 0.5s;
+}
+.comment .edit-comment:hover {
+  color: #03a9f4;
+}
+.comment .save-comment {
+  display: none;
+  cursor: pointer;
+  transition: all ease-in 0.5s;
+}
+.comment .save-comment:hover {
+  color: #4caf50;
+}
+.comment .comment-body {
+  word-break: break-word;
+  padding: 5px;
+  margin: 5px 0;
 }
