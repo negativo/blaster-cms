@@ -1,6 +1,11 @@
 var $F = require("../configs/functions");
 var passport = require("passport");
 
+var multer = require("multer"),
+	uploader = multer({ dest: './uploads/' }),
+	avatar = multer({ dest: global.appRoot + "/uploads/user"});
+
+
 var ruotesControllers = require("../controllers/private-request"),
 	POST = ruotesControllers.POST,
 	GET = ruotesControllers.GET;
@@ -45,6 +50,8 @@ module.exports = function(app,express){
 	app.post("/admin/edit-delete-user", POST.deleteUser );
 	app.post("/admin/edit-comment", POST.editComment );
 	app.post("/admin/register", POST.registerCtrl );
+	app.post("/admin/upload", uploader.single("upload"), POST.uploadCtrl );
+	app.post("/admin/upload/avatar/:id", avatar.single("avatar"), POST.avatarUpload );
 	
 	//use it later
 	var isAdmin = function(req,res,next){

@@ -231,3 +231,16 @@ hr {
 .delete-user {
   color: #ff5252;
 }
+#user-profile-form {
+  display: block;
+}
+.avatar {
+  width: 100px;
+  height: 100px;
+  background: #727272;
+  border-radius: 50%;
+  color: white;
+  line-height: 100px;
+  text-align: center;
+  overflow: hidden;
+}

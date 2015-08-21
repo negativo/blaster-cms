@@ -7,6 +7,7 @@ var UserSchema = new Schema({
 	password:{ type:String, select:false },
 	name:String,
 	email:String,
+	avatar:String,
 	createdOn:Date,
 	role:String,
 	admin:Boolean

@@ -14,6 +14,7 @@ var express = require("express"),
 	privateRoutes = require("./routes/private-routes")(app,express),
 	apiEndpoints = require("./routes/api-endpoints")(app,express);
 
+
 //FIRE IT UP
 app.listen(port, function(){
 	console.log("fire it up on port: " + port);

@@ -12,6 +12,7 @@ var express = require("express"),
 	Render = require("../lib/render-helper").private,
 	Message = require("../lib/message-helper").message;
 
+	
 var base_url = global.base_url;
 
 	
@@ -56,7 +57,7 @@ var GET = {
 			if(posts !== null && req.isAuthenticated() ) {
 				res.render("posts", new Render(req, { posts: posts }) );
 			}
-		}).populate("publishedBy.user",{password:0});
+		}).populate("publishedBy.user",{password:0}).sort({ "publishedBy.date": -1 });
 	},
 	pagesPageCtrl:function(req,res){
 		req.shared.title = req.shared.title + " Pages";
@@ -366,6 +367,21 @@ var POST = {
 			.fail(function(message){ return res.send(message) });
 		})
 		//res.send(req.body);
+	},
+	uploadCtrl:function(req,res,next){
+		 res.send("got it");
+	},
+	avatarUpload:function(req,res){
+		var userId = req.params.id;
+		User.findById( userId, function(err,user){
+			if(err) return res.send(new Message(null,"Error uploading"))
+			user.avatar = "/user/" + req.file.filename;
+			user.save();
+			req.login(user,function(err){
+				if (err) return next(err);
+				res.redirect("/admin/users/"+user._id);
+			});
+		});
 	}
 };
 

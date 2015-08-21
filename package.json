@@ -38,6 +38,7 @@
     "express-session": "^1.11.3",
     "mongoose": "^4.1.0",
     "mongoose-session": "0.0.4",
+    "multer": "^1.0.3",
     "nodemon": "^1.4.1",
     "passport": "^0.2.2",
     "passport-local": "^1.0.0",

@@ -31,7 +31,9 @@
 				$body.find(".editor").hide();
 				CKEDITOR.replace( 'editor1', {
 					fullPage: true,
-					allowedContent: true
+					allowedContent: true,
+					    filebrowserBrowseUrl: '/uploads/',
+    					filebrowserUploadUrl: '/admin/upload'
 				});
 				$body.find(".editor").show();
 			},
@@ -63,6 +65,7 @@
 				backend.request.settings();
 				backend.request.navigation();
 				backend.request.profile();
+				backend.request.avatar();
 				backend.request.editComment();
 				backend.request.editTheme();
 				backend.request.chooseTheme();
@@ -213,6 +216,17 @@
 						});
 					}
 				});
+			},
+			avatar:function(){
+				var $form = $("#user-profile-form"),
+					$getAvatar = $(".avatar-uploader");
+					//non trigger il click
+					$(".get-avatar").click(function(e){
+						e.stopPropagation();
+						e.preventDefault();
+						//Uncaught RangeError: Maximum call stack size exceeded
+						$(this).siblings("#avatar-uploader").trigger("click");
+					});
 			},
 			settings:function(){
 				var $addLink = $(".add-social-link"),
