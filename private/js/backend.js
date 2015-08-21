@@ -118,23 +118,21 @@
 							}
 							$.post("/admin/register", data, function(res){
 								console.log("backend.js :119", res);
-								if (res.message === "user_created"){
-									toastr.success("User created!");
+								if (res.message){
+									toastr.success(res.message);
 									setTimeout(function(){
 										window.location.replace("/admin/users");
 									},2000);									
-								} else if (res.message === "user_exists"){
-									toastr.error("User exists, use another username!");
-								}else{
-									toastr.error("Error try again!!");
+								} else if (res.err){
+									toastr.error(res.err);
 								}
 							});
 						}else{
+							if( Number(capthacAnswer.val()) !== sum[2] ) toastr.error("Wrong captcha!");
+							if( $password.val() !== $retype.val() ) toastr.error("Password Missmatch!");
 							sum = randomize();
 						}
 					});
-
-
 			},
 			profile:function(){
 				var $profilePwdForm = $("#user-profile-pwd"),

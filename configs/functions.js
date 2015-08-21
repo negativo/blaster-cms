@@ -6,7 +6,8 @@ var mongoose = require("mongoose");
 	Post = require("../models/posts"),
 	Page = require("../models/pages"),	
 	__root = global.appRoot,
-	crypto = require("../lib/crypto");
+	crypto = require("../lib/crypto"),
+	Message = require("../lib/message-helper").message;
 
 
 var that = module.exports = {
@@ -145,8 +146,8 @@ var that = module.exports = {
 			password:crypto.bcrypt.encrypt(newUser.password),  
 			role:"guest"
 		}).save(function(err,user){
-			if ( err === null ) return deferred.resolve({ message:"user_created" });
-			return deferred.reject({ message:"save_error" });
+			if ( err === null ) return deferred.resolve(new Message("User Created!"));
+			return deferred.reject( new Message(null, "Error saving user, try again!") );
 		});
 		
 		return deferred.promise;

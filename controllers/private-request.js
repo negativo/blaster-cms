@@ -301,7 +301,7 @@ var POST = {
 			if (err === null) {
 				if (user.role === "admin") return res.send(new Message(null,"Can't delete an Admin"))
 				user.remove(function(err){
-					if (err === null) res.send(new Message("User delete!"));
+					if (err === null) res.send(new Message("User deleted!"));
 				});
 			}
 		});
@@ -360,7 +360,7 @@ var POST = {
 	registerCtrl:function(req,res){
 		var register = req.body;
 		User.findOne({ "username": register.username },function(err, user){
-			if(user) return res.send({ message:"user_exists" });
+			if(user) return res.send(new Message(null, "User Exists") );
 			$F.register(register)
 			.then(function(message){ return res.send(message) })
 			.fail(function(message){ return res.send(message) });
