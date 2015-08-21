@@ -200,7 +200,7 @@
 			},
 			deleteUser:function(){
 				$(".delete-user").click(function(){
-					if(confirm("Deleted user can't be restored, are you sure?")){
+					if(confirm( $(this).data("username") + " will be deleted and can't be restored, are you sure?")){
 						var $that = $(this);
 						var $user = { id: $that.data("id") };
 						$.post("/admin/edit-delete-user", $user, function(res){

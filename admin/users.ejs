@@ -18,7 +18,7 @@
     <% for (var i = 0; i < users.length; i++) { %>
         <tr>
             <td class="col-xs-1">
-                <a class="delete-user" data-id="<%= users[i]._id %>"><i class="fa fa-fw fa-remove fa-lg"></i></a>
+                <a class="delete-user" data-id="<%= users[i]._id %>" data-username="<%= users[i].username %>"><i class="fa fa-fw fa-remove fa-lg"></i></a>
                 <a href="users/<%= users[i]._id %>"><i class="fa fa-fw fa-user fa-lg"></i></a>
             </td>
             <td class="col-xs-2"><%= users[i].username %></td>
