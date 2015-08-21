@@ -3,7 +3,7 @@ var passport = require("passport");
 
 var multer = require("multer"),
 	uploader = multer({ dest: './uploads/' }),
-	avatar = multer({ dest: global.appRoot + "/uploads/user"});
+	avatar = multer({ dest: global.appRoot + "/uploads/avatar"});
 
 
 var ruotesControllers = require("../controllers/private-request"),

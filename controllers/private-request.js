@@ -375,12 +375,13 @@ var POST = {
 		var userId = req.params.id;
 		User.findById( userId, function(err,user){
 			if(err) return res.send(new Message(null,"Error uploading"))
-			user.avatar = "/user/" + req.file.filename;
+			user.avatar = "/avatar/" + req.file.filename;
 			user.save();
-			req.login(user,function(err){
-				if (err) return next(err);
-				res.redirect("/admin/users/"+user._id);
-			});
+			res.redirect("/admin/users/"+user._id);
+			// req.login(user,function(err){
+			// 	if (err) return next(err);
+			// 	res.redirect("/admin/users/"+user._id);
+			// });
 		});
 	}
 };
