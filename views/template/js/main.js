@@ -15,8 +15,7 @@
 				var $footer = $(".main-footer");
 				if ($(".site-wrapper").height() <= 500 ){
 					$footer.css({
-						"position":"fixed",
-						"bottom":"0px"
+						"margin-top":"100px"
 					});
 				} else{
 					$footer.css("position","static!important");

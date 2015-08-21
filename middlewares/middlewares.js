@@ -29,7 +29,9 @@ module.exports = function(app,express,$ee){
 	//logins
 	require("../lib/login-strategy")(passport,$ee);
 	app.use(cookieParser());
-	if(app.get("mongo_db")){
+	console.log("middlewares.js :32", app.get("mongo_db") );
+	//dev purpose should be actived only after installation
+	if(!app.get("mongo_db")){
 		app.use(session({ 
 			secret: 'WeGonnaConqueryTheFuckinWorldISwearIt',
 			store: require('mongoose-session')(mongoose),
@@ -40,7 +42,6 @@ module.exports = function(app,express,$ee){
 		app.use(session({ 
 			secret: 'WeGonnaConqueryTheFuckinWorldISwearIt',
 			cookie:{ maxAge: 36000000 } //change the session after dev 
-
 		}));		
 	}
 	app.use(passport.initialize());
@@ -108,6 +109,7 @@ module.exports = function(app,express,$ee){
     app.use("/admin", function(req,res,next){
 		app.set("views", __root + "/admin");
     	if (req.url === "/login") return next();
+    	if (req.url === "/register") return next();
 		if(req.session && req.user && req.isAuthenticated() ) return next();
 		//console.log("middlewares.js", "PREREDIRECT >>> ", global.preRedirect);
 		res.redirect("/admin/login");

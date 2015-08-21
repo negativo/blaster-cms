@@ -66,9 +66,11 @@
 				backend.request.editComment();
 				backend.request.editTheme();
 				backend.request.chooseTheme();
+				backend.request.register();
+				backend.request.deleteUser();
 			},
 			login:function(){
-				var $bh = $(document).height();
+				var $bh = $(window).height();
 					$bh -= $(".form-container").height();
 					$bh /= 2;
 					$bh -= 20;
@@ -76,6 +78,7 @@
 				$(".form-container").css({
 					"margin-top": $bh
 				});
+				$(".form-container").fadeIn();
 				
 				$(".login-form").submit(function(e){
 					e.preventDefault();
@@ -89,6 +92,49 @@
 						if( !res.err ) window.location.replace("/admin/panel");
 					});
 				});
+			},
+			register:function(){
+				var capthacQuestion = $("#captcha-q"),
+					capthacAnswer = $("#captcha-a"),
+					$form = $(".register-form"),
+					$username = $(".register-username"),
+					$password = $(".register-retype"),
+					$retype = $(".register-password");
+					// CAPTCHA
+					function randomize(){
+						var	x = Math.floor(Math.round(Math.random()*10)),
+							y = Math.floor(Math.round(Math.random()*10)),
+							res = x +y;
+						capthacQuestion.html(x +"+"+ y);
+						return [x,y,res];
+					};
+					var sum = randomize();
+					$form.submit(function(e){
+						e.preventDefault();
+						if( Number(capthacAnswer.val()) === sum[2] && $password.val() === $retype.val() ){
+							var data = {
+								username:$(".register-username").val(),
+								password:$(".register-password").val()
+							}
+							$.post("/admin/register", data, function(res){
+								console.log("backend.js :119", res);
+								if (res.message === "user_created"){
+									toastr.success("User created!");
+									setTimeout(function(){
+										window.location.replace("/admin/users");
+									},2000);									
+								} else if (res.message === "user_exists"){
+									toastr.error("User exists, use another username!");
+								}else{
+									toastr.error("Error try again!!");
+								}
+							});
+						}else{
+							sum = randomize();
+						}
+					});
+
+
 			},
 			profile:function(){
 				var $profilePwdForm = $("#user-profile-pwd"),
@@ -152,6 +198,22 @@
 						});						
 					}
 
+				});
+			},
+			deleteUser:function(){
+				$(".delete-user").click(function(){
+					if(confirm("Deleted user can't be restored, are you sure?")){
+						var $that = $(this);
+						var $user = { id: $that.data("id") };
+						$.post("/admin/edit-delete-user", $user, function(res){
+							if (!res.err) {
+								$that.parent().parent().slideUp();
+								toastr.success(res.message);
+							}else{
+								return toastr.error(res.err);
+							}
+						});
+					}
 				});
 			},
 			settings:function(){

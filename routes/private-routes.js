@@ -9,6 +9,8 @@ module.exports = function(app,express){
 
 	//GETS
 	app.get("/admin/login", GET.loginPageCtrl );
+	app.get("/admin/new-user", GET.newUserCtrl );
+	app.get("/admin/register", GET.registerCtrl );
 	//DISPLAY
 	app.get("/admin/panel", GET.dashboardPageCtrl );
 	app.get("/admin/posts", GET.postsPageCtrl );
@@ -40,7 +42,9 @@ module.exports = function(app,express){
 	app.post("/admin/edit-configurations", POST.editConfigurations );
 	app.post("/admin/edit-user-profile", POST.editUserProfile );
 	app.post("/admin/edit-user-password", POST.editUserPassword );
+	app.post("/admin/edit-delete-user", POST.deleteUser );
 	app.post("/admin/edit-comment", POST.editComment );
+	app.post("/admin/register", POST.registerCtrl );
 	
 	//use it later
 	var isAdmin = function(req,res,next){

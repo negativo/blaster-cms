@@ -138,16 +138,20 @@ var that = module.exports = {
 		});
 		return deferred.promise;
 	},
+	register:function(newUser){
+		var deferred = Q.defer();
+		new User({ 
+			username:newUser.username, 
+			password:crypto.bcrypt.encrypt(newUser.password),  
+			role:"guest"
+		}).save(function(err,user){
+			if ( err === null ) return deferred.resolve({ message:"user_created" });
+			return deferred.reject({ message:"save_error" });
+		});
+		
+		return deferred.promise;
+	},
 	dataParser:function(original,name,add){
-		//  DATA SENDER HELPER
-		//	Pass original object from req.shared then 
-		//	pass a string with the name of the property you want to add
-		//	and then the data you want to add to the new property.
-		//  var json = JSON.stringify(original);
-		//  var cloned = JSON.parse(json);
-		//  cloned[name] = add;
-		//  return JSON.stringify(cloned);
-		//  console.log("functions.js", Object.isExtensible(original));
 		if(typeof original === "string" ){ 
 			original = JSON.parse(original); 
 			if( name && add ) original[name] = add;
@@ -155,7 +159,5 @@ var that = module.exports = {
 			if( name && add ) original[name] = add;
 		}
 		return JSON.stringify(original);
-
-		
 	}
 }

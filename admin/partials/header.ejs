@@ -44,7 +44,7 @@
     <body class="<%= dashboard.class %>">
 <% } %>
         
-        <% if(dashboard.class !== "login-page" ) { %>
+        <% if(dashboard.class !== "login-page" && dashboard.class !== "register-page") { %>
             <div id="wrapper">
             <%- include("navigation") %>
         <% } %>

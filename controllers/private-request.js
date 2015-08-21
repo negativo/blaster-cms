@@ -9,7 +9,8 @@ var express = require("express"),
 	Users = require("../models/user"),
 	Comments = require("../models/comments"),
 	toSlug = require('to-slug-case'),
-	Render = require("../lib/render-helper").private;
+	Render = require("../lib/render-helper").private,
+	Message = require("../lib/message-helper").message;
 
 var base_url = global.base_url;
 
@@ -174,12 +175,21 @@ var GET = {
 			req.shared.class = "choose-themes";
 			res.render("themes", new Render(req, { themes: req.avaible_themes }) );
 		});
+	},
+	newUserCtrl:function(req,res){
+		req.shared.title = req.shared.title + " Add new user";
+		req.shared.class = "new-user-page";
+		res.render("new-user", new Render(req) );
+	},
+	registerCtrl:function(req,res){
+		req.shared.title = "Register to " + req.shared.title;
+		req.shared.class = "register-page";
+		res.render("register", new Render(req) );
 	}
 };
 
 var POST = {
 	loginCtrl:function(req,res){
-		//console.log("routes.js", req.session);
 		res.redirect("/");
 	},
 	editSinglePost:function(req,res){
@@ -284,6 +294,18 @@ var POST = {
 				res.send({ message:err, err:true})
 			});
 	},
+	deleteUser:function(req,res){
+		console.log("private-request.js :291", req.body);
+		var user = req.body;
+		User.findById( user.id, function(err, user){
+			if (err === null) {
+				if (user.role === "admin") return res.send(new Message(null,"Can't delete an Admin"))
+				user.remove(function(err){
+					if (err === null) res.send(new Message("User delete!"));
+				});
+			}
+		});
+	},
 	editTheme:function(req,res){	
 		fs.exists(global.appRoot + "/views/template/css/custom.css", function(exists){
 			if(!exists){
@@ -334,6 +356,16 @@ var POST = {
 				})
 			});
 		}
+	},
+	registerCtrl:function(req,res){
+		var register = req.body;
+		User.findOne({ "username": register.username },function(err, user){
+			if(user) return res.send({ message:"user_exists" });
+			$F.register(register)
+			.then(function(message){ return res.send(message) })
+			.fail(function(message){ return res.send(message) });
+		})
+		//res.send(req.body);
 	}
 };
 
