@@ -1,0 +1,18 @@
+<%- include("./partials/header") %>
+
+<div class="container-fluid form-container">
+    <h2>REGISTER</h2>
+    <form class="register-form form-group col-md-4 col-md-offset-4">
+        <input type="text" name="username" placeholder="username" class="form-control register-username">
+        <input type="password" name="password" placeholder="password" class="form-control register-password">
+        <input type="password" name="rename-password" placeholder="retype the password" class="form-control register-retype">
+        <div class="input-group">
+          <span class="input-group-addon" id="captcha-q" class="captcha-q"></span>
+          <input type="text" class="form-control" placeholder="resultin numbers?" aria-describedby="basic-addon1" id="captcha-a" class="captcha-a">
+        </div>
+        <input type="submit" class="btn btn-primary register-submit">
+    </form>
+</div>
+<!-- /.container-fluid -->
+
+<%- include("./partials/footer") %>
