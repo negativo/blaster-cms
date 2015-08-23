@@ -71,6 +71,10 @@
 				backend.request.chooseTheme();
 				backend.request.register();
 				backend.request.deleteUser();
+				backend.request.search();
+			},
+			search:function(){
+
 			},
 			login:function(){
 				var $bh = $(window).height();

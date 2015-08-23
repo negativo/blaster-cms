@@ -21,7 +21,7 @@ var GET = {
 		//static homepage
 		if (req.shared.home === "home-template"){
 			Post.find({},function(err,posts){
-				res.render( "home-template" , new Render(req, { posts:posts, test:JSON.stringify(req.shared) }) )
+				res.render( "home-template" , new Render(req, { posts:posts }) )
 			}).sort({ "publishedBy.date": -1 }).populate("publishedBy.user",{ password:0 });
 		}
 		// Render chosen page as homepage 
@@ -55,11 +55,21 @@ var GET = {
 				res.render( post.template, new Render(req, { post:post, comments: post.comments }) );
 			});
 		});
+	},
+	searchCtrl:function(req,res){
+		console.log("public-request.js :67", req.body);
+		res.render("search", new Render(req));
 	}
 
 };
 
 var POST = {
+	searchCtrl:function(req,res){
+		var searchExp = new RegExp(req.body.term, "i");
+		Post.find({  $or: [{"title": searchExp}, {"body": searchExp}, {"tags": searchExp} ] }, function(err,post){
+			res.render("search", new Render(req, { results: post }));
+		});
+	},
 	install:{
 		mongo:function(req,res){
 			console.log("requests.js MONGOLINK", req.body);

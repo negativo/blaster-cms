@@ -30,4 +30,7 @@
 			<!-- NAVIGATION -->
 			<%- include("../partials/nav") %>
 			<i class="fa fa-fw fa-search search-button"></i>
+			<form action="/search" method="POST">
+				<input type="text" name="term">
+			</form>
 		</header>

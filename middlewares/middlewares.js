@@ -51,8 +51,9 @@ module.exports = function(app,express,$ee){
 
 	app.use(function(req,res,next){
 		//console.log("middlewares.js >>> IS MONGO OK?", app.get("is_installed"));
-		if (req.method === "POST") { next(); }
-		if(req.method === 'GET' && app.get("mongo_db") ) { 
+		if (req.method === "POST" && req.url !== "/search" ) { next(); }
+		//if(req.method === 'GET' && app.get("mongo_db") ) { 
+		if( app.get("mongo_db") ) { 
 			Configs.findOne({},function(err,configs){
 				var cfg = JSON.stringify(configs);
 					cfg = JSON.parse(cfg);
