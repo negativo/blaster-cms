@@ -144,11 +144,15 @@ var POST = {
 				res.send("log in before commenting")
 			}
 		}
+	},
+	searchCtrl:function(req,res){
+		console.log("api-request.js :149", req.body);
+		Post.find({ "title": new RegExp(req.body.name) }, function(err,post){
+			if(post) res.send(post)
+				else res.send(err)
+		});
 	}
 };
-
-//REMOVE RANDOM GENERATED PAGE
-//AND POSTS AFTER TESTING END
 
 
 exports.GET = GET;

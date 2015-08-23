@@ -14,10 +14,10 @@ module.exports = function(app,express){
 			else res.status(401).send("Unauthorized")
 	}
 
-	app.get("/api/posts", AreYouAuthorized, GET.allPostsCtrl );
-	app.get("/api/pages", AreYouAuthorized, GET.allPagesCtrl );
-	app.get("/api/users", AreYouAuthorized , GET.usersCtrl );
-	app.get("/api/configurations", AreYouAuthorized , GET.configsCtrl );
+	app.get("/api/posts", GET.allPostsCtrl );
+	app.get("/api/pages", GET.allPagesCtrl );
+	// app.get("/api/users" , GET.usersCtrl );
+	// app.get("/api/configurations" , GET.configsCtrl );
 
 	//POSTs
 	app.post("/install/mongo", POST.install.mongo);
@@ -27,6 +27,7 @@ module.exports = function(app,express){
 	app.post("/create/page", POST.create.page);
 	app.post("/create/comment/", POST.create.comment);
 	app.post("/create/reply/", POST.create.reply);
+	app.post("/api/search", POST.searchCtrl );
 
 
 }

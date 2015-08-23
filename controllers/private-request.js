@@ -32,21 +32,21 @@ var GET = {
 		req.shared.title = req.shared.title + " Dashboard";
 		req.shared.class = "dashboard-home";
 		var getPages = function(){
-			return Posts.find({});
+			return Posts.count({});
 		};
 		var getPosts = function(){
-			return Pages.find({});
+			return Pages.count({});
 		};
 		var getComments = function(){
-			return Comments.find({});
+			return Comments.count({});
 		};
 		var getUsers = function(){
-			return Users.find({});
+			return Users.count({});
 		};
 		Q.all([getPages(),getPosts(),getComments(), getUsers()])
 		.then(function(data){
 			res.render("panel", 
-				new Render(req, { postsNum: data[0].length, pagesNum: data[1].length, commentsNum: data[2].length, usersNum:data[3].length }) 
+				new Render(req, { postsNum: data[0], pagesNum: data[1], commentsNum: data[2], usersNum:data[3] }) 
 			);
 		});
 	},
@@ -255,7 +255,10 @@ var POST = {
 				configs.navigation = []; 
 			}else{
 				for (var i = 0; i < configs.navigation.length; i++) {
-					configs.navigation[i].link = "/page/"+configs.navigation[i].link;
+					var p = /\/page\//;
+					if ( !configs.navigation[i].link.match(p) ) {
+						configs.navigation[i].link = "/page/"+configs.navigation[i].link;
+					}
 				};
 			};
 			configs.save();
