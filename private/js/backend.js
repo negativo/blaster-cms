@@ -32,7 +32,7 @@
 				CKEDITOR.replace( 'editor1', {
 					fullPage: true,
 					allowedContent: true,
-					    filebrowserBrowseUrl: '/uploads/',
+					    filebrowserBrowseUrl: '../uploads/',
     					filebrowserUploadUrl: '/admin/upload'
 				});
 				$body.find(".editor").show();

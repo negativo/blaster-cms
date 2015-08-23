@@ -10,6 +10,12 @@
 @dividerColor:       #B6B6B6;
 @green: #4CAF50;
 
+*:focus{
+	outline:0 !important;
+	border:none !important;
+	box-shadow:none !important;
+}
+
 .hide{
 	display:none;
 }
@@ -47,6 +53,8 @@ hr{
 	margin-top: 15px !important;
 }
 
+
+////////LOGIN
 .login-page{
 	.form-container{ display:none; }
 	background: @darkPrimaryColor !important;
@@ -97,7 +105,7 @@ hr{
 		}
 	}
 }
-
+////////REGISTER
 .register-page{
 	.form-container{ display:none; }
 	background: @darkPrimaryColor !important;
@@ -150,6 +158,50 @@ hr{
 	}
 }
 
+
+
+//COMMENT PAGE
+.comment{
+	padding: 10px 0;
+	clear:both;
+	border-bottom: 1px solid @dividerColor !important;
+	.remove-comment{
+		cursor: pointer;
+		.transition;
+		&:hover{
+			color: @accentColor;
+		}
+	}
+	.edit-comment{
+		cursor: pointer;
+		.transition;
+		&:hover{
+			color: @primaryColor;
+		}
+	}
+	.save-comment{
+		display:none;
+		cursor: pointer;
+		.transition;
+		&:hover{
+			color: @green;
+		}
+	}
+	.comment-body{
+		word-break: break-word;
+		padding: 5px;
+		margin:5px 0;
+	}
+}
+//////////// MISC
+.editor-title{
+	border:none;
+	background:none;
+	border-radius: none;
+	box-shadow: none;
+	outline: none !important; 
+
+}
 .admin-bar{
 	height: 50px;
 	background: @primaryTextColor;
@@ -187,39 +239,6 @@ hr{
 	}
 	input{
 		margin: 10px 0px;
-	}
-}
-
-.comment{
-	padding: 10px 0;
-	clear:both;
-	border-bottom: 1px solid @dividerColor !important;
-	.remove-comment{
-		cursor: pointer;
-		.transition;
-		&:hover{
-			color: @accentColor;
-		}
-	}
-	.edit-comment{
-		cursor: pointer;
-		.transition;
-		&:hover{
-			color: @primaryColor;
-		}
-	}
-	.save-comment{
-		display:none;
-		cursor: pointer;
-		.transition;
-		&:hover{
-			color: @green;
-		}
-	}
-	.comment-body{
-		word-break: break-word;
-		padding: 5px;
-		margin:5px 0;
 	}
 }
 .delete-user{

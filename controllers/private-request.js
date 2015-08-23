@@ -78,10 +78,11 @@ var GET = {
 			return Comments.find({}).populate("user");
 		};
 		Q.all([getPosts(),getComments()])
-		.then(function(data){
-			console.log("private-request.js :49", data);
+		.then(function(promise){
+			//console.log("private-request.js :49", promise);
 			res.render("comments", 
-				new Render(req, { posts: data[0], comments: data[1] })
+				// 0-posts 1-comments
+				new Render(req, { posts: promise[0], comments: promise[1] })
 			);
 		});
 	},
@@ -296,7 +297,7 @@ var POST = {
 			});
 	},
 	deleteUser:function(req,res){
-		console.log("private-request.js :291", req.body);
+		//console.log("private-request.js :291", req.body);
 		var user = req.body;
 		User.findById( user.id, function(err, user){
 			if (err === null) {
@@ -378,10 +379,6 @@ var POST = {
 			user.avatar = "/avatar/" + req.file.filename;
 			user.save();
 			res.redirect("/admin/users/"+user._id);
-			// req.login(user,function(err){
-			// 	if (err) return next(err);
-			// 	res.redirect("/admin/users/"+user._id);
-			// });
 		});
 	}
 };

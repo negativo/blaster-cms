@@ -1,4 +1,9 @@
 @import url(http://fonts.googleapis.com/css?family=Lato:300,500);
+*:focus {
+  outline: 0 !important;
+  border: none !important;
+  box-shadow: none !important;
+}
 .hide {
   display: none;
 }
@@ -155,6 +160,45 @@ hr {
   box-shadow: inset 0 -5px 0px 0px #012539;
   transition: all ease-in 0.5s;
 }
+.comment {
+  padding: 10px 0;
+  clear: both;
+  border-bottom: 1px solid #b6b6b6 !important;
+}
+.comment .remove-comment {
+  cursor: pointer;
+  transition: all ease-in 0.5s;
+}
+.comment .remove-comment:hover {
+  color: #ff5252;
+}
+.comment .edit-comment {
+  cursor: pointer;
+  transition: all ease-in 0.5s;
+}
+.comment .edit-comment:hover {
+  color: #03a9f4;
+}
+.comment .save-comment {
+  display: none;
+  cursor: pointer;
+  transition: all ease-in 0.5s;
+}
+.comment .save-comment:hover {
+  color: #4caf50;
+}
+.comment .comment-body {
+  word-break: break-word;
+  padding: 5px;
+  margin: 5px 0;
+}
+.editor-title {
+  border: none;
+  background: none;
+  border-radius: none;
+  box-shadow: none;
+  outline: none !important;
+}
 .admin-bar {
   height: 50px;
   background: #212121;
@@ -195,38 +239,6 @@ hr {
 #user-profile-form input,
 #user-profile-pwd input {
   margin: 10px 0px;
-}
-.comment {
-  padding: 10px 0;
-  clear: both;
-  border-bottom: 1px solid #b6b6b6 !important;
-}
-.comment .remove-comment {
-  cursor: pointer;
-  transition: all ease-in 0.5s;
-}
-.comment .remove-comment:hover {
-  color: #ff5252;
-}
-.comment .edit-comment {
-  cursor: pointer;
-  transition: all ease-in 0.5s;
-}
-.comment .edit-comment:hover {
-  color: #03a9f4;
-}
-.comment .save-comment {
-  display: none;
-  cursor: pointer;
-  transition: all ease-in 0.5s;
-}
-.comment .save-comment:hover {
-  color: #4caf50;
-}
-.comment .comment-body {
-  word-break: break-word;
-  padding: 5px;
-  margin: 5px 0;
 }
 .delete-user {
   color: #ff5252;
