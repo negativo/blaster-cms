@@ -33,27 +33,22 @@ module.exports = function(app,express,$ee){
 	app.use(cookieParser());
 	console.log("middlewares.js :32", app.get("mongo_db") );
 	//dev purpose should be actived only after installation
-	if(!app.get("mongo_db")){
-		app.use(session({ 
-			secret: 'WeGonnaConqueryTheFuckinWorldISwearIt',
-			store: require('mongoose-session')(mongoose),
-			cookie:{ maxAge: 36000000 } //change the session after dev 
-
-		}));
-	} else{
-		app.use(session({ 
-			secret: 'WeGonnaConqueryTheFuckinWorldISwearIt',
-			cookie:{ maxAge: 36000000 } //change the session after dev 
-		}));		
-	}
+	app.use(session({ 
+		secret: 'WeGonnaConqueryTheFuckinWorldISwearIt',
+		cookie:{ maxAge: 36000000 } //change the session after dev 
+	}));		
+	// app.use(session({ 
+	// 	secret: 'WeGonnaConqueryTheFuckinWorldISwearIt',
+	// 	store: require('mongoose-session')(mongoose),
+	// 	cookie:{ maxAge: 36000000 } //change the session after dev 
+	// }));
 	app.use(passport.initialize());
 	app.use(passport.session());
 
 	app.use(function(req,res,next){
 		//console.log("middlewares.js >>> IS MONGO OK?", app.get("is_installed"));
-		if (req.method === "POST" && req.url !== "/search" ) { next(); }
-		//if(req.method === 'GET' && app.get("mongo_db") ) { 
-		if( app.get("mongo_db") ) { 
+		if (req.method === "POST") { next(); }
+		if(req.method === 'GET' && app.get("mongo_db") ) { 
 			Configs.findOne({},function(err,configs){
 				var cfg = JSON.stringify(configs);
 					cfg = JSON.parse(cfg);
