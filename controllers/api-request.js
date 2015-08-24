@@ -41,16 +41,13 @@ var GET = {
 var POST = {
 	install:{
 		mongo:function(req,res){
-			console.log("requests.js MONGOLINK", req.body);
+			//console.log("requests.js MONGOLINK", req.body);
 			//check if err is null in frontend
 			$F.checkDatabase(req.body)
 				.then(function(promise){
-					res.status(promise.status)
 					res.send(promise);
 				})
 				.fail(function(err){
-					console.log("requests.js MongoERROR:", err.err);
-					res.status(err);
 					res.send(err);
 				});
 		},
@@ -58,8 +55,9 @@ var POST = {
 			$F.installation(req.body)
 				.then(function(promise){
 					console.log("request.js install promise", promise);
+					app.set("mongo_db", true)
 					promise.isInstalled = true;
-					res.send(promise);
+					res.send(promise)
 				})
 				.fail(function(err){
 					console.log("request.js install promise", err);

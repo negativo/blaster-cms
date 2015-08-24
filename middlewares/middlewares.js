@@ -46,84 +46,75 @@ module.exports = function(app,express,$ee){
 	app.use(passport.session());
 
 	app.use(function(req,res,next){
-		//console.log("middlewares.js >>> IS MONGO OK?", app.get("is_installed"));
-		if (req.method === "POST") { next(); }
-		if(req.method === 'GET' && app.get("mongo_db") ) { 
-			Configs.findOne({},function(err,configs){
-				var cfg = JSON.stringify(configs);
-					cfg = JSON.parse(cfg);
-					global.theme = cfg.theme;
-					req.shared = cfg;
-					req.shared.site = cfg.title;
-					req.theme = cfg.theme;
-					req.navigation = cfg.navigation;
-					req.links = cfg.links;
-					delete req.shared.navigation;
-					delete req.shared.db_link;
-					delete req.shared.__v;
-					delete req.shared._id;
-					delete req.shared.templates;
-				
-				//get all template files and attach it, get it on the backend
-				fs.readdir("./views/template",function(err, list){
-					var pageTemplates = [];
-					var postTemplates = [];
-					var pagePattern = /-page-template.ejs/i
-					var postPattern = /-post-template.ejs/i
-					for (var i = 0; i < list.length; i++) {
-						if ( list[i].match(pagePattern) ) {
-							pageTemplates.push( list[i].replace(/.ejs/g,"") );
-						};
-						if ( list[i].match(postPattern) ) {
-							postTemplates.push( list[i].replace(/.ejs/g,"") );
-						};
-					};
-					req.pageTemplates = pageTemplates;
-					req.postTemplates = postTemplates;
-					fs.readdir("./views/",function(err, list){
-						req.avaible_themes = list;
-						$ee.emit("configs_updated", cfg, "Configuration has been attached to requestes");
-						next();			
-					});
-				});
-			});
-		}
+		if(req.method === 'POST') { next(); } 
 		if(req.method === 'GET' && !app.get("mongo_db") ) { 
 			app.set("views", __root + "/installer" );
 			res.render("install"); 
-		};		
-	});
-
-	// Change view folder public frontend
-	// change configs template on mongo to change template if you have others
-	app.use("*",function(req,res,next){
-		console.log("middlewares.js :83", global.theme);
-		app.use( express.static(__root + "/views/" + global.theme) );
-		app.set("views", __root + "/views/" + global.theme );
+		};	
 		next();
+	})
+
+	app.use(function(req,res,next){
+		Configs.findOne({},function(err,configs){
+			if(!configs) return next();
+				global.theme = configs.theme || "basic";
+				req.shared = configs || {};
+				req.shared.site = configs.title || "CMS";
+				req.theme = configs.theme || "";
+				req.navigation = configs.navigation || [];
+				req.links = configs.links || [];
+			
+			//get all template files and attach it, get it on the backend
+			fs.readdir("./views/template",function(err, list){
+				var pageTemplates = [];
+				var postTemplates = [];
+				var pagePattern = /-page-template.ejs/i
+				var postPattern = /-post-template.ejs/i
+				for (var i = 0; i < list.length; i++) {
+					if ( list[i].match(pagePattern) ) {
+						pageTemplates.push( list[i].replace(/.ejs/g,"") );
+					};
+					if ( list[i].match(postPattern) ) {
+						postTemplates.push( list[i].replace(/.ejs/g,"") );
+					};
+				};
+				req.pageTemplates = pageTemplates;
+				req.postTemplates = postTemplates;
+				fs.readdir("./views/",function(err, list){
+					req.avaible_themes = list;
+					$ee.emit("configs_updated", configs, "Configuration has been attached to requestes");
+					next();			
+				});
+			});
+		});	
 	});
 
-    //specific route check if user is logged to avoid curl req to the server
-    app.use("/admin", function(req,res,next){
-		app.set("views", __root + "/admin");
-    	if (req.url === "/login") return next();
-    	if (req.url === "/register") return next();
-		if(req.session && req.user && req.isAuthenticated() ) return next();
-		//console.log("middlewares.js", "PREREDIRECT >>> ", global.preRedirect);
-		res.redirect("/admin/login");
-    });
+	app.use(function(req,res,next){
+		var p = /\/admin/;
+		console.log("middlewares.js :99", req.url.match(p) );
+		if( req.url.match(p) ) {
+			app.set("views", __root + "/admin" )
+			next();
+		}else{
+			app.use( express.static(__root + "/views/" + global.theme) );
+			app.set("views", __root + "/views/" + global.theme );
+			next();
+		}
+	});
+
+	app.use("/admin", function(req,res,next){
+		console.log("middlewares.js :106", req.url);
+		req.shared["db_link"] = "";
+		if(req.url !== "/login" && req.method === "GET" && !req.isAuthenticated() ) return res.redirect("login"); 
+		next();
+	})
 
     //with this you get login status in frontend
 	app.use(function(req,res,next){
-		if (req.method === "GET" ) req.shared.isLoggedIn = req.isAuthenticated();
+		if (req.method === "GET" && req.shared ) req.shared.isLoggedIn = req.isAuthenticated() || false;
 		next();
 	});
 
-	//self explanatory
-	app.use(function(req,res,next){
-		if(req.url === "/admin/" && req.isAuthenticated() ) return res.redirect("/admin/panel");
-		if(req.url === "/admin/" && !req.isAuthenticated() ) return res.redirect("/admin/login");
-		next();
-	});
+
 
 }

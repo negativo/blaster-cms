@@ -22,7 +22,6 @@ var GET = {
 	crud:{},
 	//VIEWS
 	loginPageCtrl:function(req,res){
-		for (prop in req.shared) if( prop !== "title") delete req.shared[prop];
 		req.shared.title = req.shared.title + " Login";
 		req.shared.class = "login-page";
 		res.render("login", new Render(req, {}) );
@@ -51,6 +50,7 @@ var GET = {
 		});
 	},
 	postsPageCtrl:function(req,res){
+		console.log("private-request.js :54", "GOT IT");
 		req.shared.title = req.shared.title + " Posts";
 		req.shared.class = "dashboard-posts";
 		Posts.find({},{ body:0 }, function(err, posts){

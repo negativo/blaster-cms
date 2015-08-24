@@ -92,6 +92,7 @@ var that = module.exports = {
 						console.log("functions.js blog data saving: ", err);
 						fs.writeFileSync(__root + "/bin/config.json", JSON.stringify({ db_link: that.shared.db_link }) );
 						deferred.resolve({message:"User&Blog Created", error:err});
+						app.set("mongo_db", true);
 					})
 		};
 		mongoose.disconnect();
