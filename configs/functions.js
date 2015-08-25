@@ -58,8 +58,8 @@ var that = module.exports = {
 	checkDatabase:function(mongo){
 		//console.log("mongolink:",mongo);
 		var testConnection = function(){
-			console.log("functions.js", mongo);
 			var deferred = Q.defer();
+			console.log("functions.js", mongo);
 			mongoose.connect(mongo.link,function(err){
 				//RESOLVE PROMISE
 				if (err) deferred.reject({ err: err, status: 400 });
@@ -75,70 +75,80 @@ var that = module.exports = {
 		return testConnection();		
 	},
 	installation:function(cms){
-		console.log("functions.js a:", cms);
-		var deferred = Q.defer();
 		var mongoLink = that.shared.db_link;
+		var cms = cms;
 
-		//var P = { message:"", err:[] }
-		var saveBlogData = function(){
+		mongoose.disconnect();
+	
+		function connect(cms){
+			var deferred = Q.defer();
+			mongoose.connect(mongoLink,function(err){
+				return deferred.resolve(err)
+			});
+			return deferred.promise;
+		}
+
+		function createUser(prev){
+			var deferred = Q.defer();
+			User.findOne({"username":cms.username},function(err,user){
+				console.log("functions.js :94", user, prev);
+				if(!user && !prev) {
+					new User({ username:cms.username, password:crypto.bcrypt.encrypt(cms.password), admin:true, role:"admin" })
+					.save(function(err,user){
+						if(err) return deferred.reject(err)
+						//REFACTOR THIS REFACTOR THIS REFACTOR THIS <<<<<<<<<<<<<<<
+						new Post({
+							title:"Sample post",
+							slug:"sample-post",
+							body:"Hello World!",
+							publishedBy:{
+								user:user._id,
+							},
+							status:"published"
+						}).save();
+						new Page({
+							slug:"sample-page",
+							title:"Sample",
+							body:"Hi I'm a page :)",
+							publishedBy:{
+								user:cms.user,
+							},
+							status:"published"
+						}).save();
+						//REFACTOR THIS REFACTOR THIS REFACTOR THIS <<<<<<<<<<<<<<<
+						return deferred.resolve({message:"User created", user: user});
+					// 		//saveBlogData();
+					});
+				} else{
+					console.log("functions.js :126", "exists");
+					deferred.reject({error:"User Exists", user: cms.username});
+				}
+			});
+			return deferred.promise;
+		}
+
+		function saveBlogConf(prev){
+			var deferred = Q.defer();
 			that.shared.admin = cms.username;
 			that.shared.title = cms.title;
 			that.shared.subtitle = cms.subtitle;
 			that.shared.db_link = crypto.encrypt(that.shared.db_link);
 			that.shared.isInstalled = true;
-			//console.log("functions.js", that);
 			new Configs(that.shared)
-					.save(function(err){
-						console.log("functions.js blog data saving: ", err);
-						fs.writeFileSync(__root + "/bin/config.json", JSON.stringify({ db_link: that.shared.db_link }) );
-						deferred.resolve({message:"User&Blog Created", error:err});
-						app.set("mongo_db", true);
-					})
-		};
-		mongoose.disconnect();
-		console.log("functions.js", that.shared.db_link);
-		mongoose.connect(mongoLink,function(err){
-			if(!err) console.log("functions.js", " connected to mongoDB");
-				else deferred.reject({error : err});
-
-			User.findOne({"username":cms.username},function(err,user){
-				if(user == null) {
-					//console.log("functions.js", user,"non esiste");
-					new User({ username:cms.username, password:crypto.bcrypt.encrypt(cms.password), admin:true, role:"admin" }).save(function(err,user){
-						if(err === null) {
-							//REFACTOR THIS REFACTOR THIS REFACTOR THIS <<<<<<<<<<<<<<<
-							new Post({
-								title:"Sample post",
-								slug:"sample-post",
-								body:"Hello World!",
-								publishedBy:{
-									user:user._id,
-								},
-								status:"published"
-							}).save();
-							new Page({
-								slug:"sample-page",
-								title:"Sample",
-								body:"Hi I'm a page :)",
-								publishedBy:{
-									user:cms.user,
-								},
-								status:"published"
-							}).save();
-							//REFACTOR THIS REFACTOR THIS REFACTOR THIS <<<<<<<<<<<<<<<
-							saveBlogData();
-						}
-						if(err !== null )deferred.reject({error:err, message:"Problem creating user"});
-					});
-				} else{
-					//console.log("functions.js", user.username );
-					//REJECT USER EXISTS
-					deferred.reject({error:"User Exists", user: user.username});
-				}
+			.save(function(err){
+				if (err) return deferred.reject(err)
+				fs.writeFileSync(__root + "/bin/config.json", JSON.stringify({ db_link: that.shared.db_link }) );
+				app.set("mongo_db", true);
+				app.set("is_installed", true);
+				return deferred.resolve({message:"User&Blog Created", error:err});
 			});
+			return deferred.promise;
+		}
 
-		});
-		return deferred.promise;
+		return Q.fcall(connect)
+		.then(createUser)
+		.then(saveBlogConf);
+
 	},
 	register:function(newUser){
 		var deferred = Q.defer();

@@ -28,7 +28,7 @@
 					link: $formMongo.find("input").val().trim()
 				}
 				$.post("/install/mongo", data, function(data,status){
-					console.log(status,data);
+					console.log("installation.js :31", data);
 					if(!data.err){
 						setTimeout(function(){
 							$spinner.fadeOut();
@@ -55,6 +55,7 @@
 
 				$.post("/install/cms", data, function(res,status){
 					console.log("installation.js :57", res);
+					// console.log("installation.js :57", res);
 					// setTimeout(function(){
 					// 	if(res.error){
 					// 		$spinner.fadeOut(100);
@@ -88,8 +89,5 @@
 		}
 	}
 
-
-
 	app.init();
-
 })(jQuery)

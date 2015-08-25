@@ -45,8 +45,12 @@ module.exports = function(app,express,$ee){
 	app.use(passport.initialize());
 	app.use(passport.session());
 
+
 	app.use(function(req,res,next){
-		if(req.method === 'POST') { next(); } 
+		if(req.method === 'POST') { 
+			
+			next(); 
+		} 
 		if(req.method === 'GET' && !app.get("mongo_db") ) { 
 			app.set("views", __root + "/installer" );
 			res.render("install"); 
@@ -87,8 +91,10 @@ module.exports = function(app,express,$ee){
 				});
 			});
 		});	
-	});
 
+	});
+	
+	//switch views folder dinamically
 	app.use(function(req,res,next){
 		var p = /\/admin/;
 		console.log("middlewares.js :99", req.url.match(p) );
@@ -102,9 +108,9 @@ module.exports = function(app,express,$ee){
 		}
 	});
 
+	//redirect to login if no authenticated and accessing admin areas
 	app.use("/admin", function(req,res,next){
 		console.log("middlewares.js :106", req.url);
-		req.shared["db_link"] = "";
 		if(req.url !== "/login" && req.method === "GET" && !req.isAuthenticated() ) return res.redirect("login"); 
 		next();
 	})
