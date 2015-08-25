@@ -55,14 +55,9 @@ var POST = {
 		cms:function(req,res){
 			$F.installation(req.body)
 			.then(function(promise){
-				console.log("api-request.js :58", promise);
-				promise.isInstalled = true;
-				app.set("mongo_db", true)
-				res.redirect("/admin/login")
-			})
-			.catch(function(err){
-				console.log("api-request.js :63 >>>>", err);
-			})
+				console.log("api-request.js :58 >>>>>>>>>>>>>>>>>>>>>>", promise);
+				res.send("asd");
+			});
 		}
 	},//install methods
 	create:{

@@ -53,7 +53,7 @@ module.exports = function(app,express,$ee){
 			res.render("install"); 
 		};	
 		next();
-	})
+	});
 
 	app.use(function(req,res,next){
 		Configs.findOne({},function(err,configs){

@@ -1,0 +1,2 @@
+curl --data "link=mongodb://localhost:27017" localhost:9001/install/mongo
+curl --data "username=neo&password=Stratomerder1290&title=jsDEN&subtitle=test&mongo=mongodb://localhost:27017" localhost:9001/install/cms
