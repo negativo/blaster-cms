@@ -54,14 +54,13 @@
 				};
 
 				$.post("/install/cms", data, function(res,status){
-					// console.log("installation.js :57", res);
-					// setTimeout(function(){
-					// 	if(res.error){
-					// 		$spinner.fadeOut(100);
-					// 		$form.find(".credential-err").html(res.error).fadeIn();
-					// 	}
-					// 	if(res.isInstalled) window.location.replace("/");
-					// },1500);
+					console.log("installation.js :57", res);
+					setTimeout(function(){
+						if(res.err){
+							$spinner.fadeOut(100);
+							$form.find(".credential-err").html(res.error).fadeIn();
+						}else { window.location.replace("/"); }
+					},1500);
 				});
 
 			});

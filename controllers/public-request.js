@@ -18,7 +18,7 @@ var GET = {
 		res.render( "404" , new Render(req,{}) );
 	},
 	homeCtrl: function(req,res){
-		//static homepage
+		// //static homepage
 		if (req.shared.home === "home-template"){
 			Post.find({},function(err,posts){
 				res.render( "home-template" , new Render(req, { posts:posts }) )

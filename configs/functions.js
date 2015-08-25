@@ -75,7 +75,7 @@ var that = module.exports = {
 		return testConnection();		
 	},
 	installation:function(cms){
-		var defferedInstall = Q.defer();
+		var deferedInstall = Q.defer();
 		var mongoLink = cms.mongo || that.shared.db_link;
 		var cms = cms;
 
@@ -131,7 +131,6 @@ var that = module.exports = {
 
 		function saveBlogConf(prev){
 			var deferred = Q.defer();
-			console.log("functions.js :133 <<<<<<<<<<<<<<< ", prev);
 			that.shared.admin = cms.username;
 			that.shared.title = cms.title;
 			that.shared.subtitle = cms.subtitle;
@@ -139,20 +138,24 @@ var that = module.exports = {
 			that.shared.isInstalled = true;
 			new Configs(that.shared)
 			.save(function(err){
-				if (err) deferred.reject({err:err, message:"error saving configurations"})
+				if (err) return deferred.reject({err:err, message:"error saving configurations"});
 				fs.writeFileSync(__root + "/bin/config.json", JSON.stringify({ db_link: that.shared.db_link }) );
-				app.set("mongo_db", true);
-				deferred.resolve({message:"User&Blog Created", error:err});
 			});
+			deferred.resolve({message:"User&Blog Created", err:null });
 			return deferred.promise;
 		}
 
-		return connect();
-		//.then(createUser);
-		// .then(saveBlogConf)
-		// .catch(function(err){
-		// 	console.log("functions.js :160", err);
-		// })
+		connect()
+		.then(createUser)
+		.then(saveBlogConf)
+		.then(function(promise){
+			deferedInstall.resolve(promise);
+		})
+		.fail(function(error){
+			deferedInstall.reject(err);	
+		});
+
+		return deferedInstall.promise;
 
 	},
 	register:function(newUser){

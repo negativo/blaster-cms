@@ -45,49 +45,61 @@ module.exports = function(app,express,$ee){
 	app.use(passport.initialize());
 	app.use(passport.session());
 
+	app.use(function(req,res,next){
+		fs.readFile(__root + "/bin/config.json", "utf-8", function(err,file){
+			if (file.length > 0) {
+				req.isInstalled = true;
+				next();
+			}else{
+				next();
+			}
+		});	
+	})
 
 	app.use(function(req,res,next){
-		if(req.method === 'POST') { next(); } 
-		if(req.method === 'GET' && !app.get("mongo_db") ) { 
+		if( req.method === 'GET' && !req.isInstalled ) { 
 			app.set("views", __root + "/installer" );
-			res.render("install"); 
+			return res.render("install"); 
 		};	
 		next();
 	});
 
 	app.use(function(req,res,next){
-		Configs.findOne({},function(err,configs){
-			if(!configs) return next();
-				global.theme = configs.theme || "basic";
-				req.shared = configs || {};
-				req.shared.site = configs.title || "CMS";
-				req.theme = configs.theme || "";
-				req.navigation = configs.navigation || [];
-				req.links = configs.links || [];
-			
-			//get all template files and attach it, get it on the backend
-			fs.readdir("./views/template",function(err, list){
-				var pageTemplates = [];
-				var postTemplates = [];
-				var pagePattern = /-page-template.ejs/i
-				var postPattern = /-post-template.ejs/i
-				for (var i = 0; i < list.length; i++) {
-					if ( list[i].match(pagePattern) ) {
-						pageTemplates.push( list[i].replace(/.ejs/g,"") );
+		if (req.isInstalled){
+			Configs.findOne({},function(err,configs){
+					global.theme = configs.theme || "basic";
+					req.shared = configs || {};
+					req.shared.site = configs.title || "CMS";
+					req.theme = configs.theme || "";
+					req.navigation = configs.navigation || [];
+					req.links = configs.links || [];
+				
+				//get all template files and attach it, get it on the backend
+				fs.readdir("./views/template",function(err, list){
+					var pageTemplates = [];
+					var postTemplates = [];
+					var pagePattern = /-page-template.ejs/i
+					var postPattern = /-post-template.ejs/i
+					for (var i = 0; i < list.length; i++) {
+						if ( list[i].match(pagePattern) ) {
+							pageTemplates.push( list[i].replace(/.ejs/g,"") );
+						};
+						if ( list[i].match(postPattern) ) {
+							postTemplates.push( list[i].replace(/.ejs/g,"") );
+						};
 					};
-					if ( list[i].match(postPattern) ) {
-						postTemplates.push( list[i].replace(/.ejs/g,"") );
-					};
-				};
-				req.pageTemplates = pageTemplates;
-				req.postTemplates = postTemplates;
-				fs.readdir("./views/",function(err, list){
-					req.avaible_themes = list;
-					$ee.emit("configs_updated", configs, "Configuration has been attached to requestes");
-					next();			
+					req.pageTemplates = pageTemplates;
+					req.postTemplates = postTemplates;
+					fs.readdir("./views/",function(err, list){
+						req.avaible_themes = list;
+						$ee.emit("configs_updated", configs, "Configuration has been attached to requestes");
+						next();			
+					});
 				});
-			});
-		});	
+			});	
+		} else {
+			next();
+		}
 
 	});
 	
