@@ -91,7 +91,8 @@ var that = module.exports = {
 		function createUser(prev){
 			var deferred = Q.defer();
 			User.findOne({"username":cms.username},function(err,user){
-				console.log("functions.js :94", user, prev);
+				console.log("functions.js :95 >>>", err);
+				if (err) deferred.reject({err:err});
 				if(!user && !prev) {
 					new User({ username:cms.username, password:crypto.bcrypt.encrypt(cms.password), admin:true, role:"admin" })
 					.save(function(err,user){

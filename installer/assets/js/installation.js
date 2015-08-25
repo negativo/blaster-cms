@@ -54,7 +54,6 @@
 				};
 
 				$.post("/install/cms", data, function(res,status){
-					console.log("installation.js :57", res);
 					// console.log("installation.js :57", res);
 					// setTimeout(function(){
 					// 	if(res.error){

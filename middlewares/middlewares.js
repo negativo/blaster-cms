@@ -47,10 +47,7 @@ module.exports = function(app,express,$ee){
 
 
 	app.use(function(req,res,next){
-		if(req.method === 'POST') { 
-			
-			next(); 
-		} 
+		if(req.method === 'POST') { next(); } 
 		if(req.method === 'GET' && !app.get("mongo_db") ) { 
 			app.set("views", __root + "/installer" );
 			res.render("install"); 
@@ -120,7 +117,5 @@ module.exports = function(app,express,$ee){
 		if (req.method === "GET" && req.shared ) req.shared.isLoggedIn = req.isAuthenticated() || false;
 		next();
 	});
-
-
 
 }

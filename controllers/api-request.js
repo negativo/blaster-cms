@@ -47,7 +47,8 @@ var POST = {
 				.then(function(promise){
 					res.send(promise);
 				})
-				.fail(function(err){
+				.catch(function(err){
+					console.log("api-request.js :51 >>>>>>>>", err);
 					res.send(err);
 				});
 		},
@@ -55,9 +56,12 @@ var POST = {
 			$F.installation(req.body)
 			.then(function(promise){
 				console.log("api-request.js :58", promise);
-				res.redirect("/admin/login")
 				promise.isInstalled = true;
 				app.set("mongo_db", true)
+				res.redirect("/admin/login")
+			})
+			.catch(function(err){
+				console.log("api-request.js :63 >>>>", err);
 			})
 		}
 	},//install methods
