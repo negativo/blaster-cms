@@ -54,14 +54,14 @@ var POST = {
 		},
 		cms:function(req,res){
 			$F.installation(req.body)
-			.then(function(data){
-				console.log("api-request.js :58", data);
+			.then(function(promise){
+				console.log("api-request.js :58", promise);
 				req.isInstalled = true;
-				res.send(data)
+				res.send(promise)
 			})
-			.fail(function(data){
-				console.log("api-request.js :58", data);
-				res.send(data)
+			.fail(function(error){
+				console.log("api-request.js :58", error);
+				res.send(error)
 			});
 		}
 	},//install methods
