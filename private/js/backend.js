@@ -222,15 +222,7 @@
 				});
 			},
 			avatar:function(){
-				var $form = $("#user-profile-form"),
-					$getAvatar = $(".avatar-uploader");
-					//non trigger il click
-					$(".get-avatar").click(function(e){
-						e.stopPropagation();
-						e.preventDefault();
-						//Uncaught RangeError: Maximum call stack size exceeded
-						$(this).siblings("#avatar-uploader").trigger("click");
-					});
+
 			},
 			settings:function(){
 				var $addLink = $(".add-social-link"),

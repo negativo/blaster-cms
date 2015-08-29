@@ -120,7 +120,7 @@ module.exports = function(app,express,$ee){
 	//redirect to login if no authenticated and accessing admin areas
 	app.use("/admin", function(req,res,next){
 		console.log("middlewares.js :106", req.url);
-		if(req.url !== "/login" && req.method === "GET" && !req.isAuthenticated() ) return res.redirect("login"); 
+		if(req.url !== "/login" && req.method === "GET" && !req.isAuthenticated() ) return res.redirect("/admin/login"); 
 		next();
 	})
 
