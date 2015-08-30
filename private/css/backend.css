@@ -256,7 +256,3 @@ hr {
   text-align: center;
   overflow: hidden;
 }
-.avatar form input[type="file"] {
-  background: red;
-  border: none;
-}

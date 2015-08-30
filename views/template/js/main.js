@@ -10,6 +10,7 @@
 			init:function(){
 				app.ui.commons();
 				app.ui.date();
+				app.ui.search();
 			},
 			commons:function(){
 				var $footer = $(".main-footer");
@@ -25,6 +26,21 @@
 				$( ".date" ).each(function( index ) {
 					$(this).text(moment($( this ).text()).fromNow());
 					$( this ).fadeIn();
+				});
+			},
+			search:function(){
+				var $search = $(".search-button"),
+					$formContainer = $("body").find("#search-form"),
+					$form = $formContainer.find("form"),
+					$input = $(".search-term");
+
+				$search.click(function(e){
+					e.stopPropagation();
+					$form.css("margin-top", ($(window).height() - $form.height())/2 +"px" )
+					$formContainer.slideDown(function(){
+						$(this).find(".search-term").focus();
+					});
+
 				});
 			}
 		},
