@@ -16,6 +16,7 @@ var UserSchema = new Schema({
   	resetPasswordExpires: Date
 });
 
+
 // HOOK
 // UserSchema.pre('save',function(next){
 // 	var user = this;

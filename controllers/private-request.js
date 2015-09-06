@@ -365,7 +365,7 @@ var POST = {
 	registerCtrl:function(req,res){
 		var register = req.body;
 		User.findOne({ "username": register.username },function(err, user){
-			if(user) return res.send(new Message(null, "User Exists") );
+			if(user) return res.send( new Message(null, "User Exists") );
 			$F.register(register)
 			.then(function(message){ return res.send(message) })
 			.fail(function(message){ return res.send(message) });

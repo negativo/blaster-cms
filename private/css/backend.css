@@ -1,7 +1,6 @@
 @import url(http://fonts.googleapis.com/css?family=Lato:300,500);
 *:focus {
   outline: 0 !important;
-  border: none !important;
   box-shadow: none !important;
 }
 .hide {
