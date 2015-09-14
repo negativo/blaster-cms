@@ -384,7 +384,9 @@ var POST = {
 			res.redirect("/admin/users/"+user._id);
 		});
 	}
+
 };
+
 
 exports.GET = GET;
 exports.POST = POST;
