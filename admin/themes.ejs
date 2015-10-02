@@ -1,14 +1,16 @@
 <%- include("./partials/header") %>
-<%= JSON.stringify(dashboard) %>
 <div id="page-wrapper">
-    <div class="col-md-6 col-md-offset-3">
+    <h2 class="page-header">
+        Themes <small>choose which installed template to us</small>
+    </h2>
+    <div class="col-md-6">
 		<form id="themes-form">
 			<select id="avaible-themes" class="form-control">
 				<% for (var i = 0; i < themes.length; i++) { %>
 					<option value="<%= themes[i] %>" <%= dashboard.theme === themes[i] ? "selected" : "" ; %>><%= themes[i] %></option>
 				<% }; %>
 			</select>
-			<button class="btn btn-primary form-control" type="submit">change</button>
+			<button class="btn btn-primary form-control" type="submit">Save theme</button>
 		</form>
     </div>
     <!-- /.container-fluid -->

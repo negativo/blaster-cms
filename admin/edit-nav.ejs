@@ -1,8 +1,9 @@
 <%- include("./partials/header") %>
-<%= JSON.stringify(navigation); %>
     <div id="page-wrapper">
         <div class="container-fluid">
-            <h1>Navigation</h1>
+        <h2 class="page-header">
+            Navigation <small>set you website navigation</small>
+        </h2>
 			<form role="form" class="col-md-6" id="navigation-form">
 				<div class="navigation-link-container">
 					<% for(var i=0; i< navigation.length; i++) {%>
