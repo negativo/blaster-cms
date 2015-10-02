@@ -8,12 +8,24 @@
 		ui:{
 			init:function(){
 				backend.ui.sidebar();
+				backend.ui.bindEvent();
 			},
 			sidebar:function(){
 				// $(".side-nav").find("li").click(function(){
 				// 	console.log("backend.js :14", $(this));
 				// });
-			}
+			},
+			bindEvent:function(){
+				var $uploader = $("avatarUploaderForm");
+				//open search
+				$("body").delegate(".avatar-container","click",function(){
+					$("body").find("#avatar-uploader").trigger("click");
+				});
+				//when file chose trigger upload
+				$("#avatar-uploader").on("change",function(){
+					$("#avatar-submit").trigger("click");
+				})
+			}	
 		},
 		plugins:{
 			// pass init function as $.fn so we can call wherever we want it.
@@ -21,6 +33,7 @@
 				$body = $("body");
 				backend.plugins.momentjs();
 				backend.plugins.toastrjs();
+				backend.plugins.croppicjs();
 				//page/post editor
 				if ( $body.find(".editor").length ) backend.plugins.editor();
 				// code editor
@@ -48,6 +61,12 @@
 			toastrjs:function(){
 				toastr.options.closeButton = true;
 				//toastr.options.progressBar = true;
+			},
+			croppicjs:function(){
+				// var cropperOptions = {
+				// 	uploadUrl:'/'
+				// }		
+				// var cropperHeader = new Croppic('changeAvatar');
 			},
 			codemirror:function(){
 				var textarea = document.getElementById('custom-css-area');
@@ -455,4 +474,4 @@
 		console.log("backend.js", i);
 		return i;
 	}
-})(jQuery)
+})(jQuery,window,document)

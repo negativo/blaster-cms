@@ -1,8 +1,10 @@
 uploads/
 uploads/avatar/
 public/components/
+private/components/
 node_modules/
 bin/
 .DS_Store
 */.DS_Store
 .DS_Store/*
+

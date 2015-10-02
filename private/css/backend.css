@@ -245,7 +245,13 @@ hr {
 #user-profile-form {
   display: block;
 }
-.avatar {
+.avatar-container {
+  width: 100px;
+  height: 100px;
+  margin: 25px;
+  position: relative;
+}
+.avatar-container .avatar {
   width: 100px;
   height: 100px;
   background: #727272;
@@ -254,4 +260,14 @@ hr {
   line-height: 100px;
   text-align: center;
   overflow: hidden;
+}
+.avatar-container i {
+  position: absolute;
+  top: 45px;
+  left: 40px;
+  color: white;
+  text-shadow: 1px 1px 1px #333;
+}
+#avatarUploaderForm {
+  display: none;
 }

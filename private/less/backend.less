@@ -247,13 +247,30 @@ hr{
 #user-profile-form{
 	display:block;
 }
-.avatar{
+.avatar-container{
 	width: 100px;
 	height: 100px;
-	background: @secondaryTextColor;
-	border-radius: 50%;
-	color:white;
-	line-height: 100px;
-	text-align: center;
-	overflow: hidden;
+	margin: 25px;
+	position:relative;
+	.avatar{
+		width: 100px;
+		height: 100px;
+		background: @secondaryTextColor;
+		border-radius: 50%;
+		color:white;
+		line-height: 100px;
+		text-align: center;
+		overflow: hidden;
+	}
+	i{
+		position:absolute;
+		top:45px;
+		left: 40px;
+		color:white;
+		text-shadow:1px 1px 1px #333;
+
+	}
+}
+#avatarUploaderForm{
+	display:none;
 }
