@@ -12,14 +12,13 @@ Templating is going to be easy, if you work on node adding custom logics too.
 That's what I need to bootstrap my works.
 
 ###Ongoing
-All the basic functions are working right now, need some stiling and a lot of page print data in JSON because I was too lazy.
-I need to set all the json data in their place.
+All basic function are working, it's time to give backend some UX/UI and start adding utility to backend, I'm thinking of a plugin system to add functionality with node modules, I'll start it when I'm done with everything else
 
 ##Installation
 
 	npm install
 	bower install
-	npm start
+	npm start <<
 
 npm start use nodemon on server.js if you have problem with it you should install it globally
 	npm install -g nodemon
@@ -31,13 +30,12 @@ Anyway every pull-request should be done on Test Branch.
 
 
 ##changelog
-	- Added comment system
-		- added backend moderation for comments
-		- 1 LVL deep comment, reddit like nesting is possible but I wont do it, but Comment have a recursive field to reference itself.
+	- refactoring and fixing little bugs
+	- middleware refactored
 
 ##ToDos
+	- Password reset, this mean nodemailer this mean oh crap this will be a lot of hour of work.
 	- Front end API (wordpress like), for easy templating, I have some ideas but I'll do this after everything else
-	- user registration
-		- user restriction Admin>Editor>Guest
+	- user restriction Admin>Editor>Guest
 	- add google analithycs script inserction on Configurations and append it in a file that get inculded in footer of the theme.
 	- create a starter blank template with all the things in place to start developing easily a theme.

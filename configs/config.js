@@ -23,12 +23,22 @@ module.exports = function(app,$ee,port){
 	__root = global.appRoot = path.resolve(__dirname,"../");
 	global.base_url = "http://127.0.0.1:"+port;
 	global.theme = process.env.DEFAULT_THEME;
+	global.configFile = __root + "/bin/config.json";
 
 
 	app.set("view engine", "ejs");
 	app.set("views", __root + "/views/" + global.theme);
 
 	require("./routines")(app,$ee);
+
+	fs.exists(global.configFile , function(exists){
+		if(!exists){
+			fs.mkdirSync(__root + "/bin");
+			fs.writeFile(global.configFile, "",function(err){
+				if(err) console.log("config.js :37", err);
+			});
+		}
+	});
 
 	// *Get Configs on server start if cms is installed
 	fs.readFile(__root+"/bin/config.json","utf-8",function(err,file){
@@ -42,4 +52,3 @@ module.exports = function(app,$ee,port){
 	require(global.appRoot + "/middlewares/middlewares")(app,express,$ee);
 	
 }
-
