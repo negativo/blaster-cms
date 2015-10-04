@@ -18,19 +18,20 @@
     <title><%= dashboard.title %></title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="components/bootstrap/dist/css/bootstrap.min.css">
 
     <!-- Custom CSS -->
     <link href="css/sb-admin.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
-    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
     <!-- CUSTOM CSSs and PLUGINs -->
-    <link rel="stylesheet" href="/components/toastr/toastr.min.css">
-    <link rel="stylesheet" href="css/backend.min.css">
+    <link rel="stylesheet" href="components/toastr/toastr.min.css">
     <link rel="stylesheet" href="plugins/codemirror/codemirror.css">
 
+    <!-- COMPILED LESSs -->
+    <link rel="stylesheet" href="css/backend.min.css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -42,6 +43,8 @@
 </head>
 <% if(dashboard.class) { %>
     <body class="<%= dashboard.class %>">
+<% }else{ %>
+    <body>
 <% } %>
         
         <% if(dashboard.class !== "login-page" && dashboard.class !== "register-page") { %>

@@ -33,15 +33,15 @@ module.exports = function(app,express,$ee){
 	app.use(cookieParser());
 	console.log("middlewares.js :32", app.get("mongo_db") );
 	//dev purpose should be actived only after installation
-	app.use(session({ 
-		secret: 'WeGonnaConqueryTheFuckinWorldISwearIt',
-		cookie:{ maxAge: 36000000 } //change the session after dev 
-	}));		
 	// app.use(session({ 
 	// 	secret: 'WeGonnaConqueryTheFuckinWorldISwearIt',
-	// 	store: require('mongoose-session')(mongoose),
 	// 	cookie:{ maxAge: 36000000 } //change the session after dev 
-	// }));
+	// }));		
+	app.use(session({ 
+		secret: 'WeGonnaConqueryTheFuckinWorldISwearIt',
+		store: require('mongoose-session')(mongoose),
+		cookie:{ maxAge: 36000000 } //change the session after dev 
+	}));
 	app.use(passport.initialize());
 	app.use(passport.session());
 

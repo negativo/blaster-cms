@@ -1,7 +1,9 @@
 <%- include("./partials/header") %>
 
 <div class="container-fluid">
-    <h2>Posts</h2>
+        <h2 class="page-header">
+            User <small>manage you user permission and account</small>
+        </h2>
     <% if (user.role === "admin") { %>
         <a href="#">
             <a href="/admin/new-user"><button type="button" class="btn btn-primary"><i class="fa fa-fw fa-plus"></i> Add new user</button></a>
@@ -21,7 +23,7 @@
                 <a class="delete-user" data-id="<%= users[i]._id %>" data-username="<%= users[i].username %>"><i class="fa fa-fw fa-remove fa-lg"></i></a>
                 <a href="users/<%= users[i]._id %>"><i class="fa fa-fw fa-user fa-lg"></i></a>
             </td>
-            <td class="col-xs-2"><%= users[i].username %></td>
+            <td class="col-xs-2"><a href="users/<%= users[i]._id %>"><%= users[i].username %></a></td>
             <td class="col-xs-2"><%= users[i].email %></td>
             <td><%= users[i].role %></td>
         </tr>
