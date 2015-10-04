@@ -53,16 +53,17 @@ module.exports = function(app,express){
 	app.post("/admin/upload", uploader.single("upload"), POST.uploadCtrl );
 	app.post("/admin/upload/avatar/:id", avatar.single("avatar"), POST.avatarUpload );
 	
-	//use it later
-	var isAdmin = function(req,res,next){
-		if (req.user.role !== "admin") res.status(401).send("unauthorized");
-		next();
-	}
+//use it later
+//check is done in middleware on /admin routes
+// var isAdmin = function(req,res,next){
+// 	if (req.user.role !== "admin") res.status(401).send("unauthorized");
+// 	next();
+// }
 
-	var isLogged = function(req,res,next){
-		if (req.user) return next();	
-		res.redirect("/admin/login");
-	}
+// var isLogged = function(req,res,next){
+// 	if (req.user) return next();	
+// 	res.redirect("/admin/login");
+// }
 
 }
 
