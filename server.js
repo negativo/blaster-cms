@@ -14,7 +14,9 @@ var express = require("express"),
 	privateRoutes = require("./routes/private-routes")(app,express),
 	apiEndpoints = require("./routes/api-endpoints")(app,express);
 
-
+process.on("uncaughtException", function(err){
+	console.log("server.js :18", err);
+});
 
 //FIRE IT UP
 app.listen(port, function(){

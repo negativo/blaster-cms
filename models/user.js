@@ -28,8 +28,9 @@ var UserSchema = new Schema({
 // 	});
 // })
 // 
-UserSchema.methods.comparePassword = function(candidatePassword, cb) {
+UserSchema.methods.comparePassword = function(candidatePassword) {
   return crypto.bcrypt.compare(candidatePassword, this.password)
 };
+
 
 module.exports = mongoose.model("User", UserSchema);
