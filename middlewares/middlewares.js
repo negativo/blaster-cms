@@ -130,9 +130,4 @@ module.exports = function(app,express,$ee){
 		next();
 	});
 
-	app.use(function(req,res,next){
-		console.log("middlewares.js :136", mongoose.connection );
-		next();
-	});
-
 }

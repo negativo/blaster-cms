@@ -117,6 +117,15 @@ var GET = {
 			}
 		});
 	},
+	fileBrowser:function(req,res){
+		function callback(items){
+			res.render('file-browser', {files:items});	
+		}
+
+		fs.readdir(global.appRoot + '/uploads', function(err, files){
+			callback(files);
+		});
+	},
 	//CREATE/EDIT
 	newPostCtrl:function(req,res){
 		req.shared.title = req.shared.title + " New Post";
@@ -373,7 +382,7 @@ var POST = {
 		//res.send(req.body);
 	},
 	uploadCtrl:function(req,res,next){
-		 res.send("got it");
+		 res.send("<script> window.$('body').find('#cke_137_textInput') </script>");
 	},
 	avatarUpload:function(req,res){
 		var userId = req.params.id;
