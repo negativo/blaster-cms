@@ -21,13 +21,14 @@ module.exports = function(app,express,$ee){
 	app.use("/uploads",express.static(global.appRoot + "/uploads") );
 	app.use("/avatar",express.static(global.appRoot + "/uploads/avatar") );
 	app.use("/admin/", express.static(global.appRoot + "/private") );
-	app.use("/admin/:sub/:sub2", express.static(global.appRoot + "/private") );
-	app.use("/admin/:sub/:sub2/:sub3", express.static(global.appRoot + "/private") );
-	app.use("/admin/:sub/:sub2/:sub3/:sub4", express.static(global.appRoot + "/private") );
-	app.use("/admin/:sub/:sub2/:sub3/:sub4/:sub5", express.static(global.appRoot + "/private") );
+	// app.use("/admin/:sub/:sub2", express.static(global.appRoot + "/private") );
+	// app.use("/admin/:sub/:sub2/:sub3", express.static(global.appRoot + "/private") );
+	// app.use("/admin/:sub/:sub2/:sub3/:sub4", express.static(global.appRoot + "/private") );
+	// app.use("/admin/:sub/:sub2/:sub3/:sub4/:sub5", express.static(global.appRoot + "/private") );
 
 	//parsers
-	app.use(bodyParser());
+	app.use(bodyParser.urlencoded({ extended: false }));
+	app.use(bodyParser.json());
 	//logins
 	require("../lib/login-strategy")(passport,$ee);
 	app.use(cookieParser());
