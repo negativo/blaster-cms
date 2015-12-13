@@ -23,7 +23,7 @@ var that = module.exports = {
 		var options = { replset:{ socketOptions:{} }, server:{ socketOptions:{} } };
 		options.replset.socketOptions = { keepAlive: 1 };
 		options.server.socketOptions = { keepAlive: 1 };
-		mongoose.connect(URI, options); 
+		mongoose.connect(URI, options);
 		$ee.emit("mongo_global","mongo_global");
 	},
 	// checkPwd:function(userId, password){

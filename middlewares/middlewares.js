@@ -1,15 +1,14 @@
-var path = require("path");
-	Q 	= require("q"),
-	bodyParser = require("body-parser"),
-	fs = require("fs"),
-	__root = global.appRoot,
-	$F = require("../configs/functions"),
-	Configs = require("../models/configs"),
-	cookieParser = require("cookie-parser"),
-	session = require("express-session"),
-	passport = require("passport"),
-	mongoose = require("mongoose");
-
+var path     		 = require("path");
+		__root       = global.appRoot,
+		$F           = require("../configs/functions"),
+		Configs      = require("../models/configs"),
+		fs           = require("fs"),
+		Q 	         = require("q"),
+		bodyParser   = require("body-parser"),
+		cookieParser = require("cookie-parser"),
+		session      = require("express-session"),
+		passport     = require("passport"),
+		mongoose     = require("mongoose");
 
 
 module.exports = function(app,express,$ee){
@@ -130,6 +129,11 @@ module.exports = function(app,express,$ee){
     //with this you get login status in frontend
 	app.use(function(req,res,next){
 		if (req.method === "GET" && req.shared ) req.shared.isLoggedIn = req.isAuthenticated() || false;
+		next();
+	});
+
+	app.use(function(req,res,next){
+		console.log("middlewares.js :136", mongoose.connection );
 		next();
 	});
 
