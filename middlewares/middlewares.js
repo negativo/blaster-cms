@@ -41,6 +41,8 @@ module.exports = function(app,express,$ee){
 	app.use(session({ 
 		secret: 'WeGonnaConqueryTheFuckinWorldISwearIt',
 		store: require('mongoose-session')(mongoose),
+		resave: true,
+    saveUninitialized: true,
 		cookie:{ maxAge: 36000000 } //change the session after dev 
 	}));
 	app.use(passport.initialize());
