@@ -17,13 +17,11 @@ module.exports = function(app,express,$ee){
 	app.use( express.static(global.appRoot + "/public") );
 	app.use( express.static(__root + "/installer/assets") );
 
+	//virtuals path to prepend
 	app.use("/uploads",express.static(global.appRoot + "/uploads") );
 	app.use("/avatar",express.static(global.appRoot + "/uploads/avatar") );
-	app.use("/admin/", express.static(global.appRoot + "/private") );
-	// app.use("/admin/:sub/:sub2", express.static(global.appRoot + "/private") );
-	// app.use("/admin/:sub/:sub2/:sub3", express.static(global.appRoot + "/private") );
-	// app.use("/admin/:sub/:sub2/:sub3/:sub4", express.static(global.appRoot + "/private") );
-	// app.use("/admin/:sub/:sub2/:sub3/:sub4/:sub5", express.static(global.appRoot + "/private") );
+	app.use("/private", express.static(global.appRoot + "/private") );
+
 
 	//parsers
 	app.use(bodyParser.urlencoded({ extended: false }));
