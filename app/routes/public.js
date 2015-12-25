@@ -1,13 +1,10 @@
-var $F = require("../configs/functions");
-var passport = require("passport");
 
-var ruotesControllers = require("../controllers/public-request"),
-	POST = ruotesControllers.POST,
-	GET = ruotesControllers.GET;
-
-//var api = require("../controllers/api-request.js");
 module.exports = function(app,express){
-	//GETs
+	var ruotesControllers = require("../controllers/public")(app),
+		POST = ruotesControllers.POST,
+		GET = ruotesControllers.GET;
+
+	
 	app.get("/", GET.homeCtrl );
 	app.get("/page/:page", GET.singlePageCtrl );
 	app.get("/post/:post", GET.singlePostCtrl );

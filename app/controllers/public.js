@@ -1,23 +1,28 @@
-var express = require("express"),
-	app 	= express(),
-	toSlug = require('to-slug-case'),
-	$F = require("../configs/functions"),
+module.exports = function(app){
+
+	var toSlug = require('to-slug-case'),
+	$utils = require("../lib/utils"),
 	User = require("../models/user"),
 	Configs = require("../models/configs"),
 	Post = require("../models/posts"),
 	Page = require("../models/pages"),
 	Comment = require("../models/comments"),
 	Render = require("../lib/render-helper").public;
-
 	
-//Controllers
-var GET = {
-	fourOfourCtrl:function(req,res){
-		var data =  $F.dataParser(req.shared),
-		navigation =  $F.dataParser(req.navigation);
+	var handlers  = {};
+	handlers.GET  = {};
+	handlers.POST = {};
+	
+	var GET       = handlers.GET,
+	POST          = handlers.POST;
+
+	GET.fourOfourCtrl = function(req,res){
+		var data =  $utils.dataParser(req.shared),
+		navigation =  $utils.dataParser(req.navigation);
 		res.render( "404" , new Render(req,{}) );
-	},
-	homeCtrl: function(req,res){
+	}
+
+	GET.homeCtrl = function(req,res){
 		// //static homepage
 		if (req.shared.home === "home-template"){
 			Post.find({},function(err,posts){
@@ -32,8 +37,9 @@ var GET = {
 				res.render( page.template, new Render(req, { page:page }) );
 			});
 		}
-	},
-	singlePageCtrl:function (req, res) {
+	}
+
+	GET.singlePageCtrl = function (req, res) {
 		var slug = req.params.page.toString();	
 		Page.findOne({ "slug": slug },function(err,page){
 			console.log("requests.js", page,err);
@@ -41,8 +47,9 @@ var GET = {
 			req.shared.title = page.title + " - " + req.shared.title;
 			res.render( page.template, new Render(req, { page:page }) );
 		});
-	},
-	singlePostCtrl:function (req, res) {
+	}
+
+	GET.singlePostCtrl = function (req, res) {
 		var slug = req.params.post;
 		Post.findOne({ "slug": slug })
 		.populate("publishedBy.user")
@@ -55,26 +62,28 @@ var GET = {
 				res.render( post.template, new Render(req, { post:post, comments: post.comments }) );
 			});
 		});
-	},
-	searchCtrl:function(req,res){
+	}
+
+	GET.searchCtrl = function(req,res){
 		console.log("public-request.js :67", req.body);
 		res.render("search", new Render(req));
 	}
 
-};
 
-var POST = {
-	searchCtrl:function(req,res){
+
+	// POST REQ
+	POST.searchCtrl = function(req,res){
 		var searchExp = new RegExp(req.body.term, "i");
 		Post.find({  $or: [{"title": searchExp}, {"body": searchExp}, {"tags": searchExp} ] }, function(err,post){
 			res.render("search", new Render(req, { results: post }));
 		});
-	},
-	install:{
+	}
+
+	POST.install = {
 		mongo:function(req,res){
 			console.log("requests.js MONGOLINK", req.body);
 			//check if err is null in frontend
-			$F.checkDatabase(req.body)
+			$utils.checkDatabase(req.body)
 				.then(function(promise){
 					res.status(promise.status)
 					res.send(promise);
@@ -86,7 +95,7 @@ var POST = {
 				});
 		},
 		cms:function(req,res){
-			$F.installation(req.body)
+			$utils.installation(req.body)
 				.then(function(promise){
 					console.log("request.js install promise", promise);
 					promise.isInstalled = true;
@@ -100,7 +109,7 @@ var POST = {
 	},//install methods
 	// SAFE TO DELETE AFTER TESTINGS
 	// >>
-	create:{
+	POST.create = {
 		post:function(req,res){
 			console.log("routes.js", "/create/post request");
 			console.log("POST DATA: ", req.body);
@@ -133,7 +142,6 @@ var POST = {
 			res.send("pagecreate"+r);	
 		}
 	}
-};
 
-exports.GET = GET;
-exports.POST = POST;
+	return handlers;
+}

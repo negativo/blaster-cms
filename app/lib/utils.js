@@ -28,7 +28,6 @@ module.exports = function(app){
 			options.server.socketOptions = { keepAlive: 1 };
 			mongoose.connect(URI, options);
 			$ee.emit("mongo_global","mongo_global");
-			return mongoose;
 		},
 		changePwd:function(userId, password, newPwd){
 			var deferred = Q.defer();

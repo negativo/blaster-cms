@@ -1,6 +1,6 @@
 module.exports = function(app,express){
 	
-	var ruotesControllers = require("../controllers/api-request")(app),
+	var ruotesControllers = require("../controllers/api")(app),
 	POST                  = ruotesControllers.POST,
 	GET                   = ruotesControllers.GET;
 	

@@ -1,4 +1,3 @@
-var $F = require("./functions");
 var db = require("mongoose").connection;
 
 module.exports = function(app,$ee){

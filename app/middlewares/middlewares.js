@@ -12,8 +12,8 @@ var path     		 = require("path"),
 module.exports = function(app,express, $ee){
 
 	var __root = app.locals.__root,
-			__app  = app.locals.__app;
-	$F         = require("../configs/functions")(app);
+			__app  = app.locals.__app,
+			locals = app.locals;
 
 
 	//set static content folder	
