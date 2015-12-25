@@ -30,28 +30,28 @@ module.exports = function(app,express, $ee){
 	app.use(bodyParser.urlencoded({ extended: false }));
 	app.use(bodyParser.json());
 	//logins
-	require("../lib/login-strategy")(passport,$ee);
+	require(__app + "/lib/login-strategy")(passport,$ee);
 	app.use(cookieParser());
 
 	//don't store in db session
-	// app.use(session({ 
-	// 	secret: 'WeGonnaConqueryTheFuckinWorldISwearIt',
-	// 	cookie:{ maxAge: 36000000 } //change the session after dev 
-	// }));		
-	//store session in db
 	app.use(session({ 
 		secret: 'WeGonnaConqueryTheFuckinWorldISwearIt',
-		store: require('mongoose-session')(mongoose),
-		resave: true,
-    saveUninitialized: true,
 		cookie:{ maxAge: 36000000 } //change the session after dev 
-	}));
+	}));		
+	//store session in db
+	// app.use(session({ 
+	// 	secret: 'WeGonnaConqueryTheFuckinWorldISwearIt',
+	// 	store: require('mongoose-session')(mongoose),
+	// 	resave: true,
+ //    saveUninitialized: true,
+	// 	cookie:{ maxAge: 36000000 } //change the session after dev 
+	// }));
 	app.use(passport.initialize());
 	app.use(passport.session());
 
 	// check if installed
 	app.use(function(req,res,next){
-		fs.readFile( __root + "/bin/config.json", "utf-8", function(err,file){
+		fs.readFile( app.locals.__configs , "utf-8", function(err,file){
 			if (typeof file !== 'undefined' && file.length > 0) {
 				app.locals.isInstalled = true;
 				next();

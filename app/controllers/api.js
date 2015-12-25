@@ -1,7 +1,7 @@
 module.exports = function(app){
 
 
-	var $F  = require("../configs/functions")(app),
+	var $utils  = require("../lib/utils")(app),
 	toSlug  = require('to-slug-case'),
 	User    = require("../models/user"),
 	Configs = require("../models/configs"),
@@ -50,7 +50,7 @@ module.exports = function(app){
 
 	POST.install = {
 		mongo:function(req,res){
-			$F.checkDatabase(req.body)
+			$utils.checkDatabase(req.body)
 				.then(function(promise){
 					res.send(promise);
 				})
@@ -60,7 +60,7 @@ module.exports = function(app){
 				});
 		},
 		cms:function(req,res){
-			$F.installation(req.body)
+			$utils.installation(req.body)
 			.then(function(promise){
 				console.log("api-request.js :58", promise);
 				req.isInstalled = true;

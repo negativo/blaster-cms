@@ -41,7 +41,7 @@ module.exports = function(app, express, $ee){
 	});
 
 	// *Get Configs on server start if cms is installed
-	fs.readFile( locals.__root + "/bin/config.json","utf-8",function(err,file){
+	fs.readFile( locals.__configs ,"utf-8",function(err,file){
 		if(typeof file !== 'undefined' && file.length > 0) { 
 			var configs = JSON.parse(file);			
 			$utils.connectDatabase(crypto.decrypt(configs.db_link),$ee);
