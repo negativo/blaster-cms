@@ -7,6 +7,7 @@ module.exports = function(app, express, $ee){
 	var $utils = require("../lib/utils")(app);
 	// DEBUG
 	// disable console.log()
+	app.locals.debug = process.env.DEBUG_MODE_ON;
 	if (process.env.DEBUG_MODE_ON==="false") {
 	    console = console || {};
 	    console.log = function(){};

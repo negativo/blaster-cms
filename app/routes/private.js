@@ -4,8 +4,8 @@
 module.exports = function(app,express){
 	var passport      = require('passport'),
 	multer            = require('multer'),
-	uploader          = multer({ dest: './uploads/' }),
-	avatar            = multer({ dest: global.appRoot + '/uploads/avatar'}),
+	uploader          = multer({ dest: app.locals.__root + '/uploads/' }),
+	avatar            = multer({ dest: app.locals.__root + '/uploads/avatar'}),
 	ruotesControllers = require('../controllers/private')(app),
 	POST              = ruotesControllers.POST,
 	GET               = ruotesControllers.GET;

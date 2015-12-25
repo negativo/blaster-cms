@@ -23,6 +23,10 @@ process.on("uncaughtException", function(err){
 	console.log("server.js :18", err);
 });
 
+process.on("exit", function(err){
+	console.log("server.js :27", "GOODBYE");
+});
+
 //FIRE IT UP
 app.listen(app.locals.__port, function(){
 	console.log("fire it up on port: " + app.locals.__port);
