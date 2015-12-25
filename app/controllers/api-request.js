@@ -50,9 +50,6 @@ module.exports = function(app){
 
 	POST.install = {
 		mongo:function(req,res){
-			//console.log("requests.js MONGOLINK", req.body);
-			//check if err is null in frontend
-			console.log("api-request.js :46", $F.checkDatabase);
 			$F.checkDatabase(req.body)
 				.then(function(promise){
 					res.send(promise);

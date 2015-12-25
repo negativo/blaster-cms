@@ -1,4 +1,4 @@
-var path     		 = require("path");
+var path     		 = require("path"),
 		Configs      = require("../models/configs"),
 		fs           = require("fs"),
 		Q 	         = require("q"),
@@ -9,20 +9,21 @@ var path     		 = require("path");
 		mongoose     = require("mongoose");
 
 
-module.exports = function(app,express,$ee){
+module.exports = function(app,express, $ee){
 
 	var __root = app.locals.__root,
+			__app  = app.locals.__app;
 	$F         = require("../configs/functions")(app);
 
 
 	//set static content folder	
-	app.use( express.static(global.appRoot + "/public") );
+	app.use( express.static( __root + "/public") );
 	app.use( express.static(__root + "/installer/assets") );
 
 	//virtuals path to prepend
-	app.use("/uploads" , express.static(global.appRoot + "/uploads") );
-	app.use("/avatar"  , express.static(global.appRoot + "/uploads/avatar") );
-	app.use("/private" , express.static(global.appRoot + "/private") );
+	app.use("/uploads" , express.static( __root + "/uploads") );
+	app.use("/avatar"  , express.static( __root + "/uploads/avatar") );
+	app.use("/private" , express.static( __root + "/private") );
 
 
 	//parsers
@@ -47,32 +48,34 @@ module.exports = function(app,express,$ee){
 	app.use(passport.initialize());
 	app.use(passport.session());
 
+	// check if installed
 	app.use(function(req,res,next){
-		fs.readFile(__root + "/bin/config.json", "utf-8", function(err,file){
+		fs.readFile( __root + "/bin/config.json", "utf-8", function(err,file){
 			if (typeof file !== 'undefined' && file.length > 0) {
-				req.isInstalled = true;
+				app.locals.isInstalled = true;
 				next();
-				console.log("middlewares.js :54", "it's installed");
 			}else{
-				// It's not installed go on with installation
 				next();
-				console.log("middlewares.js :54", "it's NOT installed");
 			}
 		});	
 	})
 
 	app.use(function(req,res,next){
-		if( req.method === 'GET' && !req.isInstalled ) { 
+		if( req.method === 'GET' && !app.locals.isInstalled ) { 
 			app.set("views", __root + "/installer" );
 			return res.render("install"); 
 		};	
 		next();
 	});
 
+	// set theme view folder
 	app.use(function(req,res,next){
-		if (req.isInstalled){
+		if (app.locals.isInstalled){
 			Configs.findOne({},function(err,configs){
-					global.theme = configs.theme || "basic";
+					if(err){
+						console.log("middlewares.js :76", err);
+					}
+					app.locals.__theme = configs.theme || "basic";
 					req.shared = configs || {};
 					req.shared.site = configs.title || "CMS";
 					req.theme = configs.theme || "";
@@ -80,7 +83,10 @@ module.exports = function(app,express,$ee){
 					req.links = configs.links || [];
 				
 				//get all template files and attach it, get it on the backend
-				fs.readdir("./views/template",function(err, list){
+				fs.readdir(__root + "/views/" + app.locals.__theme ,function(err, list){
+					if(err){
+						console.log("middlewares.js :85", err);
+					}
 					var pageTemplates = [];
 					var postTemplates = [];
 					var pagePattern = /-page-template.ejs/i
@@ -95,7 +101,7 @@ module.exports = function(app,express,$ee){
 					};
 					req.pageTemplates = pageTemplates;
 					req.postTemplates = postTemplates;
-					fs.readdir("./views/",function(err, list){
+					fs.readdir(__root + "/views/",function(err, list){
 						req.avaible_themes = list;
 						$ee.emit("configs_updated", configs, "Configuration has been attached to requestes");
 						next();			
@@ -111,13 +117,13 @@ module.exports = function(app,express,$ee){
 	//switch views folder dinamically
 	app.use(function(req,res,next){
 		var p = /\/admin/;
-		console.log("middlewares.js :99", req.url.match(p) );
+		//console.log("middlewares.js :99", req.url.match(p) );
 		if( req.url.match(p) ) {
 			app.set("views", __root + "/admin" )
 			next();
 		}else{
-			app.use( express.static(__root + "/views/" + global.theme) );
-			app.set("views", __root + "/views/" + global.theme );
+			app.use( express.static(__root + "/views/" + app.locals.__theme) );
+			app.set("views", __root + "/views/" + app.locals.__theme);
 			next();
 		}
 	});

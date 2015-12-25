@@ -1,11 +1,10 @@
-var express = require("express");
 var path = require("path");
 var	dotenv  = require("dotenv").load(); 
 var fs 		= require("fs");
 var crypto  = require("../lib/crypto");
-var $F = require("../configs/functions");
 
-module.exports = function(app,$ee,port){
+module.exports = function(app, express, $ee){
+	var $F = require("../configs/functions")(app);
 	// DEBUG
 	// disable console.log()
 	if (process.env.DEBUG_MODE_ON==="false") {
@@ -15,40 +14,43 @@ module.exports = function(app,$ee,port){
 		var morgan = require("morgan");
 	    app.use(morgan("dev"));
 	};
-
+	
 	app.set("mongo_db",false);
 	app.set("is_installed",false);
 
+	var locals = app.locals;
+
 	//set app route global
-	__root = global.appRoot = path.resolve(__dirname,"../");
-	global.base_url = "http://127.0.0.1:"+port;
-	global.theme = process.env.DEFAULT_THEME;
-	global.configFile = __root + "/bin/config.json";
+	locals.__baseurl = "http://127.0.0.1:" + locals.__port;
+	locals.__theme = process.env.DEFAULT_THEME;
+	locals.__configs = locals.__root + "/bin/config.json";
+
+	console.log("config.js :28", locals.__theme);
 
 
 	app.set("view engine", "ejs");
-	app.set("views", __root + "/views/" + global.theme);
+	app.set("views", locals.__root + "/views/" + locals.__theme);
 
 	require("./routines")(app,$ee);
 
-	fs.exists(global.configFile , function(exists){
+	fs.exists( locals.__configs , function(exists){
 		if(!exists){
-			fs.mkdirSync(__root + "/bin");
-			fs.writeFile(global.configFile, "",function(err){
+			fs.mkdirSync( locals.__root + "/bin");
+			fs.writeFile( locals.__configs, "",function(err){
 				if(err) console.log("config.js :37", err);
 			});
 		}
 	});
 
 	// *Get Configs on server start if cms is installed
-	fs.readFile(__root+"/bin/config.json","utf-8",function(err,file){
-		if(file && file.length > 0) { 
+	fs.readFile( locals.__root + "/bin/config.json","utf-8",function(err,file){
+		if(typeof file !== 'undefined' && file.length > 0) { 
 			var configs = JSON.parse(file);			
 			$F.connectDatabase(crypto.decrypt(configs.db_link),$ee);
 		}
 	});
 
 	// MIDDLEWARES
-	require(global.appRoot + "/middlewares/middlewares")(app,express,$ee);
+	require( locals.__app + "/middlewares/middlewares")(app,express,$ee);
 	
 }
