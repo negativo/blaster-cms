@@ -1,6 +1,4 @@
 var path     		 = require("path");
-		__root       = global.appRoot,
-		$F           = require("../configs/functions"),
 		Configs      = require("../models/configs"),
 		fs           = require("fs"),
 		Q 	         = require("q"),
@@ -13,14 +11,18 @@ var path     		 = require("path");
 
 module.exports = function(app,express,$ee){
 
+	var __root = app.locals.__root,
+	$F         = require("../configs/functions")(app);
+
+
 	//set static content folder	
 	app.use( express.static(global.appRoot + "/public") );
 	app.use( express.static(__root + "/installer/assets") );
 
 	//virtuals path to prepend
-	app.use("/uploads",express.static(global.appRoot + "/uploads") );
-	app.use("/avatar",express.static(global.appRoot + "/uploads/avatar") );
-	app.use("/private", express.static(global.appRoot + "/private") );
+	app.use("/uploads" , express.static(global.appRoot + "/uploads") );
+	app.use("/avatar"  , express.static(global.appRoot + "/uploads/avatar") );
+	app.use("/private" , express.static(global.appRoot + "/private") );
 
 
 	//parsers
@@ -31,27 +33,30 @@ module.exports = function(app,express,$ee){
 	app.use(cookieParser());
 	console.log("middlewares.js :32", app.get("mongo_db") );
 	//dev purpose should be actived only after installation
-	// app.use(session({ 
-	// 	secret: 'WeGonnaConqueryTheFuckinWorldISwearIt',
-	// 	cookie:{ maxAge: 36000000 } //change the session after dev 
-	// }));		
 	app.use(session({ 
 		secret: 'WeGonnaConqueryTheFuckinWorldISwearIt',
-		store: require('mongoose-session')(mongoose),
-		resave: true,
-    saveUninitialized: true,
 		cookie:{ maxAge: 36000000 } //change the session after dev 
-	}));
+	}));		
+	// app.use(session({ 
+	// 	secret: 'WeGonnaConqueryTheFuckinWorldISwearIt',
+	// 	store: require('mongoose-session')(mongoose),
+	// 	resave: true,
+ //    saveUninitialized: true,
+	// 	cookie:{ maxAge: 36000000 } //change the session after dev 
+	// }));
 	app.use(passport.initialize());
 	app.use(passport.session());
 
 	app.use(function(req,res,next){
 		fs.readFile(__root + "/bin/config.json", "utf-8", function(err,file){
-			if (file.length > 0) {
+			if (typeof file !== 'undefined' && file.length > 0) {
 				req.isInstalled = true;
 				next();
+				console.log("middlewares.js :54", "it's installed");
 			}else{
+				// It's not installed go on with installation
 				next();
+				console.log("middlewares.js :54", "it's NOT installed");
 			}
 		});	
 	})

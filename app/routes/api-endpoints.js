@@ -1,12 +1,8 @@
-var $F = require("../configs/functions");
-var passport = require("passport");
-
-var ruotesControllers = require("../controllers/api-request"),
-	POST = ruotesControllers.POST,
-	GET = ruotesControllers.GET;
-
-
 module.exports = function(app,express){
+	
+	var ruotesControllers = require("../controllers/api-request")(app),
+	POST                  = ruotesControllers.POST,
+	GET                   = ruotesControllers.GET;
 	
 	// NEED TO IMPLEMENT API TOKEN BUT NOT NEEDED NOW
 	var AreYouAuthorized = function(req,res,next){
@@ -31,5 +27,3 @@ module.exports = function(app,express){
 
 
 }
-
-Post.find({},{});

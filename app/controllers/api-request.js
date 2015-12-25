@@ -1,48 +1,58 @@
-var express = require("express"),
-	app 	= express(),
-	$F = require("../configs/functions"),
-	toSlug = require('to-slug-case'),
-	User = require("../models/user"),
-	Configs = require("../models/configs"),
-	Post = require("../models/posts"),
-	Page = require("../models/pages"),
-	Comment = require("../models/comments");
+module.exports = function(app){
 
+
+	var $F  = require("../configs/functions")(app),
+	toSlug  = require('to-slug-case'),
+	User    = require("../models/user"),
+	Configs = require("../models/configs"),
+	Post    = require("../models/posts"),
+	Page    = require("../models/pages"),
+	Comment = require("../models/comments");
 	
-//Controllers
-var GET = {
-	allPostsCtrl:function(req,res){
+	var handlers  = {};
+	handlers.GET  = {};
+	handlers.POST = {};
+	
+	var GET       = handlers.GET,
+	POST          = handlers.POST;
+
+
+	GET.allPostsCtrl = function(req,res){
 		console.log("api-request.js", "GOT REQUEST FOR POSTS");
 		Post.find({}, function(err, posts){
 			if(posts !== null) return res.status(200).send(posts);
 			res.status(404).send("No posts found");
 		});
-	},
-	allPagesCtrl:function(req,res){
+	}
+
+	GET.allPagesCtrl = function(req,res){
 		Page.find({}, function(err, pages){
 			if(pages !== null) return res.status(200).send(pages);
 			res.status(404).send("No pages found");
 		});
-	},
-	usersCtrl:function(req,res){
+	}
+
+	GET.usersCtrl = function(req,res){
 		User.findOne({}, function(err, user){
 			if(user !== null) return res.status(200).send(user);
 			res.status(404).send("No user found");
 		});
-	},
-	configsCtrl:function(req,res){
+	}
+
+	GET.configsCtrl = function(req,res){
 		Configs.findOne({}, function(err, configs){
 			if(configs !== null) return res.status(200).send(configs);
 			res.status(404).send("No configs found");
 		});
 	}
-};
 
-var POST = {
-	install:{
+	// POST REQ
+
+	POST.install = {
 		mongo:function(req,res){
 			//console.log("requests.js MONGOLINK", req.body);
 			//check if err is null in frontend
+			console.log("api-request.js :46", $F.checkDatabase);
 			$F.checkDatabase(req.body)
 				.then(function(promise){
 					res.send(promise);
@@ -65,7 +75,7 @@ var POST = {
 			});
 		}
 	},//install methods
-	create:{
+	POST.create = {
 		post:function(req,res){
 			console.log("routes.js", "/create/post request");
 			console.log("POST DATA: ", req.body);
@@ -143,15 +153,16 @@ var POST = {
 			}
 		}
 	},
-	searchCtrl:function(req,res){
+	POST.searchCtrl = function(req,res){
 		console.log("api-request.js :149", req.body);
 		Post.find({ "title": new RegExp(req.body.name) }, function(err,post){
 			if(post) res.send(post)
 				else res.send(err)
 		});
-	}
-};
+	}			
+
+	return handlers;
+}
 
 
-exports.GET = GET;
-exports.POST = POST;
+	

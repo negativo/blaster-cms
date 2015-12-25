@@ -1,18 +1,16 @@
+var express       = require("express"),
+port 	            = 8181,
+app 	            = express();
+app.locals.__root = __dirname;
+app.locals.__app  = __dirname + "/app";
 
-// PERSONAL MODULES
-// $F for methods require("./configs/functions")
-// $S shared require("./configs/functions").shared;
-
-var express = require("express"),
-	app 	= express(),
-	port 	= 8181,
-	EventEmitter = require("events").EventEmitter,
-		$ee = new EventEmitter(),
-	events = require("./configs/events")(app,$ee),
-	config  = require("./configs/config")(app,$ee,port),
-	publicRoutes = require("./routes/public-routes")(app,express),
-	privateRoutes = require("./routes/private-routes")(app,express),
-	apiEndpoints = require("./routes/api-endpoints")(app,express);
+var EE 			      = require("events").EventEmitter,
+$ee               = new EE(),
+events            = require(app.locals.__app + "/configs/events")(app,$ee),
+config            = require(app.locals.__app + "/configs/config")(app,$ee,port),
+publicRoutes      = require(app.locals.__app + "/routes/public-routes")(app,express),
+privateRoutes     = require(app.locals.__app + "/routes/private-routes")(app,express),
+apiEndpoints      = require(app.locals.__app + "/routes/api-endpoints")(app,express);
 
 process.on("uncaughtException", function(err){
 	console.log("server.js :18", err);

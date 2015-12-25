@@ -18,7 +18,7 @@
 
 			$(".mongo-localhost").click(function(e){
 				e.preventDefault();
-				$formMongo.find(".mongo-link").val("mongodb://localhost:27017");
+				$formMongo.find(".mongo-link").val("mongodb://localhost:27017/db_name");
 			});
 
 			$mongoSubmit.click(function(e){
