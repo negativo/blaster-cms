@@ -24,7 +24,6 @@ module.exports = function(app){
 		req.shared.title = req.shared.title + " Login";
 		req.shared.class = "login-page";
 		res.render("login", new Render(req, {}) );
-
 	}
 
 	GET.dashboardPageCtrl = function(req,res){

@@ -13,8 +13,8 @@ module.exports = function(app,express, $ee){
 
 	var __root = app.locals.__root,
 			__app  = app.locals.__app,
-			locals = app.locals,
-			$utils = require('../lib/utils.js')(app);
+			locals = app.locals;
+			//$utils = require('../lib/utils.js')(app);
 
 
 
@@ -134,7 +134,7 @@ module.exports = function(app,express, $ee){
 
 	//redirect to login if no authenticated and accessing admin areas
 	app.use("/admin", function(req,res,next){
-		console.log("middlewares.js :106", req.url);
+		//console.log("middlewares.js :106", req.url);
 		if(req.url !== "/login" && req.method === "GET" && !req.isAuthenticated() ) return res.redirect("/admin/login"); 
 		next();
 	})
@@ -144,5 +144,8 @@ module.exports = function(app,express, $ee){
 		if (req.method === "GET" && req.shared ) req.shared.isLoggedIn = req.isAuthenticated() || false;
 		next();
 	});
+
+	var roles = require("./roles.js");
+	app.use(roles)
 
 }

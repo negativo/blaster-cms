@@ -6,7 +6,7 @@ var crypto  = require("../lib/crypto");
 module.exports = function(app, express, $ee){
 	var $utils = require("../lib/utils")(app);
 	
-	app.locals.debug = process.env.DEBUG_MODE_ON;
+	app.locals.debug_mode_on = process.env.DEBUG_MODE_ON;
 	if (process.env.DEBUG_MODE_ON==="false") {
 			//disable logging
 	    console = console || {};
