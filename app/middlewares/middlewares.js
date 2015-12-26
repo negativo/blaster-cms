@@ -29,25 +29,25 @@ module.exports = function(app,express, $ee){
 
 
 	//parsers
-	app.use(bodyParser.urlencoded({ extended: false }));
+	app.use(bodyParser.urlencoded({ extended: true }));
 	app.use(bodyParser.json());
 	//logins
 	require(__app + "/lib/login-strategy")(passport,$ee);
 	app.use(cookieParser());
 
 	//don't store in db session
-	app.use(session({ 
-		secret: 'WeGonnaConqueryTheFuckinWorldISwearIt',
-		cookie:{ maxAge: 36000000 } //change the session after dev 
-	}));		
-	//store session in db
 	// app.use(session({ 
 	// 	secret: 'WeGonnaConqueryTheFuckinWorldISwearIt',
-	// 	store: require('mongoose-session')(mongoose),
-	// 	resave: true,
-  //  saveUninitialized: true,
 	// 	cookie:{ maxAge: 36000000 } //change the session after dev 
 	// }));
+	//store session in db
+	app.use(session({ 
+		secret: 'WeGonnaConqueryTheFuckinWorldISwearIt',
+		store: require('mongoose-session')(mongoose),
+		resave: true,
+   saveUninitialized: true,
+		cookie:{ maxAge: 36000000 } //change the session after dev 
+	}));
 	app.use(passport.initialize());
 	app.use(passport.session());
 

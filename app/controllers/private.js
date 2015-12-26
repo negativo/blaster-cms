@@ -1,7 +1,7 @@
 module.exports = function(app){
 
 	var Q    = require("q"),
-	$utils   = require("../lib/utils"),
+	$utils   = require("../lib/utils")(app),
 	fs       = require("fs"),
 	Configs  = require("../models/configs"),
 	Posts    = require("../models/posts"),
@@ -260,16 +260,14 @@ module.exports = function(app){
 			configs.links = [];
 			configs.links = req.body.links;
 			configs.home = req.body.home;
-			console.log("private-request.js", req.body);
 			configs.save(function(err){
 				if(!err) {
-					req.logout();
+					//req.logout();
 					res.send("success");
 				}
 				
 			});
 		});
-		//res.send("success")
 	}
 	
 	POST.editNavigation = function(req,res){

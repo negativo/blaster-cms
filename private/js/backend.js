@@ -267,7 +267,7 @@
 							link: $(this).val().trim()
 						}
 						getLinks.push(social);
-						//console.log("backend.js", getLinks);
+						console.log("backend.js", getLinks);
 					});
 					var settings = {
 						siteTitle: $("#site-title").val().trim(),
@@ -275,13 +275,15 @@
 						home: $("#homepage").val(),
 						links: getLinks
 					};
+
+					console.log("backend.js :279", settings);
 					console.log("backend.js", settings );
 					$.post("/admin/edit-configurations", settings ,function(res,status){
 						console.log("backend.js", res);
 						getLinks = [];
 						if (res === "success") {
 							toastr.success('Configurations Changed!');
-							setTimeout(function(){ window.location.replace("/admin/login"); }, 1500);
+							//setTimeout(function(){ window.location.replace("/admin/login"); }, 1500);
 						}
 						//window.location.replace("configurations");
 					});
