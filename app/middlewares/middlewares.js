@@ -13,7 +13,9 @@ module.exports = function(app,express, $ee){
 
 	var __root = app.locals.__root,
 			__app  = app.locals.__app,
-			locals = app.locals;
+			locals = app.locals,
+			$utils = require('../lib/utils.js')(app);
+
 
 
 	//set static content folder	
@@ -43,11 +45,12 @@ module.exports = function(app,express, $ee){
 	// 	secret: 'WeGonnaConqueryTheFuckinWorldISwearIt',
 	// 	store: require('mongoose-session')(mongoose),
 	// 	resave: true,
- //    saveUninitialized: true,
+  //  saveUninitialized: true,
 	// 	cookie:{ maxAge: 36000000 } //change the session after dev 
 	// }));
 	app.use(passport.initialize());
 	app.use(passport.session());
+
 
 	// check if installed
 	app.use(function(req,res,next){
@@ -83,7 +86,7 @@ module.exports = function(app,express, $ee){
 					req.navigation = configs.navigation || [];
 					req.links = configs.links || [];
 				
-				//get all template files and attach it, get it on the backend
+				//get page&posts templates
 				fs.readdir(__root + "/views/" + app.locals.__theme ,function(err, list){
 					if(err){
 						console.log("middlewares.js :85", err);

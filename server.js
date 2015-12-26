@@ -2,6 +2,7 @@ var express       = require("express"),
 port 	            = 8181,
 app 	            = express();
 
+
 //globals
 app.locals.__root = __dirname;
 app.locals.__app  = __dirname + "/app";
@@ -16,6 +17,7 @@ config     = require(app.locals.__app + "/configs/config")(app, express, $ee),
 public_routes  = require(app.locals.__app + "/routes/public")(app,express),
 private_routes = require(app.locals.__app + "/routes/private")(app,express),
 api_routes     = require(app.locals.__app + "/routes/api")(app,express);
+
 
 
 //ERROR

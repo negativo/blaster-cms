@@ -25,4 +25,21 @@ var PostSchema = new Schema({
 	//when I have or someone have time to check all the reference..FML
 });
 
+
+// Model's Methods
+PostSchema.statics.all = function (cb) {
+  return this.find({ }, cb);
+}
+
+PostSchema.statics.getById = function (id, cb) {
+  return this.find({ _id: id}, cb);
+}
+
+PostSchema.statics.getBySlug = function (slug, cb) {
+  return this.find({ slug: slug}, cb);
+}
+
 module.exports = mongoose.model("Post", PostSchema);
+
+
+

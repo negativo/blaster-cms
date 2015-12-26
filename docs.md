@@ -4,7 +4,11 @@ That's not a documentation but I'm leaving here all the things I need to remenbe
 ###req attached helpers
 req object get some helper in middleware.js
 
-	global.theme = 
+	app.locals
+		.__root
+		.__app
+		.__configs
+		.__theme
 	req.shared = 
 	req.shared.site = 
 	req.theme = 
@@ -12,6 +16,7 @@ req object get some helper in middleware.js
 	req.links = 
 	req.pageTemplates = 
 	req.postTemplates = 
+	req.avaible_themes
 
 
 ###Usefull endpoint
