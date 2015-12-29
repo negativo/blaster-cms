@@ -51,4 +51,6 @@ module.exports = function(app, express, $ee){
 	// MIDDLEWARES
 	require( locals.__app + "/middlewares/middlewares")(app,express,$ee);
 	
+
+	$ee.emit('server_configured');
 }
