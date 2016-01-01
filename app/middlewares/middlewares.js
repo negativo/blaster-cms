@@ -1,12 +1,12 @@
-var colors   = require('colors'),
-Configs      = require("../models/configs"),
-fs           = require("fs"),
-Q 	         = require("q"),
-bodyParser   = require("body-parser"),
-cookieParser = require("cookie-parser"),
-session      = require("express-session"),
-passport     = require("passport"),
-mongoose     = require("mongoose");
+var path     		 = require("path"),
+		Configs      = require("../models/configs"),
+		fs           = require("fs"),
+		Q 	         = require("q"),
+		bodyParser   = require("body-parser"),
+		cookieParser = require("cookie-parser"),
+		session      = require("express-session"),
+		passport     = require("passport"),
+		mongoose     = require("mongoose");
 
 
 module.exports = function(app,express, $ee){
@@ -19,9 +19,9 @@ module.exports = function(app,express, $ee){
 			
 	app.__sessionOption = { 
 		secret: 'WeGonnaConqueryTheFuckinWorldISwearIt',
-		store: require('mongoose-session')(mongoose),
-		resave: true,
-		saveUninitialized: true,
+		// store: require('mongoose-session')(mongoose),
+		// resave: true,
+		// saveUninitialized: true,
 		cookie:{ maxAge: 36000000 } //change the session after dev 
 	};
 	
@@ -30,23 +30,17 @@ module.exports = function(app,express, $ee){
 	 */
 	app.use(installer.check);
 
-	/**
-	 * STATICS
-	 */
+	//set static content folder	
 	app.use( express.static( __root + "/public") );
 	app.use( express.static(__root + "/installer/assets") );
 
-	/**
-	 * VIRTUAL PATH FOR STATICS
-	 */
+	//virtuals path to prepend
 	app.use("/uploads" , express.static( __root + "/uploads") );
 	app.use("/avatar"  , express.static( __root + "/uploads/avatar") );
 	app.use("/private" , express.static( __root + "/private") );
 
 
-	/**
-	 * PARSERS
-	 */
+	//parsers
 	app.use(bodyParser.urlencoded({ extended: true }));
 	app.use(bodyParser.json());
 	app.use(cookieParser());
@@ -57,13 +51,9 @@ module.exports = function(app,express, $ee){
 	/**
 	 * SESSION & LOGIN
 	 */
-	app.use( function(req,res,next){
-		session(app.__sessionOption);
-		console.log("middlewares.js :62".red);
-		next();
-	});
-	app.use( passport.initialize() );
-	app.use( passport.session() );
+	session(app.__sessionOption)
+	app.use( passport.initialize() 	);
+	app.use( passport.session() 		);
 
 
 
@@ -140,7 +130,5 @@ module.exports = function(app,express, $ee){
 		if (req.method === "GET" && req.shared ) req.shared.isLoggedIn = req.isAuthenticated() || false;
 		next();
 	});
-
-
-
+	
 }
