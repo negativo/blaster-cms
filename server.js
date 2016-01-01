@@ -1,35 +1,59 @@
-var express       = require("express"),
-port 	            = 8181,
-app 	            = express();
+var express = require("express"),
+port 	      = 8181,
+app 	      = express(),
+EE 		      = require("events").EventEmitter,
+$ee         = new EE();
 
 
-//globals
-app.locals.__root = __dirname;
-app.locals.__app  = __dirname + "/app";
-app.locals.__port = port;
+/**
+ * GLOBALS
+ */
+app.locals.__root   = __dirname;
+app.locals.__app    = __dirname + "/app";
+app.locals.__public = __dirname + "/public";
+app.locals.__views  = __dirname + "/views";
+app.locals.__admin  = __dirname + "/admin";
+app.locals.__port   = port;
 
-var EE 		 = require("events").EventEmitter,
-$ee        = new EE(),
-events     = require(app.locals.__app + "/configs/events")(app,$ee),
-config     = require(app.locals.__app + "/configs/config")(app, express, $ee),
+/**
+ * CONFIG & STARTUPS
+ */
+require(app.locals.__app + "/configs/config")(app, express, $ee);
 
-//ROUTES
-public_routes  = require(app.locals.__app + "/routes/public")(app,express),
-private_routes = require(app.locals.__app + "/routes/private")(app,express),
-api_routes     = require(app.locals.__app + "/routes/api")(app,express);
+/**
+ * EVENTS
+ */
+require(app.locals.__app + "/configs/events")(app,$ee);
 
+/**
+ * MIDDLEWARES
+ */
+require( app.locals.__app + "/middlewares/middlewares")(app,express,$ee);
 
+/**
+ * ROUTES
+ */
+require(app.locals.__app + "/routes/public")(app,express), 	// Public
+require(app.locals.__app + "/routes/private")(app,express),	// Private
+require(app.locals.__app + "/routes/api")(app,express);			// API
 
-//ERROR
+/**
+ * Exceptions
+ */
 process.on("uncaughtException", function(err){
-	console.log("server.js :18", err);
+	console.log("server.js :18", err.message);
 });
 
+/**
+ * on process exit handler
+ */
 process.on("exit", function(err){
 	console.log("server.js :27", "GOODBYE");
 });
 
-//FIRE IT UP
+/**
+ * SERVER
+ */
 app.listen(app.locals.__port, function(){
 	console.log("fire it up on port: " + app.locals.__port);
 });	

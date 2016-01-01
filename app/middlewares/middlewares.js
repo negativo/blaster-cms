@@ -1,76 +1,72 @@
-var path     		 = require("path"),
-		Configs      = require("../models/configs"),
-		fs           = require("fs"),
-		Q 	         = require("q"),
-		bodyParser   = require("body-parser"),
-		cookieParser = require("cookie-parser"),
-		session      = require("express-session"),
-		passport     = require("passport"),
-		mongoose     = require("mongoose");
+var colors   = require('colors'),
+Configs      = require("../models/configs"),
+fs           = require("fs"),
+Q 	         = require("q"),
+bodyParser   = require("body-parser"),
+cookieParser = require("cookie-parser"),
+session      = require("express-session"),
+passport     = require("passport"),
+mongoose     = require("mongoose");
 
 
 module.exports = function(app,express, $ee){
 
+	var installer = require("./installer")(app);
+
 	var __root = app.locals.__root,
 			__app  = app.locals.__app,
 			locals = app.locals;
-			//$utils = require('../lib/utils.js')(app);
+			
+	app.__sessionOption = { 
+		secret: 'WeGonnaConqueryTheFuckinWorldISwearIt',
+		store: require('mongoose-session')(mongoose),
+		resave: true,
+		saveUninitialized: true,
+		cookie:{ maxAge: 36000000 } //change the session after dev 
+	};
+	
+	/**
+	 * INSTALLATION CHECKS
+	 */
+	app.use(installer.check);
 
-
-
-	//set static content folder	
+	/**
+	 * STATICS
+	 */
 	app.use( express.static( __root + "/public") );
 	app.use( express.static(__root + "/installer/assets") );
 
-	//virtuals path to prepend
+	/**
+	 * VIRTUAL PATH FOR STATICS
+	 */
 	app.use("/uploads" , express.static( __root + "/uploads") );
 	app.use("/avatar"  , express.static( __root + "/uploads/avatar") );
 	app.use("/private" , express.static( __root + "/private") );
 
 
-	//parsers
+	/**
+	 * PARSERS
+	 */
 	app.use(bodyParser.urlencoded({ extended: true }));
 	app.use(bodyParser.json());
+	app.use(cookieParser());
 	//logins
 	require(__app + "/lib/login-strategy")(passport,$ee);
-	app.use(cookieParser());
-
-	//don't store in db session
-	// app.use(session({ 
-	// 	secret: 'WeGonnaConqueryTheFuckinWorldISwearIt',
-	// 	cookie:{ maxAge: 36000000 } //change the session after dev 
-	// }));
-	//store session in db
-	app.use(session({ 
-		secret: 'WeGonnaConqueryTheFuckinWorldISwearIt',
-		store: require('mongoose-session')(mongoose),
-		resave: true,
-   saveUninitialized: true,
-		cookie:{ maxAge: 36000000 } //change the session after dev 
-	}));
-	app.use(passport.initialize());
-	app.use(passport.session());
 
 
-	// check if installed
-	app.use(function(req,res,next){
-		fs.readFile( app.locals.__configs , "utf-8", function(err,file){
-			if (typeof file !== 'undefined' && file.length > 0) {
-				app.locals.isInstalled = true;
-				next();
-			}else{
-				next();
-			}
-		});	
-	})
-
-	app.use(function(req,res,next){
-		if( req.method === 'GET' && !app.locals.isInstalled ) { 
-			app.set("views", __root + "/installer" );
-			return res.render("install"); 
-		};	
+	/**
+	 * SESSION & LOGIN
+	 */
+	app.use( function(req,res,next){
+		session(app.__sessionOption);
+		console.log("middlewares.js :62".red);
 		next();
 	});
+	app.use( passport.initialize() );
+	app.use( passport.session() );
+
+
+
 
 	// set theme view folder
 	app.use(function(req,res,next){
@@ -145,7 +141,6 @@ module.exports = function(app,express, $ee){
 		next();
 	});
 
-	var roles = require("./roles.js");
-	app.use(roles)
+
 
 }
