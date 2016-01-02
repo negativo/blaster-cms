@@ -1,6 +1,5 @@
 //constructor for views locals.variables
 var private = function (req,add) {
-	this.dashboard = req.shared;
 	this.user = req.user || {} ;
 	for( prop in add){
 		this[prop] = add[prop];

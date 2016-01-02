@@ -1,4 +1,5 @@
 # NoNameYet CMS
+tested on node 4.2.1
 
 ##OpenSource NodeJS CMS Framework.
 ###Simple node powered CMS.

@@ -22,7 +22,7 @@ module.exports = function (app, $ee) {
 				app.locals.navigation = configs.navigation || [];
 				app.locals.sitename   = configs.title || 'CMS';
 				app.locals.subtitle   = configs.subtitle || '';
-				app.locals.socials    = configs.socials || ''; 
+				app.locals.socials    = configs.links || ''; 
 				app.set('home', configs.home || 'home-template');
 
 				req.shared         = configs || {}; // configurations

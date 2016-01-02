@@ -21,14 +21,14 @@ module.exports = function(app){
 
 	
 	GET.loginPageCtrl = function(req,res){
-		req.shared.title = req.shared.title + " Login";
-		req.shared.class = "login-page";
+		app.locals.pagename = " Login";
+		app.locals.bodyclass = "login-page";
 		res.render("login", new Render(req, { error: req.flash('error') }) );
 	}
 
 	GET.dashboardPageCtrl = function(req,res){
-		req.shared.title = req.shared.title + " Dashboard";
-		req.shared.class = "dashboard-home";
+		app.locals.pagename = " Dashboard";
+		app.locals.bodyclass = "dashboard-home";
 		var getPages = function(){
 			return Posts.count({});
 		};
@@ -50,8 +50,8 @@ module.exports = function(app){
 	}
 
 	GET.postsPageCtrl = function(req,res){
-		req.shared.title = req.shared.title + " Posts";
-		req.shared.class = "dashboard-posts";
+		app.locals.pagename = " Posts";
+		app.locals.bodyclass = "dashboard-posts";
 		Posts.find({},{ body:0 }, function(err, posts){
 			if(posts !== null && req.isAuthenticated() ) {
 				res.render("posts", new Render(req, { posts: posts }) );
@@ -60,8 +60,8 @@ module.exports = function(app){
 	}
 
 	GET.pagesPageCtrl = function(req,res){
-		req.shared.title = req.shared.title + " Pages";
-		req.shared.class = "dashboard-pages";
+		app.locals.pagename = " Pages";
+		app.locals.bodyclass = "dashboard-pages";
 		Pages.find({},{ body:0 }, function(err, pages){
 			if(pages !== null && req.isAuthenticated() ) {
 				res.render("pages", new Render(req, { pages: pages }) );
@@ -70,8 +70,8 @@ module.exports = function(app){
 	}
 	
 	GET.commentsPageCtrl = function(req,res){
-		req.shared.title = req.shared.title + " Comments";
-		req.shared.class = "dashboard-comments";
+		app.locals.pagename = " Comments";
+		app.locals.bodyclass = "dashboard-comments";
 		function getPosts(){
 			return Posts.find({});
 		};
@@ -89,8 +89,8 @@ module.exports = function(app){
 	}
 
 	GET.usersPageCtrl = function(req,res){
-		req.shared.title = req.shared.title + " Users";
-		req.shared.class = "dashboard-users";
+		app.locals.pagename = " Users";
+		app.locals.bodyclass = "dashboard-users";
 		Users.find({},{ password:0 }, function(err, users){
 			if(users !== null && req.isAuthenticated() ) {
 				res.render("users", new Render(req, { users: users }) );
@@ -102,15 +102,15 @@ module.exports = function(app){
 		var userId = req.params.id;
 		Users.findById( userId, {password:0}, function(err, profile){
 			if(profile !== null && req.isAuthenticated() ) {
-				req.shared.title = profile.username + " Profile";
-				req.shared.class = profile.username.toLowerCase() + "-profile";
+				app.locals.pagename= profile.username + " Profile";
+				app.locals.bodyclass = profile.username.toLowerCase() + "-profile";
 				res.render("profile", new Render(req, { profile: profile }) );
 			};
 		});
 	}
 	GET.configurationsPageCtrl = function(req,res){
-		req.shared.title = req.shared.title + " Configurations";
-		req.shared.class = "dashboard-configurations";
+		app.locals.pagename = " Configurations";
+		app.locals.bodyclass = "dashboard-configurations";
 		Configs.findOne({},{ db_link:0, templates:0 }, function(err, configs){
 			if(configs !== null && req.isAuthenticated() ) {
 				Pages.find({},{ body:0 },function(err, pages){
@@ -132,8 +132,8 @@ module.exports = function(app){
 
 	//CREATE/EDIT
 	GET.newPostCtrl = function(req,res){
-		req.shared.title = req.shared.title + " New Post";
-			req.shared.class = "new-post";
+		app.locals.pagename = " New Post";
+			app.locals.bodyclass = "new-post";
 			res.render("editor", new Render(req, { editor: "post", templates: app.locals.templates.post }) );
 	}
 
@@ -142,16 +142,16 @@ module.exports = function(app){
 			var postId = req.params.id;
 			Posts.findById( postId ,function(err,singlePost){
 				console.log("private-request.js", singlePost );
-				req.shared.title = singlePost.title + " edit";
-				req.shared.class = "edit-post";
+				app.locals.pagename = " " + singlePost.title + " edit";
+				app.locals.bodyclass = "edit-post";
 				res.render("editor", new Render(req, { editor: "post", single: singlePost, templates: app.locals.templates.post }) );
 			}).populate("publishedBy.user",{password:0});;
 		}
 	}
 
 	GET.newPageCtrl = function(req,res){
-			req.shared.title = req.shared.title + " New Page";
-			req.shared.class = "new-page";
+			app.locals.pagename = " New Page";
+			app.locals.bodyclass = "new-page";
 			Configs.findOne({},{ siteTemplate:1 }, function(err, templates){
 				if(templates === null) return;
 				res.render("editor", new Render(req, { editor: "page", templates: app.locals.templates.page }) );
@@ -162,16 +162,16 @@ module.exports = function(app){
 			var pageId = req.params.id;
 			Pages.findById( pageId ,function(err,singlePage){
 				console.log("private-request.js", singlePage );
-				req.shared.title = singlePage.title + " edit";
-				req.shared.class = "edit-page";
+				app.locals.pagename= singlePage.title + " edit";
+				app.locals.bodyclass = "edit-page";
 				res.render("editor", new Render(req, { editor: "page", single: singlePage, templates: app.locals.templates.page }) );
 			});
 		}
 	}
 
 	GET.editNavigation = function(req,res){
-		req.shared.title = req.shared.title + " Navigation";
-		req.shared.class = "edit-navigation";
+		app.locals.pagename = " Navigation";
+		app.locals.bodyclass = "edit-navigation";
 		Configs.findOne({},{ db_link:0, templates:0 }, function(err, configs){
 			Pages.find({},{ slug:1, title:1 },function(err,pages){
 				if(configs !== null && req.isAuthenticated() ) {
@@ -183,29 +183,29 @@ module.exports = function(app){
 
 	GET.editTheme = function(req,res){
 		fs.readFile(global.appRoot + "/views/template/css/custom.css", "utf-8", function(err,file){
-			req.shared.title = req.shared.title + " Theme Edit";
-			req.shared.class = "edit-theme";
+			app.locals.pagename = " Theme Edit";
+			app.locals.bodyclass = "edit-theme";
 			res.render("edit-theme", new Render(req, { css:file }) );
 		});
 	}
 
 	GET.themesCtrl = function(req,res){
 		fs.readFile(global.appRoot + "/views/template/css/custom.css", "utf-8", function(err,file){
-			req.shared.title = req.shared.title + " Choose themes";
-			req.shared.class = "choose-themes";
+			app.locals.pagename = " Choose themes";
+			app.locals.bodyclass = "choose-themes";
 			res.render("themes", new Render(req, { themes: req.avaible_themes }) );
 		});
 	}
 
 	GET.newUserCtrl = function(req,res){
-		req.shared.title = req.shared.title + " Add new user";
-		req.shared.class = "new-user-page";
+		app.locals.pagename = " Add new user";
+		app.locals.bodyclass = "new-user-page";
 		res.render("new-user", new Render(req) );
 	}
 
 	GET.registerCtrl = function(req,res){
-		req.shared.title = "Register to " + req.shared.title;
-		req.shared.class = "register-page";
+		app.locals.pagename = "Register to " + app.locals.sitename;
+		app.locals.bodyclass = "register-page";
 		res.render("register", new Render(req) );
 	}
 

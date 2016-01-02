@@ -15,7 +15,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title><%= dashboard.title %></title>
+    <title><%= sitename + pagename %></title>
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/private/components/bootstrap/dist/css/bootstrap.min.css">
@@ -41,13 +41,13 @@
     <![endif]-->
 
 </head>
-<% if(dashboard.class) { %>
-    <body class="<%= dashboard.class %>">
+<% if(bodyclass) { %>
+    <body class="<%= bodyclass %>">
 <% }else{ %>
     <body>
 <% } %>
         
-        <% if(dashboard.class !== "login-page" && dashboard.class !== "register-page") { %>
+        <% if(bodyclass !== "login-page" && bodyclass !== "register-page") { %>
             <div id="wrapper">
             <%- include("navigation") %>
         <% } %>
