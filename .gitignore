@@ -1,6 +1,6 @@
 sessions/
-uploads/
-uploads/avatar/
+uploads/**
+uploads/avatar/**
 public/components/
 private/components/
 node_modules/

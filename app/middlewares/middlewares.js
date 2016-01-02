@@ -21,21 +21,27 @@ module.exports = function(app,express, $ee){
 			__app  = app.locals.__app,
 			locals = app.locals;
 			
-	// DEVO DISATTIVARE lA SESSIONE PRIMA DELL'INSTALLAZIONE
+	/**
+	 * SESSION OPTIONS
+	 */
 	app.__sessionOption = { 
 		secret: process.env.SECRET,
 		resave: true,
 		saveUninitialized: false,
-		store: new FileStore({ path: __root + "/sessions", encrypt:true }),
+		store: new FileStore({ path: __root + "/sessions", encrypt:true }), // session in /sessions
 		cookie:{ maxAge: 36000000 } //change the session after dev 
 	};
 	
 
-	//set static content folder	
+	/**
+	 * STATICS
+	 */
 	app.use( express.static( __root + '/public') );
 	app.use( express.static( __root + '/installer/assets') );
 
-	//virtuals path to prepend
+	/**
+	 * VIRTUAL PATHS FOR STATICS
+	 */
 	app.use('/uploads' , express.static( __root + '/uploads') );
 	app.use('/avatar'  , express.static( __root + '/uploads/avatar') );
 	app.use('/private' , express.static( __root + '/private') );
