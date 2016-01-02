@@ -1,5 +1,6 @@
 var fs = require("fs");
 
+
 module.exports = function (app) {
 	/**
 	 * CHECK IF CMS IS INSTALLED IF NOT INSTALL IT

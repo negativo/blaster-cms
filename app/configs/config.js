@@ -1,7 +1,7 @@
-var path = require("path");
-var	dotenv  = require("dotenv").load(); 
-var fs 		= require("fs");
-var crypto  = require("../lib/crypto");
+var path   = require("path");
+var	dotenv = require("dotenv").load();
+var fs 		  = require("fs");
+var crypto = require("../lib/crypto");
 
 module.exports = function(app, express, $ee){
 	var $utils = require("../lib/utils")(app);
@@ -47,11 +47,6 @@ module.exports = function(app, express, $ee){
 			$utils.connectDatabase(crypto.decrypt(configs.db_link),$ee);
 		}
 	});
-
-	/**
-	 * MIDDLEWARES
-	 */
-	require( locals.__app + "/middlewares/middlewares")(app,express,$ee);
 
 	$ee.emit('server_configured');
 }

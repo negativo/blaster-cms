@@ -25,7 +25,10 @@ require(app.locals.__app + "/configs/config")(app, express, $ee);
  */
 require(app.locals.__app + "/configs/events")(app,$ee);
 
-
+/**
+ * MIDDLEWARES GLOBALS
+ */
+require(app.locals.__app + "/middlewares/middlewares")(app,express,$ee);
 
 /**
  * ROUTES

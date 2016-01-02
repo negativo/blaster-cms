@@ -34,7 +34,7 @@ module.exports = function(app,$ee){
 	});
 
 	$ee.on('server_configured', function(){
-		console.log("events.js :37", "server online".green);
+		console.log("events.js :37", "server configured".green);
 	});
 
 }
