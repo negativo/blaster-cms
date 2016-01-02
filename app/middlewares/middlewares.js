@@ -7,7 +7,8 @@ cookieParser = require('cookie-parser'),
 session      = require('express-session'),
 passport     = require('passport'),
 mongoose     = require('mongoose'),
-MongoStore	 = require('connect-mongo')(session);
+MongoStore	 = require('connect-mongo')(session),
+FileStore 	 = require('session-file-store')(session);
 
 module.exports = function(app,express, $ee){
 
@@ -25,7 +26,7 @@ module.exports = function(app,express, $ee){
 		secret: process.env.SECRET,
 		resave: true,
 		saveUninitialized: false,
-		//store: new MongoStore({ mongooseConnection: mongoose.connection }) || "",
+		store: new FileStore({ path: __root + "/sessions", encrypt:true }),
 		cookie:{ maxAge: 36000000 } //change the session after dev 
 	};
 	
@@ -58,7 +59,7 @@ module.exports = function(app,express, $ee){
 	/**
 	 * SESSION & LOGIN
 	 */
-	//app.use( session( app.__sessionOption )); // problem when installing because of session storage of mongo still uninitialized
+	app.use( session( app.__sessionOption )); // problem when installing because of session storage of mongo still uninitialized
 	app.use( passport.initialize());
 	app.use( passport.session());
 
@@ -81,6 +82,7 @@ module.exports = function(app,express, $ee){
 
   //with this you get login status in frontend
 	app.use(function(req,res,next){
+		console.log("middlewares.js :84", req.isAuthenticated());
 		if (req.method === 'GET' && req.shared ) req.shared.isLoggedIn = req.isAuthenticated() || false;
 		next();
 	});

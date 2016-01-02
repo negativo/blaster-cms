@@ -52,7 +52,7 @@ process.on("exit", function(err){
 });
 
 /**
- * SERVER
+ * START SERVER
  */
 app.listen(app.locals.__port, function(){
 	console.log("fire it up on port: " + app.locals.__port);

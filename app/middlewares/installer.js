@@ -19,7 +19,7 @@ module.exports = function (app) {
 		},
 		install:function(req,res,next){
 			if( req.method === 'GET' && !app.locals.isInstalled && !(/^\/install/.test(req.url)) ) { 
-				return res.redirect("install"); 
+				return res.redirect("/install"); 
 			};	
 			next();
 		}
