@@ -6,8 +6,8 @@
     <div class="col-md-6">
 		<form id="themes-form">
 			<select id="avaible-themes" class="form-control">
-				<% for (var i = 0; i < themes.length; i++) { %>
-					<option value="<%= themes[i] %>" <%= dashboard.theme === themes[i] ? "selected" : "" ; %>><%= themes[i] %></option>
+				<% for (var i = 0; i < templates.theme.length; i++) { %>
+					<option value="<%= templates.theme[i] %>" <%= dashboard.theme === templates.theme[i] ? "selected" : "" ; %>><%= templates.theme[i] %></option>
 				<% }; %>
 			</select>
 			<button class="btn btn-primary form-control" type="submit">Save theme</button>

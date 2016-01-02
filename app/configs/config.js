@@ -3,9 +3,10 @@ var fs 		  = require("fs");
 var crypto = require("../lib/crypto");
 
 module.exports = function(app, express, $ee){
+	var locals = app.locals;
 	var $utils = require("../lib/utils")(app);
 	
-	app.locals.debug_mode_on = process.env.DEBUG_MODE_ON;
+	locals.debug_mode_on = process.env.DEBUG_MODE_ON;
 	if (process.env.DEBUG_MODE_ON==="false") {
 			//disable logging
 	    console = console || {};
@@ -17,17 +18,12 @@ module.exports = function(app, express, $ee){
 	
 	app.set("mongo_db",false);
 	app.set("is_installed",false);
-
-	var locals = app.locals;
-
-	//set app route global
-	locals.__baseurl = process.env.BASE_URL + ":" + locals.__port;
-	locals.__theme = process.env.DEFAULT_THEME;
-	locals.__configs = locals.__root + "/bin/config.json";
-
-
+	app.set('base_url',process.env.BASE_URL + ":" + locals.__port);
+	app.set('theme',process.env.DEFAULT_THEME);
 	app.set("view engine", "ejs");
 	app.set("views", locals.__root + "/views/" + locals.__theme);
+
+	locals.__configs = locals.__root + "/bin/config.json";
 
 	/**
 	 * CREATE CONFIG FILE IF DON'T EXISTS

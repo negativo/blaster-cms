@@ -135,7 +135,7 @@ module.exports = function(app){
 	GET.newPostCtrl = function(req,res){
 		req.shared.title = req.shared.title + " New Post";
 			req.shared.class = "new-post";
-			res.render("editor", new Render(req, { editor: "post", templates:req.postTemplates }) );
+			res.render("editor", new Render(req, { editor: "post", templates: app.locals.templates.post }) );
 	}
 
 	GET.editSinglePost = function(req,res){
@@ -145,7 +145,7 @@ module.exports = function(app){
 				console.log("private-request.js", singlePost );
 				req.shared.title = singlePost.title + " edit";
 				req.shared.class = "edit-post";
-				res.render("editor", new Render(req, { editor: "post", single: singlePost, templates:req.postTemplates }) );
+				res.render("editor", new Render(req, { editor: "post", single: singlePost, templates: app.locals.templates.post }) );
 			}).populate("publishedBy.user",{password:0});;
 		}
 	}
@@ -155,7 +155,7 @@ module.exports = function(app){
 			req.shared.class = "new-page";
 			Configs.findOne({},{ siteTemplate:1 }, function(err, templates){
 				if(templates === null) return;
-				res.render("editor", new Render(req, { editor: "page", templates:req.pageTemplates }) );
+				res.render("editor", new Render(req, { editor: "page", templates: app.locals.templates.page }) );
 			});
 	}
 	GET.editSinglePage = function(req,res){
@@ -165,7 +165,7 @@ module.exports = function(app){
 				console.log("private-request.js", singlePage );
 				req.shared.title = singlePage.title + " edit";
 				req.shared.class = "edit-page";
-				res.render("editor", new Render(req, { editor: "page", single: singlePage, templates:req.pageTemplates }) );
+				res.render("editor", new Render(req, { editor: "page", single: singlePage, templates: app.locals.templates.page }) );
 			});
 		}
 	}

@@ -4,11 +4,8 @@ That's not a documentation but I'm leaving here all the things I need to remenbe
 ###req attached helpers
 req object get some helper in middleware.js
 
-	app.locals
-		.__root
-		.__app
-		.__configs
-		.__theme
+	Shared and usefull data is in app.local, refactoring all to use it insted of storing in req object
+	
 	req.shared = 
 	req.shared.site = 
 	req.theme = 
