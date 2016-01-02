@@ -31,21 +31,24 @@ exports.install = function(app, cms){
 			console.log("installer.js :29", err);
 			if (err) deferred.reject({err:err, message:"error finding existing user"});
 			if(!user) {
-				new User({ username:cms.username, password:crypto.bcrypt.encrypt(cms.password), admin:true, role:"admin" })
+				new User({ username:cms.username, password: cms.password, admin:true, role:"admin" })
 				.save(function(err,user){
 					if(err) deferred.reject({err:err, message:"error saving user"})
-					//REFACTOR THIS REFACTOR THIS REFACTOR THIS <<<<<<<<<<<<<<<
+
+					//post
 					new Post({
 						publishedBy:{
 							user:user._id,
 						}
 					}).save();
+					
+					// page
 					new Page({
 						publishedBy:{
 							user:cms.user,
 						}
 					}).save();
-					//REFACTOR THIS REFACTOR THIS REFACTOR THIS <<<<<<<<<<<<<<<
+
 					deferred.resolve({message:"User created", user: user});
 				});
 			} else{

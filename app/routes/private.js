@@ -10,8 +10,8 @@ module.exports = function(app,express){
 	POST              = ruotesControllers.POST,
 	GET               = ruotesControllers.GET;
 
-	var roles = require("../middlewares/roles.js");
-	app.use("/admin", roles);
+	// var roles = require("../middlewares/roles.js");
+	// app.use("/admin", roles);
 
 	//GETS
 	app.get('/admin',function(req,res){

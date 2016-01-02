@@ -305,7 +305,8 @@ module.exports = function(app){
 	POST.editUserPassword = function(req,res){
 		//oldPwd, newPwd, CheckPwd
 		var pwd = req.body;
-		$utils.changePwd( pwd.id, pwd.oldPwd, pwd.newPwd )
+		
+		User.change_password(pwd.id, pwd.oldPwd, pwd.newPwd)
 			.then(function(changePwd){
 				if(changePwd){
 					req.logout();
@@ -388,13 +389,13 @@ module.exports = function(app){
 	
 	POST.registerCtrl = function(req,res){
 		var register = req.body;
-		User.findOne({ "username": register.username },function(err, user){
-			if(user) return res.send( new Message(null, "User Exists") );
-			$utils.register(register)
+		
+		new_user = register;
+		
+		User
+			.register_new(new_user)
 			.then(function(message){ return res.send(message) })
 			.fail(function(message){ return res.send(message) });
-		})
-		//res.send(req.body);
 	}
 
 	POST.uploadCtrl = function(req,res,next){

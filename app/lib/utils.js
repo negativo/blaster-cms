@@ -1,13 +1,6 @@
 var mongoose = require("mongoose");
 fs           = require("fs"),
-Q            = require("q"),
-User         = require("../models/user"),
-Configs      = require("../models/configs"),
-Post         = require("../models/posts"),
-Page         = require("../models/pages"),	
-crypto       = require("../lib/crypto"),
-Message      = require("../lib/message-helper").message;
-
+Q            = require("q");
 
 module.exports = function(app){
 	var __app 				 = app.locals.__app,
@@ -20,27 +13,6 @@ module.exports = function(app){
 			options.server.socketOptions = { keepAlive: 1 };
 			mongoose.connect(URI, options);
 			$ee.emit("mongo_global","mongo_global");
-		},
-		changePwd:function(userId, password, newPwd){
-			var deferred = Q.defer();
-			User.findById( userId,{ password:1 }, function(err,user){
-				if(user) {
-					if( user.comparePassword(password) ){
-						user.password = crypto.bcrypt.encrypt(newPwd);
-						user.save(function(err,saved){
-							console.log("functions.js :47", err, saved);
-							if (err === null) deferred.resolve("Password changed");
-							if (err !== null) deferred.reject("error while saving " + err);
-						});
-					}else{
-						deferred.reject("current password incorrect ");
-					};
-				}
-				if(err) {
-					deferred.reject("user not found " + err);
-				}
-			});
-			return deferred.promise;
 		},
 		checkDatabase:function(mongo){
 			var testConnection = function(){
@@ -57,19 +29,6 @@ module.exports = function(app){
 			}
 			return testConnection();		
 		}, 
-		register:function(newUser){
-			var deferred = Q.defer();
-			new User({ 
-				username:newUser.username, 
-				password:crypto.bcrypt.encrypt(newUser.password),  
-				role:"guest"
-			}).save(function(err,user){
-				if ( err === null ) return deferred.resolve(new Message("User Created!"));
-				return deferred.reject( new Message(null, "Error saving user, try again!") );
-			});
-			
-			return deferred.promise;
-		},
 		dataParser:function(original,name,add){
 			if(typeof original === "string" ){ 
 				original = JSON.parse(original); 

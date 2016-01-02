@@ -10,7 +10,7 @@ module.exports = function(passport,$ee){
   // serializza pure la pass
   passport.serializeUser(function(user, done) {
     var serializedUser = {
-      id: user.id,
+      id: user._id,
       user: user.username,
       role: user.role,
       avatar: user.avatar
