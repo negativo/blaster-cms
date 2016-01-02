@@ -13,6 +13,7 @@ module.exports = function (app, $ee) {
 				}
 
 				app.locals.__theme = configs.theme || 'basic'; //theme
+
 				req.theme          = configs.theme || ''; //theme
 				req.shared         = configs || {}; // configurations
 				req.shared.site    = configs.title || 'CMS'; //site tite

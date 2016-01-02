@@ -70,6 +70,7 @@ exports.install = function(app, cms){
 		app.settings.title = confData.title = cms.title;
 		app.settings.subtitle = confData.subtitle = cms.subtitle;
 		app.settings.is_installed = confData.isInstalled = true;
+		app.settings.home = confData.home = "home-template";
 		new Configs(confData)
 		.save(function(err){
 			if (err) return deferred.reject({err:err, message:"error saving configurations"});

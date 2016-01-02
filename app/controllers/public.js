@@ -24,6 +24,7 @@ module.exports = function(app){
 
 	GET.homeCtrl = function(req,res){
 		// //static homepage
+		console.log("public.js :27", "--HOME REQUEST--");
 		if (req.shared.home === "home-template"){
 			Post.find({},function(err,posts){
 				res.render( "home-template" , new Render(req, { posts:posts }) )
