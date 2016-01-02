@@ -4,16 +4,16 @@ var User = require("./user");
 var Schema = mongoose.Schema;
 
 var PostSchema = new Schema({
-	title:String,
-	slug: String,
-	body:String,
-	status:String,
+	title: { type: String, default: "Sample Post" },
+	slug: { type: String, default: "sample-post" },
+	body:{ type: String, default: "Hello World!" },
+	status: { type: String, default: "published" },
 	template: { type: String, default: "post-template" },
 	type: { type:String, default: "post" },
 	tags: Array,
 	comments:[{ type: Schema.ObjectId, ref:"Comment"}],
 	publishedBy:{
-		user:{ type: Schema.Types.ObjectId, ref:"User" },
+		user:{ type: Schema.Types.ObjectId, ref:"User"},
 		date:{ type: Date, default: Date.now() }
 	},
 	meta:{
@@ -40,6 +40,5 @@ PostSchema.statics.getBySlug = function (slug, cb) {
 }
 
 module.exports = mongoose.model("Post", PostSchema);
-
 
 

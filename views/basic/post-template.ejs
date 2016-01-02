@@ -1,9 +1,17 @@
 <%- include("partials/header") %>
 <div class="small-12 single-post">
-	<h1 class="title"><%= post.title  %></h1>
-	<div class="body"><%- post.body %></div>
-	<small><%= post.publishedBy.user.username %> - <span class="date"><%= post.publishedBy.date %></span> - <%= post.tags %></small>
+	<h1 class="title"><%= post.title %></h1>
+	<div class="meta">
+		<span class="user" style="display: <%= !isAuthenticated ? 'none': '' %> ;"><i class="fa fa-edit"></i> <a href="/admin/edit-post/<%= post._id %>">Edit post</a></span>
+		<span class="user"><i class="fa fa-user"></i> <%= post.publishedBy.user.username %></span>
+		<i class="fa fa-clock-o"></i> <span class="date"> <%= post.publishedBy.date %></span>
+		<span class="tags"><i class="fa fa-tags"></i> <%= post.tags %></span>
+	</div>
+	<div class="post-body"><%- post.body %></div>
 	<hr>
+	<%- include("./partials/comments") %>
 </div>
+
+
 <%- include("partials/footer") %>
 

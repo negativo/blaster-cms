@@ -36,22 +36,14 @@ exports.install = function(app, cms){
 					if(err) deferred.reject({err:err, message:"error saving user"})
 					//REFACTOR THIS REFACTOR THIS REFACTOR THIS <<<<<<<<<<<<<<<
 					new Post({
-						title:"Sample post",
-						slug:"sample-post",
-						body:"Hello World!",
 						publishedBy:{
 							user:user._id,
-						},
-						status:"published"
+						}
 					}).save();
 					new Page({
-						slug:"sample-page",
-						title:"Sample",
-						body:"Hi I'm a page :)",
 						publishedBy:{
 							user:cms.user,
-						},
-						status:"published"
+						}
 					}).save();
 					//REFACTOR THIS REFACTOR THIS REFACTOR THIS <<<<<<<<<<<<<<<
 					deferred.resolve({message:"User created", user: user});
@@ -66,21 +58,27 @@ exports.install = function(app, cms){
 
 	function saveBlogConf(prev){
 		var deferred = Q.defer();
+
 		app.settings.admin = confData.admin = cms.username;
 		app.settings.title = confData.title = cms.title;
 		app.settings.subtitle = confData.subtitle = cms.subtitle;
 		app.settings.is_installed = confData.isInstalled = true;
 		app.settings.home = confData.home = "home-template";
+
 		new Configs(confData)
 		.save(function(err){
 			if (err) return deferred.reject({err:err, message:"error saving configurations"});
-			console.log("installer.js :76", "PRE > SAVE CONF ON FILE");
 			fs.writeFileSync( app.locals.__root + "/bin/config.json", JSON.stringify({ db_link: crypto.encrypt(app.settings.db_link) }) );
 		});
+
 		deferred.resolve({message:"User&Blog Created", err:null });
+		
 		return deferred.promise;
 	}
 
+	/**
+	 * RESOLVE ALL INSTALLATION PROMISE
+	 */
 	connect()
 	.then(createUser)
 	.then(saveBlogConf)

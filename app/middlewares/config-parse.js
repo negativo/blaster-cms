@@ -18,6 +18,9 @@ module.exports = function (app, $ee) {
 
 				console.log("config-parse.js :19", configs);
 
+				/**
+				 * SET GLOBAL APP VARIABLES
+				 */
 				app.settings.theme    = configs.theme || 'basic'; 
 				app.locals.navigation = configs.navigation || [];
 				app.locals.sitename   = configs.title || 'CMS';
@@ -25,9 +28,7 @@ module.exports = function (app, $ee) {
 				app.locals.socials    = configs.links || ''; 
 				app.set('home', configs.home || 'home-template');
 
-				req.shared         = configs || {}; // configurations
-				//req.links          = configs.links || []; // social links
-				
+				//req.shared         = configs || {}; // configurations				
 
 				/**
 				 * SCAN POST/PAGE TEMPLATES FILE
