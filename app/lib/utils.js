@@ -53,8 +53,8 @@ module.exports = function(app){
 		checkDatabase:function(mongo){
 			//console.log("mongolink:",mongo);
 			var testConnection = function(){
+				//console.log("functions.js", mongo);
 				var deferred = Q.defer();
-				console.log("functions.js", mongo);
 				mongoose.connect(mongo.link,function(err){
 					//RESOLVE PROMISE
 					if (err) deferred.reject({ err: err, status: 400 });
@@ -62,6 +62,9 @@ module.exports = function(app){
 						deferred.resolve({ err: null, status: 200 });
 						//if connection is right save link to reuse later
 						that.shared.db_link = mongo.link;
+						app.set('db_link', mongo.link);
+						console.log("utils.js :66", "AOAOAOAOA");
+						console.log("utils.js :67", app.locals);
 					}
 					mongoose.disconnect();
 				});
@@ -69,6 +72,7 @@ module.exports = function(app){
 			}
 			return testConnection();		
 		},
+		//REMOVE AFTER SWITCHING TO HIS FILE
 		installation:function(cms){
 			var deferedInstall = Q.defer();
 			var mongoLink = cms.mongo || that.shared.db_link;

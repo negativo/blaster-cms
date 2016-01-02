@@ -33,7 +33,6 @@ module.exports = function(app,express, $ee){
 		cookie:{ maxAge: 36000000 } //change the session after dev 
 	};
 	
-
 	/**
 	 * STATICS
 	 */
@@ -90,7 +89,6 @@ module.exports = function(app,express, $ee){
 
   //with this you get login status in frontend
 	app.use(function(req,res,next){
-		console.log("middlewares.js :84", req.isAuthenticated());
 		if (req.method === 'GET' && req.shared ) req.shared.isLoggedIn = req.isAuthenticated() || false;
 		next();
 	});

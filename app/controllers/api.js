@@ -2,6 +2,7 @@ module.exports = function(app){
 
 
 	var $utils  = require("../lib/utils")(app),
+	cms_installer  = require('../configs/installer'),
 	toSlug  = require('to-slug-case'),
 	User    = require("../models/user"),
 	Configs = require("../models/configs"),
@@ -64,15 +65,15 @@ module.exports = function(app){
 				});
 		},
 		cms:function(req,res){
-			$utils.installation(req.body)
+			cms_installer.install(app,req.body)
 			.then(function(promise){
 				console.log("api-request.js :58", promise);
 				req.isInstalled = true;
-				res.send(promise)
+				res.send(promise);
 			})
 			.fail(function(error){
 				console.log("api-request.js :58", error);
-				res.send(error)
+				res.send(error);
 			});
 		}
 	},//install methods
