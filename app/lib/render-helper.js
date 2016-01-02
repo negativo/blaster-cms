@@ -14,7 +14,6 @@ var private = function (req,add) {
 
 var public = function (req,add) {
 	this.shared = req.shared;
-	this.navigation = req.navigation;
 	this.user = req.user || {};
 	this.help = [];
 	for( prop in add){

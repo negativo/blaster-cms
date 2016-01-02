@@ -5,12 +5,11 @@ module.exports = function (app, $ee) {
 			__app  = app.locals.__app,
 			locals = app.locals;
 	
-	app.locals.templates = {
-		post:[],
-		page:[],
-	};
-
 	return function(req,res,next){
+		app.locals.templates = {
+			post:[],
+			page:[],
+		};
 		if (app.locals.isInstalled){
 			Configs.findOne({},function(err,configs){
 				if(err){
@@ -18,14 +17,16 @@ module.exports = function (app, $ee) {
 				}
 
 				app.settings.theme = configs.theme || 'basic'; //theme
+				app.locals.navigation = configs.navigation || [];
 
-				//req.theme          = configs.theme || ''; //theme
 				req.shared         = configs || {}; // configurations
 				req.shared.site    = configs.title || 'CMS'; //site tite
-				req.navigation     = configs.navigation || []; // navigation links
 				req.links          = configs.links || []; // social links
 				
-				//get page&posts templates
+
+				/**
+				 * SCAN POST/PAGE TEMPLATES FILE
+				 */
 				fs.readdir(__root + '/views/' + app.get('theme') ,function(err, list){
 					if(err){
 						console.log('middlewares.js :85', err);
@@ -43,9 +44,11 @@ module.exports = function (app, $ee) {
 						};
 					};
 
+					/**
+					 * SCAN THEMES
+					 */
 					fs.readdir(__root + '/views/',function(err, list){
 						app.locals.templates.theme = list;
-						console.log("config-parse.js :48", app.locals);
 						$ee.emit('configs_updated', configs, 'Configuration has been attached to requestes');
 						next();			
 					});
