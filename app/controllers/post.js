@@ -10,6 +10,12 @@ module.exports = function(app){
 	Render = require("../lib/render-helper").public;
 
 	return {
+		index: function (req, res) {
+			Post.find({},function(err,posts){
+				if(err) res.json({err:"not found"});
+				res.json(posts);
+			});			
+		},
 		show: function (req, res) {
 			var slug = req.params.post;
 			Post.findOne({ "slug": slug })
@@ -23,6 +29,33 @@ module.exports = function(app){
 					res.render( post.template, new Render(req, { post:post, comments: post.comments }) );
 				});
 			});
+		},
+		create:function(req,res){
+			console.log("routes.js", "/create/post request");
+			console.log("POST DATA: ", req.body);
+			var post = req.body;
+			new Post({
+				title: post.title || "Post Title",
+				slug: toSlug(post.title),
+				body: post.body || "Post Body",
+				template: post.template || "post-template",
+				publishedBy:{
+					user: req.user.id,
+					date:Date.now()
+				},
+				tags: post.tags || [],
+				status:"Published"
+			}).save();
+			res.send("success");	
+		},
+		destroy:function(req,res){
+			res.send("");
+		},
+		edit:function(req,res){
+			res.send("");
+		},
+		update:function(req,res){
+			res.send("");
 		},
 	};
 

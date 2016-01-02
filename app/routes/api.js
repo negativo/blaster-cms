@@ -1,8 +1,10 @@
 module.exports = function(app,express){
 	
-	var ruotesControllers = require("../controllers/api")(app),
-	POST                  = ruotesControllers.POST,
-	GET                   = ruotesControllers.GET;
+	var PageCtrl    = require("../controllers/page")(app);
+	var PostCtrl    = require("../controllers/post")(app);
+	var CommentCtrl = require("../controllers/comment")(app);
+	var ApiCtrl = require("../controllers/api")(app);
+
 	
 	// NEED TO IMPLEMENT API TOKEN BUT NOT NEEDED NOW
 	var AreYouAuthorized = function(req,res,next){
@@ -10,23 +12,24 @@ module.exports = function(app,express){
 			else res.status(401).send("Unauthorized")
 	}
 
-	app.get("/api/posts", GET.allPostsCtrl );
-	app.get("/api/pages", GET.allPagesCtrl );
-	// app.get("/api/users" , GET.usersCtrl );
-	// app.get("/api/configurations" , GET.configsCtrl );
+	app.get('/api/posts', PostCtrl.index );
+	app.get('/api/pages', PageCtrl.index );
 
 	/**
-	 * INSTALL
-	 */
-	app.get("/install", GET.installView );
-	app.post("/install/mongo", POST.install.mongo);
-	app.post("/install/cms", POST.install.cms);
+	 * INSTALLATION
+	 */	
+	app.get("/install", ApiCtrl.install_index );
+	app.post("/install/mongo", ApiCtrl.install_mongo);
+	app.post("/install/cms", ApiCtrl.install_cms);
 
-	app.post("/create/post", POST.create.post);
-	app.post("/create/page", POST.create.page);
-	app.post("/create/comment/", POST.create.comment);
-	app.post("/create/reply/", POST.create.reply);
-	app.post("/api/search", POST.searchCtrl );
+	/**
+	 * CREATION
+	 */
+	app.post("/create/post", PostCtrl.create );
+	app.post("/create/page", PageCtrl.create );
+	app.post("/create/comment", CommentCtrl.create );
+	app.post("/create/reply/", CommentCtrl.reply );
+
 
 
 }

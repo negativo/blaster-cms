@@ -10,6 +10,12 @@ module.exports = function(app){
 	Render = require("../lib/render-helper").public;
 
 	return {
+		index:function(req,res){
+			Page.find({},function(err,pages){
+				if(err) res.json({err:"not found"});
+				res.json(pages);
+			});
+		},
 		show: function (req, res) {
 			var slug = req.params.page.toString();	
 			Page.findOne({ "slug": slug },function(err,page){
@@ -19,6 +25,37 @@ module.exports = function(app){
 				res.render( page.template, new Render(req, { page:page }) );
 			});
 		},
+		create:function(req,res){
+			console.log("routes.js", "create_page request");
+			var page = req.body;
+			new Page({
+				title: page.title || "Page Title" ,
+				slug:toSlug(page.title),
+				body: page.body || "Page Body" ,
+				template: page.template || "page-template",
+				publishedBy:{
+					user: req.user.id,
+					date:Date.now()
+				},
+				status:"published"
+			}).save();
+			res.send("success");	
+		},
+		destroy:function(req,res){
+			res.send("");
+		},
+		edit:function(req,res){
+			res.send("");
+		},
+		update:function(req,res){
+			res.send("");
+		},
 	};
 
 }
+
+
+
+
+
+		

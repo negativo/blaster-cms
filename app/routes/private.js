@@ -61,7 +61,6 @@ module.exports = function(app,express){
 	app.post('/admin/register'            , POST.registerCtrl );
 	app.post('/admin/upload'              , uploader.single('upload'), POST.uploadCtrl );
 	app.post('/admin/upload/avatar/:id'   , avatar.single('avatar'), POST.avatarUpload );
-	
 
 }
 
