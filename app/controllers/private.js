@@ -23,7 +23,7 @@ module.exports = function(app){
 	GET.loginPageCtrl = function(req,res){
 		req.shared.title = req.shared.title + " Login";
 		req.shared.class = "login-page";
-		res.render("login", new Render(req, {}) );
+		res.render("login", new Render(req, { error: req.flash('error') }) );
 	}
 
 	GET.dashboardPageCtrl = function(req,res){
@@ -210,10 +210,6 @@ module.exports = function(app){
 		res.render("register", new Render(req) );
 	}
 
-
-	POST.loginCtrl = function(req,res){
-		res.redirect("/");
-	}
 	
 	POST.editSinglePost = function(req,res){
 		console.log("private-request.js", req.body);

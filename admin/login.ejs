@@ -2,7 +2,9 @@
 <div class="form-container">
 	<h2><%= dashboard.title %></h2>
 
-	<form class="login-form">
+
+	<form class="login-form" action="/admin/login" method="POST">
+		<h5><%= error %></h5>
 		<input autocomplete="off" id="username" type="text" name="username" placeholder="username">
 		<input autocomplete="off" id="password" type="password" name="password" placeholder="password">
 		<input type="submit">

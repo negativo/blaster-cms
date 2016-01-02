@@ -38,7 +38,6 @@ module.exports = function(passport,$ee){
             return done(null, false, { message: 'Incorrect username.' });
           }
           if ( user.comparePassword(password) ){
-              console.log("login-strategy.js :41", "Logged : ", user.comparePassword(password));
               $ee.emit("login_event", "Login Succesfull");
               return done(null, user);          
           } else {

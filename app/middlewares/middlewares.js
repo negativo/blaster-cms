@@ -5,6 +5,7 @@ Q 	         = require('q'),
 bodyParser   = require('body-parser'),
 cookieParser = require('cookie-parser'),
 session      = require('express-session'),
+flash 			 = require("connect-flash"),
 passport     = require('passport'),
 mongoose     = require('mongoose'),
 MongoStore	 = require('connect-mongo')(session),
@@ -68,6 +69,7 @@ module.exports = function(app,express, $ee){
 	app.use( session( app.__sessionOption )); // problem when installing because of session storage of mongo still uninitialized
 	app.use( passport.initialize());
 	app.use( passport.session());
+	app.use(flash());
 
 
 	/**

@@ -45,7 +45,9 @@ module.exports = function(app,express){
 	
 
 	//POSTS	
-	app.post('/admin/login'               , passport.authenticate('local'),  POST.loginCtrl );
+	app.post('/admin/login',
+	  passport.authenticate('local', { successRedirect: '/admin/panel', failureRedirect: '/admin/login', failureFlash: true })
+  );
 	app.post('/admin/edit-post'           , POST.editSinglePost );
 	app.post('/admin/edit-page'           , POST.editSinglePage );
 	app.post('/admin/edit-nav'            , POST.editNavigation );
