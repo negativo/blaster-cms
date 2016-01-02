@@ -21,4 +21,15 @@ var ConfigsSchema = Schema({
 	links: Array
 });
 
+
+
+/**
+ * METHODS
+ */
+
+
+/**
+ * EXPORT MODEL
+ */
 module.exports = mongoose.model("Config", ConfigsSchema, "Configs" );
+

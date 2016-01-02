@@ -9,10 +9,12 @@ passport     = require('passport'),
 mongoose     = require('mongoose'),
 MongoStore	 = require('connect-mongo')(session);
 
-
 module.exports = function(app,express, $ee){
 
-	var installer = require('./installer')(app);
+
+	var installer   = require('./installer')(app).check,
+			configParse = require('./config-parse')(app,$ee),
+			viewSwitcher = require('./view-switch')(app);
 
 	var __root = app.locals.__root,
 			__app  = app.locals.__app,
@@ -23,7 +25,7 @@ module.exports = function(app,express, $ee){
 		secret: process.env.SECRET,
 		resave: true,
 		saveUninitialized: false,
-		//store: new MongoStore({ mongooseConnection: mongoose.connection }),
+		//store: new MongoStore({ mongooseConnection: mongoose.connection }) || "",
 		cookie:{ maxAge: 36000000 } //change the session after dev 
 	};
 	
@@ -41,85 +43,35 @@ module.exports = function(app,express, $ee){
 	/**
 	 * INSTALLATION CHECKS
 	 */
-	app.use(installer.check);
-
+	app.use(installer);
 
 	//parsers
 	app.use(bodyParser.urlencoded({ extended: true }));
 	app.use(bodyParser.json());
 	app.use(cookieParser());
-	//logins
+	
+	/**
+	 * LOGIN STRATEGIES
+	 */
 	require(__app + '/lib/login-strategy')(passport,$ee);
-
-
 
 	/**
 	 * SESSION & LOGIN
 	 */
-	app.use( session( app.__sessionOption ) );
+	//app.use( session( app.__sessionOption )); // problem when installing because of session storage of mongo still uninitialized
 	app.use( passport.initialize());
 	app.use( passport.session());
 
 
-	// set theme view folder
-	app.use(function(req,res,next){
-		if (app.locals.isInstalled){
-			Configs.findOne({},function(err,configs){
-					if(err){
-						console.log('middlewares.js :76', err);
-					}
-					app.locals.__theme = configs.theme || 'basic';
-					req.shared = configs || {};
-					req.shared.site = configs.title || 'CMS';
-					req.theme = configs.theme || '';
-					req.navigation = configs.navigation || [];
-					req.links = configs.links || [];
-				
-				//get page&posts templates
-				fs.readdir(__root + '/views/' + app.locals.__theme ,function(err, list){
-					if(err){
-						console.log('middlewares.js :85', err);
-					}
-					var pageTemplates = [];
-					var postTemplates = [];
-					var pagePattern = /-page-template.ejs/i
-					var postPattern = /-post-template.ejs/i
-					for (var i = 0; i < list.length; i++) {
-						if ( list[i].match(pagePattern) ) {
-							pageTemplates.push( list[i].replace(/.ejs/g,'') );
-						};
-						if ( list[i].match(postPattern) ) {
-							postTemplates.push( list[i].replace(/.ejs/g,'') );
-						};
-					};
-					req.pageTemplates = pageTemplates;
-					req.postTemplates = postTemplates;
-					fs.readdir(__root + '/views/',function(err, list){
-						req.avaible_themes = list;
-						$ee.emit('configs_updated', configs, 'Configuration has been attached to requestes');
-						next();			
-					});
-				});
-			});	
-		} else {
-			next();
-		}
-
-	});
+	/**
+	 * CONFIGURATION PARSE IN REQ && PARSE THEME STRUCTURE AND TEMPLATE
+	 */
+	app.use( configParse );
 	
-	//switch views folder dinamically
-	app.use(function(req,res,next){
-		var p = /\/admin/;
-		//console.log("middlewares.js :99", req.url.match(p) );
-		if( req.url.match(p) ) {
-			app.set('views', __root + '/admin' )
-			next();
-		}else{
-			app.use( express.static(__root + '/views/' + app.locals.__theme) );
-			app.set('views', __root + '/views/' + app.locals.__theme);
-			next();
-		}
-	});
+	/**
+	 * SWITCH ADMIN & PUBLIC VIEW FOLDER DINAMICALLY
+	 */
+	app.use(viewSwitcher);
 
 	//redirect to login if no authenticated and accessing admin areas
 	app.use('/admin', function(req,res,next){

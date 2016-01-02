@@ -15,7 +15,10 @@ module.exports = function(app,express){
 	// app.get("/api/users" , GET.usersCtrl );
 	// app.get("/api/configurations" , GET.configsCtrl );
 
-	//POSTs
+	/**
+	 * INSTALL
+	 */
+	app.get("/install", GET.installView );
 	app.post("/install/mongo", POST.install.mongo);
 	app.post("/install/cms", POST.install.cms);
 

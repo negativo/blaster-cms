@@ -18,9 +18,8 @@ module.exports = function (app) {
 			});	
 		},
 		install:function(req,res,next){
-			if( req.method === 'GET' && !app.locals.isInstalled ) { 
-				app.set("views", app.locals.__root + "/installer" );
-				return res.render("install"); 
+			if( req.method === 'GET' && !app.locals.isInstalled && !(/^\/install/.test(req.url)) ) { 
+				return res.redirect("install"); 
 			};	
 			next();
 		}

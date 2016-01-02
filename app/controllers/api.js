@@ -16,6 +16,10 @@ module.exports = function(app){
 	var GET       = handlers.GET,
 	POST          = handlers.POST;
 
+	GET.installView = function(req,res){
+		app.set("views", app.locals.__root + "/installer" );
+		res.render('install');
+	}
 
 	GET.allPostsCtrl = function(req,res){
 		console.log("api-request.js", "GOT REQUEST FOR POSTS");

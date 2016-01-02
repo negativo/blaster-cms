@@ -1,4 +1,3 @@
-var path   = require("path");
 var	dotenv = require("dotenv").load();
 var fs 		  = require("fs");
 var crypto = require("../lib/crypto");
@@ -22,7 +21,7 @@ module.exports = function(app, express, $ee){
 	var locals = app.locals;
 
 	//set app route global
-	locals.__baseurl = "http://127.0.0.1:" + locals.__port;
+	locals.__baseurl = process.env.BASE_URL + ":" + locals.__port;
 	locals.__theme = process.env.DEFAULT_THEME;
 	locals.__configs = locals.__root + "/bin/config.json";
 
@@ -30,7 +29,9 @@ module.exports = function(app, express, $ee){
 	app.set("view engine", "ejs");
 	app.set("views", locals.__root + "/views/" + locals.__theme);
 
-
+	/**
+	 * CREATE CONFIG FILE IF DON'T EXISTS
+	 */
 	fs.exists( locals.__configs , function(exists){
 		if(!exists){
 			fs.mkdirSync( locals.__root + "/bin");
@@ -40,7 +41,9 @@ module.exports = function(app, express, $ee){
 		}
 	});
 
-	// *Get Configs on server start if cms is installed
+	/**
+	 * GET CONFIGS IF INSTALLED AND CONNECT TO DB
+	 */
 	fs.readFile( locals.__configs ,"utf-8",function(err,file){
 		if(typeof file !== 'undefined' && file.length > 0) { 
 			var configs = JSON.parse(file);			
