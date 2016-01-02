@@ -37,6 +37,7 @@ require(app.locals.__app + "/routes/public")(app,express), 	// Public
 require(app.locals.__app + "/routes/private")(app,express),	// Private
 require(app.locals.__app + "/routes/api")(app,express);			// API
 
+
 /**
  * Exceptions
  */

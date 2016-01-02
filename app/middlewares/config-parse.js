@@ -28,8 +28,6 @@ module.exports = function (app, $ee) {
 				app.locals.socials    = configs.links || ''; 
 				app.set('home', configs.home || 'home-template');
 
-				//req.shared         = configs || {}; // configurations				
-
 				/**
 				 * SCAN POST/PAGE TEMPLATES FILE
 				 */

@@ -1,20 +1,23 @@
 
 module.exports = function(app,express){
-	var ruotesControllers = require("../controllers/public")(app),
-		POST = ruotesControllers.POST,
-		GET = ruotesControllers.GET;
-
+	/**
+	 * CONTROLLERS
+	 */
+	var PageCtrl = require("../controllers/page")(app);
+	var PostCtrl = require("../controllers/post")(app);
+	var PublicCtrl = require("../controllers/public")(app);
 	
-	app.get("/", GET.homeCtrl );
-	app.get("/page/:page", GET.singlePageCtrl );
-	app.get("/post/:post", GET.singlePostCtrl );
-	app.get("/404", GET.fourOfourCtrl );
-	app.get("/search", GET.searchCtrl );
+	app.get("/", PublicCtrl.home_index );
+	app.get("/page/:page", PageCtrl.show );
+	app.get("/post/:post", PostCtrl.show );
+	app.get("/404", PublicCtrl.not_found_page );
+	
 	app.get("/logout",function(req,res){
 		req.logout();
 		res.redirect("/");
 	});
 
-	app.post("/search", POST.searchCtrl );
+	app.post("/search", PublicCtrl.search_term );
+
 }
 
