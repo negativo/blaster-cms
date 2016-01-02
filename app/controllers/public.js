@@ -17,24 +17,23 @@ module.exports = function(app){
 	POST          = handlers.POST;
 
 	GET.fourOfourCtrl = function(req,res){
-		var data =  $utils.dataParser(req.shared),
-		navigation =  $utils.dataParser(req.navigation);
+		app.locals.pagetitle = "404 - " + app.locals.sitename;
 		res.render( "404" , new Render(req,{}) );
 	}
 
 	GET.homeCtrl = function(req,res){
 		// //static homepage
-		console.log("public.js :27", "--HOME REQUEST--");
-		if (req.shared.home === "home-template"){
+		if (app.get('home') === "home-template"){
 			Post.find({},function(err,posts){
+				app.locals.pagetitle = "HOME" + " - " + app.locals.sitename;
 				res.render( "home-template" , new Render(req, { posts:posts }) )
 			}).sort({ "publishedBy.date": -1 }).populate("publishedBy.user",{ password:0 });
 		}
 		// Render chosen page as homepage 
 		else{
-			Page.findOne({ "_id": req.shared.home },function(err,page){
+			Page.findOne({ "_id": app.get('home') },function(err,page){
 				if(page === null && req.url !== "/favicon.ico" ) return res.redirect("/404");
-				req.shared.title = page.title + " - " + req.shared.title;
+				app.locals.pagetitle = page.title + " - " + app.locals.pagetitle;
 				res.render( page.template, new Render(req, { page:page }) );
 			});
 		}
@@ -45,7 +44,7 @@ module.exports = function(app){
 		Page.findOne({ "slug": slug },function(err,page){
 			console.log("requests.js", page,err);
 			if(page === null && req.url !== "/favicon.ico" ) return res.redirect("/404");
-			req.shared.title = page.title + " - " + req.shared.title;
+			app.locals.pagetitle = page.title + " - " + app.locals.sitename;
 			res.render( page.template, new Render(req, { page:page }) );
 		});
 	}
@@ -57,7 +56,7 @@ module.exports = function(app){
 		.populate("comments")
 		.exec(function(err,post){
 			if(post === null) return res.redirect("/404");
-			req.shared.title = post.title + " - " + req.shared.title;
+			app.locals.pagetitle = post.title + " - " + app.locals.sitename;
 			Comment.populate(post.comments,[{ path:"user", model:"User" }], function(err,posts){
 				console.log("public-request.js :55", posts);
 				res.render( post.template, new Render(req, { post:post, comments: post.comments }) );

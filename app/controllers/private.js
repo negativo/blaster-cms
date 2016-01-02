@@ -50,7 +50,6 @@ module.exports = function(app){
 	}
 
 	GET.postsPageCtrl = function(req,res){
-		console.log("private-request.js :54", "GOT IT");
 		req.shared.title = req.shared.title + " Posts";
 		req.shared.class = "dashboard-posts";
 		Posts.find({},{ body:0 }, function(err, posts){

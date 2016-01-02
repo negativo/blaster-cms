@@ -16,12 +16,17 @@ module.exports = function (app, $ee) {
 					console.log('middlewares.js :76', err);
 				}
 
-				app.settings.theme = configs.theme || 'basic'; //theme
+				console.log("config-parse.js :19", configs);
+
+				app.settings.theme    = configs.theme || 'basic'; 
 				app.locals.navigation = configs.navigation || [];
+				app.locals.sitename   = configs.title || 'CMS';
+				app.locals.subtitle   = configs.subtitle || '';
+				app.locals.socials    = configs.socials || ''; 
+				app.set('home', configs.home || 'home-template');
 
 				req.shared         = configs || {}; // configurations
-				req.shared.site    = configs.title || 'CMS'; //site tite
-				req.links          = configs.links || []; // social links
+				//req.links          = configs.links || []; // social links
 				
 
 				/**
@@ -45,7 +50,7 @@ module.exports = function (app, $ee) {
 					};
 
 					/**
-					 * SCAN THEMES
+					 * SCAN THEMES	
 					 */
 					fs.readdir(__root + '/views/',function(err, list){
 						app.locals.templates.theme = list;

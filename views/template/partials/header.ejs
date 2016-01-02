@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title><%= shared.title  %></title>
+	<title><%= pagetitle %></title>
 	<link rel="stylesheet" href="/css/main.min.css">
 	<link rel="stylesheet" href="/css/custom.css">
 	<link rel="stylesheet" href="/components/foundation/css/normalize.min.css">
@@ -12,7 +12,7 @@
 </head>
 <body>
 	<!-- admin bar -->
-	<% if(shared.isLoggedIn) { %>
+	<% if(isAuthenticated) { %>
 		<%- include('../partials/admin-bar'); %>
 	<% }; %>
 	<!-- colored stripes useless -->
@@ -26,7 +26,7 @@
 	<div class="site-wrapper small-10 small-offset-1 medium-8 medium-offset-2 large-6 large-offset-3">
 		<!-- HEADER -->
 		<header class="small-12 home">
-			<h1><a href="/"><%= shared.site %></h1></a><span class="subtitle"><%= shared.subtitle %></span>
+			<h1><a href="/"><%= sitename %></h1></a><span class="subtitle"><%= subtitle %></span>
 			<!-- NAVIGATION -->
 			<%- include("../partials/nav") %>
 	
