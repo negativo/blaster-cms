@@ -22,9 +22,10 @@ npm start use nodemon on server.js if you have problem with it you should instal
 	npm install -g nodemon
 
 ##changelog
-	- refactored middlewares
+	- refactored a lot of file
+	- shared data in app.locals, no more in request object
+	- middleware split and redone
 	- updated some packages
-	- deciding if continuing or doing it from scratch, I got new ideas.
 
 ##ToDos
 	priority > 1 > 2 > 3 (self explanatory)
