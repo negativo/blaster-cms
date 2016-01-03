@@ -17,8 +17,8 @@
 		</form>
 	</div>
 <% }else{ %>
-	<form action="/create/comment/" method="POST" class="small-12 post-comments">
-		<textarea name="comment" style="resize:none !important;">asdasda</textarea>
+	<form action="/api/comment/" method="POST" class="small-12 post-comments">
+		<textarea name="comment" style="resize:none !important;" placeholder="Write your comment"></textarea>
 		<input type="text" style="display:none;" name="post_id" value="<%= post.id %>">
 		<button type="submit" class="button expand">Comment</button>
 	</form>

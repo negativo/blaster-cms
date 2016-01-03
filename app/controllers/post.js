@@ -10,6 +10,12 @@ module.exports = function(app){
 	Render = require("../lib/render-helper").public;
 
 	return {
+		index: function (req, res) {
+			Post.find({},function(err,posts){
+				if(err) res.json({err:"not found"});
+				res.json(posts);
+			});	
+		},
 		show: function (req, res) {
 			var slug = req.params.post;
 			Post.findOne({ "slug": slug })
@@ -21,6 +27,58 @@ module.exports = function(app){
 				Comment.populate(post.comments,[{ path:"user", model:"User" }], function(err,posts){
 					console.log("public-request.js :55", posts);
 					res.render( post.template, new Render(req, { post:post, comments: post.comments }) );
+				});
+			});
+		},
+		create:function(req,res){
+			app.locals.pagename = " New Post";
+			app.locals.bodyclass = "new-post";
+			res.render("editor", new Render(req, { editor: "post", templates: app.locals.templates.post }) );
+		},
+		store:function(req,res){
+			var post = req.body;
+			new Post({
+				title: post.title || "Post Title",
+				slug: toSlug(post.title),
+				body: post.body || "Post Body",
+				template: post.template || "post-template",
+				publishedBy:{
+					user: req.user.id,
+					date:Date.now()
+				},
+				tags: post.tags || [],
+				status:"Published"
+			}).save();
+			res.send("success");	
+		},
+		destroy:function(req,res){
+			res.send("");
+		},
+		edit:function(req,res){
+			if( req.params.id ){
+				var postId = req.params.id;
+				Post.findById( postId ,function(err,singlePost){
+					console.log("private-request.js", singlePost );
+					app.locals.pagename = " " + singlePost.title + " edit";
+					app.locals.bodyclass = "edit-post";
+					res.render("editor", new Render(req, { editor: "post", single: singlePost, templates: app.locals.templates.post }) );
+				}).populate("publishedBy.user",{password:0});;
+			}
+		},
+		update:function(req,res){
+			console.log("post.js :69", "Updating post");
+			var postId = req.body.id,
+					post   = req.body;
+			Post.findById( postId ,function(err,singlePost){
+				singlePost.title = post.title;
+				singlePost.body = post.body;
+				singlePost.slug = toSlug(post.title);
+				singlePost.publishedBy.user = req.user.id;
+				singlePost.template = post.template || "post-template",
+				singlePost.tags = post.tags;
+				singlePost.save(function(err){
+					if (err) throw err;
+					res.send(200);
 				});
 			});
 		},

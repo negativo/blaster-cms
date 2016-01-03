@@ -45,8 +45,8 @@
 				CKEDITOR.replace( 'editor1', {
 					fullPage: true,
 					allowedContent: true,
-					    filebrowserBrowseUrl: '/admin/uploads/',
-    					filebrowserUploadUrl: '/admin/upload'
+					    filebrowserBrowseUrl: '/admin/file-browser',
+    					filebrowserUploadUrl: '/api/upload'
 				});
 				$body.find(".editor").show();
 			},
@@ -86,7 +86,7 @@
 				backend.request.profile();
 				backend.request.avatar();
 				backend.request.editComment();
-				backend.request.editTheme();
+				backend.request.custom_css();
 				backend.request.chooseTheme();
 				backend.request.register();
 				backend.request.deleteUser();
@@ -142,7 +142,7 @@
 								username:$(".register-username").val(),
 								password:$(".register-password").val()
 							}
-							$.post("/admin/register", data, function(res){
+							$.post("/api/user", data, function(res){
 								console.log("backend.js :119", res);
 								if (res.message){
 									toastr.success(res.message);
@@ -175,7 +175,7 @@
 						email: $("#profile-email").val(),
 						role: $("#profile-role").val()
 					}
-					$.post("/admin/edit-user-profile", profile, function(res,status){
+					$.post("/api/user/" + profile.id , profile, function(res,status){
 						console.log("backend.js :90", res);
 						if (res === "success") {
 							toastr.success('Profile Changed!');
@@ -208,7 +208,7 @@
 					} else if ( pwd.newPwd !== pwd.checkPwd ) {
 						$(".pwd-err").fadeIn().addClass("alert").text("Passwords don't match!");
 					} else{
-						$.post("/admin/edit-user-password",pwd ,function(res,status){
+						$.post("/api/user/"+ pwd.id +"/password" ,pwd ,function(res,status){
 							console.log("backend.js :80", res);
 							if(!res.err){
 								$(".pwd-err").fadeIn().addClass("success").text(res.message + ", redirecting to login.");
@@ -229,13 +229,18 @@
 					if(confirm( $(this).data("username") + " will be deleted and can't be restored, are you sure?")){
 						var $that = $(this);
 						var $user = { id: $that.data("id") };
-						$.post("/admin/edit-delete-user", $user, function(res){
-							if (!res.err) {
-								$that.parent().parent().slideUp();
-								toastr.success(res.message);
-							}else{
-								return toastr.error(res.err);
-							}
+						$.ajax({
+					    url: '/api/user/' + $user.id,
+					    type: 'DELETE',
+					    data: $user,
+					    success: function(res) {
+								if (!res.err) {
+									$that.parent().parent().slideUp();
+									toastr.success(res.message);
+								}else{
+									return toastr.error(res.err);
+								}
+					    }
 						});
 					}
 				});
@@ -278,7 +283,7 @@
 
 					console.log("backend.js :279", settings);
 					console.log("backend.js", settings );
-					$.post("/admin/edit-configurations", settings ,function(res,status){
+					$.post("/api/configuration", settings ,function(res,status){
 						console.log("backend.js", res);
 						getLinks = [];
 						if (res === "success") {
@@ -328,18 +333,18 @@
 						//console.log("backend.js", getNavigation);
 					});
 					console.log("backend.js", getNavigation );
-					$.post("/admin/edit-nav", getNavigation ,function(res,status){
+					$.post("/api/navigation", getNavigation ,function(res,status){
 						console.log("backend.js", res);
 						getNavigation.links = [];
 						toastr.success('Navigation Changed!');
 						console.log("backend.js :218", res);
-						setTimeout(function(){ window.location.replace("/admin/edit-nav"); }, 2000)
+						setTimeout(function(){ window.location.replace("/admin/navigation"); }, 2000)
 						
 					});
 
 				});		
 			},
-			editTheme:function(){
+			custom_css:function(){
 				var $form = $("#custom-css-form"),
 					$css = $(".custom-css");
 
@@ -347,7 +352,7 @@
 					e.preventDefault();
 					var editor = CODE_EDITOR;					
 					var data = { css: editor.getValue() };
-					$.post("/admin/edit-theme", data, function(res,status){
+					$.post("/api/custom-css", data, function(res,status){
 						if (res === "success") toastr.success("Custom CSS updated!");
 					});
 				});
@@ -394,7 +399,7 @@
 					}
 					if(contentType === "editor-post" && id === undefined){
 						data.tags = $(".tags-input").val().split(",");
-						$.post("/create/post", data,function(res,status){
+						$.post("/api/post", data,function(res,status){
 							console.log(res);
 							if (status === "success") {
 								toastr.success("Post created!");
@@ -404,7 +409,7 @@
 					};
 					if(contentType === "editor-post" && id ){
 						data.tags = $(".tags-input").val().split(",");
-						$.post("/admin/edit-post", data,function(res,status){
+						$.post("/api/post/" + data.id , data,function(res,status){
 							console.log(status);
 							if (status === "success") {
 								toastr.success("Post edited!");
@@ -414,7 +419,7 @@
 					};
 					if(contentType === "editor-page" && id === undefined){
 						data.tags = [];
-						$.post("/create/page", data,function(res,status){
+						$.post("/api/page", data,function(res,status){
 							console.log(res);
 							if (status === "success") {
 								toastr.success("Page created!");
@@ -424,7 +429,7 @@
 					};
 					if(contentType === "editor-page" && id ){
 						data.tags = [];
-						$.post("/admin/edit-page", data,function(res,status){
+						$.post("/api/page/" + data.id, data, function(res,status){
 							console.log(status);
 							if (status === "success") {
 								toastr.success("Page edited!");
@@ -441,14 +446,20 @@
 					var $parent = $( this ).parent().parent();
 					var data = { action:"delete", id:$(this).data("id"), post_id: $(this).data("post-id") };
 					if (confirm("Deleted comment can't be restored are you sure? ") ){
-						$.post("/admin/edit-comment",data,function(res){
-							if (res === "success" ) {
-								toastr.success("Comment Removed!");
-								$parent.slideUp();
-							};
+						$.ajax({
+							url: "/api/comment/" + data.id,
+							type: 'DELETE',
+							data: data,
+							success:function(res){
+								if (res === "success" ) {
+									toastr.success("Comment Removed!");
+									$parent.slideUp();
+								};
+							},
 						});
 					};
 				});
+
 				//edit comment
 				$(".comment-body").click(function(){
 					$(this).parent().find(".save-comment").fadeIn();
@@ -461,7 +472,7 @@
 					var $parent = $( this ).parent().parent(),
 						$comment = $parent.find(".comment-body");
 					var data = { action:"update", id:$comment.data("id").trim(), body: $comment.text() };
-					$.post("/admin/edit-comment", data, function(res){
+					$.post("/api/comment/" + data.id, data, function(res){
 						if (res === "success" ) toastr.success("Comment edited!");
 					});
 				});

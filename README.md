@@ -27,6 +27,9 @@ npm start use nodemon on server.js if you have problem with it you should instal
 	- middleware split and redone
 	- updated some packages
 
+## Bugs
+	- Changing password on user results in password change but username gets delete :\ wtf
+
 ##ToDos
 	priority > 1 > 2 > 3 (self explanatory)
 	- [1] Password reset.

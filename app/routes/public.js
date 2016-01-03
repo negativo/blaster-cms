@@ -6,6 +6,7 @@ module.exports = function(app,express){
 	var PageCtrl = require("../controllers/page")(app);
 	var PostCtrl = require("../controllers/post")(app);
 	var PublicCtrl = require("../controllers/public")(app);
+	var ApiCtrl = require("../controllers/api")(app);
 	
 	app.get("/", PublicCtrl.home_index );
 	app.get("/page/:page", PageCtrl.show );

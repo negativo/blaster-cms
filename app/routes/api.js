@@ -1,32 +1,67 @@
 module.exports = function(app,express){
-	
-	var ruotesControllers = require("../controllers/api")(app),
-	POST                  = ruotesControllers.POST,
-	GET                   = ruotesControllers.GET;
-	
-	// NEED TO IMPLEMENT API TOKEN BUT NOT NEEDED NOW
-	var AreYouAuthorized = function(req,res,next){
-		if(req.isAuthenticated()) next();
-			else res.status(401).send("Unauthorized")
-	}
 
-	app.get("/api/posts", GET.allPostsCtrl );
-	app.get("/api/pages", GET.allPagesCtrl );
-	// app.get("/api/users" , GET.usersCtrl );
-	// app.get("/api/configurations" , GET.configsCtrl );
+	var passport      = require('passport'),
+	multer            = require('multer'),
+	uploader          = multer({ dest: app.locals.__root + '/uploads/' }),
+	avatar            = multer({ dest: app.locals.__root + '/uploads/avatar'});
+	
+	var PageCtrl    = require("../controllers/page")(app);
+	var PostCtrl    = require("../controllers/post")(app);
+	var CommentCtrl = require("../controllers/comment")(app);
+	var ApiCtrl     = require("../controllers/api")(app);
+	var ConfCtrl    = require("../controllers/configuration")(app);
+	var UserCtrl    = require("../controllers/user")(app);
+
+	app.get('/api/posts'           , PostCtrl.index );
+	app.get('/api/pages'           , PageCtrl.index );
 
 	/**
-	 * INSTALL
+	 * INSTALLATION
+	 */	
+	app.get("/install"             , ApiCtrl.install_index );
+	app.post("/install/mongo"      , ApiCtrl.install_mongo);
+	app.post("/install/cms"        , ApiCtrl.install_cms);
+
+	/**
+	 * POST
 	 */
-	app.get("/install", GET.installView );
-	app.post("/install/mongo", POST.install.mongo);
-	app.post("/install/cms", POST.install.cms);
+	app.post("/api/post"           , PostCtrl.store );
+	app.post('/api/post/:id'       , PostCtrl.update );
 
-	app.post("/create/post", POST.create.post);
-	app.post("/create/page", POST.create.page);
-	app.post("/create/comment/", POST.create.comment);
-	app.post("/create/reply/", POST.create.reply);
-	app.post("/api/search", POST.searchCtrl );
+	/**
+	 * PAGE
+	 */
+	app.post("/api/page"           , PageCtrl.store );
+	app.post('/api/page/:id'       , PageCtrl.update  );
 
+	 /**
+	 * COMMENTS
+	 */
+	app.post("/api/comment"        , CommentCtrl.store );
+	app.post("/api/comment/:id"    , CommentCtrl.update );
+	app.del("/api/comment/:id"     , CommentCtrl.destroy );
+	app.post("/api/comment/reply/" , CommentCtrl.reply );
 
+	/**
+	 * USERS
+	 */
+	app.post('/api/user'                  , UserCtrl.store ); // registar
+	app.post('/api/user/:id'   	          , UserCtrl.update );
+	app.post('/api/user/:id/password'   	, UserCtrl.update );
+	app.del('/api/user/:id'               , UserCtrl.destroy );
+	
+	/**
+	 * CONFIGS
+	 */
+	app.post('/api/configuration'  , ConfCtrl.edit );
+	app.post('/api/navigation'     , ConfCtrl.edit_nav );
+	app.post('/api/themes'         , ConfCtrl.edit_themes );
+	app.post('/api/custom-css'     , ConfCtrl.edit_css );
+
+	/**
+	 * UPLOADS
+	 */
+	app.post('/api/upload'            , uploader.single('upload') , ApiCtrl.upload_photo  );
+	app.post('/api/upload/avatar/:id' , avatar.single('avatar')   , ApiCtrl.upload_avatar );
 }
+
