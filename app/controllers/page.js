@@ -26,6 +26,8 @@ module.exports = function(app){
 			});
 		},
 		create:function(req,res){
+		},
+		store:function(){
 			console.log("routes.js", "create_page request");
 			var page = req.body;
 			new Page({

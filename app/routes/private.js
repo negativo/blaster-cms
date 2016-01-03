@@ -13,6 +13,13 @@ module.exports = function(app,express){
 	// var roles = require("../middlewares/roles.js");
 	// app.use("/admin", roles);
 
+
+
+
+	app.get('/admin/posts'          , GET.postsPageCtrl );
+	app.get('/admin/new-post'      , GET.newPostCtrl );
+	app.get('/admin/edit-post/:id' , GET.editSinglePost );
+
 	//GETS
 	app.get('/admin',function(req,res){
 		if(typeof req.user != 'undefined' && req.user.role !== 'guest'){
@@ -24,7 +31,6 @@ module.exports = function(app,express){
 	app.get('/admin/register' , GET.registerCtrl );
 	//DISPLAY
 	app.get('/admin/panel'          , GET.dashboardPageCtrl );
-	app.get('/admin/posts'          , GET.postsPageCtrl );
 	app.get('/admin/pages'          , GET.pagesPageCtrl );
 	app.get('/admin/comments'       , GET.commentsPageCtrl );
 	app.get('/admin/users'          , GET.usersPageCtrl );
@@ -34,14 +40,12 @@ module.exports = function(app,express){
 
 	//VIEW WITH CRUD OPs
 	// 	CREATE/EDIT
-	app.get('/admin/new-post'      , GET.newPostCtrl );
 	app.get('/admin/new-page'      , GET.newPageCtrl );
 	app.get('/admin/edit-nav'      , GET.editNavigation );
 	app.get('/admin/edit-theme'    , GET.editTheme );
 	app.get('/admin/themes'        , GET.themesCtrl );
-	app.get('/admin/edit-post/:id' , GET.editSinglePost );
 	app.get('/admin/edit-page/:id' , GET.editSinglePage );
-	// 	DELETE
+
 	
 
 	//POSTS	

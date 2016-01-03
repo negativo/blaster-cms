@@ -394,7 +394,7 @@
 					}
 					if(contentType === "editor-post" && id === undefined){
 						data.tags = $(".tags-input").val().split(",");
-						$.post("/create/post", data,function(res,status){
+						$.post("/api/post", data,function(res,status){
 							console.log(res);
 							if (status === "success") {
 								toastr.success("Post created!");
@@ -414,7 +414,7 @@
 					};
 					if(contentType === "editor-page" && id === undefined){
 						data.tags = [];
-						$.post("/create/page", data,function(res,status){
+						$.post("/api/page", data,function(res,status){
 							console.log(res);
 							if (status === "success") {
 								toastr.success("Page created!");

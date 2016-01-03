@@ -10,7 +10,18 @@ module.exports = function(app){
 	Render = require("../lib/render-helper").public;
 
 	return {
+		index:function(req,res){
+			Comment.find({},function(err,comments){
+				if(err) res.json({err:"not found"});
+				res.json(comments);
+			});
+		},
+		show:function(req,res){
+			
+		},
 		create:function(req,res){
+		},
+		store:function(req,res){
 			var comment = req.body;
 			comment.comment = comment.comment.trim();
 			console.log("api-request.js :108", comment);

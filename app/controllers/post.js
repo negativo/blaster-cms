@@ -31,8 +31,8 @@ module.exports = function(app){
 			});
 		},
 		create:function(req,res){
-			console.log("routes.js", "/create/post request");
-			console.log("POST DATA: ", req.body);
+		},
+		store:function(req,res){
 			var post = req.body;
 			new Post({
 				title: post.title || "Post Title",
