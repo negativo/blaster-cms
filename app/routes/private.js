@@ -2,10 +2,7 @@
 
 
 module.exports = function(app,express){
-	var passport      = require('passport'),
-	multer            = require('multer'),
-	uploader          = multer({ dest: app.locals.__root + '/uploads/' }),
-	avatar            = multer({ dest: app.locals.__root + '/uploads/avatar'});
+	var passport      = require('passport');
 	
 	var PrivateCtrl = require('../controllers/private')(app);
 	var PageCtrl    = require("../controllers/page")(app);
@@ -68,12 +65,9 @@ module.exports = function(app,express){
  	);
 	
 	/**
-	 * UPLOADS
+	 * FILE BROWSER
 	 */
-	app.get('/admin/uploads'        , PrivateCtrl.fileBrowser );
-	// app.post('/admin/upload'              , uploader.single('upload'), POST.uploadCtrl );
-	// app.post('/admin/upload/avatar/:id'   , avatar.single('avatar'), POST.avatarUpload );
-
+	app.get('/admin/file-browser'        , PrivateCtrl.fileBrowser );
 	
 
 }

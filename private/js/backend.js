@@ -45,8 +45,8 @@
 				CKEDITOR.replace( 'editor1', {
 					fullPage: true,
 					allowedContent: true,
-					    filebrowserBrowseUrl: '/admin/uploads/',
-    					filebrowserUploadUrl: '/admin/upload'
+					    filebrowserBrowseUrl: '/admin/file-browser',
+    					filebrowserUploadUrl: '/api/upload'
 				});
 				$body.find(".editor").show();
 			},
@@ -456,9 +456,6 @@
 									$parent.slideUp();
 								};
 							},
-						});
-						
-						$.post("/api/comment/" + data.id, data,function(res){
 						});
 					};
 				});

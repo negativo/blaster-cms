@@ -1,4 +1,9 @@
 module.exports = function(app,express){
+
+	var passport      = require('passport'),
+	multer            = require('multer'),
+	uploader          = multer({ dest: app.locals.__root + '/uploads/' }),
+	avatar            = multer({ dest: app.locals.__root + '/uploads/avatar'});
 	
 	var PageCtrl    = require("../controllers/page")(app);
 	var PostCtrl    = require("../controllers/post")(app);
@@ -52,5 +57,11 @@ module.exports = function(app,express){
 	app.post('/api/navigation'     , ConfCtrl.edit_nav );
 	app.post('/api/themes'         , ConfCtrl.edit_themes );
 	app.post('/api/custom-css'     , ConfCtrl.edit_css );
+
+	/**
+	 * UPLOADS
+	 */
+	app.post('/api/upload'            , uploader.single('upload') , ApiCtrl.upload_photo  );
+	app.post('/api/upload/avatar/:id' , avatar.single('avatar')   , ApiCtrl.upload_avatar );
 }
 

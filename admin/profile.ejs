@@ -7,7 +7,7 @@
         <img src="<%= profile.avatar %>" class="avatar" style="display:<%= profile.avatar ? 'block': 'none'; %>;">
         <i class="fa fa-fw fa-plus fa-lg get-avatar"></i>
     </div>
-    <form action="/admin/upload/avatar/<%= profile.id %>" method="POST" enctype="multipart/form-data" class="col-md-4" id="avatarUploaderForm">
+    <form action="/api/upload/avatar/<%= profile.id %>" method="POST" enctype="multipart/form-data" class="col-md-4" id="avatarUploaderForm">
         <input type="file" id="avatar-uploader" name="avatar" class="form-control">
         <input type="submit" id="avatar-submit" class="btn btn-primary">
     </form>
