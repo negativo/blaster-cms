@@ -328,12 +328,12 @@
 						//console.log("backend.js", getNavigation);
 					});
 					console.log("backend.js", getNavigation );
-					$.post("/admin/edit-nav", getNavigation ,function(res,status){
+					$.post("/api/navigation", getNavigation ,function(res,status){
 						console.log("backend.js", res);
 						getNavigation.links = [];
 						toastr.success('Navigation Changed!');
 						console.log("backend.js :218", res);
-						setTimeout(function(){ window.location.replace("/admin/edit-nav"); }, 2000)
+						setTimeout(function(){ window.location.replace("/admin/navigation"); }, 2000)
 						
 					});
 
@@ -347,7 +347,7 @@
 					e.preventDefault();
 					var editor = CODE_EDITOR;					
 					var data = { css: editor.getValue() };
-					$.post("/admin/edit-theme", data, function(res,status){
+					$.post("/api/custom-css", data, function(res,status){
 						if (res === "success") toastr.success("Custom CSS updated!");
 					});
 				});

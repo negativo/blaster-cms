@@ -47,31 +47,28 @@ module.exports = function(app,express){
 	app.get('/admin/comments'       , PrivateCtrl.comments );
 
 	/**
-	 * CONFIGURATION
+	 * CONFIGURATION && CUSTOMIZATION
 	 */
 	app.get('/admin/configurations' , PrivateCtrl.configurations );
+	app.get('/admin/navigation'     , PrivateCtrl.navigation );
+	app.get('/admin/themes'         , PrivateCtrl.themes_index );
+	app.get('/admin/custom-css'     , PrivateCtrl.edit_css );
 
 	/**
-	 * CMS VIEWS
+	 * VIEWS
 	 */
 	app.get('/admin/login'          , PrivateCtrl.login );
 	app.get('/admin/new-user'       , PrivateCtrl.newUser );
 	app.get('/admin/register'       , PrivateCtrl.register );
 	app.get('/admin/panel'          , PrivateCtrl.dashboard );
 	app.get('/admin/uploads'        , PrivateCtrl.fileBrowser )
-	app.get('/admin/edit-nav'       , PrivateCtrl.editNavigation );
-	app.get('/admin/edit-theme'     , PrivateCtrl.editTheme );
-	app.get('/admin/themes'         , PrivateCtrl.themesCtrl );
-
 	
+	
+	app.post('/admin/login',
+	  passport.authenticate('local', { successRedirect: '/admin/panel', failureRedirect: '/admin/login', failureFlash: true })
+ 	);
 
 	//POSTS	
-	// app.post('/admin/login',
-	//   passport.authenticate('local', { successRedirect: '/admin/panel', failureRedirect: '/admin/login', failureFlash: true })
- //  );
-	// app.post('/admin/edit-nav'            , POST.editNavigation );
-	// app.post('/admin/edit-theme'          , POST.editTheme );
-	// app.post('/admin/themes'              , POST.themesCtrl );
 	// app.post('/admin/edit-user-profile'   , POST.editUserProfile );
 	// app.post('/admin/edit-user-password'  , POST.editUserPassword );
 	// app.post('/admin/edit-delete-user'    , POST.deleteUser );

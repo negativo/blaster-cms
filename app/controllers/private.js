@@ -96,13 +96,13 @@ module.exports = function(app){
 				res.render('file-browser', {files:items});	
 			}
 
-			fs.readdir(global.appRoot + '/uploads', function(err, files){
+			fs.readdir(app.locals.__root + '/uploads', function(err, files){
 				callback(files);
 			});
 		},
 
 
-		editNavigation: function(req,res){
+		navigation: function(req,res){
 			app.locals.pagename = " Navigation";
 			app.locals.bodyclass = "edit-navigation";
 			Configs.findOne({},{ db_link:0, templates:0 }, function(err, configs){
@@ -114,20 +114,18 @@ module.exports = function(app){
 			});
 		},
 
-		editTheme: function(req,res){
-			fs.readFile(global.appRoot + "/views/template/css/custom.css", "utf-8", function(err,file){
+		edit_css: function(req,res){
+			fs.readFile( app.locals.__root + "/views/"+ app.get('theme') +"/css/custom.css", "utf-8", function(err,file){
 				app.locals.pagename = " Theme Edit";
 				app.locals.bodyclass = "edit-theme";
 				res.render("edit-theme", new Render(req, { css:file }) );
 			});
 		},
 
-		themesCtrl: function(req,res){
-			fs.readFile(global.appRoot + "/views/template/css/custom.css", "utf-8", function(err,file){
-				app.locals.pagename = " Choose themes";
-				app.locals.bodyclass = "choose-themes";
-				res.render("themes", new Render(req, { themes: req.avaible_themes }) );
-			});
+		themes_index: function(req,res){
+			app.locals.pagename = " Choose themes";
+			app.locals.bodyclass = "choose-themes";
+			res.render("themes", new Render(req, { themes: req.avaible_themes }) );
 		},
 
 		newUser: function(req,res){
@@ -144,43 +142,7 @@ module.exports = function(app){
 
 	};
 
-		
-	// POST.editConfigurations = function(req,res){
-	// 	console.log("private-request.js", req.body);
-	// 	Configs.findOne({}, function(err, configs){
-	// 		configs.title = req.body.siteTitle;
-	// 		configs.subtitle = req.body.subtitle;
-	// 		configs.links = [];
-	// 		configs.links = req.body.links;
-	// 		configs.home = req.body.home;
-	// 		configs.save(function(err){
-	// 			if(!err) {
-	// 				//req.logout();
-	// 				res.send("success");
-	// 			}
-	// 		});
-	// 	});
-	// }
-	
-	// POST.editNavigation = function(req,res){
-	// 	console.log("private-request.js :206 >>>>", req.body);
-	// 	Configs.findOne({}, function(err, configs){
-	// 		configs.navigation = req.body.links;
-	// 		if (configs.navigation === undefined ) {
-	// 			configs.navigation = []; 
-	// 		}else{
-	// 			for (var i = 0; i < configs.navigation.length; i++) {
-	// 				var p = /\/page\//;
-	// 				if ( !configs.navigation[i].link.match(p) ) {
-	// 					configs.navigation[i].link = "/page/"+configs.navigation[i].link;
-	// 				}
-	// 			};
-	// 		};
-	// 		configs.save();
-	// 		res.send("success");
-	// 	});
-	// }
-	
+			
 	// POST.editUserProfile = function(req,res){
 	// 	//{id: "55d0dd911a5f1c41564a2734", username: "Neofrascati", name: "", email: "", role: "admin"}
 	// 	var profile = req.body;
@@ -231,33 +193,9 @@ module.exports = function(app){
 	// 	});
 	// }
 	
-	// POST.editTheme = function(req,res){	
-	// 	fs.exists(global.appRoot + "/views/template/css/custom.css", function(exists){
-	// 		if(!exists){
-	// 			fs.open(global.appRoot + "/views/template/css/custom.css","w",function(err){
-	// 				fs.writeFile(global.appRoot + "/views/template/css/custom.css", req.body.css , function(err){
-	// 					if(err) return res.send(err);
-	// 					res.send("success");
-	// 				});
-	// 			});
-	// 		}else{
-	// 			fs.writeFile(global.appRoot + "/views/template/css/custom.css", req.body.css , function(err){
-	// 				if(err) return res.send(err);
-	// 				res.send("success");
-	// 			});
-	// 		}
-	// 	});
-	// }
 
-	// POST.themesCtrl = function(req,res){
-	// 	Configs.findOne(function(err,configs){
-	// 		configs.theme = req.body.theme;
-	// 		configs.save(function(err){
-	// 			if(!err) return res.send("success");
-	// 			res.send("error")
-	// 		});
-	// 	});
-	// }
+
+
 
 	// POST.editComment = function(req,res){
 	// 	var comment = req.body;

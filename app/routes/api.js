@@ -42,5 +42,8 @@ module.exports = function(app,express){
 	 * CONFIGS
 	 */
 	app.post('/api/configuration' , ConfCtrl.edit );
+	app.post('/api/navigation'    , ConfCtrl.edit_nav );
+	app.post('/api/themes'        , ConfCtrl.edit_themes );
+	app.post('/api/custom-css'    , ConfCtrl.edit_css );
 }
 
