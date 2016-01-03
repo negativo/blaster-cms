@@ -62,7 +62,34 @@ module.exports = function(app){
 			}else{
 				res.send("log in before commenting")
 			}
-		}
+		},
+		destroy:function(req,res){
+			var comment = req.body;
+			Comment.findById( comment.id ).remove(function(err){
+				Post.findById( comment.post_id, function(err,post){
+					if (post.comments.indexOf(comment.id) > -1) {
+					    post.comments.splice(post.comments.indexOf(comment.id), 1);
+					}
+					post.save(function(err){
+						if(err === null) res.send("success");
+					});
+				});
+			});
+		},
+		edit:function(req,res){
+			res.send("");
+		},
+		update:function(req,res){
+			var comment = req.body;
+			console.log("private-request.js :316", comment);
+			Comment.findById( comment.id, function(err,updateComment){
+				updateComment.comment = comment.body;
+				updateComment.save(function(err){
+					console.log("private-request.js :324", err);
+					if(err === null ) return res.send("success");
+				})
+			});
+		},
 	};
 
 }

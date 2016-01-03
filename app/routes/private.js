@@ -20,6 +20,9 @@ module.exports = function(app,express){
 		}
 	});
 
+	// ADMIN PANEL
+	app.get('/admin/panel'          , PrivateCtrl.dashboard );
+
 	/**
 	 * POSTS
 	 */
@@ -40,6 +43,8 @@ module.exports = function(app,express){
 	 */
 	app.get('/admin/users'          , UserCtrl.index );
 	app.get('/admin/users/:id'      , UserCtrl.show );
+	app.get('/admin/new-user'       , PrivateCtrl.newUser );
+	app.get('/admin/register'       , PrivateCtrl.register );
 
 	/**
 	 * COMMENTS
@@ -55,27 +60,21 @@ module.exports = function(app,express){
 	app.get('/admin/custom-css'     , PrivateCtrl.edit_css );
 
 	/**
-	 * VIEWS
+	 * LOGIN
 	 */
 	app.get('/admin/login'          , PrivateCtrl.login );
-	app.get('/admin/new-user'       , PrivateCtrl.newUser );
-	app.get('/admin/register'       , PrivateCtrl.register );
-	app.get('/admin/panel'          , PrivateCtrl.dashboard );
-	app.get('/admin/uploads'        , PrivateCtrl.fileBrowser )
-	
-	
 	app.post('/admin/login',
 	  passport.authenticate('local', { successRedirect: '/admin/panel', failureRedirect: '/admin/login', failureFlash: true })
  	);
-
-	//POSTS	
-	// app.post('/admin/edit-user-profile'   , POST.editUserProfile );
-	// app.post('/admin/edit-user-password'  , POST.editUserPassword );
-	// app.post('/admin/edit-delete-user'    , POST.deleteUser );
-	// app.post('/admin/edit-comment'        , POST.editComment );
-	// app.post('/admin/register'            , POST.registerCtrl );
+	
+	/**
+	 * UPLOADS
+	 */
+	app.get('/admin/uploads'        , PrivateCtrl.fileBrowser );
 	// app.post('/admin/upload'              , uploader.single('upload'), POST.uploadCtrl );
 	// app.post('/admin/upload/avatar/:id'   , avatar.single('avatar'), POST.avatarUpload );
+
+	
 
 }
 

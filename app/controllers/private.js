@@ -142,97 +142,9 @@ module.exports = function(app){
 
 	};
 
-			
-	// POST.editUserProfile = function(req,res){
-	// 	//{id: "55d0dd911a5f1c41564a2734", username: "Neofrascati", name: "", email: "", role: "admin"}
-	// 	var profile = req.body;
-	// 	console.log("private-request.js :230", profile);
-	// 	Users.findById( profile.id,function(err,user){
-	// 		user.username = profile.username;
-	// 		user.name = profile.name;
-	// 		user.email = profile.email;
-	// 		user.role = profile.role;
-	// 		user.save(function(err){
-	// 			console.log("private-request.js :229", err);
-	// 			if(err === null ) res.send("success");
-	// 				else res.send("error")
-	// 			req.logout();
-	// 		});
-	// 		req.logout();
-	// 	});
-	// }
-	
-	// POST.editUserPassword = function(req,res){
-	// 	//oldPwd, newPwd, CheckPwd
-	// 	var pwd = req.body;
+
 		
-	// 	User.change_password(pwd.id, pwd.oldPwd, pwd.newPwd)
-	// 		.then(function(changePwd){
-	// 			if(changePwd){
-	// 				req.logout();
-	// 				res.send({ message:changePwd, err:false})
-	// 			}else{
-	// 				res.send({ message:changePwd, err:true});
-	// 			}
-	// 		})
-	// 		.fail(function(err){
-	// 			res.send({ message:err, err:true})
-	// 		});
-	// }
-	
-	// POST.deleteUser = function(req,res){
-	// 	//console.log("private-request.js :291", req.body);
-	// 	var user = req.body;
-	// 	User.findById( user.id, function(err, user){
-	// 		if (err === null) {
-	// 			if (user.role === "admin") return res.send(new Message(null,"Can't delete an Admin"))
-	// 			user.remove(function(err){
-	// 				if (err === null) res.send(new Message("User deleted!"));
-	// 			});
-	// 		}
-	// 	});
-	// }
-	
 
-
-
-
-	// POST.editComment = function(req,res){
-	// 	var comment = req.body;
-	// 	console.log("private-request.js :316", comment);
-	// 	if( comment.action === "delete" ){
-	// 		Comments.findById( comment.id ).remove(function(err){
-	// 			Posts.findById( comment.post_id, function(err,post){
-	// 				if (post.comments.indexOf(comment.id) > -1) {
-	// 				    post.comments.splice(post.comments.indexOf(comment.id), 1);
-					    
-	// 				};
-	// 				post.save(function(err){
-	// 					if(err === null) res.send("success");
-	// 				})
-	// 			});
-	// 		});
-	// 	}else if ( comment.action === "update" ){
-	// 		Comments.findById( comment.id, function(err,updateComment){
-	// 			updateComment.comment = comment.body;
-	// 			updateComment.save(function(err){
-	// 				console.log("private-request.js :324", err);
-	// 				if(err === null ) return res.send("success");
-	// 			})
-	// 		});
-	// 	}
-	// }
-	
-	// POST.registerCtrl = function(req,res){
-	// 	var register = req.body;
-		
-	// 	new_user = register;
-		
-	// 	User
-	// 		.register_new(new_user)
-	// 		.then(function(message){ return res.send(message) })
-	// 		.fail(function(message){ return res.send(message) });
-	// }
 
 	// POST.uploadCtrl = function(req,res,next){
 	// 	 res.send("<script> window.$('body').find('#cke_137_textInput') </script>");
