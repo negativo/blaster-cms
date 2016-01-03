@@ -278,7 +278,7 @@
 
 					console.log("backend.js :279", settings);
 					console.log("backend.js", settings );
-					$.post("/admin/edit-configurations", settings ,function(res,status){
+					$.post("/api/configuration", settings ,function(res,status){
 						console.log("backend.js", res);
 						getLinks = [];
 						if (res === "success") {

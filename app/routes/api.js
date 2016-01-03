@@ -4,6 +4,7 @@ module.exports = function(app,express){
 	var PostCtrl    = require("../controllers/post")(app);
 	var CommentCtrl = require("../controllers/comment")(app);
 	var ApiCtrl     = require("../controllers/api")(app);
+	var ConfCtrl    = require("../controllers/configuration")(app);
 
 	app.get('/api/posts', PostCtrl.index );
 	app.get('/api/pages', PageCtrl.index );
@@ -40,5 +41,6 @@ module.exports = function(app,express){
 	/**
 	 * CONFIGS
 	 */
+	app.post('/api/configuration' , ConfCtrl.edit );
 }
 
