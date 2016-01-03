@@ -45,7 +45,7 @@ module.exports = function(app,express){
 	/**
 	 * USERS
 	 */
-	app.post('/api/user'                  , UserCtrl.store );
+	app.post('/api/user'                  , UserCtrl.store ); // registar
 	app.post('/api/user/:id'   	          , UserCtrl.update );
 	app.post('/api/user/:id/password'   	, UserCtrl.update );
 	app.del('/api/user/:id'               , UserCtrl.destroy );
