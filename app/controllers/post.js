@@ -14,7 +14,7 @@ module.exports = function(app){
 			Post.find({},function(err,posts){
 				if(err) res.json({err:"not found"});
 				res.json(posts);
-			});			
+			});	
 		},
 		show: function (req, res) {
 			var slug = req.params.post;
@@ -31,6 +31,9 @@ module.exports = function(app){
 			});
 		},
 		create:function(req,res){
+			app.locals.pagename = " New Post";
+			app.locals.bodyclass = "new-post";
+			res.render("editor", new Render(req, { editor: "post", templates: app.locals.templates.post }) );
 		},
 		store:function(req,res){
 			var post = req.body;
@@ -52,10 +55,32 @@ module.exports = function(app){
 			res.send("");
 		},
 		edit:function(req,res){
-			res.send("");
+			if( req.params.id ){
+				var postId = req.params.id;
+				Post.findById( postId ,function(err,singlePost){
+					console.log("private-request.js", singlePost );
+					app.locals.pagename = " " + singlePost.title + " edit";
+					app.locals.bodyclass = "edit-post";
+					res.render("editor", new Render(req, { editor: "post", single: singlePost, templates: app.locals.templates.post }) );
+				}).populate("publishedBy.user",{password:0});;
+			}
 		},
 		update:function(req,res){
-			res.send("");
+			console.log("post.js :69", "Updating post");
+			var postId = req.body.id,
+					post   = req.body;
+			Post.findById( postId ,function(err,singlePost){
+				singlePost.title = post.title;
+				singlePost.body = post.body;
+				singlePost.slug = toSlug(post.title);
+				singlePost.publishedBy.user = req.user.id;
+				singlePost.template = post.template || "post-template",
+				singlePost.tags = post.tags;
+				singlePost.save(function(err){
+					if (err) throw err;
+					res.send(200);
+				});
+			});
 		},
 	};
 

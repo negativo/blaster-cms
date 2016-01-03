@@ -404,7 +404,7 @@
 					};
 					if(contentType === "editor-post" && id ){
 						data.tags = $(".tags-input").val().split(",");
-						$.post("/admin/edit-post", data,function(res,status){
+						$.post("/api/post/" + data.id , data,function(res,status){
 							console.log(status);
 							if (status === "success") {
 								toastr.success("Post edited!");
@@ -424,7 +424,7 @@
 					};
 					if(contentType === "editor-page" && id ){
 						data.tags = [];
-						$.post("/admin/edit-page", data,function(res,status){
+						$.post("/api/page/" + data.id, data, function(res,status){
 							console.log(status);
 							if (status === "success") {
 								toastr.success("Page edited!");

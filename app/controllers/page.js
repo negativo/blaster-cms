@@ -26,6 +26,12 @@ module.exports = function(app){
 			});
 		},
 		create:function(req,res){
+			app.locals.pagename = " New Page";
+			app.locals.bodyclass = "new-page";
+			Configs.findOne({},{ siteTemplate:1 }, function(err, templates){
+				if(templates === null) return;
+				res.render("editor", new Render(req, { editor: "page", templates: app.locals.templates.page }) );
+			});
 		},
 		store:function(){
 			console.log("routes.js", "create_page request");
@@ -47,17 +53,31 @@ module.exports = function(app){
 			res.send("");
 		},
 		edit:function(req,res){
-			res.send("");
+			if( req.params.id ){
+				var pageId = req.params.id;
+				Page.findById( pageId ,function(err,singlePage){
+					console.log("private-request.js", singlePage );
+					app.locals.pagename= singlePage.title + " edit";
+					app.locals.bodyclass = "edit-page";
+					res.render("editor", new Render(req, { editor: "page", single: singlePage, templates: app.locals.templates.page }) );
+				});
+			}
 		},
 		update:function(req,res){
-			res.send("");
+			console.log("page.js :67", "Edit single page");
+			var pageId = req.body.id;
+			Page.findById( pageId ,function(err,singlePage){
+				singlePage.title = req.body.title;
+				singlePage.body = req.body.body;
+				singlePage.publishedBy.user = req.user.id;
+				singlePage.slug = toSlug(req.body.title);
+				singlePage.template = req.body.template || "page-template",
+				singlePage.save(function(err){
+					if (err) throw err;
+					res.send(200);
+				});
+			});
 		},
 	};
 
 }
-
-
-
-
-
-		
