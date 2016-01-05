@@ -15,13 +15,7 @@ module.exports = function(app,express){
 	app.get('/api/posts'           , PostCtrl.index );
 	app.get('/api/pages'           , PageCtrl.index );
 
-	/**
-	 * INSTALLATION
-	 */	
-	app.get("/install"             , ApiCtrl.install_index );
-	app.post("/install/mongo"      , ApiCtrl.install_mongo);
-	app.post("/install/cms"        , ApiCtrl.install_cms);
-
+	
 	/**
 	 * POST
 	 */
@@ -47,7 +41,7 @@ module.exports = function(app,express){
 	 */
 	app.post('/api/user'                  , UserCtrl.store ); // registar
 	app.post('/api/user/:id'   	          , UserCtrl.update );
-	app.post('/api/user/:id/password'   	, UserCtrl.update );
+	app.post('/api/user/:id/password'   	, UserCtrl.change_password );
 	app.delete('/api/user/:id'               , UserCtrl.destroy );
 	
 	/**

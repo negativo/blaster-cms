@@ -7,31 +7,17 @@ Post         = require("../models/posts"),
 Page         = require("../models/pages"),	
 crypto       = require("../lib/crypto");
 
-exports.install = function(app, cms){
+exports.install = function(app){
 	var deferedInstall = Q.defer();
-	var cms = cms;
 	var confData = {};
 
-	mongoose.disconnect();
-
-	console.log("installer.js :16", cms);
-
-	function connect(cms){
+	function createUser(){
 		var deferred = Q.defer();
-		console.log("installer.js :18", app.settings.db_link );
-		mongoose.connect(app.settings.db_link ,function(err){
-			deferred.resolve({ err:err })
-		});
-		return deferred.promise;
-	}
-
-	function createUser(prev){
-		var deferred = Q.defer();
-		User.findOne({"username":cms.username},function(err,user){
+		User.findOne({"username": process.env.ADMIN_USERNAME },function(err,user){
 			console.log("installer.js :29", err);
 			if (err) deferred.reject({err:err, message:"error finding existing user"});
 			if(!user) {
-				new User({ username:cms.username, password: cms.password, admin:true, role:"admin" })
+				new User({ username: process.env.ADMIN_USERNAME, password:  process.env.ADMIN_PASSWORD, admin:true, role:"admin" })
 				.save(function(err,user){
 					if(err) deferred.reject({err:err, message:"error saving user"})
 
@@ -45,7 +31,7 @@ exports.install = function(app, cms){
 					// page
 					new Page({
 						publishedBy:{
-							user:cms.user,
+							user:user.password,
 						}
 					}).save();
 
@@ -53,25 +39,24 @@ exports.install = function(app, cms){
 				});
 			} else{
 				console.log("installer.js :58", "exists");
-				deferred.reject({error:"User Exists", user: cms.username});
+				deferred.reject({error:"User Exists", user: user.username });
 			}
 		});
 		return deferred.promise;
 	}
 
-	function saveBlogConf(prev){
+	function saveBlogConf(){
 		var deferred = Q.defer();
 
-		app.settings.admin = confData.admin = cms.username;
-		app.settings.title = confData.title = cms.title;
-		app.settings.subtitle = confData.subtitle = cms.subtitle;
+		app.settings.admin        = confData.admin = process.env.ADMIN_USERNAME;
+		app.settings.title        = confData.title = process.env.SITENAME;
+		app.settings.subtitle     = confData.subtitle = process.env.SITESUBTITLE;
 		app.settings.is_installed = confData.isInstalled = true;
-		app.settings.home = confData.home = "home-template";
+		app.settings.home         = confData.home = "home-template";
 
 		new Configs(confData)
 		.save(function(err){
 			if (err) return deferred.reject({err:err, message:"error saving configurations"});
-			fs.writeFileSync( app.locals.__root + "/bin/config.json", JSON.stringify({ db_link: crypto.encrypt(app.settings.db_link) }) );
 		});
 
 		deferred.resolve({message:"User&Blog Created", err:null });
@@ -82,14 +67,13 @@ exports.install = function(app, cms){
 	/**
 	 * RESOLVE ALL INSTALLATION PROMISE
 	 */
-	connect()
-	.then(createUser)
+	createUser()
 	.then(saveBlogConf)
 	.then(function(promise){
 		deferedInstall.resolve(promise);
 	})
-	.fail(function(error){
-		deferedInstall.reject(err);	
+	.catch(function(error){
+		deferedInstall.reject(error);	
 	});
 
 	return deferedInstall.promise;
