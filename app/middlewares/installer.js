@@ -17,6 +17,12 @@ module.exports = function (app) {
 				}
 			});	
 		},
+		check_redirect:function(req,res,next){
+			if( /^\/install/.test(req.url) && req.method == "GET" && app.locals.isInstalled){
+				res.redirect("/");
+			}
+			next();
+		},
 		install:function(req,res,next){
 			if( req.method === 'GET' && !app.locals.isInstalled && !(/^\/install/.test(req.url)) ) { 
 				return res.redirect("/install"); 

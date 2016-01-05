@@ -39,7 +39,7 @@ module.exports = function(app,express){
 	 */
 	app.post("/api/comment"        , CommentCtrl.store );
 	app.post("/api/comment/:id"    , CommentCtrl.update );
-	app.del("/api/comment/:id"     , CommentCtrl.destroy );
+	app.delete("/api/comment/:id"     , CommentCtrl.destroy );
 	app.post("/api/comment/reply/" , CommentCtrl.reply );
 
 	/**
@@ -48,7 +48,7 @@ module.exports = function(app,express){
 	app.post('/api/user'                  , UserCtrl.store ); // registar
 	app.post('/api/user/:id'   	          , UserCtrl.update );
 	app.post('/api/user/:id/password'   	, UserCtrl.update );
-	app.del('/api/user/:id'               , UserCtrl.destroy );
+	app.delete('/api/user/:id'               , UserCtrl.destroy );
 	
 	/**
 	 * CONFIGS

@@ -15,13 +15,12 @@ var UserSchema = new Schema({
 	role:String,
 	admin:Boolean,
 	resetPasswordToken: String,
-  	resetPasswordExpires: Date
+  resetPasswordExpires: Date
 });
 
 /**
  * HOOKS
  */
-
 UserSchema.pre('save',function(next){
 	// hash password if saving to db or skip
 	var user = this;
@@ -57,7 +56,6 @@ UserSchema.statics.change_password = function(user_id, old_password, new_passwor
 	 * @param  {String} new_password 
 	 * @return {Promise}              
 	 */
-	
 	var deferred = Q.defer();
 	this.findById( user_id, { password:1 }, function(err,user){
 		if(user) {

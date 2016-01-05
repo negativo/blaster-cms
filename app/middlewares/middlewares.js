@@ -14,7 +14,7 @@ FileStore 	 = require('session-file-store')(session);
 module.exports = function(app,express, $ee){
 
 
-	var installer   = require('./installer')(app).check,
+	var installer   = require('./installer')(app),
 			configParse = require('./config-parse')(app,$ee),
 			viewSwitcher = require('./view-switch')(app);
 
@@ -50,7 +50,8 @@ module.exports = function(app,express, $ee){
 	/**
 	 * INSTALLATION CHECKS
 	 */
-	app.use(installer);
+	app.use(installer.check);
+	app.use(installer.check_redirect);
 
 	//parsers
 	app.use(bodyParser.urlencoded({ extended: true }));
@@ -90,6 +91,11 @@ module.exports = function(app,express, $ee){
   //with this you get login status in frontend
 	app.use(function(req,res,next){
 		if (req.method === 'GET' ) app.locals.isAuthenticated = req.isAuthenticated() || false;
+		next();
+	});
+
+	app.use(function(req,res,next){
+		console.log("middlewares.js :98", req.user );	
 		next();
 	});
 	
