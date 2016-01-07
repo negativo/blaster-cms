@@ -7,7 +7,33 @@ Post         = require("../models/posts"),
 Page         = require("../models/pages"),	
 crypto       = require("../lib/crypto");
 
-exports.install = function(app){
+
+var check_database = function(app){
+	var Config = require("../models/configs");
+
+	// installation check fired from event.js on mongo successfull connection
+	mongoose.connect('mongodb://' + process.env.DB_HOST + ':' + process.env.DB_PORT + '/' + process.env.DB_TABLE );
+
+	Config.findOne({},function(err,data){
+		if(err) console.log("utils.js :45", err);
+
+		if(!err && data) {
+			app.set('is_installed', true);
+		}
+
+		if(!err && !data) {
+			install(app)
+			.then(function(data){
+				app.set('is_installed', true);
+				console.log("utils.js :40", data);
+			},function(err){
+				console.log("utils.js :42", err);
+			})
+		}
+	});
+}
+
+var install = function(app){
 	var deferedInstall = Q.defer();
 	var confData = {};
 
@@ -79,3 +105,6 @@ exports.install = function(app){
 	return deferedInstall.promise;
 
 };
+
+
+exports.check_database = check_database;

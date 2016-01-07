@@ -5,8 +5,6 @@ module.exports = function(app,$ee){
 
 	// configuration object updated
 	db.once("open",function(){
-		$utils.isInstalled();
-		app.set("mongo_db",true);
 		console.log("mongo connected".green);
 	});
 
@@ -16,7 +14,6 @@ module.exports = function(app,$ee){
 	});
 
 	db.on("close",function(){
-		app.set("mongo_db",false);
 		console.log("mongo disconnected".yellow);
 	});
 
@@ -24,8 +21,6 @@ module.exports = function(app,$ee){
 
 	$ee.on("configs_updated",function(configs, message){
 		console.log("events.js :8", "configuration parsed".green);
-		//global.theme = configs.theme;
-		//console.log("events.js", message, configs );
 	});
 
 

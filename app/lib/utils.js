@@ -24,28 +24,6 @@ module.exports = function(app){
 			}
 			return JSON.stringify(original);
 		},
-		isInstalled: function(){
-			var Config = require("../models/configs");
-
-			Config.findOne({},function(err,data){
-				if(err) console.log("utils.js :45", err);
-
-				if(!err && data) {
-					app.set('is_installed', true);
-				}
-
-				if(!err && !data) {
-					installer.install(app)
-					.then(function(data){
-						app.set('is_installed', true);
-						console.log("utils.js :40", data);
-					},function(err){
-						console.log("utils.js :42", err);
-					})
-				}
-			});
-			
-		}
 	};
 
 	return utils;
