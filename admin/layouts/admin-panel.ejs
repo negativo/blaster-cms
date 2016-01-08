@@ -34,13 +34,28 @@
     <![endif]-->
 
 </head>
-<% if(bodyclass) { %>
-    <body class="<%= bodyclass %>">
-<% }else{ %>
-    <body>
-<% } %>
+<body class="<%= typeof bodyclass !== 'undefined' ? bodyclass : '' %>">
         
-        <% if(bodyclass !== "login-page" && bodyclass !== "register-page") { %>
-            <div id="wrapper">
-            <%- include("navigation") %>
-        <% } %>
+  <div id="wrapper">
+    <%- partial('partials/navigation') %>
+    <%- body -%>
+  </div>
+
+  <!-- jQuery -->
+  <script src="/private/components/jquery/dist/jquery.js"></script>
+  
+  <!-- Bootstrap Core JavaScript 
+  <script src="/private/js/bootstrap.min.js"></script>-->
+  <script src="/private/components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+  <script src="/private/components/ckeditor/ckeditor.js"></script>
+  <script src="/private/components/momentjs/moment.js"></script>
+  <script src="/private/components/toastr/toastr.min.js"></script>
+  <script src="/private/plugins/codemirror/codemirror.js"></script>
+  <script src="/private/plugins/codemirror/css/css.js"></script>
+  
+  <!-- CMS backend object -->
+  <script src="/private/js/backend.js"></script>
+
+</body>
+</html>

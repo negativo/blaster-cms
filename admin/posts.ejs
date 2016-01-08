@@ -1,4 +1,4 @@
-<%- include("./partials/header") %>
+<%- layout('layouts/admin-panel.ejs') -%>
 <div id="page-wrapper">
     <div class="container-fluid">  
         <h2 class="page-header">
@@ -20,8 +20,8 @@
             <th>Preview</th>
         </tr>
         <% for (var i = 0; i < posts.length; i++) { %>
-            <tr onclick="$.fn.getData(<%= JSON.stringify(posts[i]); %>)">
-                <td><%=  i %></td>
+            <tr>
+                <td><%= i %></td>
                 <td><a href="./edit-post/<%=  posts[i]._id %>"><%=  posts[i].title %></a></td>
                 <td><%=  posts[i].status %></td>
                 <td><%=  posts[i].publishedBy.user.username %></td>
@@ -34,6 +34,3 @@
     </div>
     <!-- /.container-fluid -->
 </div>
-<!-- /#page-wrapper -->
-<%- include("./partials/footer") %>
-

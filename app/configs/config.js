@@ -2,6 +2,7 @@ var	dotenv = require('dotenv').load();
 var fs 		  = require('fs');
 var crypto = require('../lib/crypto');
 var mongoose = require('mongoose');
+var ejs_mate = require("ejs-mate");
 
 module.exports = function(app, express, $ee){
 	var locals = app.locals;
@@ -20,10 +21,11 @@ module.exports = function(app, express, $ee){
 	/**
 	 * SETTINGS
 	 */
-	app.set('base_url',process.env.BASE_URL + ':' + locals.__port);
-	app.set('theme',process.env.DEFAULT_THEME);
+	app.engine('ejs', ejs_mate);
 	app.set('view engine', 'ejs');
 	app.set('views', locals.__root + '/views/' + locals.__theme);
+	app.set('base_url',process.env.BASE_URL + ':' + locals.__port);
+	app.set('theme',process.env.DEFAULT_THEME);
 
 	/**
 	 * CHECK DB CONNECTION && INSTALLATION

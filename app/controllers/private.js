@@ -31,7 +31,7 @@ module.exports = function(app){
 			};
 			Q.all([getPages(),getPosts(),getComments(), getUsers()])
 			.then(function(data){
-				res.render("panel", 
+				res.render("dashboard", 
 					new Render(req, { postsNum: data[0], pagesNum: data[1], commentsNum: data[2], usersNum:data[3] }) 
 				);
 			});
@@ -85,7 +85,7 @@ module.exports = function(app){
 			Configs.findOne({},{ db_link:0, templates:0 }, function(err, configs){
 				if(configs !== null && req.isAuthenticated() ) {
 					Pages.find({},{ body:0 },function(err, pages){
-						res.render("configs", new Render(req, { configs:configs, pages: pages }) );
+						res.render("configurations", new Render(req, { configs:configs, pages: pages }) );
 					});
 				}
 			});
@@ -108,7 +108,7 @@ module.exports = function(app){
 			Configs.findOne({},{ db_link:0, templates:0 }, function(err, configs){
 				Pages.find({},{ slug:1, title:1 },function(err,pages){
 					if(configs !== null && req.isAuthenticated() ) {
-						res.render("edit-nav", new Render(req, { pages: pages, navigation:configs.navigation }) );
+						res.render("navigation", new Render(req, { pages: pages, navigation:configs.navigation }) );
 					};
 				});
 			});
@@ -118,7 +118,7 @@ module.exports = function(app){
 			fs.readFile( app.locals.__root + "/views/"+ app.get('theme') +"/css/custom.css", "utf-8", function(err,file){
 				app.locals.pagename = " Theme Edit";
 				app.locals.bodyclass = "edit-theme";
-				res.render("edit-theme", new Render(req, { css:file }) );
+				res.render("custom-css", new Render(req, { css:file }) );
 			});
 		},
 

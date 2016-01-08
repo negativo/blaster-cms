@@ -1,10 +1,10 @@
-<%- include("./partials/header") %>
+<%- layout('layouts/admin-panel.ejs') -%>
 
 <div class="container-fluid profile-container" data-id="<%= profile._id %>">
     <h2><%= profile.username %>'s Profile</h2>
     <hr>
     <div class="avatar-container">
-        <img src="<%= profile.avatar %>" class="avatar" style="display:<%= profile.avatar ? 'block': 'none'; %>;">
+        <img src="<%= profile.avatar %>" class="avatar" style="display:<%= profile.avatar ? 'block': 'none' %>">
         <i class="fa fa-fw fa-plus fa-lg get-avatar"></i>
     </div>
     <form action="/api/upload/avatar/<%= profile.id %>" method="POST" enctype="multipart/form-data" class="col-md-4" id="avatarUploaderForm">
@@ -30,8 +30,8 @@
         <div class="form-group">
             <label for="role">Role</label>
             <select name="role" id="profile-role" class="form-control">
-                <option value="admin" <%= user.role === "admin" ? "selected" : "" ; %> >admin</option>
-                <option value="editor" <%= user.role === "editor" ? "selected" : "" ; %> >editor</option>
+                <option value="admin" <%= user.role === "admin" ? "selected" : "" %> >admin</option>
+                <option value="editor" <%= user.role === "editor" ? "selected" : "" %> >editor</option>
             </select>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
@@ -51,6 +51,3 @@
     </form>
 
 </div>
-<!-- /.container-fluid -->
-<%- include("./partials/footer") %>
-
