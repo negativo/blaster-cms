@@ -40,15 +40,9 @@
 				if ( $body.attr("class") === "edit-theme" ) backend.plugins.codemirror();
 			},
 			editor:function(){
-				$body = $("body");
-				$body.find(".editor").hide();
-				CKEDITOR.replace( 'editor1', {
-					fullPage: true,
-					allowedContent: true,
-					    filebrowserBrowseUrl: '/admin/file-browser',
-    					filebrowserUploadUrl: '/api/upload'
-				});
-				$body.find(".editor").show();
+				tinymce.init({
+		      selector: '#text-editor'
+		    });
 			},
 			momentjs:function(){
 				$body = $("body");
@@ -373,31 +367,47 @@
 					});
 				});
 			},
-			editorGetData:function(){
+			editorGetData:function(){				
 				$(".tags-input").click(function(){
 					$(".tags-input").val().split(",")
 				});
 				$(".editor").submit(function(e){
-					e.preventDefault();	
-					var contentType = $(".editor").attr("id");
-					var title = $(".editor-title").val();
-					var id = $(".editor").data("id");
-					var body = CKEDITOR.instances.editor1.getData();
-					var template = $("#templates-choice").val() || "page-template";
-					var data = {
-						id: id,
-						title: title,
-						body: body,
-						template:template,
-						tags: []
+					var isPost = function(data){
+						if(contentType === "editor-post") return true;
+						else return false;
 					}
-					console.log("backend.js", data);
-					console.log("backend.js", contentType);
+					var isPage = function(data){
+						if(contentType === "editor-page") return true;
+						else return false;
+					}
+					var isNew = function(data){
+						if(data.id === "") return true;
+						else return false;
+					}
+
+					e.preventDefault();	
+					tinyMCE.triggerSave();
+
+					var contentType = $(".editor").attr("id"),
+							template = $("#templates-choice").val() || "page-template",
+							data = {
+								id: $(".editor").data("id"),
+								title: $(".editor-title").val(),
+								body: $("#text-editor").val(),
+								template:template,
+								tags: []
+							};
+					
+					console.log("backend.js :390", contentType);
+					console.log("backend.js :389", data);
+
 					if(data.title == ""){
 						//DO SOME VALIDATION LATER
 						data.title = "My New Content";
 					}
-					if(contentType === "editor-post" && id === undefined){
+
+					// is a post and is new
+					if(contentType === "editor-post" && data.id === ""){
 						data.tags = $(".tags-input").val().split(",");
 						$.post("/api/post", data,function(res,status){
 							console.log(res);
@@ -407,7 +417,9 @@
 							}
 						});
 					};
-					if(contentType === "editor-post" && id ){
+
+					// is a post and is existing
+					if(contentType === "editor-post" && data.id !== "" ){
 						data.tags = $(".tags-input").val().split(",");
 						$.post("/api/post/" + data.id , data,function(res,status){
 							console.log(status);
@@ -417,7 +429,9 @@
 							}
 						});
 					};
-					if(contentType === "editor-page" && id === undefined){
+
+					// is a page and is new
+					if(contentType === "editor-page" && data.id === ""){
 						data.tags = [];
 						$.post("/api/page", data,function(res,status){
 							console.log(res);
@@ -427,7 +441,9 @@
 							}
 						});
 					};
-					if(contentType === "editor-page" && id ){
+
+					// is a page and is existing
+					if(contentType === "editor-page" && data.id !== "" ){
 						data.tags = [];
 						$.post("/api/page/" + data.id, data, function(res,status){
 							console.log(status);
