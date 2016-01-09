@@ -1,6 +1,10 @@
+<%
+	String.prototype.capitalize = function() {
+	    return this.charAt(0).toUpperCase() + this.slice(1);
+	}
+%>
 <!-- single.content is for pages single.body is for post
 forgot to give the same name in creation I should refactor all reference now.., or keep the ternary operator, which seems nice -->
-
 <div class="small-10 small-offset-1">
 	<h2><%= editor.capitalize() %> editor</h2>
 	<form class="editor" class="editor" id="editor-<%= editor %>" data-id="<%= isNew ? '' : single._id %>">

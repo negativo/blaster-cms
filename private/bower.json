@@ -24,7 +24,6 @@
     "toastr": "~2.1.2",
     "jquery": "~2.1.4",
     "bootstrap": "~3.3.5",
-    "font-awesome": "~4.4.0",
-    "ckeditor":"git://github.com/Kirkhammetz/ckeditor-personal-configuration.git"
+    "font-awesome": "~4.4.0"
   }
 }

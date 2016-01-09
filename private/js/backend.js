@@ -40,9 +40,17 @@
 				if ( $body.attr("class") === "edit-theme" ) backend.plugins.codemirror();
 			},
 			editor:function(){
-				tinymce.init({
-		      selector: '#text-editor'
-		    });
+		    tinymce.init({
+		      selector: '#text-editor',
+				  height: 500,
+				  plugins: [
+		        "advlist autolink lists link image imagetools charmap preview anchor",
+		        "searchreplace visualblocks code fullscreen",
+		        "insertdatetime media table contextmenu paste "
+			    ],
+			    toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+		    	
+				});
 			},
 			momentjs:function(){
 				$body = $("body");
