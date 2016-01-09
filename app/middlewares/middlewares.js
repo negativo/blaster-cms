@@ -14,8 +14,7 @@ FileStore 	 = require('session-file-store')(session);
 module.exports = function(app,express, $ee){
 
 
-	var installer   = require('./installer')(app).check,
-			configParse = require('./config-parse')(app,$ee),
+	var configParse = require('./config-parse')(app,$ee),
 			viewSwitcher = require('./view-switch')(app);
 
 	var __root = app.locals.__root,
@@ -29,7 +28,7 @@ module.exports = function(app,express, $ee){
 		secret: process.env.SECRET,
 		resave: true,
 		saveUninitialized: false,
-		store: new FileStore({ path: __root + "/sessions", encrypt:true }), // session in /sessions
+		store: new MongoStore({ mongooseConnection: mongoose.connection }),
 		cookie:{ maxAge: 36000000 } //change the session after dev 
 	};
 	
@@ -50,7 +49,8 @@ module.exports = function(app,express, $ee){
 	/**
 	 * INSTALLATION CHECKS
 	 */
-	app.use(installer);
+	//app.use(installer.check);
+	//app.use(installer.check_redirect);
 
 	//parsers
 	app.use(bodyParser.urlencoded({ extended: true }));
@@ -79,7 +79,7 @@ module.exports = function(app,express, $ee){
 	/**
 	 * SWITCH ADMIN & PUBLIC VIEW FOLDER DINAMICALLY
 	 */
-	app.use(viewSwitcher);
+	app.use( viewSwitcher );
 
 	//redirect to login if no authenticated and accessing admin areas
 	app.use('/admin', function(req,res,next){

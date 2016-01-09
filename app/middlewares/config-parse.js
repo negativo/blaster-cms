@@ -1,4 +1,5 @@
 var fs = require("fs");
+var Configs = require('../models/configs');
 
 module.exports = function (app, $ee) {
 	var __root = app.locals.__root,
@@ -6,17 +7,16 @@ module.exports = function (app, $ee) {
 			locals = app.locals;
 	
 	return function(req,res,next){
+		console.log("config-parse.js :9", "PARSING");
 		app.locals.templates = {
 			post:[],
 			page:[],
 		};
-		if (app.locals.isInstalled){
+		if (app.get('is_installed')){
 			Configs.findOne({},function(err,configs){
 				if(err){
 					console.log('middlewares.js :76', err);
 				}
-
-				console.log("config-parse.js :19", configs);
 
 				/**
 				 * SET GLOBAL APP VARIABLES
@@ -27,6 +27,7 @@ module.exports = function (app, $ee) {
 				app.locals.subtitle   = configs.subtitle || '';
 				app.locals.socials    = configs.links || ''; 
 				app.set('home', configs.home || 'home-template');
+
 
 				/**
 				 * SCAN POST/PAGE TEMPLATES FILE

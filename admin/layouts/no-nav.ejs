@@ -13,15 +13,11 @@
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/private/components/bootstrap/dist/css/bootstrap.min.css">
 
-    <!-- Custom CSS -->
-    <link href="/private/css/sb-admin.css" rel="stylesheet">
-
     <!-- Custom Fonts -->
     <link href="/private/components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
     <!-- CUSTOM CSSs and PLUGINs -->
     <link rel="stylesheet" href="/private/components/toastr/toastr.min.css">
-    <link rel="stylesheet" href="/private/plugins/codemirror/codemirror.css">
 
     <!-- COMPILED LESSs -->
     <link rel="stylesheet" href="/private/css/backend.min.css">
@@ -34,13 +30,26 @@
     <![endif]-->
 
 </head>
-<% if(bodyclass) { %>
-    <body class="<%= bodyclass %>">
-<% }else{ %>
-    <body>
-<% } %>
-        
-        <% if(bodyclass !== "login-page" && bodyclass !== "register-page") { %>
-            <div id="wrapper">
-            <%- include("navigation") %>
-        <% } %>
+<body class="<%= typeof bodyclass !== 'undefined' ? bodyclass : '' %>">
+       
+
+  <div id="wrapper">
+
+    <%- body -%>
+
+  </div>
+
+  <!-- jQuery -->
+  <script src="/private/components/jquery/dist/jquery.js"></script>
+  
+  <!-- Bootstrap Core JavaScript 
+  <script src="/private/js/bootstrap.min.js"></script>-->
+  <script src="/private/components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+  <script src="/private/components/toastr/toastr.min.js"></script>
+  
+  <!-- CMS backend object -->
+  <script src="/private/js/backend.js"></script>
+
+</body>
+</html>

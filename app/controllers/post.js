@@ -23,7 +23,7 @@ module.exports = function(app){
 			.populate("comments")
 			.exec(function(err,post){
 				if(post === null) return res.redirect("/404");
-				app.locals.pagetitle = post.title + " - " + app.locals.sitename;
+				res.locals.pagetitle = post.title + " - " + app.locals.sitename;
 				Comment.populate(post.comments,[{ path:"user", model:"User" }], function(err,posts){
 					console.log("public-request.js :55", posts);
 					res.render( post.template, new Render(req, { post:post, comments: post.comments }) );
@@ -31,8 +31,9 @@ module.exports = function(app){
 			});
 		},
 		create:function(req,res){
-			app.locals.pagename = " New Post";
-			app.locals.bodyclass = "new-post";
+			res.locals.pagename  = " New Post";
+			res.locals.bodyclass = "new-post";
+			res.locals.isNew = true;
 			res.render("editor", new Render(req, { editor: "post", templates: app.locals.templates.post }) );
 		},
 		store:function(req,res){
@@ -59,8 +60,9 @@ module.exports = function(app){
 				var postId = req.params.id;
 				Post.findById( postId ,function(err,singlePost){
 					console.log("private-request.js", singlePost );
-					app.locals.pagename = " " + singlePost.title + " edit";
-					app.locals.bodyclass = "edit-post";
+					res.locals.pagename = " " + singlePost.title + " edit";
+					res.locals.bodyclass = "edit-post";
+					res.locals.isNew = false;
 					res.render("editor", new Render(req, { editor: "post", single: singlePost, templates: app.locals.templates.post }) );
 				}).populate("publishedBy.user",{password:0});;
 			}

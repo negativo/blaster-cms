@@ -1,27 +1,19 @@
+<%
+	String.prototype.capitalize = function() {
+	    return this.charAt(0).toUpperCase() + this.slice(1);
+	}
+%>
 <!-- single.content is for pages single.body is for post
 forgot to give the same name in creation I should refactor all reference now.., or keep the ternary operator, which seems nice -->
-<% if (locals.single) { %> 
-	<div class="small-10 small-offset-1">
-		<h2><%= editor %> Creation</h2>
-		<form class="form editor" class="editor" id="editor-<%= editor %>" data-id="<%= single._id %>">
-			<div class="form-group">
-				<input type="text" name="title" placeholder="<%= single.title %>" value="<%= single.title %>" class="small-12 editor-title form-control">
-				<textarea name="editor1"><%= single.body; %></textarea>
-				<!-- <textarea class="js-st-instance"></textarea> -->
-				<input type="submit">
-			</div>
-		</form>
-	</div>
-<% } else { %>
-	<div class="small-10 small-offset-1">
-		<h2><%= editor %> Creation</h2>
-		<form class="editor" id="editor-<%= editor %>">
-			<div class="form-group">
-				<input type="text" name="title" placeholder="title" class="small-12 editor-title form-control">
-				<textarea name="editor1"></textarea>
-				<!-- <textarea class="js-st-instance"></textarea> -->
-				<input type="submit" class="btn btn-primary pull-right" value="Create">
-			</div>
-		</form>
-	</div>
-<%}; %>
+<div class="small-10 small-offset-1">
+	<h2><%= editor.capitalize() %> editor</h2>
+	<form class="editor" class="editor" id="editor-<%= editor %>" data-id="<%= isNew ? '' : single._id %>">
+		<div class="form-group">
+			<input type="text" name="title" placeholder="<%= isNew ? 'Title' : single.title %>" value="<%= isNew ? '' : single.title %>" class="small-12 editor-title form-control">
+			<textarea name="editor1" id="text-editor"><%= isNew ? 'Write...' : single.body %></textarea>
+			<input type="submit" class="btn btn-primary pull-right">
+		</div>
+	</form>
+</div>
+
+

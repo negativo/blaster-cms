@@ -1,4 +1,4 @@
-<%- include("partials/header") %>
+<% layout('layouts/main') -%>
 	<!-- POST SECTION -->
 	<div class="small-12 page-search">
 		<% if(locals.results && locals.results.length != 0) {  
@@ -11,5 +11,3 @@
 			<h4 style="text-align:center;">No Post found :(</h4>
 		<% }%>
 	</div>
-<%- include("partials/footer") %>
-

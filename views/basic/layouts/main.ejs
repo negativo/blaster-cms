@@ -13,8 +13,8 @@
 <body>
 	<!-- admin bar -->
 	<% if(isAuthenticated) { %>
-		<%- include('../partials/admin-bar'); %>
-	<% }; %>
+		<%- partial('partials/admin-bar') %>
+	<% } %>
 	<!-- colored stripes useless -->
 	<div class="ornament">
 		<div class="object-bg"></div>
@@ -28,7 +28,7 @@
 		<header class="small-12 home">
 			<h1><a href="/"><%= sitename %></h1></a><span class="subtitle"><%= subtitle %></span>
 			<!-- NAVIGATION -->
-			<%- include("../partials/nav") %>
+			<%- partial("partials/nav") %>
 	
 			<i class="fa fa-fw fa-search search-button"></i>
 			<div id="search-form">
@@ -39,3 +39,35 @@
 			</div>	
 		</header>
 
+
+		<!-- BODY -->
+		<%- body -%>
+
+	</div><!-- MAIN WRAPPER -->
+
+	<!-- FOOTER -->
+	<footer class="main-footer small-12" >
+		<div class="footer-container small-8 small-offset-2">
+			<div class="footer-left">
+				<span class="object">created</span>.<span class="function">with</span>(<span class="parameter">nomeCms</span>);			
+			</div>
+
+			<div class="footer-left">
+				<span class="statement">if </span><span>( youLikedIt <span class="statement">&&</span> youKnowIt ) {</span>
+				<br>
+				<span>&nbsp;&nbsp;&nbsp;&nbsp;git.star().fork();</span><br>
+				<span>&nbsp;&nbsp;&nbsp;&nbsp;fb.share();</span><br>
+				<span>&nbsp;&nbsp;&nbsp;&nbsp;give.feedback();</span>
+				<br>
+				<span>};</span>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+	</footer>
+
+	<script src="/components/jquery/dist/jquery.min.js"></script>
+	<script src="/components/foundation/js/foundation.min.js"></script>
+	<script src="http://momentjs.com/downloads/moment.js"></script>
+	<script src="/js/main.js"></script>
+</body>
+</html>

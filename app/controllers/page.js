@@ -21,19 +21,20 @@ module.exports = function(app){
 			Page.findOne({ "slug": slug },function(err,page){
 				console.log("requests.js", page,err);
 				if(page === null && req.url !== "/favicon.ico" ) return res.redirect("/404");
-				app.locals.pagetitle = page.title + " - " + app.locals.sitename;
+				res.locals.pagetitle = page.title + " - " + app.locals.sitename;
 				res.render( page.template, new Render(req, { page:page }) );
 			});
 		},
 		create:function(req,res){
-			app.locals.pagename = " New Page";
-			app.locals.bodyclass = "new-page";
+			res.locals.pagename = " New Page";
+			res.locals.bodyclass = "new-page";
+			res.locals.isNew = true;
 			Configs.findOne({},{ siteTemplate:1 }, function(err, templates){
 				if(templates === null) return;
 				res.render("editor", new Render(req, { editor: "page", templates: app.locals.templates.page }) );
 			});
 		},
-		store:function(){
+		store:function(req,res){
 			console.log("routes.js", "create_page request");
 			var page = req.body;
 			new Page({
@@ -57,8 +58,9 @@ module.exports = function(app){
 				var pageId = req.params.id;
 				Page.findById( pageId ,function(err,singlePage){
 					console.log("private-request.js", singlePage );
-					app.locals.pagename= singlePage.title + " edit";
-					app.locals.bodyclass = "edit-page";
+					res.locals.pagename= singlePage.title + " edit";
+					res.locals.bodyclass = "edit-page";
+					res.locals.isNew = false;
 					res.render("editor", new Render(req, { editor: "page", single: singlePage, templates: app.locals.templates.page }) );
 				});
 			}
