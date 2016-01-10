@@ -1,9 +1,18 @@
 module.exports = function(app,express){
 
-	var passport      = require('passport'),
-	multer            = require('multer'),
-	uploader          = multer({ dest: app.locals.__root + '/uploads/' }),
-	avatar            = multer({ dest: app.locals.__root + '/uploads/avatar'});
+
+	var passport        = require('passport');
+	var multer          = require('multer');
+	var general_storage = multer.diskStorage({
+	  destination: function (req, file, cb) {
+	    cb(null, app.locals.__root + '/uploads/' );
+	  },
+	  filename: function (req, file, cb) {
+	    cb(null, Date.now() + '.jpg') //Appending .jpg
+	  }
+	});
+	var uploader    = multer({ storage: general_storage })
+	var avatar      = multer({ dest: app.locals.__root + '/uploads/avatar'});
 	
 	var PageCtrl    = require("../controllers/page")(app);
 	var PostCtrl    = require("../controllers/post")(app);
@@ -11,11 +20,11 @@ module.exports = function(app,express){
 	var ApiCtrl     = require("../controllers/api")(app);
 	var ConfCtrl    = require("../controllers/configuration")(app);
 	var UserCtrl    = require("../controllers/user")(app);
+	var MediaCtrl   = require("../controllers/media")(app);
 
 	app.get('/api/posts'           , PostCtrl.index );
 	app.get('/api/pages'           , PageCtrl.index );
 
-	
 	/**
 	 * POST
 	 */
@@ -25,8 +34,13 @@ module.exports = function(app,express){
 	/**
 	 * PAGE
 	 */
-	app.post("/api/page"           , PageCtrl.store );
+	app.post("/api/page"           , PageCtrl.store   );
 	app.post('/api/page/:id'       , PageCtrl.update  );
+
+	/**
+	 * MEDIAS
+	 */
+	app.delete("/api/media/:id"     , MediaCtrl.destroy );
 
 	 /**
 	 * COMMENTS
@@ -55,7 +69,7 @@ module.exports = function(app,express){
 	/**
 	 * UPLOADS
 	 */
-	app.post('/api/upload'            , uploader.single('upload') , ApiCtrl.upload_photo  );
+	app.post('/api/upload'            , uploader.array('upload') , ApiCtrl.upload_photo  );
 	app.post('/api/upload/avatar/:id' , avatar.single('avatar')   , ApiCtrl.upload_avatar );
 }
 

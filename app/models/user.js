@@ -6,16 +6,14 @@ var Message  = require("../lib/message-helper").message;
 var Schema = mongoose.Schema;
 
 var UserSchema = new Schema({
-	username:String,
-	password:{ type:String, select:false },
-	name:String,
-	email:String,
-	avatar:String,
-	createdOn:Date,
-	role:String,
-	admin:Boolean,
-	resetPasswordToken: String,
-  resetPasswordExpires: Date
+	username             : String,
+	password             : { type:String, select:false },
+	name                 : { type:String, default:"" },
+	email                : { type:String, default:"" },
+	avatar               : String,
+	createdOn            : Date,
+	role                 : String,
+	admin                : Boolean,
 });
 
 /**

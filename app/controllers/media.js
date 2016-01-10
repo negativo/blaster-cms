@@ -6,11 +6,18 @@ module.exports = function(app){
 	Post       = require("../models/posts"),
 	Page       = require("../models/pages"),
 	Comment    = require("../models/comments"),
+	Media      = require("../models/media"),
 	Render     = require("../lib/render-helper").public;
 
 	return {
 		index: function (req, res) {
-			res.send("show list");
+			res.locals.pagename = " Media";
+			res.locals.bodyclass = "dashboard-media";
+			Media.find({}, function(err, medias){
+				if(err) console.log("media.js :17", err);
+				res.locals.medias = medias;
+				res.render("media", new Render(req) );
+			});
 		},
 		show: function (req, res) {
 			res.send("show single");
@@ -22,7 +29,10 @@ module.exports = function(app){
 			res.send("store single");
 		},
 		destroy:function(req,res){
-			res.send("delete");
+			var image_id = req.params.id;
+			Media.removeMedia(image_id, function(err){
+				if(!err) res.send("delete");
+			});
 		},
 		edit:function(req,res){
 			res.send("edit view");

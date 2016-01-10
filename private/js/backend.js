@@ -21,6 +21,11 @@
 				$("body").delegate(".avatar-container","click",function(){
 					$("body").find("#avatar-uploader").trigger("click");
 				});
+
+				$("body").delegate(".upload-file","click",function(){
+					$("#media-upload-form").find("input").trigger("click");
+				});
+
 				//when file chose trigger upload
 				$("#avatar-uploader").on("change",function(){
 					$("#avatar-submit").trigger("click");
@@ -92,10 +97,78 @@
 				backend.request.chooseTheme();
 				backend.request.register();
 				backend.request.deleteUser();
-				backend.request.search();
+				backend.request.media_upload();
+				backend.request.remove_media();
 			},
-			search:function(){
+			remove_media: function(){
+				var $button = $(".remove-media");
 
+				$button.click(function(e){
+					e.preventDefault();
+					var $image = $(this).parent().parent();
+					var image_id = $(this).next().data("id");
+
+					if(confirm("Are you sure you want to delete this image?")){
+						$.ajax({
+							url: '/api/media/' + image_id,
+							type: 'delete',
+							success: function(res){
+								if(res === "delete") $image.fadeOut();
+							}	
+						});
+					}
+
+					
+				})
+			},
+			media_upload:function(){
+				var max_filesize = 2 * 1000000; // 2MB
+
+				$('#media-upload-form').submit(function(e) {
+					e.preventDefault();
+				});
+
+				$('#file-upload').change(function(event) {
+					event.preventDefault();
+					event.stopPropagation();
+					
+					var form = new FormData();
+
+					$button = $("body").find('.upload-file');
+
+					$button.html('<i class="fa fa-cog fa-spin"></i>');
+
+					var files = [];
+					var files = $("#media-upload-form").find("input")[0].files;
+
+					for (var i = 0; i < files.length; i++) {
+						if(files[i].size <= max_filesize){
+							form.append('upload', files[i]);
+						}else{
+							toastr.error("File too big (max "+ max_filesize+"):<br>" + files[i].name);
+						}
+					};
+					
+					
+					$.ajax({
+						url: '/api/upload',
+						type: 'POST',
+						cache:false,
+						processData: false,
+    				contentType: false,
+						data: form,
+						success: function(res){
+							$button.html('<i class="fa fa-upload"></i>');
+							toastr.success("Media Uploaded");
+							console.log("backend.js :112", res);
+							$('#media-upload-form')[0].reset();
+							setTimeout(function(){
+										window.location.reload();
+							},1000);	
+						}
+					})
+					
+				});
 			},
 			login:function(){
 				var $bh = $(window).height();
