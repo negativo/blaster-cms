@@ -10,6 +10,7 @@ module.exports = function(app,express){
 	var CommentCtrl = require("../controllers/comment")(app);
 	var ApiCtrl     = require("../controllers/api")(app);
 	var UserCtrl    = require("../controllers/user")(app);
+	var MediaCtrl   = require("../controllers/media")(app);
 
 	app.get('/admin',function(req,res){
 		if(typeof req.user != 'undefined' && req.user.role !== 'guest'){
@@ -42,6 +43,12 @@ module.exports = function(app,express){
 	app.get('/admin/users/:id'      , UserCtrl.show );
 	app.get('/admin/new-user'       , PrivateCtrl.newUser );
 	app.get('/admin/register'       , PrivateCtrl.register );
+
+	/**
+	 * MEDIA
+	 */
+
+	app.get('/admin/media', MediaCtrl.index );
 
 	/**
 	 * COMMENTS
