@@ -15,7 +15,6 @@ module.exports = function(app,express){
 	app.get('/api/posts'           , PostCtrl.index );
 	app.get('/api/pages'           , PageCtrl.index );
 
-	
 	/**
 	 * POST
 	 */
