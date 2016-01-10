@@ -148,8 +148,7 @@
 							toastr.error("File too big (max "+ max_filesize+"):<br>" + files[i].name);
 						}
 					};
-					
-					
+
 					$.ajax({
 						url: '/api/upload',
 						type: 'POST',
@@ -166,7 +165,7 @@
 										window.location.reload();
 							},1000);	
 						}
-					})
+					});
 					
 				});
 			},
@@ -181,18 +180,6 @@
 				});
 				$(".form-container").fadeIn();
 				
-				// $(".login-form").submit(function(e){
-				// 	e.preventDefault();
-				// 	var data = {
-				// 		username: $("#username").val().trim(),
-				// 		password: $("#password").val().trim()
-				// 	};
-				// 	$.post("/admin/login", data, function(err, res){
-				// 		console.log("backend.js", res);
-				// 		if( res.err ) console.log("backend.js", res.err);
-				// 		if( !res.err ) window.location.replace("/admin/panel");
-				// 	});
-				// });
 			},
 			register:function(){
 				var capthacQuestion = $("#captcha-q"),

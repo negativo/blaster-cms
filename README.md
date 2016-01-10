@@ -22,18 +22,20 @@ npm start use nodemon on server.js if you have problem with it you should instal
 	npm install -g nodemon
 
 ##changelog
+	- implemented media view/upload/delete
 	- refactored a lot of file
 	- shared data in app.locals, no more in request object
-	- middleware split and redone
+	- middlewares split and redone
+	- models enhanced
+	- controller splitted and enhanced in a restful way
 	- updated some packages
 
-## Bugs
-	- Changing password on user results in password change but username gets delete :\ wtf
+## Known Bugs
 
 ##ToDos
 	priority > 1 > 2 > 3 (self explanatory)
 	- [1] Password reset.
-	- [2] Uploaded image browser.
-	- [2] user restriction Admin>Editor>Guest, we have those 3 type of user but still not rules for them
-	- [3] add google analithycs script inserction on Configurations and append it in a file that get inculded in footer of the theme.
+	- [2] User Authorizations
+	- [2] File browser in tinyMCE ??
+	- [3] add google analytics from configurations
 	- [3] Blank template with only ejs rendering of data to let users bootstrap their theme.

@@ -1,5 +1,7 @@
 var fs = require("fs");
 var mongoose = require("mongoose");
+var path = require("path");
+var __root = path.join( __dirname, "../../");
 
 var Schema = mongoose.Schema;
 
