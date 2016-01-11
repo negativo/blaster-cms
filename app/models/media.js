@@ -8,21 +8,13 @@ var Schema = mongoose.Schema;
 var MediaSchema = new Schema({
 	filename:String,
 	path:String,
+	tags:[{ type: Array, default:"media"} ],
 });
 
 
 // STILL DOESN'T WORK
 MediaSchema.post('save', function(media){
-	// console.log("media.js :17", __root + media.path);
-	// lwip.open( __root + media.path, function(err, image){
 
-	// 		image.batch()
-	// 		.scale(0.5)
-	// 		.writeFile( "uploads/" + media.filename, function(err){
-	// 			if(err) console.log("media.js :23", err);
-	// 			clog
-	// 		} );	
-	// });
 });
 
 
