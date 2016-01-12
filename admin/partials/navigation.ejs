@@ -16,7 +16,7 @@
         <!-- USER PROFILE -->
         <img src="<%= user.avatar ? user.avatar : "" %>" alt="">
         <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= user.user  %><b class="caret"></b></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= user.username  %><b class="caret"></b></a>
             <ul class="dropdown-menu">
                 <li>
                     <a href="/admin/users/<%= user.id %>"><i class="fa fa-fw fa-user"></i> Profile</a>

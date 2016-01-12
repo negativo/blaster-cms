@@ -9,17 +9,18 @@ module.exports = function(passport,$ee){
 
   // serializza pure la pass
   passport.serializeUser(function(user, done) {
-    var serializedUser = {
-      id: user._id,
-      user: user.username,
-      role: user.role,
-      avatar: user.avatar
+    var bcrypt = require('bcrypt');
+    var serialized = {
+      id: user.id,
+      token: bcrypt.genSaltSync(10),
     }
-    done(null, serializedUser);
+    done(null, serialized);
   });
 
   passport.deserializeUser(function(user, done) {
-    done(null, user);
+    User.findById( user.id , function(err, user){
+      done(null, user);
+    });
   });
 
 
@@ -38,6 +39,7 @@ module.exports = function(passport,$ee){
             return done(null, false, { message: 'Incorrect username.' });
           }
           if ( user.comparePassword(password) ){
+              console.log("login-strategy.js :42", "LOGIN CHECK");
               $ee.emit("login_event", "Login Succesfull");
               return done(null, user);          
           } else {
