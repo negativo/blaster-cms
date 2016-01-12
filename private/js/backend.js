@@ -11,9 +11,6 @@
 				backend.ui.bindEvent();
 			},
 			sidebar:function(){
-				// $(".side-nav").find("li").click(function(){
-				// 	console.log("backend.js :14", $(this));
-				// });
 			},
 			bindEvent:function(){
 				var $uploader = $("avatarUploaderForm");
@@ -179,7 +176,6 @@
 					"margin-top": $bh
 				});
 				$(".form-container").fadeIn();
-				
 			},
 			register:function(){
 				var capthacQuestion = $("#captcha-q"),
