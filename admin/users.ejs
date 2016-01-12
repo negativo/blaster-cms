@@ -1,9 +1,9 @@
 <%- layout('layouts/admin-panel.ejs') -%>
 
 <div class="container-fluid">
-        <h2 class="page-header">
-            User <small>manage you user permission and account</small>
-        </h2>
+    <h2 class="page-header">
+        User <small>manage you user permission and account</small>
+    </h2>
     <% if (user.role === "admin") { %>
         <a href="#">
             <a href="/admin/new-user"><button type="button" class="btn btn-primary"><i class="fa fa-fw fa-plus"></i> Add new user</button></a>
@@ -29,8 +29,4 @@
         </tr>
     <% }; %>
   </table>		
-
-  <%= JSON.stringify(users) %>
-
-
 </div>

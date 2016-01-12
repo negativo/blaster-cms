@@ -239,7 +239,7 @@
 						if (res === "success") {
 							toastr.success('Profile Changed!');
 							setTimeout(function(){
-								window.location.replace("/admin/panel");
+								window.location.reload();
 							},2000);
 						} else{
 							toastr.error('Error while changing profile');
