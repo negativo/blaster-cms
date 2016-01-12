@@ -71,7 +71,6 @@ module.exports = function(app){
 					}else{ 
 						res.send("error");
 					}
-					//if(req.user.username === user.username) req.logout();
 				});
 			});
 		},

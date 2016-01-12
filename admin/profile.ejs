@@ -29,9 +29,9 @@
         <div class="form-group">
             <label for="role">Role</label>
             <select name="role" id="profile-role" class="form-control">
-                <option value="admin" <%= user.role === "admin" ? "selected" : "" %> >Admin</option>
-                <option value="moderator" <%= user.role === "moderator" ? "selected" : "" %> >Moderator</option>
-                <option value="guest" <%= user.role === "guest" ? "selected" : "" %> >Guest</option>
+                <option value="admin" <%= profile.role === "admin" ? "selected" : "" %> >Admin</option>
+                <option value="moderator" <%= profile.role === "moderator" ? "selected" : "" %> >Moderator</option>
+                <option value="guest" <%= profile.role === "guest" ? "selected" : "" %> >Guest</option>
             </select>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
