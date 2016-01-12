@@ -8,6 +8,7 @@ var Schema = mongoose.Schema;
 var MediaSchema = new Schema({
 	filename:String,
 	path:String,
+	tags: { type:Array, default:"media"},
 });
 
 

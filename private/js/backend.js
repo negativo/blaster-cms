@@ -8,9 +8,21 @@
 		ui:{
 			init:function(){
 				backend.ui.sidebar();
+				backend.ui.login();
 				backend.ui.bindEvent();
 			},
 			sidebar:function(){
+			},
+			login:function(){
+				var $bh = $(window).height();
+				$bh -= $(".form-container").height();
+				$bh /= 2;
+				$bh -= 20;
+
+				$(".form-container").css({
+					"margin-top": $bh
+				});
+				$(".form-container").fadeIn();		
 			},
 			bindEvent:function(){
 				var $uploader = $("avatarUploaderForm");
@@ -26,8 +38,9 @@
 				//when file chose trigger upload
 				$("#avatar-uploader").on("change",function(){
 					$("#avatar-submit").trigger("click");
-				})
-			}	
+				});
+
+			},
 		},
 		plugins:{
 			// pass init function as $.fn so we can call wherever we want it.
@@ -84,7 +97,6 @@
 		request:{
 			init:function(){
 				backend.request.editorGetData();
-				backend.request.login();
 				backend.request.settings();
 				backend.request.navigation();
 				backend.request.profile();
@@ -165,17 +177,6 @@
 					});
 					
 				});
-			},
-			login:function(){
-				var $bh = $(window).height();
-					$bh -= $(".form-container").height();
-					$bh /= 2;
-					$bh -= 20;
-
-				$(".form-container").css({
-					"margin-top": $bh
-				});
-				$(".form-container").fadeIn();
 			},
 			register:function(){
 				var capthacQuestion = $("#captcha-q"),
