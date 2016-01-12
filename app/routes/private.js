@@ -13,13 +13,16 @@ module.exports = function(app,express){
 	var MediaCtrl   = require("../controllers/media")(app);
 
 	app.get('/admin',function(req,res){
-		if(typeof req.user != 'undefined' && req.user.role !== 'guest'){
-			res.redirect('/admin/panel');
-		}
+		res.redirect('/admin/panel');
+	});
+
+	app.get('/admin/logout',function(req,res){
+		req.logout();
+		res.redirect('/admin/login');
 	});
 
 	// ADMIN PANEL
-	app.get('/admin/panel'          , PrivateCtrl.dashboard );
+	app.get('/admin/panel'         , PrivateCtrl.dashboard );
 
 	/**
 	 * POSTS
