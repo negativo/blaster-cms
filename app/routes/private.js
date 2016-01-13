@@ -12,6 +12,13 @@ module.exports = function(app,express){
 	var UserCtrl    = require("../controllers/user")(app);
 	var MediaCtrl   = require("../controllers/media")(app);
 
+	/**
+	 * AUTHORIZATIONS
+	 */
+	var guest     = require('../middlewares/roles')('guest');
+	var moderator = require('../middlewares/roles')('moderator');
+	var admin     = require('../middlewares/roles')('admin');
+
 	app.get('/admin',function(req,res){
 		res.redirect('/admin/panel');
 	});
@@ -31,7 +38,6 @@ module.exports = function(app,express){
 	app.get('/admin/new-post'      , PostCtrl.create );
 	app.get('/admin/edit-post/:id' , PostCtrl.edit );
 
-
 	/**
 	 * PAGES
 	 */
@@ -42,8 +48,10 @@ module.exports = function(app,express){
 	/**
 	 * USERS
 	 */
-	app.get('/admin/users'          , UserCtrl.index );
+	//use should be able to modify his data, need to do it
+	app.get('/admin/users'          , admin, UserCtrl.index );
 	app.get('/admin/users/:id'      , UserCtrl.show );
+
 	app.get('/admin/new-user'       , PrivateCtrl.newUser );
 	app.get('/admin/register'       , PrivateCtrl.register );
 
@@ -61,10 +69,10 @@ module.exports = function(app,express){
 	/**
 	 * CONFIGURATION && CUSTOMIZATION
 	 */
-	app.get('/admin/configurations' , PrivateCtrl.configurations );
-	app.get('/admin/navigation'     , PrivateCtrl.navigation );
-	app.get('/admin/themes'         , PrivateCtrl.themes_index );
-	app.get('/admin/custom-css'     , PrivateCtrl.edit_css );
+	app.get('/admin/configurations' , admin, PrivateCtrl.configurations );
+	app.get('/admin/navigation'     , admin, PrivateCtrl.navigation );
+	app.get('/admin/themes'         , admin, PrivateCtrl.themes_index );
+	app.get('/admin/custom-css'     , admin, PrivateCtrl.edit_css );
 
 	/**
 	 * LOGIN

@@ -96,6 +96,7 @@
 		},
 		request:{
 			init:function(){
+				backend.request.setup();
 				backend.request.editorGetData();
 				backend.request.settings();
 				backend.request.navigation();
@@ -108,6 +109,14 @@
 				backend.request.deleteUser();
 				backend.request.media_upload();
 				backend.request.remove_media();
+			},
+			setup:function(){
+				$( document ).ajaxError(function(err, head) {
+				  console.log('You are not authorized to do this action!')
+				  if(head.status === 403){
+				  	toastr.error("Your are not authorized to do this!","Contact the admin!");
+				  }
+				});
 			},
 			remove_media: function(){
 				var $button = $(".remove-media");

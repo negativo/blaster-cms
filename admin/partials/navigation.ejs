@@ -52,10 +52,10 @@
             <li>
                 <a href="/admin/comments"><i class="fa fa-fw fa-comments"></i> Comments</a>
             </li>            
-            <li>
+            <li style="<%= user.role !== 'admin' ? 'display:none;' : '' %>">
                 <a href="/admin/users"><i class="fa fa-fw fa-user"></i> Users</a>
             </li>
-            <li>
+            <li style="<%= user.role !== 'admin' ? 'display:none;' : '' %>">
                 <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-picture-o"></i> Appearance <i class="fa fa-fw fa-caret-down"></i></a>
                 <ul id="demo" class="collapse">
                     <li>
@@ -69,7 +69,7 @@
                     </li>
                 </ul>
             </li>
-            <li>
+            <li style="<%= user.role !== 'admin' ? 'display:none;' : '' %>">
                 <a href="/admin/configurations"><i class="fa fa-fw fa-cog"></i> Settings</a>
             </li>
         </ul>
