@@ -22,6 +22,7 @@ npm start use nodemon on server.js if you have problem with it you should instal
 ##changelog
 	- 3 Kind of user authorization, seems working, 403 returning when unauthorized
 	- media manager
+	- configurations parsed in request only if updated if not using the cached one.
 
 ## Known Bugs
 
