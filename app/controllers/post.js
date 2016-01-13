@@ -37,6 +37,7 @@ module.exports = function(app){
 			res.render("editor", new Render(req, { editor: "post", templates: app.locals.templates.post }) );
 		},
 		store:function(req,res){
+			console.log("post.js :40", req.body);
 			var post = req.body;
 			new Post({
 				title: post.title || "Post Title",
@@ -49,7 +50,9 @@ module.exports = function(app){
 				},
 				tags: post.tags || [],
 				status:"Published"
-			}).save();
+			}).save(function(err){
+				console.log("post.js :53", err);
+			});
 			res.send("success");	
 		},
 		destroy:function(req,res){

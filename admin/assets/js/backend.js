@@ -8,12 +8,21 @@
 		ui:{
 			init:function(){
 				backend.ui.sidebar();
+				backend.ui.login();
 				backend.ui.bindEvent();
 			},
 			sidebar:function(){
-				// $(".side-nav").find("li").click(function(){
-				// 	console.log("backend.js :14", $(this));
-				// });
+			},
+			login:function(){
+				var $bh = $(window).height();
+				$bh -= $(".form-container").height();
+				$bh /= 2;
+				$bh -= 20;
+
+				$(".form-container").css({
+					"margin-top": $bh
+				});
+				$(".form-container").fadeIn();		
 			},
 			bindEvent:function(){
 				var $uploader = $("avatarUploaderForm");
@@ -29,8 +38,9 @@
 				//when file chose trigger upload
 				$("#avatar-uploader").on("change",function(){
 					$("#avatar-submit").trigger("click");
-				})
-			}	
+				});
+
+			},
 		},
 		plugins:{
 			// pass init function as $.fn so we can call wherever we want it.
@@ -87,7 +97,6 @@
 		request:{
 			init:function(){
 				backend.request.editorGetData();
-				backend.request.login();
 				backend.request.settings();
 				backend.request.navigation();
 				backend.request.profile();
@@ -169,18 +178,6 @@
 					
 				});
 			},
-			login:function(){
-				var $bh = $(window).height();
-					$bh -= $(".form-container").height();
-					$bh /= 2;
-					$bh -= 20;
-
-				$(".form-container").css({
-					"margin-top": $bh
-				});
-				$(".form-container").fadeIn();
-				
-			},
 			register:function(){
 				var capthacQuestion = $("#captcha-q"),
 					capthacAnswer = $("#captcha-a"),
@@ -242,7 +239,7 @@
 						if (res === "success") {
 							toastr.success('Profile Changed!');
 							setTimeout(function(){
-								window.location.replace("/admin/panel");
+								window.location.reload();
 							},2000);
 						} else{
 							toastr.error('Error while changing profile');

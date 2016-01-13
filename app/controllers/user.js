@@ -66,12 +66,12 @@ module.exports = function(app){
 				user.email = profile.email;
 				user.role = profile.role;
 				user.save(function(err){
-					console.log("private-request.js :229", err);
-					if(err === null ) res.send("success");
-						else res.send("error")
-					req.logout();
+					if(!err) {
+						res.send("success");
+					}else{ 
+						res.send("error");
+					}
 				});
-				req.logout();
 			});
 		},
 		change_password:function(req,res){

@@ -22,54 +22,62 @@ module.exports = function(app,express){
 	var UserCtrl    = require("../controllers/user")(app);
 	var MediaCtrl   = require("../controllers/media")(app);
 
-	app.get('/api/posts'           , PostCtrl.index );
-	app.get('/api/pages'           , PageCtrl.index );
+	/**
+	 * AUTHORIZATIONS
+	 */
+	var guest     = require('../middlewares/roles')('guest');
+	var moderator = require('../middlewares/roles')('moderator');
+	var admin     = require('../middlewares/roles')('admin');
+
+
+	app.get('/api/posts'     , guest, PostCtrl.index );
+	app.get('/api/pages'     , guest, PageCtrl.index );
 
 	/**
 	 * POST
 	 */
-	app.post("/api/post"           , PostCtrl.store );
-	app.post('/api/post/:id'       , PostCtrl.update );
+	app.post("/api/post"     , moderator, PostCtrl.store );
+	app.post('/api/post/:id' , moderator, PostCtrl.update );
 
 	/**
 	 * PAGE
 	 */
-	app.post("/api/page"           , PageCtrl.store   );
-	app.post('/api/page/:id'       , PageCtrl.update  );
+	app.post("/api/page"     , moderator, PageCtrl.store   );
+	app.post('/api/page/:id' , moderator, PageCtrl.update  );
 
 	/**
 	 * MEDIAS
 	 */
-	app.delete("/api/media/:id"     , MediaCtrl.destroy );
+	app.delete("/api/media/:id"     , moderator, MediaCtrl.destroy );
 
 	 /**
 	 * COMMENTS
 	 */
-	app.post("/api/comment"        , CommentCtrl.store );
-	app.post("/api/comment/:id"    , CommentCtrl.update );
-	app.delete("/api/comment/:id"     , CommentCtrl.destroy );
-	app.post("/api/comment/reply/" , CommentCtrl.reply );
+	app.post("/api/comment"        , moderator, CommentCtrl.store );
+	app.post("/api/comment/:id"    , moderator, CommentCtrl.update );
+	app.delete("/api/comment/:id"  , moderator, CommentCtrl.destroy );
+	app.post("/api/comment/reply/" , moderator, CommentCtrl.reply );
 
 	/**
 	 * USERS
 	 */
-	app.post('/api/user'                  , UserCtrl.store ); // registar
-	app.post('/api/user/:id'   	          , UserCtrl.update );
-	app.post('/api/user/:id/password'   	, UserCtrl.change_password );
-	app.delete('/api/user/:id'               , UserCtrl.destroy );
+	app.post('/api/user'                  , admin, UserCtrl.store ); // registar
+	app.post('/api/user/:id'   	          , admin, UserCtrl.update );
+	app.post('/api/user/:id/password'   	, admin, UserCtrl.change_password );
+	app.delete('/api/user/:id'            , admin, UserCtrl.destroy );
 	
 	/**
 	 * CONFIGS
 	 */
-	app.post('/api/configuration'  , ConfCtrl.edit );
-	app.post('/api/navigation'     , ConfCtrl.edit_nav );
-	app.post('/api/themes'         , ConfCtrl.edit_themes );
-	app.post('/api/custom-css'     , ConfCtrl.edit_css );
+	app.post('/api/configuration'  , admin, ConfCtrl.edit );
+	app.post('/api/navigation'     , admin, ConfCtrl.edit_nav );
+	app.post('/api/themes'         , admin, ConfCtrl.edit_themes );
+	app.post('/api/custom-css'     , admin, ConfCtrl.edit_css );
 
 	/**
 	 * UPLOADS
 	 */
-	app.post('/api/upload'            , uploader.array('upload') , ApiCtrl.upload_photo  );
-	app.post('/api/upload/avatar/:id' , avatar.single('avatar')   , ApiCtrl.upload_avatar );
+	app.post('/api/upload'            , moderator, uploader.array('upload') , ApiCtrl.upload_photo  );
+	app.post('/api/upload/avatar/:id' , moderator, avatar.single('avatar')   , ApiCtrl.upload_avatar );
 }
 

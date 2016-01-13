@@ -12,12 +12,6 @@ var MediaSchema = new Schema({
 });
 
 
-// STILL DOESN'T WORK
-MediaSchema.post('save', function(media){
-
-});
-
-
 // Model's Methods
 MediaSchema.statics.all = function (callback) {
   return this.find({ }, callback);
@@ -33,7 +27,6 @@ MediaSchema.statics.removeMedia = function (id, callback) {
   	})
   })
 }
-
 
 module.exports = mongoose.model("Media", MediaSchema);
 

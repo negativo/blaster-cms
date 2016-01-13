@@ -1,7 +1,8 @@
 var	dotenv   = require("dotenv").load(),
 Configs      = require('../models/configs'),
 fs           = require('fs'),
-Q 	         = require('q'),
+csrf         = require('csurf'),
+Q            = require('q'),
 bodyParser   = require('body-parser'),
 cookieParser = require('cookie-parser'),
 session      = require('express-session'),
@@ -9,7 +10,7 @@ flash 			 = require("connect-flash"),
 passport     = require('passport'),
 mongoose     = require('mongoose'),
 MongoStore	 = require('connect-mongo')(session),
-FileStore 	 = require('session-file-store')(session);
+mustBe 			 = require('./roles');
 
 module.exports = function(app,express, $ee){
 
@@ -43,19 +44,16 @@ module.exports = function(app,express, $ee){
 	 */
 	app.use('/uploads' , express.static( __root + '/uploads') );
 	app.use('/avatar'  , express.static( __root + '/uploads/avatar') );
-	app.use('/private' , express.static( __root + '/private') );
+	app.use('/admin' , express.static( __root + '/admin') );
 
 
 	/**
-	 * INSTALLATION CHECKS
+	 * PARSERs
 	 */
-	//app.use(installer.check);
-	//app.use(installer.check_redirect);
-
-	//parsers
-	app.use(bodyParser.urlencoded({ extended: true }));
-	app.use(bodyParser.json());
-	app.use(cookieParser());
+	var csrfProtection = csrf({ cookie: true });
+	app.use( bodyParser.urlencoded({ extended: true }) );
+	app.use( bodyParser.json() );
+	app.use( cookieParser() );
 	
 	/**
 	 * LOGIN STRATEGIES
@@ -68,7 +66,7 @@ module.exports = function(app,express, $ee){
 	app.use( session( app.__sessionOption )); // problem when installing because of session storage of mongo still uninitialized
 	app.use( passport.initialize());
 	app.use( passport.session());
-	app.use(flash());
+	app.use( flash() );
 
 
 	/**
@@ -84,13 +82,24 @@ module.exports = function(app,express, $ee){
 	//redirect to login if no authenticated and accessing admin areas
 	app.use('/admin', function(req,res,next){
 		if(req.url !== '/login' && req.method === 'GET' && !req.isAuthenticated() ) return res.redirect('/admin/login'); 
+		if(req.url === '/login' && req.method === 'GET' && req.isAuthenticated() ) return res.redirect('/admin/panel'); 
 		next();
-	})
+	});
 
   //with this you get login status in frontend
 	app.use(function(req,res,next){
 		if (req.method === 'GET' ) app.locals.isAuthenticated = req.isAuthenticated() || false;
 		next();
 	});
+
+	// add roles middleware on all /admin route except /login
+	app.use(/^\/admin\/[^login].*/, mustBe('moderator'));
+
+
+	app.use('/login', function(req,res,next){
+		res.redirect('/admin/login');
+		next();
+	});
+
 	
 }
