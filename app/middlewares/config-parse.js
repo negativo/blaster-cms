@@ -7,12 +7,13 @@ module.exports = function (app, $ee) {
 			locals = app.locals;
 	
 	return function(req,res,next){
-		console.log("config-parse.js :9", "PARSING");
 		app.locals.templates = {
 			post:[],
 			page:[],
 		};
-		if (app.get('is_installed')){
+			
+		if (app.get('is_installed') && (app.get('configs_parsed') <= app.get('configs_updated') || !app.get('configs_parsed')) ){
+			console.log("Parsing configuration in request".yellow);
 			Configs.findOne({},function(err,configs){
 				if(err){
 					console.log('middlewares.js :76', err);
@@ -54,7 +55,7 @@ module.exports = function (app, $ee) {
 					 */
 					fs.readdir(__root + '/themes/',function(err, list){
 						app.locals.templates.theme = list;
-						$ee.emit('configs_updated', configs, 'Configuration has been attached to requestes');
+						$ee.emit('configs_parsed', configs, 'Configuration has been attached to requestes');
 						next();			
 					});
 				});

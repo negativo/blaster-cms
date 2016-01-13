@@ -33,9 +33,9 @@ require(app.locals.__app + "/middlewares/middlewares")(app,express,$ee);
 /**
  * ROUTES
  */
-require(app.locals.__app + "/routes/public")(app,express), 	// Public
-require(app.locals.__app + "/routes/private")(app,express),	// Private
-require(app.locals.__app + "/routes/api")(app,express);			// API
+require(app.locals.__app + "/routes/public")(app,express,$ee), 	// Public
+require(app.locals.__app + "/routes/private")(app,express,$ee),	// Private
+require(app.locals.__app + "/routes/api")(app,express,$ee);			// API
 
 
 /**

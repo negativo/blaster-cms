@@ -33,8 +33,5 @@ module.exports = function(app, express, $ee){
 	 */
 	installer.check_database(app);
 
-
-	
-
 	$ee.emit('server_configured');
 }

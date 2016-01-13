@@ -20,7 +20,13 @@ module.exports = function(app,$ee){
 
 
 	$ee.on("configs_updated",function(configs, message){
-		console.log("events.js :8", "configuration parsed".green);
+		app.set('configs_updated', Date.now() );
+		console.log("configuration has been updated".green);
+	});
+
+	$ee.on("configs_parsed",function(configs, message){
+		app.set('configs_parsed', Date.now() );
+		console.log("Configurations parsed in request".green);
 	});
 
 

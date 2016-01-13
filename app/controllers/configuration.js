@@ -1,4 +1,4 @@
-module.exports = function(app){
+module.exports = function(app,$ee){
 
 	var toSlug = require('to-slug-case'),
 	fs 				 = require("fs"),
@@ -20,7 +20,7 @@ module.exports = function(app){
 				configs.home = req.body.home;
 				configs.save(function(err){
 					if(!err) {
-						//req.logout();
+						$ee.emit('configs_updated');
 						res.send("success");
 					}
 				});
@@ -39,16 +39,19 @@ module.exports = function(app){
 						}
 					};
 				};
-				configs.save();
-				res.send("success");
+				configs.save(function(){
+					$ee.emit('configs_updated');
+					res.send("success");
+				});
 			});
 		},
 		edit_themes:function(req,res){
 			Config.findOne(function(err,configs){
 				configs.theme = req.body.theme;
 				configs.save(function(err){
-					if(!err) return res.send("success");
-					res.send("error")
+					if(err) return res.send("error");
+					$ee.emit('configs_updated');
+					res.send("success")
 				});
 			});
 		},
@@ -59,12 +62,14 @@ module.exports = function(app){
 					fs.open(app.locals.__root + "/views/"+ app.get('theme') +"/css/custom.css","w",function(err){
 						fs.writeFile(app.locals.__root + "/views/"+ app.get('theme') +"/css/custom.css", req.body.css , function(err){
 							if(err) return res.send(err);
+							$ee.emit('configs_updated');
 							res.send("success");
 						});
 					});
 				}else{
 					fs.writeFile(app.locals.__root + "/views/"+ app.get('theme') +"/css/custom.css", req.body.css , function(err){
 						if(err) return res.send(err);
+						$ee.emit('configs_updated');
 						res.send("success");
 					});
 				}
