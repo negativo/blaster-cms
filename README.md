@@ -12,6 +12,8 @@ That's what I need to bootstrap small projects.
 All basic function are working, it's time to give backend some UX/UI and start adding utility to backend, I'm thinking of a plugin system to add functionality with node modules, I'll start it when I'm done with everything else
 
 ##Installation
+At first startup it get installed, be sure to check .env file for database and other datas needed for installation
+
 	npm install
 	bower install
 	npm start
