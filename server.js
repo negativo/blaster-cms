@@ -16,14 +16,15 @@ app.locals.__admin  = __dirname + "/admin";
 app.locals.__port   = port;
 
 /**
+ * EVENTS
+ */
+require(app.locals.__app + "/configs/events")(app,$ee);
+
+/**
  * CONFIG & STARTUPS
  */
 require(app.locals.__app + "/configs/config")(app, express, $ee);
 
-/**
- * EVENTS
- */
-require(app.locals.__app + "/configs/events")(app,$ee);
 
 /**
  * MIDDLEWARES GLOBALS
@@ -56,5 +57,5 @@ process.on("exit", function(err){
  * START SERVER
  */
 app.listen(app.locals.__port, function(){
-	console.log("fire it up on port: " + app.locals.__port);
+	console.log(String("Server up on port: " + app.locals.__port).inverse.green);
 });	

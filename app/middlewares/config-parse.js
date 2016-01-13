@@ -13,7 +13,7 @@ module.exports = function (app, $ee) {
 		};
 			
 		if (app.get('is_installed') && (app.get('configs_parsed') <= app.get('configs_updated') || !app.get('configs_parsed')) ){
-			console.log("Parsing configuration in request".yellow);
+			console.log("Parsing configuration in request".blue);
 			Configs.findOne({},function(err,configs){
 				if(err){
 					console.log('middlewares.js :76', err);

@@ -21,17 +21,17 @@ module.exports = function(app,$ee){
 
 	$ee.on("configs_updated",function(configs, message){
 		app.set('configs_updated', Date.now() );
-		console.log("configuration has been updated".green);
+		console.log("configuration has been updated".cyan);
 	});
 
 	$ee.on("configs_parsed",function(configs, message){
 		app.set('configs_parsed', Date.now() );
-		console.log("Configurations parsed in request".green);
+		console.log("Configurations parsed in request".cyan);
 	});
 
 
 	$ee.on('server_configured', function(){
-		console.log("events.js :37", "server configured".green);
+		console.log("Server configurations done!".inverse.green);
 	});
 
 }

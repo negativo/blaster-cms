@@ -32,5 +32,6 @@ npm start use nodemon on server.js if you have problem with it you should instal
 	- [2] CSRF
 	- [3] Refactor all in controllers
 	- [2] File browser in tinyMCE ??
+	- [3] Optimize here and there
 	- [3] add google analytics from configurations
 	- [3] Blank template with only ejs rendering of data to let users bootstrap their theme.
