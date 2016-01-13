@@ -15,7 +15,10 @@ module.exports = function(app, express, $ee){
 	    console.log = function(){};
 	} else{
 		var morgan = require('morgan');
-	    app.use(morgan('dev'));
+		// show only errors
+		app.use(morgan('dev', {
+			skip: function(req,res){ return res.statusCode < 400; }
+		}));
 	};
 	
 	/**
