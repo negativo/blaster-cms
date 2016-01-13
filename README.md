@@ -14,28 +14,22 @@ All basic function are working, it's time to give backend some UX/UI and start a
 ##Installation
 	npm install
 	bower install
-	cd private
-	bower install
 	npm start
 
 npm start use nodemon on server.js if you have problem with it you should install it globally
 	npm install -g nodemon
 
 ##changelog
-	- implemented media view/upload/delete
-	- refactored a lot of file
-	- shared data in app.locals, no more in request object
-	- middlewares split and redone
-	- models enhanced
-	- controller splitted and enhanced in a restful way
-	- updated some packages
+	- 3 Kind of user authorization, seems working, 403 returning when unauthorized
+	- media manager
 
 ## Known Bugs
 
 ##ToDos
 	priority > 1 > 2 > 3 (self explanatory)
 	- [1] Password reset.
-	- [2] User Authorizations
+	- [2] CSRF
+	- [3] Refactor all in controllers
 	- [2] File browser in tinyMCE ??
 	- [3] add google analytics from configurations
 	- [3] Blank template with only ejs rendering of data to let users bootstrap their theme.

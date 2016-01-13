@@ -4,11 +4,16 @@
   "authors": [
     "Kirkhammetz <Neofrascati@hotmail.it>"
   ],
-  "description": "personal blog",
+  "description": "personal CMS",
   "license": "MIT",
   "dependencies": {
+    "fastclick": ">=0.6.11",
+    "font-awesome": "~4.4.0",
     "foundation": "~5.5.2",
+    "jquery": "~2.1.4",
     "toastr": "~2.1.2",
-    "momentjs": "~2.10.6"
+    "momentjs": "~2.10.6",
+    "bootstrap": "~3.3.5",
+    "tinymce": "~4.3.2"
   }
 }

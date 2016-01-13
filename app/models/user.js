@@ -10,7 +10,7 @@ var UserSchema = new Schema({
 	password             : { type:String, select:false },
 	name                 : { type:String, default:"" },
 	email                : { type:String, default:"" },
-	avatar               : { type:String, default:"/private/dummy-user.png" },
+	avatar               : { type:String, default: require('../configs/globals').admin_assets + "dummy-user.png" },
 	createdOn            : Date,
 	role                 : String,
 	admin                : Boolean,

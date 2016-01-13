@@ -23,9 +23,10 @@ module.exports = function(app, express, $ee){
 	 */
 	app.engine('ejs', ejs_mate);
 	app.set('view engine', 'ejs');
-	app.set('views', locals.__root + '/views/' + locals.__theme);
+	app.set('views', locals.__root + '/themes/' + locals.__theme);
 	app.set('base_url',process.env.BASE_URL + ':' + locals.__port);
 	app.set('theme',process.env.DEFAULT_THEME);
+
 
 	/**
 	 * CHECK DB CONNECTION && INSTALLATION

@@ -48,7 +48,6 @@
     "path": "^0.11.14",
     "q": "^1.4.1",
     "request": "^2.60.0",
-    "session-file-store": "0.0.24",
     "to-slug-case": "^0.1.2"
   },
   "devDependencies": {

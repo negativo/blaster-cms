@@ -11,8 +11,8 @@ module.exports = function (app) {
 			app.set('views', __root + '/admin' )
 			next();
 		}else{
-			app.use( express.static(__root + '/views/' + app.get('theme') ) );
-			app.set('views', __root + '/views/' + app.get('theme') );
+			app.use( express.static(__root + '/themes/' + app.get('theme') ) );
+			app.set('views', __root + '/themes/' + app.get('theme') );
 			next();
 		}
 	};

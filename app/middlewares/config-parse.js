@@ -32,7 +32,7 @@ module.exports = function (app, $ee) {
 				/**
 				 * SCAN POST/PAGE TEMPLATES FILE
 				 */
-				fs.readdir(__root + '/views/' + app.get('theme') ,function(err, list){
+				fs.readdir(__root + '/themes/' + app.get('theme') ,function(err, list){
 					if(err){
 						console.log('middlewares.js :85', err);
 					}
@@ -52,7 +52,7 @@ module.exports = function (app, $ee) {
 					/**
 					 * SCAN THEMES	
 					 */
-					fs.readdir(__root + '/views/',function(err, list){
+					fs.readdir(__root + '/themes/',function(err, list){
 						app.locals.templates.theme = list;
 						$ee.emit('configs_updated', configs, 'Configuration has been attached to requestes');
 						next();			
