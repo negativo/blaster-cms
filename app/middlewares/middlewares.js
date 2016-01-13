@@ -66,10 +66,6 @@ module.exports = function(app,express, $ee){
 	 */
 	app.use( session( app.__sessionOption )); // problem when installing because of session storage of mongo still uninitialized
 	app.use( passport.initialize());
-	app.use(function(req,res,next){
-		console.log("middlewares.js :70", req.session);	
-		next();
-	})
 	app.use( passport.session());
 	app.use(flash());
 
@@ -107,17 +103,5 @@ module.exports = function(app,express, $ee){
 		next();
 	});
 
-	// app.use(function(req,res,next){
-	// 	console.log("middlewares.js :107", req.user);	
-	// 	console.log("middlewares.js :108", req.session);
-	// 	next();
-	// })
-
-
-	// app.use('/api', csrfProtection );
-	// app.use('/api', function(req,res,next){
-	// 	console.log("middlewares.js :101", req.csrfToken() );
-	// 	next();
-	// });
 	
 }
