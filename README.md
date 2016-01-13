@@ -30,6 +30,7 @@ npm start use nodemon on server.js if you have problem with it you should instal
 	priority > 1 > 2 > 3 (self explanatory)
 	- [1] Password reset.
 	- [2] CSRF
+	- [2] User should be able to enter their profile if guest/moderator and edit basic data &&|| delete account
 	- [3] Refactor all in controllers
 	- [2] File browser in tinyMCE ??
 	- [3] Optimize here and there
