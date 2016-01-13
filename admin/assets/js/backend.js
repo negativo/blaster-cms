@@ -320,7 +320,7 @@
 				});	
 
 				$addLink.click(function(e){
-					$socialsContainer.append('<div class="form-group"><label for="text" contenteditable>Edit this</label><input type="text" class="form-control social-link"></div>');
+					$socialsContainer.append('<div class="form-group"><label for="text" contenteditable>Edit this label to the social name</label><input type="text" class="form-control social-link" placeholder="Social Link"></div>');
 				});
 
 				$settingsForm.submit(function(e){
