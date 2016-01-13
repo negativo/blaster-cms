@@ -375,6 +375,7 @@
 				$(".remove-page-from-nav").click(function(e){
 					e.preventDefault();	
 					$(this).parent().remove();
+					$("#navigation-form").submit();
 				});				
 
 				$addLink.click(function(e){
@@ -397,8 +398,7 @@
 						getNavigation.links = [];
 						toastr.success('Navigation Changed!');
 						console.log("backend.js :218", res);
-						setTimeout(function(){ window.location.replace("/admin/navigation"); }, 2000)
-						
+						pageReload();
 					});
 
 				});		
@@ -562,7 +562,14 @@
 	}
 	backend.init();
 
-	//HELPERS
+	/**
+	 * [getData description]
+	 */
+	
+	var pageReload = function(){
+		return setTimeout(function(){ window.location.reload(); }, 1500);
+	}
+
 	$.fn.getData = function(item){
 		var i = item;
 		console.log("backend.js", i);

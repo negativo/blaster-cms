@@ -5,7 +5,7 @@
         Navigation <small>set you website navigation</small>
     </h2>
 	<div class="col-md-4 add-pages-container">
-		<h4 class="page-header"><small>add your pages to the main navigation</small></h4>
+		<h4 class="page-header"><small>Add your pages to the main navigation</small></h4>
 			<% for (var i = 0; i < pages.length; i++) { %>
 				<div class="add-page" data-slug="<%= pages[i].slug %>" data-title="<%= pages[i].title %>">
 					<i class="fa fa-fw fa-plus add-page-to-nav"></i>
@@ -14,17 +14,18 @@
 			<% }; %>
 	</div>
 	<form role="form" class="col-md-6" id="navigation-form">
+		<h4 class="page-header"><small>Your Navigation</h4>
 		<div class="navigation-link-container">
 			<% for(var i=0; i< navigation.length; i++) {%>
 			   <div class="form-group navigation-link-single">
 				   	<i class="fa fa-fw fa-remove remove-page-from-nav"></i>
 				   	<label for="text" contenteditable><%= navigation[i].linkName %></label>
-				   	<input type="text" class="form-control navigation-link" value="<%= navigation[i].link %>">
+				   	<input type="text" class="form-control navigation-link" value="<%= navigation[i].link %>" readonly>
 			   </div>
 			<% } %>					
 		</div>
-		<div class="add-navigation-link add-link"><i class="fa fa-fw fa-plus"></i></div>
-		<button type="submit" class="btn btn-primary">Submit</button>
+		<!-- <div class="add-navigation-link add-link"><i class="fa fa-fw fa-plus"></i></div> -->
+		<button type="submit" class="btn btn-primary pull-right">Save Navigation</button>
 	</form>
     </div>
     <!-- /.container-fluid -->
