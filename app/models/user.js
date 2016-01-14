@@ -14,6 +14,8 @@ var UserSchema = new Schema({
 	createdOn            : Date,
 	role                 : String,
 	admin                : Boolean,
+	resetToken					 : { type:String }, //expires after 30min
+	resetTokenCreated		 : { type:Date },
 });
 
 /**
@@ -39,6 +41,22 @@ UserSchema.methods.comparePassword = function(candidatePassword) {
 	 * @return {boolean}
 	 */
   return crypto.bcrypt.compare(candidatePassword, this.password);
+};
+
+UserSchema.methods.generateResetToken = function(cb) {
+	this.resetToken = require('bcrypt').genSaltSync(24);
+	this.resetTokenCreated = Date.now();
+	return this.save(cb);
+};
+
+/**
+ * [isTokenExpired description]
+ * @return false if not expired
+ */
+UserSchema.methods.isTokenExpired = function() {
+	var now = Date.now();
+	var difference = process.env.RESET_TOKEN_EXPIRES_IN; // 30 min
+	return (Date.now() >= ( this.resetTokenCreated.getTime() + difference*60000)) ;
 };
 
 

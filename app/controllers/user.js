@@ -1,7 +1,7 @@
 module.exports = function(app){
 
 	var toSlug = require('to-slug-case'),
-	$utils     = require("../lib/utils")(app),
+	mail 			 = require('../lib/mail'),
 	User       = require("../models/user"),
 	Configs    = require("../models/configs"),
 	Post       = require("../models/posts"),
@@ -87,6 +87,67 @@ module.exports = function(app){
 			})
 			.fail(function(err){
 				res.send({ message:err, err:true})
+			});
+		},
+		forgotten_password:function(req,res){
+			User.findOne( { email: req.body.email }, function(err, user){
+				if(err) res.send(err);
+				if(!user) res.send('no user found');
+				if(!err && user) {
+					user.generateResetToken(function(err, info){
+						if(!err && info.resetToken) {
+							mail.sendmail({
+								to: user.email,
+								link: app.get('base_url') + "/api/user/reset?token=" + info.resetToken + "&mail=" + info.email,
+							}, function(err, info){
+								if(err) res.send(err);
+								res.send(info);
+							});
+						}
+					});
+				}
+			});
+		},
+		reset_token_check:function(req,res){
+			User.findOne({ email: req.query.mail}, function(err,user){
+				if(err) res.send(err);
+
+				if( !user.resetToken) res.send('token no more avaible, get a new one!');
+
+				if (!user.isTokenExpired()){
+					res.locals.pagename= "Reset Password";
+					res.locals.bodyclass = "reset-page";
+					res.locals.token_url = req.path + "/token";
+					res.locals._token = req.query.token;
+					res.locals._mail = req.query.mail;
+					res.locals.error = req.flash('error');
+					res.render('reset-password-new');
+				}else{
+					res.send("token expired");
+				}
+			});
+		},
+		reset_password:function(req,res){
+			var password = req.body.password;
+			var password_check = req.body['retype-password'];
+			var mail = req.body._mail;
+			var token = req.body._token;
+
+			console.log("user.js :133", req.body);
+
+			if(password !== password_check) res.send('password mismatch, retry!');
+			
+			User.findOne({ email: mail}, function(err,user){
+				if(err) res.send(err);
+				if (!user.isTokenExpired()){
+					user.password = password;
+					user.resetToken = undefined;
+					user.resetTokenCreated = undefined;
+					user.save();
+					res.send('password changed check DB');
+				}else{
+					res.send('request expired, send an email with new token');
+				}
 			});
 		}
 	};

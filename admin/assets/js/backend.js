@@ -109,6 +109,10 @@
 				backend.request.deleteUser();
 				backend.request.media_upload();
 				backend.request.remove_media();
+				backend.request.forgotten_password();
+			},
+			forgotten_password:function(){
+				$form = $("#reset-password-form");
 			},
 			setup:function(){
 				$( document ).ajaxError(function(err, head) {

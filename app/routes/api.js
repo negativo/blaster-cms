@@ -61,6 +61,9 @@ module.exports = function(app,express,$ee){
 	/**
 	 * USERS
 	 */
+	app.get('/api/user/reset'     				, UserCtrl.reset_token_check );
+	app.post('/api/user/reset/:token' 		, UserCtrl.reset_password );
+	app.post('/api/user/reset'          	, UserCtrl.forgotten_password );
 	app.post('/api/user'                  , admin, UserCtrl.store ); // registar
 	app.post('/api/user/:id'   	          , admin, UserCtrl.update );
 	app.post('/api/user/:id/password'   	, admin, UserCtrl.change_password );

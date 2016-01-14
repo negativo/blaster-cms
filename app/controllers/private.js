@@ -140,6 +140,14 @@ module.exports = function(app){
 			res.render("register", new Render(req) );
 		},
 
+		resetPassword:function(req,res){
+			res.locals.pagename = "Reset Password ";
+			res.locals.bodyclass = "login-page";
+			res.locals.error = req.flash('error');
+			
+			res.render('reset-password');
+		},
+
 	};
 
 }

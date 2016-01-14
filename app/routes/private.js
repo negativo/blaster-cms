@@ -54,6 +54,7 @@ module.exports = function(app,express){
 
 	app.get('/admin/new-user'       , PrivateCtrl.newUser );
 	app.get('/admin/register'       , PrivateCtrl.register );
+	app.get('/admin/reset-password' , PrivateCtrl.resetPassword );
 
 	/**
 	 * MEDIA
