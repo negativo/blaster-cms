@@ -1,69 +1,66 @@
 module.exports = function(grunt) {
  grunt.initConfig({
 
-     less: {
-         development: {
-             options: {
-                 paths: ['views/template/css']
-             },
-             files: [{
-					expand: true,
-					cwd: 'views/template/less',
-					src: ['main.less'],
-					dest: 'views/template/css',
-					ext: '.css'
+ 	/**
+ 	 * COMPIPLE LESS
+ 	 */
+  less: {
+    theme_dev: {
+      options: {
+        paths: ['themes/basic/css']
+      },
+      files: [{
+			  expand: true,
+				cwd: 'themes/basic/less',
+				src: ['main.less'],
+				dest: 'themes/basic/css',
+				ext: '.css'
 			}]
-         },
-         backend: {
-             options: {
-                 paths: ['private/css']
-             },
-             files: [{
-					expand: true,
-					cwd: 'private/less',
-					src: ['*.less'],
-					dest: 'private/css',
-					ext: '.css'
+    },
+    admin_backend: {
+      options: {
+        paths: ['admin/assets/css']
+     	},
+      files: [{
+				expand: true,
+				cwd: 'admin/assets/less',
+				src: ['*.less'],
+				dest: 'admin/assets/css',
+				ext: '.css'
 			}]
-         },
-         production: {
-             options: {
-                 paths: ['views/template/css'],
-                 cleancss: true
-             },
-             files: [{
-					expand: true,
-					cwd: 'views/template/less',
-					src: ['main.less'],
-					dest: 'views/template/css',
-					ext: '.css'
-			}]
-         }
-     },
+    },
+  },
 
+  /**
+   * MINIFY
+   */
 	cssmin: {
-	  target: {
+	  basic_theme: {
 	    files: [{
-	      expand: true,
-	      cwd: 'views/template/css',
-	      src: ['*.css', '!*.min.css'],
-	      dest: 'views/template/css',
-	      ext: '.min.css'
-	    },
-		{
-	      expand: true,
-	      cwd: 'private/css',
-	      src: ['*.css', '!*.min.css'],
-	      dest: 'private/css',
-	      ext: '.min.css'
-	    }]
+	    	      expand: true,
+	    	      cwd: 'themes/basic/css',
+	    	      src: ['*.css', '!*.min.css'],
+	    	      dest: 'themes/basic/css',
+	    	      ext: '.min.css'
+	    	    }]
+	  },
+	  backend: {
+	  	files: [{
+	  		      expand: true,
+	  		      cwd: 'admin/assets/css',
+	  		      src: ['*.css', '!*.min.css'],
+	  		      dest: 'admin/assets/css',
+	  		      ext: '.min.css'
+	  		    }]
 	  }
 	},
 	
-	
+	/**
+	 * WATCHERS
+	 */
 	watch:{
 		script:{
-			files:['views/template/less/*.less','private/less/*.less'],
+			files:['themes/basic/less/*.less','admin/assets/less/*.less'],
 			tasks:["less","cssmin"],
 			options:{
 				spawn:false,
@@ -71,7 +68,7 @@ module.exports = function(grunt) {
 			}
 		},
 		ejs:{
-			files:['views/template/*.ejs','private/*.ejs','views/template/partials/*.ejs','private/partials/*.ejs'],
+			files:['themes/basic/*.ejs','admin/*.ejs','themes/basic/partials/*.ejs','admin/partials/*.ejs'],
 			tasks:["less","cssmin"],
 			options:{
 				spawn:false,
@@ -87,5 +84,5 @@ module.exports = function(grunt) {
  grunt.loadNpmTasks('grunt-contrib-watch');
 
  //register
- grunt.registerTask('default', ['less','cssmin']);
+ grunt.registerTask('default', ['less', 'cssmin']);
 };
