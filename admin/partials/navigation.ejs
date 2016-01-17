@@ -24,7 +24,7 @@
                 <!-- <li>
                     <a href="#"><i class="fa fa-fw fa-envelope"></i> Inbox</a>
                 </li> -->
-                <li>
+                <li style="<%= user.role !== 'admin' ? 'display:none;' : '' %>">
                     <a href="/admin/configurations"><i class="fa fa-fw fa-gear"></i> Settings</a>
                 </li>
                 <li class="divider"></li>
@@ -35,8 +35,8 @@
         </li>
     </ul>
     <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
-    <div class="collapse navbar-collapse navbar-ex1-collapse">
-        <ul class="nav navbar-nav side-nav">
+    <div class="collapse navbar-collapse navbar-ex1-collapse" > 
+        <ul class="nav navbar-nav side-nav" style="<%= user.role === 'guest' ? 'display:none;' : '' %>">
             <li>
                 <a href="/admin/panel"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
             </li>
@@ -52,8 +52,12 @@
             <li>
                 <a href="/admin/comments"><i class="fa fa-fw fa-comments"></i> Comments</a>
             </li>            
-            <li style="<%= user.role !== 'admin' ? 'display:none;' : '' %>">
+            <li>
+            <% if(user.role !== "admin"){ %>
+                <a href="/admin/users/<%= user._id %>"><i class="fa fa-fw fa-user"></i> My Profile</a>
+            <% }else{ %>
                 <a href="/admin/users"><i class="fa fa-fw fa-user"></i> Users</a>
+            <% } %>
             </li>
             <li style="<%= user.role !== 'admin' ? 'display:none;' : '' %>">
                 <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-picture-o"></i> Appearance <i class="fa fa-fw fa-caret-down"></i></a>
@@ -69,7 +73,7 @@
                     </li>
                 </ul>
             </li>
-            <li style="<%= user.role !== 'admin' ? 'display:none;' : '' %>">
+            <li style="<%= user.role != 'admin' ? 'display:none;' : '' %>">
                 <a href="/admin/configurations"><i class="fa fa-fw fa-cog"></i> Settings</a>
             </li>
         </ul>

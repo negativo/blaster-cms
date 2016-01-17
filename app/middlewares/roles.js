@@ -10,10 +10,14 @@ module.exports = function(mustBeRole){
 		var logged_role = req.user ? req.user.role : 'guest';
 
 		if ( user_power[logged_role] >= user_power[mustBeRole] ){
-			next();
-		} else{
-			res.sendStatus(403);
+			return next();
+		} 
+		
+		if( req.isAuthenticated() && req.user.role == 'guest' && req.method == "GET"){
+			return res.redirect('/admin/users/' + req.user._id);
 		}
+
+		return res.redirect(403, '/admin');
 	}
 	
 	return function(req,res,next){

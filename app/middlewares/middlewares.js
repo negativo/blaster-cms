@@ -86,14 +86,15 @@ module.exports = function(app,express, $ee){
 		next();
 	});
 
+
   //with this you get login status in frontend
 	app.use(function(req,res,next){
 		if (req.method === 'GET' ) app.locals.isAuthenticated = req.isAuthenticated() || false;
 		next();
 	});
 
-	// add roles middleware on all /admin route except /login
-	app.use(/^\/admin\/[^login|reset].*/, mustBe('moderator'));
+	// add roles middleware on all /admin route except /login /reset-* and /user/:id
+	app.use(/^\/admin\/[^login|reset|users].*/, mustBe('moderator')	);
 
 
 	app.use('/login', function(req,res,next){

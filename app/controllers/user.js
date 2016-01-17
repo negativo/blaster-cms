@@ -22,13 +22,18 @@ module.exports = function(app){
 		},
 		show: function (req, res) {
 			var userId = req.params.id;
-			User.findById( userId, {password:0}, function(err, profile){
-				if(profile !== null && req.isAuthenticated() ) {
-					app.locals.pagename= profile.username + " Profile";
-					app.locals.bodyclass = profile.username.toLowerCase() + "-profile";
-					res.render("profile", new Render(req, { profile: profile }) );
-				};
-			});
+			//only current user or admin can view this page
+			if(req.user._id == userId || req.user.admin){
+				User.findById( userId, {password:0}, function(err, profile){
+					if(profile !== null && req.isAuthenticated() ) {
+						app.locals.pagename= profile.username + " Profile";
+						app.locals.bodyclass = profile.username.toLowerCase() + "-profile";
+						res.render("profile", new Render(req, { profile: profile }) );
+					};
+				});
+			}else{
+				res.sendStatus(403);
+			}
 		},
 		create:function(req,res){
 			res.send("create view");
@@ -64,7 +69,12 @@ module.exports = function(app){
 				user.username = profile.username;
 				user.name = profile.name;
 				user.email = profile.email;
-				user.role = profile.role;
+
+				// admin can't demote himself
+				if(req.user.admin && profile.role != 'admin' && !(profile.id == req.user._id)){
+					user.role = profile.role;
+				}
+				
 				user.save(function(err){
 					if(!err) {
 						res.send("success");

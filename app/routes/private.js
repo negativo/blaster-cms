@@ -50,7 +50,7 @@ module.exports = function(app,express){
 	 */
 	//use should be able to modify his data, need to do it
 	app.get('/admin/users'          , admin, UserCtrl.index );
-	app.get('/admin/users/:id'      , UserCtrl.show );
+	app.get('/admin/users/:id'      , guest, UserCtrl.show );
 
 	app.get('/admin/new-user'       , PrivateCtrl.newUser );
 	app.get('/admin/register'       , PrivateCtrl.register );

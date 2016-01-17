@@ -1,4 +1,5 @@
 <%- layout('layouts/admin-panel.ejs') -%>
+<% var isMyProfile = (profile._id.toString() == user._id.toString()) %>
 <div class="container-fluid profile-container" data-id="<%= profile._id %>">
     <h2><%= profile.username %>'s Profile</h2>
     <hr>
@@ -26,7 +27,7 @@
             <label for="email">email</label>
             <input type="email" class="form-control" id="profile-email" value="<%= profile.email %>">
         </div>
-        <div class="form-group">
+        <div class="form-group" style="<%= user.role !== 'admin' || isMyProfile ? 'display:none;' : '' %>">
             <label for="role">Role</label>
             <select name="role" id="profile-role" class="form-control">
                 <option value="admin" <%= profile.role === "admin" ? "selected" : "" %> >Admin</option>
