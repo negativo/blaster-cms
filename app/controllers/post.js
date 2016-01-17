@@ -41,7 +41,6 @@ module.exports = function(app){
 			var post = req.body;
 			new Post({
 				title: post.title || "Post Title",
-				slug: toSlug(post.title),
 				body: post.body || "Post Body",
 				template: post.template || "post-template",
 				publishedBy:{

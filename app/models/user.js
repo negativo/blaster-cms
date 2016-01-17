@@ -24,10 +24,16 @@ var UserSchema = new Schema({
 UserSchema.pre('save',function(next){
 	// hash password if saving to db or skip
 	var user = this;
-	if (!user.isModified('password')) return next();	
-	user.password = crypto.bcrypt.encrypt(user.password);
-	next();
+	
+	if (user.isModified('password')) {
+		user.password = crypto.bcrypt.encrypt(user.password);
+	}
 
+	if (user.isModified('email')) {
+		user.email = user.email.toLowerCase();
+	}
+
+	next();
 })
 
 /**

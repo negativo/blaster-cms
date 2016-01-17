@@ -89,10 +89,13 @@ module.exports = function(app){
 				res.send({ message:err, err:true})
 			});
 		},
-		forgotten_password:function(req,res){
+		reset_password_request:function(req,res){
 			User.findOne( { email: req.body.email }, function(err, user){
 				if(err) res.send(err);
-				if(!user) res.send('no user found');
+				if(!user) {
+					req.flash('error', 'No user with this email has been found.');
+					res.redirect('/admin/reset-password');
+				}
 				if(!err && user) {
 					user.generateResetToken(function(err, info){
 						if(!err && info.resetToken) {
@@ -101,7 +104,8 @@ module.exports = function(app){
 								link: app.get('base_url') + "/api/user/reset?token=" + info.resetToken + "&mail=" + info.email,
 							}, function(err, info){
 								if(err) res.send(err);
-								res.send(info);
+								req.flash('info', info); 
+								res.redirect('/admin/reset-password');
 							});
 						}
 					});
@@ -112,44 +116,47 @@ module.exports = function(app){
 			User.findOne({ email: req.query.mail}, function(err,user){
 				if(err) res.send(err);
 
-				if( !user.resetToken) res.send('token no more avaible, get a new one!');
-
-				if (!user.isTokenExpired()){
-					res.locals.pagename= "Reset Password";
-					res.locals.bodyclass = "reset-page";
-					res.locals.token_url = req.path + "/token";
-					res.locals._token = req.query.token;
-					res.locals._mail = req.query.mail;
-					res.locals.error = req.flash('error');
-					res.render('reset-password-new');
-				}else{
-					res.send("token expired");
+				if( !user.resetToken) {
+					return res.redirect('/');
 				}
+
+				if (user.isTokenExpired()){
+					req.flash('error','Token is Expired, request a new one!');
+					return res.redirect("/admin/reset-password");
+				}
+
+				res.locals.pagename  = "Reset Password";
+				res.locals.bodyclass = "reset-page";
+				res.locals._token    = req.query.token;
+				res.locals._mail     = req.query.mail;
+
+				res.render('reset-password-new');
 			});
 		},
 		reset_password:function(req,res){
 			var password = req.body.password;
-			var password_check = req.body['retype-password'];
-			var mail = req.body._mail;
-			var token = req.body._token;
-
-			console.log("user.js :133", req.body);
-
-			if(password !== password_check) res.send('password mismatch, retry!');
-			
+			var mail = req.body.mail.toLowerCase();
+	
 			User.findOne({ email: mail}, function(err,user){
 				if(err) res.send(err);
+
+				if(!user.resetToken){
+					return res.send({ err:"Password has been reset! Log In! ", message:null });
+				}
+
 				if (!user.isTokenExpired()){
 					user.password = password;
 					user.resetToken = undefined;
 					user.resetTokenCreated = undefined;
-					user.save();
-					res.send('password changed check DB');
+					user.save(function(err){
+						if(err) res.send(err);
+						res.send({ err:null, message: 'Password changed! Login with your new password'});
+					});
 				}else{
-					res.send('request expired, send an email with new token');
+					res.send({ err: 'Token is Expired, request a new one!', message:null });
 				}
 			});
-		}
+		},
 	};
 
 }
