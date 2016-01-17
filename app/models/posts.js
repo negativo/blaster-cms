@@ -1,5 +1,4 @@
 var mongoose = require("mongoose");
-var User = require("./user");
 var toSlug = require('to-slug-case');
 
 var Schema = mongoose.Schema;
@@ -33,7 +32,7 @@ PostSchema.pre('save',function(next){
 		post.slug = toSlug(post.title);
 	}
 	next();
-})
+});
 
 
 // Model's Methods
@@ -46,7 +45,7 @@ PostSchema.statics.getById = function (id, cb) {
 }
 
 PostSchema.statics.getBySlug = function (slug, cb) {
-  return this.find({ slug: slug}, cb);
+  return this.findOne({ slug: slug }, cb);
 }
 
 module.exports = mongoose.model("Post", PostSchema);

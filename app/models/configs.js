@@ -31,5 +31,5 @@ var ConfigsSchema = Schema({
 /**
  * EXPORT MODEL
  */
-module.exports = mongoose.model("Config", ConfigsSchema, "Configs" );
+module.exports = mongoose.model("Config", ConfigsSchema );
 

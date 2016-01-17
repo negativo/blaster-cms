@@ -1,8 +1,9 @@
 var mongoose = require('mongoose');
+var toSlug = require('to-slug-case');
 
 var Schema = mongoose.Schema;
 
-var Page = new Schema({
+var PageSchema = new Schema({
 	slug:{ type: String, default: 'sample-page' },
 	title:{ type: String, default: 'Sample' },
 	body:{ type: String, default: 'Hi I\'m a page :)' },
@@ -19,4 +20,13 @@ var Page = new Schema({
 	type: { type:String, default: 'page' }
 });
 
-module.exports = mongoose.model('pages', Page, 'pages');
+
+PageSchema.pre('save',function(next){
+	var page = this;
+	if(page.isModified('title')){
+		page.slug = toSlug(page.title);
+	}
+	next();
+});
+
+module.exports = mongoose.model('Page', PageSchema );

@@ -39,7 +39,6 @@ module.exports = function(app){
 			var page = req.body;
 			new Page({
 				title: page.title || "Page Title" ,
-				slug:toSlug(page.title),
 				body: page.body || "Page Body" ,
 				template: page.template || "page-template",
 				publishedBy:{
@@ -72,7 +71,6 @@ module.exports = function(app){
 				singlePage.title = req.body.title;
 				singlePage.body = req.body.body;
 				singlePage.publishedBy.user = req.user.id;
-				singlePage.slug = toSlug(req.body.title);
 				singlePage.template = req.body.template || "page-template",
 				singlePage.save(function(err){
 					if (err) throw err;

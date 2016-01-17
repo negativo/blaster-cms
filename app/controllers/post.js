@@ -1,8 +1,6 @@
 module.exports = function(app){
 
-	var toSlug = require('to-slug-case'),
-	$utils = require("../lib/utils")(app),
-	User = require("../models/user"),
+	var User = require("../models/user"),
 	Configs = require("../models/configs"),
 	Post = require("../models/posts"),
 	Page = require("../models/pages"),
@@ -76,7 +74,6 @@ module.exports = function(app){
 			Post.findById( postId ,function(err,singlePost){
 				singlePost.title = post.title;
 				singlePost.body = post.body;
-				singlePost.slug = toSlug(post.title);
 				singlePost.publishedBy.user = req.user.id;
 				singlePost.template = post.template || "post-template",
 				singlePost.tags = post.tags;
