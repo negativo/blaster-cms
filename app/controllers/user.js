@@ -1,7 +1,7 @@
 module.exports = function(app){
 
 	var toSlug = require('to-slug-case'),
-	$utils     = require("../lib/utils")(app),
+	mail 			 = require('../lib/mail'),
 	User       = require("../models/user"),
 	Configs    = require("../models/configs"),
 	Post       = require("../models/posts"),
@@ -88,7 +88,75 @@ module.exports = function(app){
 			.fail(function(err){
 				res.send({ message:err, err:true})
 			});
-		}
+		},
+		reset_password_request:function(req,res){
+			User.findOne( { email: req.body.email }, function(err, user){
+				if(err) res.send(err);
+				if(!user) {
+					req.flash('error', 'No user with this email has been found.');
+					res.redirect('/admin/reset-password');
+				}
+				if(!err && user) {
+					user.generateResetToken(function(err, info){
+						if(!err && info.resetToken) {
+							mail.sendmail({
+								to: user.email,
+								link: app.get('base_url') + "/api/user/reset?token=" + info.resetToken + "&mail=" + info.email,
+							}, function(err, info){
+								if(err) res.send(err);
+								req.flash('info', info); 
+								res.redirect('/admin/reset-password');
+							});
+						}
+					});
+				}
+			});
+		},
+		reset_token_check:function(req,res){
+			User.findOne({ email: req.query.mail}, function(err,user){
+				if(err) res.send(err);
+
+				if( !user.resetToken) {
+					return res.redirect('/');
+				}
+
+				if (user.isTokenExpired()){
+					req.flash('error','Token is Expired, request a new one!');
+					return res.redirect("/admin/reset-password");
+				}
+
+				res.locals.pagename  = "Reset Password";
+				res.locals.bodyclass = "reset-page";
+				res.locals._token    = req.query.token;
+				res.locals._mail     = req.query.mail;
+
+				res.render('reset-password-new');
+			});
+		},
+		reset_password:function(req,res){
+			var password = req.body.password;
+			var mail = req.body.mail.toLowerCase();
+	
+			User.findOne({ email: mail}, function(err,user){
+				if(err) res.send(err);
+
+				if(!user.resetToken){
+					return res.send({ err:"Password has been reset! Log In! ", message:null });
+				}
+
+				if (!user.isTokenExpired()){
+					user.password = password;
+					user.resetToken = undefined;
+					user.resetTokenCreated = undefined;
+					user.save(function(err){
+						if(err) res.send(err);
+						res.send({ err:null, message: 'Password changed! Login with your new password'});
+					});
+				}else{
+					res.send({ err: 'Token is Expired, request a new one!', message:null });
+				}
+			});
+		},
 	};
 
 }

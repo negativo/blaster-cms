@@ -1,5 +1,6 @@
 var mongoose = require("mongoose");
 var User = require("./user");
+var toSlug = require('to-slug-case');
 
 var Schema = mongoose.Schema;
 
@@ -24,6 +25,15 @@ var PostSchema = new Schema({
 	//refactor to use meta insied of publishedBy 
 	//when I have or someone have time to check all the reference..FML
 });
+
+
+PostSchema.pre('save',function(next){
+	var post = this;
+	if(post.isModified('title')){
+		post.slug = toSlug(post.title);
+	}
+	next();
+})
 
 
 // Model's Methods

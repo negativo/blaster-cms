@@ -109,6 +109,44 @@
 				backend.request.deleteUser();
 				backend.request.media_upload();
 				backend.request.remove_media();
+				backend.request.forgotten_password();
+				backend.request.resetPasswordWithToken();
+			},
+			forgotten_password:function(){
+				// using flash message for now
+				//$form = $("#reset-password-form");
+			},
+			resetPasswordWithToken: function(){
+				$(".reset-withToken-form").submit(function(e){
+					$("#messages").addClass('hide');
+					e.preventDefault();
+					e.stopPropagation();
+
+					var min_pwd_lng = 6;
+
+					var pwd = $(this).find('.change-password').val();
+					var retype_pwd = $(this).find('.retype-password').val();
+
+					if(pwd === retype_pwd){
+						if(pwd.length >= min_pwd_lng){
+							$.ajax({
+								url: '/api/user/reset/token',
+								type: 'POST',
+								data: { password: pwd, mail: $("input[name='_mail']").val(), token: $("input[name='_token']").val() },
+								success: function(res){
+									if(!res.message) $("body").find('#messages').html(res.err);
+									$("form").fadeOut();
+									$("body").find('#messages').html(res.message).removeClass('hide');
+								}
+							});
+						}else{
+							$("body").find('#messages').html('Password too short, it should be greater than 6 character').removeClass('hide');	
+						}
+					}else{
+						$("body").find('#messages').html('Password mismatch! Try again!').removeClass('hide');
+					}
+					
+				});
 			},
 			setup:function(){
 				$( document ).ajaxError(function(err, head) {
@@ -134,10 +172,8 @@
 								if(res === "delete") $image.fadeOut();
 							}	
 						});
-					}
-
-					
-				})
+					}					
+				});
 			},
 			media_upload:function(){
 				var max_filesize = 2 * 1000000; // 2MB

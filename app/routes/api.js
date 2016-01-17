@@ -61,10 +61,15 @@ module.exports = function(app,express,$ee){
 	/**
 	 * USERS
 	 */
+	app.post('/api/user/reset-request'   	, UserCtrl.reset_password_request ); // request password reset
+	app.get('/api/user/reset'     				, UserCtrl.reset_token_check ); // password change view && check
+	app.post('/api/user/reset/token'  		, UserCtrl.reset_password );		// reset password post
+
 	app.post('/api/user'                  , admin, UserCtrl.store ); // registar
 	app.post('/api/user/:id'   	          , admin, UserCtrl.update );
 	app.post('/api/user/:id/password'   	, admin, UserCtrl.change_password );
 	app.delete('/api/user/:id'            , admin, UserCtrl.destroy );
+
 	
 	/**
 	 * CONFIGS

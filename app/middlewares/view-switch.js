@@ -6,7 +6,7 @@ module.exports = function (app) {
 			locals = app.locals;
 
 	return function(req,res,next){
-		var p = /\/admin/;
+		var p = /\/(admin|api)/;
 		if( req.url.match(p) ) {
 			app.set('views', __root + '/admin' )
 			next();
