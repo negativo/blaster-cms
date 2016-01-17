@@ -13,7 +13,7 @@ module.exports = function(app){
 		index: function (req, res) {
 			res.locals.pagename = " Media";
 			res.locals.bodyclass = "dashboard-media";
-			Media.find({}, function(err, medias){
+			Media.getUserMedia( req.user._id, function(err, medias){
 				if(err) console.log("media.js :17", err);
 				res.locals.medias = medias;
 				res.render("media", new Render(req) );

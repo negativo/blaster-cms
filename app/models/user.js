@@ -34,7 +34,7 @@ UserSchema.pre('save',function(next){
 	}
 
 	next();
-})
+});
 
 /**
  * INSTANCE METHODS

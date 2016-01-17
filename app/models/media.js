@@ -2,12 +2,15 @@ var fs = require("fs");
 var mongoose = require("mongoose");
 var path = require("path");
 var __root = path.join( __dirname, "../../");
+var User = require('./user');
 
 var Schema = mongoose.Schema;
 
 var MediaSchema = new Schema({
 	filename:String,
 	path:String,
+  uploadedOn: { type:Date, default: Date.now() },
+  owner: { type: Schema.Types.ObjectId, ref:"User" },
 	tags:[{ type: Array, default:"media"} ],
 });
 
@@ -15,6 +18,15 @@ var MediaSchema = new Schema({
 // Model's Methods
 MediaSchema.statics.all = function (callback) {
   return this.find({ }, callback);
+}
+
+MediaSchema.statics.getUserMedia = function (userId, callback) {
+  var Media = this;
+
+  User.findById( userId, function(err, user){
+    if(user.role === 'admin') return Media.find({ }).populate('owner').exec(callback);
+    return Media.find({ owner: userId }).populate('owner').exec(callback);
+  });
 }
 
 MediaSchema.statics.removeMedia = function (id, callback) {

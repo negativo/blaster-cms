@@ -22,7 +22,8 @@ module.exports = function(app){
 			req.files.forEach(function(element, index, array){
 				new Media({
 					filename: element.filename,
-					path: "/uploads/" + element.filename
+					path: "/uploads/" + element.filename,
+					owner: req.user._id,
 				}).save();
 			});
 			res.send(req.files);
