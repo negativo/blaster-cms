@@ -6,8 +6,7 @@ module.exports = function(app){
 	Post       = require("../models/posts"),
 	Page       = require("../models/pages"),
 	Comment    = require("../models/comments"),
-	Media      = require("../models/media"),
-	Render     = require("../lib/render-helper").public;
+	Media      = require("../models/media");
 
 	return {
 		index: function (req, res) {
@@ -16,7 +15,7 @@ module.exports = function(app){
 			Media.getUserMedia( req.user._id, function(err, medias){
 				if(err) console.log("media.js :17", err);
 				res.locals.medias = medias;
-				res.render("media", new Render(req) );
+				res.render("media");
 			});
 		},
 		show: function (req, res) {

@@ -1,7 +1,7 @@
 module.exports = function(app,$ee){
 	var db = require("mongoose").connection;
 	var colors = require("colors");
-	var $utils = require('../lib/utils')(app);
+
 
 	// configuration object updated
 	db.once("open",function(){

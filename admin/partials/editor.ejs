@@ -9,7 +9,7 @@ forgot to give the same name in creation I should refactor all reference now.., 
 	<h2><%= editor.capitalize() %> editor</h2>
 	<form class="editor" class="editor" id="editor-<%= editor %>" data-id="<%= isNew ? '' : single._id %>">
 		<div class="form-group">
-			<input type="text" name="title" placeholder="<%= isNew ? 'Title' : single.title %>" value="<%= isNew ? '' : single.title %>" class="small-12 editor-title form-control">
+			<input autocomplete="off" type="text" name="title" placeholder="<%= isNew ? 'Title' : single.title %>" value="<%= isNew ? '' : single.title %>" class="small-12 editor-title form-control">
 			<textarea name="editor1" id="text-editor"><%= isNew ? 'Write...' : single.body %></textarea>
 			<input type="submit" class="btn btn-primary pull-right">
 		</div>

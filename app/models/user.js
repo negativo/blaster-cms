@@ -11,9 +11,9 @@ var UserSchema = new Schema({
 	name                 : { type:String, default:"" },
 	email                : { type:String, default:"" },
 	avatar               : { type:String, default: require('../configs/globals').admin_assets + "dummy-user.png" },
-	createdOn            : Date,
-	role                 : String,
-	admin                : Boolean,
+	createdOn            : { type: Date, default: Date.now() },
+	role                 : { type:String, default:'guest' },
+	admin                : { type:Boolean, default:false },
 	resetToken					 : { type:String }, //expires after 30min
 	resetTokenCreated		 : { type:Date },
 });
@@ -106,8 +106,8 @@ UserSchema.statics.register_new = function(new_user) {
 	this.findOne({ "username": new_user.username },function(err, user){
 		if(user) return res.send( new Message(null, "User Exists") );
 		new UserModel({ 
-			username:new_user.username, 
-			password:new_user.password,
+			username: new_user.username, 
+			password: new_user.password,
 			role:"guest"
 		})
 		.save(function(err,user){

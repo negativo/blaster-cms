@@ -23,8 +23,23 @@ var PostSchema = new Schema({
 	}
 	//refactor to use meta insied of publishedBy 
 	//when I have or someone have time to check all the reference..FML
+}, {
+  toObject: {
+  virtuals: true
+  },
+  toJSON: {
+  virtuals: true 
+  }
 });
 
+/**
+ * Virtuals
+ */
+PostSchema
+	.virtual('comments_num')
+	.get(function(){
+		return this.comments.length;
+	});
 
 PostSchema.pre('save',function(next){
 	var post = this;

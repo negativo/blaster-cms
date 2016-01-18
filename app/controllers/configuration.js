@@ -2,13 +2,11 @@ module.exports = function(app,$ee){
 
 	var toSlug = require('to-slug-case'),
 	fs 				 = require("fs"),
-	$utils     = require("../lib/utils")(app),
 	User       = require("../models/user"),
 	Config     = require("../models/configs"),
 	Post       = require("../models/posts"),
 	Page       = require("../models/pages"),
-	Comment    = require("../models/comments"),
-	Render     = require("../lib/render-helper").public;
+	Comment    = require("../models/comments");
 
 	return {
 		edit:function(req,res){

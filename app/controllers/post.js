@@ -4,8 +4,7 @@ module.exports = function(app){
 	Configs = require("../models/configs"),
 	Post = require("../models/posts"),
 	Page = require("../models/pages"),
-	Comment = require("../models/comments"),
-	Render = require("../lib/render-helper").public;
+	Comment = require("../models/comments");
 
 	return {
 		index: function (req, res) {
@@ -20,14 +19,14 @@ module.exports = function(app){
 				if(post === null) return res.redirect("/404");
 
 				res.locals.pagetitle = post.title + " - " + app.locals.sitename;
-				res.render( post.template, new Render(req, { post:post, comments: post.comments }) );
+				res.render( post.template, { post: post, comments: post.comments });
 			});
 		},
 		create:function(req,res){
 			res.locals.pagename  = " New Post";
 			res.locals.bodyclass = "new-post";
 			res.locals.isNew = true;
-			res.render("editor", new Render(req, { editor: "post", templates: app.locals.templates.post }) );
+			res.render("editor", { editor: "post", templates: app.locals.templates.post } );
 		},
 		store:function(req,res){
 			console.log("post.js :40", req.body);
@@ -58,7 +57,7 @@ module.exports = function(app){
 					res.locals.pagename = " " + singlePost.title + " edit";
 					res.locals.bodyclass = "edit-post";
 					res.locals.isNew = false;
-					res.render("editor", new Render(req, { editor: "post", single: singlePost, templates: app.locals.templates.post }) );
+					res.render("editor", { editor: "post", single: singlePost, templates: app.locals.templates.post });
 				}).populate("publishedBy.user",{password:0});;
 			}
 		},

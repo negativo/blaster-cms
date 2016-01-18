@@ -7,7 +7,6 @@ module.exports = function(app){
 	Post       = require("../models/posts"),
 	Page       = require("../models/pages"),
 	Comment    = require("../models/comments"),
-	Render     = require("../lib/render-helper").public,
 	Message  = require("../lib/message-helper").message;
 
 	return {
@@ -16,7 +15,7 @@ module.exports = function(app){
 			app.locals.bodyclass = "dashboard-users";
 			User.find({},{ password:0 }, function(err, users){
 				if(users !== null && req.isAuthenticated() ) {
-					res.render("users", new Render(req, { users: users }) );
+					res.render("users", { users: users });
 				};
 			});
 		},
@@ -28,7 +27,7 @@ module.exports = function(app){
 					if(profile !== null && req.isAuthenticated() ) {
 						app.locals.pagename= profile.username + " Profile";
 						app.locals.bodyclass = profile.username.toLowerCase() + "-profile";
-						res.render("profile", new Render(req, { profile: profile }) );
+						res.render("profile", { profile: profile });
 					};
 				});
 			}else{

@@ -1,13 +1,11 @@
 module.exports = function(app){
 
 	var toSlug = require('to-slug-case'),
-	$utils = require("../lib/utils")(app),
 	User = require("../models/user"),
 	Configs = require("../models/configs"),
 	Post = require("../models/posts"),
 	Page = require("../models/pages"),
-	Comment = require("../models/comments"),
-	Render = require("../lib/render-helper").public;
+	Comment = require("../models/comments");
 
 	return {
 		index:function(req,res){
@@ -22,7 +20,7 @@ module.exports = function(app){
 				console.log("requests.js", page,err);
 				if(page === null && req.url !== "/favicon.ico" ) return res.redirect("/404");
 				res.locals.pagetitle = page.title + " - " + app.locals.sitename;
-				res.render( page.template, new Render(req, { page:page }) );
+				res.render( page.template, { page:page });
 			});
 		},
 		create:function(req,res){
@@ -31,7 +29,7 @@ module.exports = function(app){
 			res.locals.isNew = true;
 			Configs.findOne({},{ siteTemplate:1 }, function(err, templates){
 				if(templates === null) return;
-				res.render("editor", new Render(req, { editor: "page", templates: app.locals.templates.page }) );
+				res.render("editor", { editor: "page", templates: app.locals.templates.page });
 			});
 		},
 		store:function(req,res){
@@ -60,7 +58,7 @@ module.exports = function(app){
 					res.locals.pagename= singlePage.title + " edit";
 					res.locals.bodyclass = "edit-page";
 					res.locals.isNew = false;
-					res.render("editor", new Render(req, { editor: "page", single: singlePage, templates: app.locals.templates.page }) );
+					res.render("editor", { editor: "page", single: singlePage, templates: app.locals.templates.page });
 				});
 			}
 		},

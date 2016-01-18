@@ -4,8 +4,7 @@ module.exports = function(app){
 	Configs = require("../models/configs"),
 	Post = require("../models/posts"),
 	Page = require("../models/pages"),
-	Comment = require("../models/comments"),
-	Render = require("../lib/render-helper").public;
+	Comment = require("../models/comments");
 
 	return {
 		index:function(req,res){

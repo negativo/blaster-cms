@@ -13,5 +13,5 @@ var public = function (req,add) {
 	}
 }
 
-module.exports.private = private; // new Render( { }, req )
-module.exports.public = public; // new Render( { }, req )
+module.exports.private = private; // new Render( req, {} )
+module.exports.public = public;   // new Render( req, {} )
