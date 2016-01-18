@@ -44,8 +44,16 @@ PostSchema.statics.getById = function (id, cb) {
   return this.find({ _id: id}, cb);
 }
 
-PostSchema.statics.getBySlug = function (slug, cb) {
-  return this.findOne({ slug: slug }, cb);
+PostSchema.statics.findBySlug = function (slug, callback) {
+
+	return this.findOne({ "slug": slug })
+		.populate("publishedBy.user")
+		.populate({
+	    path: 'comments',
+	    populate: { path: 'user', model: 'User' }
+	  })
+		.exec(callback);
+
 }
 
 module.exports = mongoose.model("Post", PostSchema);

@@ -87,9 +87,12 @@ module.exports = function(app,express, $ee){
 	});
 
 
-  //with this you get login status in frontend
+  //with this you get login status in frontend && user logged
 	app.use(function(req,res,next){
-		if (req.method === 'GET' ) app.locals.isAuthenticated = req.isAuthenticated() || false;
+		if (req.method === 'GET' ) {
+			app.locals.isAuthenticated = req.isAuthenticated() || false
+			res.locals.user = req.user;
+		};
 		next();
 	});
 

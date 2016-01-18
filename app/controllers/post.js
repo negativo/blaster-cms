@@ -16,16 +16,11 @@ module.exports = function(app){
 		},
 		show: function (req, res) {
 			var slug = req.params.post;
-			Post.findOne({ "slug": slug })
-			.populate("publishedBy.user")
-			.populate("comments")
-			.exec(function(err,post){
+			Post.findBySlug( slug, function(err,post){
 				if(post === null) return res.redirect("/404");
+
 				res.locals.pagetitle = post.title + " - " + app.locals.sitename;
-				Comment.populate(post.comments,[{ path:"user", model:"User" }], function(err,posts){
-					console.log("public-request.js :55", posts);
-					res.render( post.template, new Render(req, { post:post, comments: post.comments }) );
-				});
+				res.render( post.template, new Render(req, { post:post, comments: post.comments }) );
 			});
 		},
 		create:function(req,res){
