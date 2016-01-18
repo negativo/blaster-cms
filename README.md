@@ -28,6 +28,7 @@ npm start use nodemon on server.js if you have problem with it you should instal
 	- removed unused modules
 
 ## Known Bugs
+	deleting user create some "null" populate that make EJS go wild, I need to decide if move ownership to admin or delete it
 
 ##ToDos
 	priority > 1 > 2 > 3 (self explanatory)
