@@ -11,7 +11,7 @@ $ee         = new EE();
 app.locals.__root   = __dirname;
 app.locals.__app    = __dirname + "/app";
 app.locals.__public = __dirname + "/public";
-app.locals.__views  = __dirname + "/views";
+app.locals.__views  = __dirname + "/themes";
 app.locals.__admin  = __dirname + "/admin";
 app.locals.__port   = port;
 
@@ -24,6 +24,11 @@ require(app.locals.__app + "/configs/events")(app,$ee);
  * CONFIG & STARTUPS
  */
 require(app.locals.__app + "/configs/config")(app, express, $ee);
+
+/**
+ * ROUTINES
+ */
+require(app.locals.__app + "/configs/routines")(app, $ee);
 
 
 /**

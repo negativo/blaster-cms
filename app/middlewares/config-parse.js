@@ -6,11 +6,12 @@ module.exports = function (app, $ee) {
 			__app  = app.locals.__app,
 			locals = app.locals;
 	
+	app.locals.templates = {
+		post:[],
+		page:[],
+	};
+	
 	return function(req,res,next){
-		app.locals.templates = {
-			post:[],
-			page:[],
-		};
 			
 		if (app.get('is_installed') && (app.get('configs_parsed') <= app.get('configs_updated') || !app.get('configs_parsed')) ){
 			console.log("Parsing configuration in request".blue);
@@ -49,6 +50,8 @@ module.exports = function (app, $ee) {
 							app.locals.templates.post.push( list[i].replace(/.ejs/g,'') );
 						};
 					};
+
+					console.log("config-parse.js :53", app.locals);
 
 					/**
 					 * SCAN THEMES	

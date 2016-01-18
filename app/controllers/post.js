@@ -26,6 +26,7 @@ module.exports = function(app){
 			res.locals.pagename  = " New Post";
 			res.locals.bodyclass = "new-post";
 			res.locals.isNew = true;
+			console.log("post.js :29", app.locals.templates.post);
 			res.render("editor", { editor: "post", templates: app.locals.templates.post } );
 		},
 		store:function(req,res){

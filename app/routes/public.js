@@ -3,10 +3,11 @@ module.exports = function(app,express){
 	/**
 	 * CONTROLLERS
 	 */
-	var PageCtrl = require("../controllers/page")(app);
-	var PostCtrl = require("../controllers/post")(app);
+	var PageCtrl   = require("../controllers/page")(app);
+	var PostCtrl   = require("../controllers/post")(app);
 	var PublicCtrl = require("../controllers/public")(app);
-	var ApiCtrl = require("../controllers/api")(app);
+	var ApiCtrl    = require("../controllers/api")(app);
+
 	
 	app.get("/", PublicCtrl.home_index );
 	app.get("/page/:page", PageCtrl.show );
