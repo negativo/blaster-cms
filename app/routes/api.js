@@ -38,12 +38,14 @@ module.exports = function(app,express,$ee){
 	 */
 	app.post("/api/post"     , moderator, PostCtrl.store );
 	app.post('/api/post/:id' , moderator, PostCtrl.update );
+	app.delete('/api/post/:id' , moderator, PostCtrl.destroy );
 
 	/**
 	 * PAGE
 	 */
 	app.post("/api/page"     , moderator, PageCtrl.store   );
 	app.post('/api/page/:id' , moderator, PageCtrl.update  );
+	app.delete('/api/page/:id' , moderator, PageCtrl.destroy  );
 
 	/**
 	 * MEDIAS
