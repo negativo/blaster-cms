@@ -10,7 +10,7 @@ module.exports = function (app, $ee) {
 		post:[],
 		page:[],
 	};
-	
+
 	return function(req,res,next){
 			
 		if (app.get('is_installed') && (app.get('configs_parsed') <= app.get('configs_updated') || !app.get('configs_parsed')) ){
@@ -50,8 +50,6 @@ module.exports = function (app, $ee) {
 							app.locals.templates.post.push( list[i].replace(/.ejs/g,'') );
 						};
 					};
-
-					console.log("config-parse.js :53", app.locals);
 
 					/**
 					 * SCAN THEMES	
