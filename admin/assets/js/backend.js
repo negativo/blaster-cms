@@ -339,8 +339,15 @@
 					    data: $user,
 					    success: function(res) {
 								if (!res.err) {
-									$that.parent().parent().slideUp();
 									toastr.success(res.message);
+									
+									//redirect if it's not on /users list page
+									if( document.location.pathname.match(/\/admin\/users\/[A-Za-z0-9].+/) ){
+										window.location.replace("/admin/users");
+									}else{
+										$that.parent().parent().slideUp();
+									}
+
 								}else{
 									return toastr.error(res.err);
 								}

@@ -23,17 +23,17 @@ npm start use nodemon on server.js if you have problem with it you should instal
 
 ##changelog
 	- Password reset on /admin/reset-password
-	- 3 Kind of user authorization, seems working, 403 returning when unauthorized
-	- media manager
-	- configurations parsed in request only if updated if not using the cached one.
+	- cached configurations & random performance enhance
+	- normal user edit profile
+	- removed unused modules
 
 ## Known Bugs
 
 ##ToDos
 	priority > 1 > 2 > 3 (self explanatory)
-	- [1] User should be able to enter their profile if guest/moderator and edit basic data &&|| delete account
 	- [1] CSRF
 	- [2] File browser in tinyMCE ??
-	- [3] Refactor all in controllers
+	- [3] Reduce controllers ? 
+	- [3] Should expose a better api
 	- [3] add google analytics from configurations
 	- [3] Blank template with only ejs rendering of data to let users bootstrap their theme.

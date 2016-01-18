@@ -39,6 +39,8 @@ module.exports = function(app){
 		},
 		store:function(req,res){
 			var register = req.body;
+
+			console.log("user.js :43", "ASDASDASD");
 			
 			new_user = register;
 			
@@ -50,8 +52,8 @@ module.exports = function(app){
 		destroy:function(req,res){
 			var user = req.body;
 			User.findById( user.id, function(err, user){
-				if (err === null) {
-					if (user.role === "admin") return res.send(new Message(null,"Can't delete an Admin"))
+				if (!err) {
+					if (user.role === "admin") return res.send(new Message(null,"Can't delete an Admin"));
 					user.remove(function(err){
 						if (err === null) res.send(new Message("User deleted!"));
 					});

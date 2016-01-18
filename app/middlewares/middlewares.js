@@ -81,7 +81,7 @@ module.exports = function(app,express, $ee){
 
 	//redirect to login if no authenticated and accessing admin areas
 	app.use('/admin', function(req,res,next){
-		if( !req.url.match(/\/(login|reset)/) && req.method === 'GET' && !req.isAuthenticated() ) return res.redirect('/admin/login'); 
+		if( !req.url.match(/\/(login|reset|register)/) && req.method === 'GET' && !req.isAuthenticated() ) return res.redirect('/admin/login'); 
 		if( req.url.match(/\/(login|reset)/)  && req.method === 'GET' && req.isAuthenticated() ) return res.redirect('/admin/panel'); 
 		next();
 	});
@@ -97,7 +97,7 @@ module.exports = function(app,express, $ee){
 	});
 
 	// add roles middleware on all /admin route except /login /reset-* and /user/:id
-	app.use(/^\/admin\/[^login|reset|users].*/, mustBe('moderator')	);
+	app.use(/^\/admin\/[^login|reset|users|register].*/, mustBe('moderator')	);
 
 
 	app.use('/login', function(req,res,next){

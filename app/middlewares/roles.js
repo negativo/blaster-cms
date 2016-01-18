@@ -9,7 +9,9 @@ module.exports = function(mustBeRole){
 	function mustBe(req, res, next, mustBeRole){
 		var logged_role = req.user ? req.user.role : 'guest';
 
-		if ( user_power[logged_role] >= user_power[mustBeRole] ){
+		var isContentMine = req.user ? (req.user._id.toString() === req.params.id && req.method != "GET") : false;
+
+		if ( user_power[logged_role] >= user_power[mustBeRole] || isContentMine ){
 			return next();
 		} 
 		
