@@ -1,7 +1,7 @@
 var fs = require("fs");
 var Configs = require('../models/configs');
 
-module.exports = function (app, $ee) {
+module.exports = function (app) {
 	var __root = app.locals.__root,
 			__app  = app.locals.__app,
 			locals = app.locals;
@@ -56,7 +56,7 @@ module.exports = function (app, $ee) {
 					 */
 					fs.readdir(__root + '/themes/',function(err, list){
 						app.locals.templates.theme = list;
-						$ee.emit('configs_parsed', configs, 'Configuration has been attached to requestes');
+						process.emit('configs_parsed', configs, 'Configuration has been attached to requestes');
 						next();			
 					});
 				});

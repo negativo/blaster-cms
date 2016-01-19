@@ -1,10 +1,6 @@
-var	dotenv = require('dotenv').load();
-var fs 		  = require('fs');
-var crypto = require('../lib/crypto');
-var mongoose = require('mongoose');
-var ejs_mate = require("ejs-mate");
-
-module.exports = function(app, express, $ee){
+module.exports = function(app, express){
+	//var	dotenv = require('dotenv').load();
+	var ejs_mate = require("ejs-mate");
 	var locals = app.locals;
 	var installer = require('../lib/installer');
 	
@@ -51,5 +47,5 @@ module.exports = function(app, express, $ee){
 		}
 	};
 
-	$ee.emit('server_configured');
+	process.emit('server_configured');
 }

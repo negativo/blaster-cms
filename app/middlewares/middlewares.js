@@ -12,10 +12,10 @@ mongoose     = require('mongoose'),
 MongoStore	 = require('connect-mongo')(session),
 mustBe 			 = require('./roles');
 
-module.exports = function(app,express, $ee){
+module.exports = function(app,express){
 
 
-	var configParse = require('./config-parse')(app,$ee),
+	var configParse = require('./config-parse')(app),
 			viewSwitcher = require('./view-switch')(app);
 
 	var __root = app.locals.__root,
@@ -58,7 +58,7 @@ module.exports = function(app,express, $ee){
 	/**
 	 * LOGIN STRATEGIES
 	 */
-	require(__app + '/lib/login-strategy')(passport,$ee);
+	require(__app + '/lib/login-strategy')(passport);
 
 	/**
 	 * SESSION & LOGIN

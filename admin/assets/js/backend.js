@@ -377,7 +377,8 @@
 							} else {     
 								$user.deleteUserData = true;
 								deleteUserRequest();
-							} });
+							} 
+						});
 					});
 
 					function deleteUserRequest(){

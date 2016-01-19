@@ -1,4 +1,4 @@
-module.exports = function(app,express,$ee){
+module.exports = function(app,express){
 
 
 	var passport        = require('passport');
@@ -18,7 +18,7 @@ module.exports = function(app,express,$ee){
 	var PostCtrl    = require("../controllers/post")(app);
 	var CommentCtrl = require("../controllers/comment")(app);
 	var ApiCtrl     = require("../controllers/api")(app);
-	var ConfCtrl    = require("../controllers/configuration")(app,$ee);
+	var ConfCtrl    = require("../controllers/configuration")(app);
 	var UserCtrl    = require("../controllers/user")(app);
 	var MediaCtrl   = require("../controllers/media")(app);
 

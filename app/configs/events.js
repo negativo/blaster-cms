@@ -1,4 +1,4 @@
-module.exports = function(app,$ee){
+module.exports = function(app){
 	var db = require("mongoose").connection;
 	var colors = require("colors");
 
@@ -15,6 +15,10 @@ module.exports = function(app,$ee){
 
 	db.on("close",function(){
 		console.log("mongo disconnected".yellow);
+	});
+
+	process.on('login_event',function(message){
+		console.log(String(message).yellow);
 	});
 
 	process.on('media_removed',function(){
@@ -37,19 +41,19 @@ module.exports = function(app,$ee){
 		console.log("comment has been removed".yellow);
 	});
 
-	$ee.on("configs_updated",function(configs, message){
+	process.on("configs_updated",function(configs, message){
 		app.set('configs_updated', Date.now() );
 		console.log("configuration has been updated".cyan);
 	});
 
-	$ee.on("configs_parsed",function(configs, message){
+	process.on("configs_parsed",function(configs, message){
 		app.set('configs_parsed', Date.now() );
 		console.log("Configurations parsed in request".cyan);
 	});
 
 
-	$ee.on('server_configured', function(){
-		console.log("Server configurations done!".inverse.green);
+	process.on('server_configured', function(){
+		console.log("Server configurations: " + " LOADED!".inverse.green);
 	});
 
 }

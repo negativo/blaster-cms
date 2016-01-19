@@ -5,7 +5,7 @@ var User = require("../models/user");
 // var FacebookStrategy = require("passport-facebook").Strategy;
 // var facebookConf    = require("./confAuth")
 
-module.exports = function(passport,$ee){
+module.exports = function(passport){
 
   // serializza pure la pass
   passport.serializeUser(function(user, done) {
@@ -34,18 +34,15 @@ module.exports = function(passport,$ee){
           if (err) { return done(err); }
           //user don't exist
           if (!user) {
-            console.log("Incorrect Username");
-            $ee.emit("login_event", "Incorrect Username");
+            process.emit("login_event", "Incorrect Username attempt for user: " + username);
             return done(null, false, { message: 'Incorrect username.' });
           }
           if ( user.comparePassword(password) ){
-              console.log("login-strategy.js :42", "LOGIN CHECK");
-              $ee.emit("login_event", "Login Succesfull");
+              process.emit("login_event", "User : " + username + " - Login Succesfull");
               return done(null, user);          
           } else {
-              console.log("Password Incorrect");
-              $ee.emit("login_event", "Password Incorrect");
-              return done(null, false, { message: 'Incorrect password.' });
+              process.emit("login_event", "Password Incorrect attempt for user: " + username);
+              return done(null, false, { message: 'Incorrect password' });
           }
         });
       }
