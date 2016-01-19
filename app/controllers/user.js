@@ -1,8 +1,9 @@
 module.exports = function(app){
 
-	var toSlug = require('to-slug-case'),
+	var Q      = require('q'),
 	mail 			 = require('../lib/mail'),
 	User       = require("../models/user"),
+	Media       = require("../models/media"),
 	Configs    = require("../models/configs"),
 	Post       = require("../models/posts"),
 	Page       = require("../models/pages"),
@@ -39,9 +40,7 @@ module.exports = function(app){
 		},
 		store:function(req,res){
 			var register = req.body;
-
-			console.log("user.js :43", "ASDASDASD");
-			
+		
 			new_user = register;
 			
 			User
@@ -50,15 +49,27 @@ module.exports = function(app){
 				.fail(function(message){ return res.send(message) });
 		},
 		destroy:function(req,res){
-			var user = req.body;
-			User.findById( user.id, function(err, user){
-				if (!err) {
-					if (user.role === "admin") return res.send(new Message(null,"Can't delete an Admin"));
-					user.remove(function(err){
-						if (err === null) res.send(new Message("User deleted!"));
+			var user_id = req.body.id;
+
+			if(req.body.deleteUserData === 'true'){
+
+				User
+					.purge(user_id)
+					.then(function(data){
+						console.log("user.js :61 POST",  data[0]);
+						console.log("user.js :61 PAGE",  data[1]);
+						console.log("user.js :61 MEDIA", data[2]);
 					});
-				}
-			});
+			}
+			// var user = req.body;
+			// User.findById( user.id, function(err, user){
+			// 	if (!err) {
+			// 		if (user.role === "admin") return res.send(new Message(null,"Can't delete an Admin"));
+			// 		user.remove(function(err){
+			// 			if (err === null) res.send(new Message("User deleted!"));
+			// 		});
+			// 	}
+			// });
 		},
 		edit:function(req,res){
 			res.send("edit view");

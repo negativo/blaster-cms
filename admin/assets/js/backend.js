@@ -332,7 +332,11 @@
 				$(".delete-user").click(function(){
 					if(confirm( $(this).data("username") + " will be deleted and can't be restored, are you sure?")){
 						var $that = $(this);
-						var $user = { id: $that.data("id") };
+						var $user = { 
+							id: $that.data("id"), 
+							deleteUserData: confirm( "Would you like to delete all " + $(this).data("username") + " content?" ) 
+						};
+
 						$.ajax({
 					    url: '/api/user/' + $user.id,
 					    type: 'DELETE',
@@ -357,7 +361,6 @@
 				});
 			},
 			avatar:function(){
-
 			},
 			settings:function(){
 				var $addLink = $(".add-social-link"),

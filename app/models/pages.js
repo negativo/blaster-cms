@@ -29,4 +29,8 @@ PageSchema.pre('save',function(next){
 	next();
 });
 
+PageSchema.post('remove',function(){
+  process.emit('page_removed');
+});
+
 module.exports = mongoose.model('Page', PageSchema );

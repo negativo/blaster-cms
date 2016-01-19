@@ -2,7 +2,6 @@ var fs = require("fs");
 var mongoose = require("mongoose");
 var path = require("path");
 var __root = path.join( __dirname, "../../");
-var User = require('./user');
 
 var Schema = mongoose.Schema;
 
@@ -14,6 +13,19 @@ var MediaSchema = new Schema({
 	tags:[{ type: Array, default:"media"} ],
 });
 
+MediaSchema.pre('remove',function(next){
+  var media = this;
+  fs.unlink( __root + media.path, function(err){
+    if(err) return next();
+    media.remove();
+    next();  
+  });
+});
+
+MediaSchema.post('remove',function(){
+  process.emit('media_removed');
+});
+
 
 // Model's Methods
 MediaSchema.statics.all = function (callback) {
@@ -21,6 +33,7 @@ MediaSchema.statics.all = function (callback) {
 }
 
 MediaSchema.statics.getUserMedia = function (userId, callback) {
+  var User = require('./user');
   var Media = this;
 
   User.findById( userId, function(err, user){
@@ -36,7 +49,7 @@ MediaSchema.statics.removeMedia = function (id, callback) {
   	fs.unlink( __root + media.path, function(err){
   		if(err) console.log("media.js :23", err);
   		media.remove(callback);
-  	})
+  	});
   })
 }
 

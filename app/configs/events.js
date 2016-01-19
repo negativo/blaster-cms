@@ -17,7 +17,25 @@ module.exports = function(app,$ee){
 		console.log("mongo disconnected".yellow);
 	});
 
+	process.on('media_removed',function(){
+		console.log("media has been removed".yellow);
+	});
 
+	process.on('post_removed',function(){
+		console.log("post has been removed".yellow);
+	});
+
+	process.on('page_removed',function(){
+		console.log("page has been removed".yellow);
+	});
+
+	process.on('user_removed',function(){
+		console.log("user has been removed".yellow);
+	});
+
+	process.on('comment_removed',function(){
+		console.log("comment has been removed".yellow);
+	});
 
 	$ee.on("configs_updated",function(configs, message){
 		app.set('configs_updated', Date.now() );

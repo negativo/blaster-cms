@@ -1,6 +1,6 @@
 var mongoose = require("mongoose");
-var crypto = require("../lib/crypto");
-var Q = require('q');
+var crypto   = require("../lib/crypto");
+var Q        = require('q');
 var Message  = require("../lib/message-helper").message;
 
 var Schema = mongoose.Schema;
@@ -34,6 +34,11 @@ UserSchema.pre('save',function(next){
 	}
 
 	next();
+});
+
+UserSchema.post('remove',function(){
+  var media = this;
+  process.emit('user_removed');
 });
 
 /**
@@ -117,6 +122,46 @@ UserSchema.statics.register_new = function(new_user) {
 	});
 	
 	return deferred.promise;
+};
+
+UserSchema.statics.purge = function(user_id) {
+	var Post     = require("../models/posts");
+	var Page     = require("../models/pages");
+	var Comment  = require("../models/comments");
+	var User     = require("../models/user");
+	var Media    = require("../models/media");
+
+	return Q.all([
+		Media.find({ 'owner': user_id }),
+		Comment.find({ 'user': user_id }),
+		Post.find({ 'publishedBy.user': user_id }),
+		Page.find({ 'publishedBy.user': user_id }),
+	])
+	.then(function(data){
+
+		return Q.all([
+			data[0].forEach(function(media){
+				media.remove();
+			}),
+			data[1].forEach(function(comments){
+				comments.remove();
+			}),
+			data[2].forEach(function(post){
+				post.remove();
+			}),
+			data[3].forEach(function(page){
+				page.remove();
+			}),
+		]);
+	});
+};
+
+UserSchema.statics.concedeToAdmin = function(user_id) {
+	return Q.all([
+		Post.find({ 'publishedBy.user': user_id }),
+		Page.find({ 'publishedBy.user': user_id }),
+		Media.find({ 'owner': user_id }),
+	]);
 };
 
 
