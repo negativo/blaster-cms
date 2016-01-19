@@ -1,5 +1,7 @@
 exports.init = function(app,express){
 
+	process.title = process.env.NODE_TITLE;
+
 	/**
 	 * EVENTS
 	 */
