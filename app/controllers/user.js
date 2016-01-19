@@ -51,6 +51,8 @@ module.exports = function(app){
 		destroy:function(req,res){
 			var user_id = req.body.id;
 
+			console.log("user.js :54", req.body);
+
 			if(req.body.deleteUserData === 'true'){
 
 				User

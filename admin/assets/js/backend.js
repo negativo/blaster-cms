@@ -164,7 +164,15 @@
 					var $image = $(this).parent().parent();
 					var image_id = $(this).next().data("id");
 
-					if(confirm("Are you sure you want to delete this image?")){
+					swal({
+						title: "Are you sure?",
+						text: "You will not be able to recover this image!",
+						type: "warning",
+						showCancelButton: true,
+						confirmButtonColor: "#DD6B55",
+						confirmButtonText: "Yes, delete it!",
+						closeOnConfirm: true 
+					}, function(){
 						$.ajax({
 							url: '/api/media/' + image_id,
 							type: 'delete',
@@ -172,7 +180,8 @@
 								if(res === "delete") $image.fadeOut();
 							}	
 						});
-					}					
+					});
+
 				});
 			},
 			media_upload:function(){
@@ -329,14 +338,49 @@
 				});
 			},
 			deleteUser:function(){
-				$(".delete-user").click(function(){
-					if(confirm( $(this).data("username") + " will be deleted and can't be restored, are you sure?")){
-						var $that = $(this);
-						var $user = { 
-							id: $that.data("id"), 
-							deleteUserData: confirm( "Would you like to delete all " + $(this).data("username") + " content?" ) 
-						};
+				var $user = { 
+					id: "", 
+					deleteUserData: false,
+				};
 
+				var $that;
+
+				$(".delete-user").click(function(e){
+					$user.id = $(this).data("id");
+					$that = $(this);
+
+					e.preventDefault();
+					swal({   
+						title: "Are you sure?",   
+						text: "You will not be able to recover user: " + $(this).data("username"),   
+						type: "warning",
+						showCancelButton: true,   
+						confirmButtonColor: "#DD6B55",   
+						confirmButtonText: "Yes, delete it!",   
+						closeOnConfirm: false 
+					}, function(){   
+							swal({   
+								title: "What about data?",   
+							text: "Would you give ownership of post/media/pages to the administrator?",   
+							type: "warning",   
+							showCancelButton: true,   
+							confirmButtonColor: "#DD6B55",   
+							confirmButtonText: "Yes, give to admin!",
+							cancelButtonText: "No, delete all!",
+							closeOnConfirm: true,   
+							closeOnCancel: true 
+						}, function(isConfirm){   
+							if (isConfirm) {
+								//give data to admin  
+								$user.deleteUserData = false;
+								deleteUserRequest();
+							} else {     
+								$user.deleteUserData = true;
+								deleteUserRequest();
+							} });
+					});
+
+					function deleteUserRequest(){
 						$.ajax({
 					    url: '/api/user/' + $user.id,
 					    type: 'DELETE',
@@ -344,7 +388,6 @@
 					    success: function(res) {
 								if (!res.err) {
 									toastr.success(res.message);
-									
 									//redirect if it's not on /users list page
 									if( document.location.pathname.match(/\/admin\/users\/[A-Za-z0-9].+/) ){
 										window.location.replace("/admin/users");
@@ -358,6 +401,7 @@
 					    }
 						});
 					}
+					
 				});
 			},
 			avatar:function(){
@@ -581,7 +625,15 @@
 				$(".remove-comment").click(function(){
 					var $parent = $( this ).parent().parent();
 					var data = { action:"delete", id:$(this).data("id"), post_id: $(this).data("post-id") };
-					if (confirm("Deleted comment can't be restored are you sure? ") ){
+					swal({
+						title: "Are you sure?",
+						text: "You will not be able to recover this comment!",
+						type: "warning",
+						showCancelButton: true,
+						confirmButtonColor: "#DD6B55",
+						confirmButtonText: "Yes, delete it!",
+						closeOnConfirm: true 
+					}, function(){
 						$.ajax({
 							url: "/api/comment/" + data.id,
 							type: 'DELETE',
@@ -593,7 +645,7 @@
 								};
 							},
 						});
-					};
+					});
 				});
 
 				//edit comment
