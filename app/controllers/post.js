@@ -58,7 +58,6 @@ module.exports = function(app){
 					res.locals.pagename = " " + singlePost.title + " edit";
 					res.locals.bodyclass = "edit-post";
 					res.locals.isNew = false;
-					console.log("post.js :61", single);
 					res.render("editor", { editor: "post", single: singlePost, templates: app.locals.templates.post });
 				}).populate("publishedBy.user",{password:0});;
 			}

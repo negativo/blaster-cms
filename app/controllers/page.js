@@ -33,7 +33,6 @@ module.exports = function(app){
 			});
 		},
 		store:function(req,res){
-			console.log("routes.js", "create_page request");
 			var page = req.body;
 			new Page({
 				title: page.title || "Page Title" ,

@@ -4,7 +4,7 @@
         <h2 class="page-header">
             Posts <small>manage your news and posts</small>
         </h2>
-        <a href="/admin/new-post">
+        <a href="/admin/post">
             <button type="button" class="btn btn-primary"><i class="fa fa-fw fa-plus"></i> Add new post</button>
         </a>
         <br><br>
@@ -22,7 +22,7 @@
         <% for (var i = 0; i < posts.length; i++) { %>
             <tr>
                 <td><%= i %></td>
-                <td><a href="./edit-post/<%=  posts[i]._id %>"><%=  posts[i].title %></a></td>
+                <td><a href="/admin/post/<%=  posts[i]._id %>"><%=  posts[i].title %></a></td>
                 <td><%=  posts[i].status %></td>
                 <td><%=  posts[i].publishedBy.user.username %></td>
                 <td class="date"><%=  posts[i].publishedBy.date %></td>
