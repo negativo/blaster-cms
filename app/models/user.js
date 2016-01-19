@@ -14,6 +14,7 @@ var UserSchema = new Schema({
 	createdOn            : { type: Date, default: Date.now() },
 	role                 : { type:String, default:'guest' },
 	admin                : { type:Boolean, default:false },
+	master               : { type:Boolean, default:false },
 	resetToken					 : { type:String }, //expires after 30min
 	resetTokenCreated		 : { type:Date },
 });
@@ -124,6 +125,12 @@ UserSchema.statics.register_new = function(new_user) {
 	return deferred.promise;
 };
 
+
+/**
+ * DELETE USER
+ * purge: destroy every user content and account
+ * deleteAdminInherit: remove user but admin inherit his content
+ */
 UserSchema.statics.purge = function(user_id) {
 	var Post     = require("../models/posts");
 	var Page     = require("../models/pages");
@@ -131,37 +138,142 @@ UserSchema.statics.purge = function(user_id) {
 	var User     = require("../models/user");
 	var Media    = require("../models/media");
 
-	return Q.all([
-		Media.find({ 'owner': user_id }),
-		Comment.find({ 'user': user_id }),
-		Post.find({ 'publishedBy.user': user_id }),
-		Page.find({ 'publishedBy.user': user_id }),
-	])
-	.then(function(data){
+	var user_to_delete;
+
+	return (function(){
+		var deferred = Q.defer();
+		User.findById( user_id, function(err,user){
+			if(err) return deferred.reject(err);
+			if( user && (!user.admin || !user.role == 'admin') ){
+				deferred.resolve(user);
+			}else{
+				deferred.reject("Can't delete an admin");
+			}
+		})
+		return deferred.promise;
+	})()
+	.then(function(user){
+		user_to_delete = user;
 
 		return Q.all([
-			data[0].forEach(function(media){
-				media.remove();
-			}),
-			data[1].forEach(function(comments){
-				comments.remove();
-			}),
-			data[2].forEach(function(post){
-				post.remove();
-			}),
-			data[3].forEach(function(page){
-				page.remove();
-			}),
+			Media.find({ 'owner': user_id }),
+			Comment.find({ 'user': user_id }),
+			Post.find({ 'publishedBy.user': user_id }),
+			Page.find({ 'publishedBy.user': user_id }),
 		]);
+	})
+	.then(function(data){
+		var the_promises = [];
+		
+		data[0].forEach(function(media){
+			the_promises.push(media.remove());
+		});
+		data[1].forEach(function(comments){
+			the_promises.push(comments.remove());
+		});
+		data[2].forEach(function(post){
+			the_promises.push(post.remove());
+		});
+		data[3].forEach(function(page){
+			the_promises.push(page.remove());
+		});
+
+		return Q.all(the_promises);
+	})
+	.then(function(data){
+		return user_to_delete.remove();
 	});
 };
 
-UserSchema.statics.concedeToAdmin = function(user_id) {
-	return Q.all([
-		Post.find({ 'publishedBy.user': user_id }),
-		Page.find({ 'publishedBy.user': user_id }),
-		Media.find({ 'owner': user_id }),
-	]);
+UserSchema.statics.deleteAdminInherit = function(user_id) {
+	var Post     = require("../models/posts");
+	var Page     = require("../models/pages");
+	var Comment  = require("../models/comments");
+	var User     = require("../models/user");
+	var Media    = require("../models/media");
+
+	var admin_id;
+
+	var the_promises = [];
+
+	var user_to_delete;
+
+	var changeMediaOwner = function(medias){
+		medias.forEach(function(media){
+			media.owner = admin_id;
+			the_promises.push(media.save());
+		});
+	}
+
+	var changeCommentOwner = function(comments){
+		comments.forEach(function(comment){
+			the_promises.push(comment.remove());
+		});
+	}
+
+	var changePostOwner = function(posts){
+		posts.forEach(function(post){
+			post.publishedBy.user = admin_id;
+			the_promises.push(post.save());
+		});
+	}
+
+	var changePageOwner = function(pages){
+		pages.forEach(function(page){
+			page.publishedBy.user = admin_id;
+			the_promises.push(page.save());
+		});
+	}
+
+	return (function(){
+		var deferred = Q.defer();
+		User.findById( user_id, function(err,user){
+			if(err) return deferred.reject(err);
+			if( user && (!user.admin || !user.role == 'admin') ){
+				deferred.resolve(user);
+			}else{
+				deferred.reject("Can't delete an admin");
+			}
+		})
+		return deferred.promise;
+	})()
+	.then(function(user){
+		user_to_delete = user;
+
+		return Q.all([
+			Media.find({ 'owner': user_id }),
+			Comment.find({ 'user': user_id }),
+			Post.find({ 'publishedBy.user': user_id }),
+			Page.find({ 'publishedBy.user': user_id }),
+		]);
+	})
+	.then(function(data){
+		var deferred = Q.defer();
+
+		User.findOne({ "admin": true}, function(err, admin){
+			if(err) deferred.reject(err);
+			return deferred.resolve({ admin:admin, datas: data});
+		});
+
+		return deferred.promise;
+	})
+	.then(function(data){
+		admin_id    = data.admin._id;
+		var media   = data.datas[0];
+		var comment = data.datas[1];
+		var post    = data.datas[2];
+		var page    = data.datas[3];
+
+		changeMediaOwner(media);
+		changeCommentOwner(comment);
+		changePostOwner(post);
+		changePageOwner(page);
+
+		return Q.all(the_promises);
+	})
+	.then(function(data){
+		return user_to_delete.remove();
+	});
 };
 
 

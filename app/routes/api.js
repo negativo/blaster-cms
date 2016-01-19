@@ -55,7 +55,7 @@ module.exports = function(app,express,$ee){
 	 /**
 	 * COMMENTS
 	 */
-	app.post("/api/comment"        , moderator, CommentCtrl.store );
+	app.post("/api/comment"        , guest, CommentCtrl.store );
 	app.post("/api/comment/:id"    , moderator, CommentCtrl.update );
 	app.delete("/api/comment/:id"  , moderator, CommentCtrl.destroy );
 	app.post("/api/comment/reply/" , moderator, CommentCtrl.reply );

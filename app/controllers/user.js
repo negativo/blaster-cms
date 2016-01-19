@@ -56,9 +56,19 @@ module.exports = function(app){
 				User
 					.purge(user_id)
 					.then(function(data){
-						console.log("user.js :61 POST",  data[0]);
-						console.log("user.js :61 PAGE",  data[1]);
-						console.log("user.js :61 MEDIA", data[2]);
+						return res.send(new Message("User and his content deleted!"));
+					})
+					.catch(function(err){
+						return res.send(new Message(null, err));
+					});
+			}else{
+				User
+					.deleteAdminInherit(user_id)
+					.then(function(data){
+						return res.send(new Message("User deleted, admin inherited page/post/medias!"));
+					})
+					.catch(function(err){
+						return res.send(new Message(null, err));
 					});
 			}
 			// var user = req.body;
