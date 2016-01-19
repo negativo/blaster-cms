@@ -36,5 +36,20 @@ module.exports = function(app, express, $ee){
 	 */
 	installer.check_database(app);
 
+	/**
+	 * HELPERS FUNCTIONS
+	 */
+	app.locals.scripts = [];
+	app.locals.renderScripts =  function (all) {
+		app.locals.scripts = [];
+		if (all != undefined) {
+			return all.map(function(script) {
+				return '<script src="/admin/assets/js/' + script + '"></script>';
+			}).join('\n ');
+		}else {
+			return '';
+		}
+	};
+
 	$ee.emit('server_configured');
 }
