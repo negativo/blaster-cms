@@ -7,40 +7,55 @@ var Schema = mongoose.Schema;
 
 var UserSchema = new Schema({
 	username             : String,
-	password             : { type:String, select:false },
-	name                 : { type:String, default:"" },
-	email                : { type:String, default:"" },
-	avatar               : { type:String, default: require('../configs/globals').admin_assets + "dummy-user.png" },
+	password             : { type: String, select:false },
+	name                 : { type: String, default:"" },
+	email                : { type: String, default:"" },
+	avatar               : { type: String, default: require('../configs/globals').admin_assets + "dummy-user.png" },
 	createdOn            : { type: Date, default: Date.now() },
-	role                 : { type:String, default:'guest' },
-	admin                : { type:Boolean, default:false },
-	master               : { type:Boolean, default:false },
-	resetToken					 : { type:String }, //expires after 30min
-	resetTokenCreated		 : { type:Date },
+	role                 : { type: String, default:'guest' },
+	admin                : { type: Boolean, default:false },
+	master               : { type: Boolean, default:false },
+	resetToken					 : { type: String }, //expires after 30min
+	resetTokenCreated		 : { type: Date },
+	apiToken 						 : { type: Schema.Types.ObjectId, ref:"Token" },
 });
+
 
 /**
  * HOOKS
  */
-UserSchema.pre('save',function(next){
-	// hash password if saving to db or skip
-	var user = this;
-	
-	if (user.isModified('password')) {
-		user.password = crypto.bcrypt.encrypt(user.password);
-	}
 
-	if (user.isModified('email')) {
-		user.email = user.email.toLowerCase();
-	}
+UserSchema
+	.pre('save',function(next){
+		// hash password if saving to db or skip
+		var user = this;
+		
+		if (user.isModified('password')) {
+			user.password = crypto.bcrypt.encrypt(user.password);
+		}
 
-	next();
-});
+		if (user.isModified('email')) {
+			user.email = user.email.toLowerCase();
+		}
 
-UserSchema.post('remove',function(){
-  var media = this;
-  process.emit('user_removed');
-});
+		next();
+	})
+	.pre('find',function(next){
+		this.populate('apiToken');
+		next();
+	})
+	.pre('findOne',function(next){
+		this.populate('apiToken');
+		next();
+	});
+
+UserSchema
+	.post('remove',function(){
+	  process.emit('user_removed');
+	});
+
+
+
 
 /**
  * INSTANCE METHODS
@@ -75,6 +90,23 @@ UserSchema.methods.isTokenExpired = function() {
 /**
  * MODEL METHODS
  */
+
+
+UserSchema.statics.findUserComparePassword = function(user, candidatePassword) {
+	/**
+	 * find user and check if password is correct
+	 * @param  {Object} user, have user_id or username
+	 * @return {Promise}              
+	 */
+	var deferred = Q.defer();
+
+	this.findOne( { $or:[ {'_id': user.user_id}, {'username': user.username} ] } ,{ password:1 }, function(err, user){
+		if(err) deferred.reject(err);
+		deferred.resolve({ auth: user.comparePassword(candidatePassword) , user_id: user._id });
+	});
+
+	return deferred.promise;  
+};
 
 UserSchema.statics.change_password = function(user_id, old_password, new_password) {
 	/**

@@ -35,7 +35,7 @@
                 <option value="guest" <%= profile.role === "guest" ? "selected" : "" %> >Guest</option>
             </select>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary pull-right">Submit</button>
     </form>
     <div class="clearfix"></div>
     <br>
@@ -48,14 +48,27 @@
             <input type="password" class="form-control profile-check-pwd" placeholder="Repeat new password">
             <label class="pwd-err">error</label>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary pull-right">Submit</button>
     </form>
     <div class="clearfix"></div>
-    <br>
-    <h2>Delete account</h2>
-    <hr>
-    <br>
-    <button style="color:white;" class="btn btn-danger delete-user" data-id="<%= profile._id %>">DELETE ACCOUNT</button>
-    <br><br><br>
+    <form role="form" class="col-md-4" id="user-token-api-request" data-id="<%= profile._id %>">
+        <h2>Develop <small>(api token)</small></h2>
+        <hr>
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="request an api token" value="<%= !profile.apiToken ? '' : profile.apiToken.token %>" readonly>
+        </div>
+        <% if(!profile.apiToken){ %>
+            <button type="submit" class="btn btn-primary pull-right">request</button>
+        <% } %>
+    </form>
+    <div class="clearfix"></div>
+    <div class="col-md-4">
+        <h2>Delete account</h2>
+        <hr>
+        <br>
+        <p>Are your sure? Your data cannot be restored</p>
+        <button style="color:white;" class="btn btn-danger delete-user pull-right" data-id="<%= profile._id %>">DELETE ACCOUNT</button>
+    </div>
+
 
 </div>

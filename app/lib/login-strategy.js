@@ -9,10 +9,9 @@ module.exports = function(passport){
 
   // serializza pure la pass
   passport.serializeUser(function(user, done) {
-    var bcrypt = require('bcrypt');
     var serialized = {
       id: user.id,
-      token: bcrypt.genSaltSync(10),
+      apiToken: user.apiToken || null,
     }
     done(null, serialized);
   });

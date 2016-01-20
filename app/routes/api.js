@@ -14,13 +14,14 @@ module.exports = function(app,express){
 	var uploader    = multer({ storage: general_storage })
 	var avatar      = multer({ dest: app.locals.__root + '/uploads/avatar'});
 	
-	var PageCtrl    = require("../controllers/page")(app);
-	var PostCtrl    = require("../controllers/post")(app);
-	var CommentCtrl = require("../controllers/comment")(app);
-	var ApiCtrl     = require("../controllers/api")(app);
-	var ConfCtrl    = require("../controllers/configuration")(app);
-	var UserCtrl    = require("../controllers/user")(app);
-	var MediaCtrl   = require("../controllers/media")(app);
+	var PageCtrl     = require("../controllers/page")(app);
+	var PostCtrl     = require("../controllers/post")(app);
+	var CommentCtrl  = require("../controllers/comment")(app);
+	var ApiCtrl      = require("../controllers/api")(app);
+	var ConfCtrl     = require("../controllers/configuration")(app);
+	var UserCtrl     = require("../controllers/user")(app);
+	var MediaCtrl    = require("../controllers/media")(app);
+	var ApiTokenCtrl = require("../controllers/api-token")(app);
 
 	/**
 	 * AUTHORIZATIONS
@@ -30,7 +31,7 @@ module.exports = function(app,express){
 	var admin     = require('../middlewares/roles')('admin');
 
 
-	app.get('/api/posts'     , guest, PostCtrl.index );
+	app.get('/api/posts'     , moderator, PostCtrl.index );
 	app.get('/api/pages'     , guest, PageCtrl.index );
 
 	/**
@@ -63,14 +64,14 @@ module.exports = function(app,express){
 	/**
 	 * USERS
 	 */
-	app.post('/api/user/reset-request'   	, UserCtrl.reset_password_request ); // request password reset
-	app.get('/api/user/reset'     				, UserCtrl.reset_token_check ); // password change view && check
-	app.post('/api/user/reset/token'  		, UserCtrl.reset_password );		// reset password post
-
-	app.post('/api/user'                  , guest, UserCtrl.store ); // registar
-	app.post('/api/user/:id'   	          , admin, UserCtrl.update );
-	app.post('/api/user/:id/password'   	, admin, UserCtrl.change_password );
-	app.delete('/api/user/:id'            , admin, UserCtrl.destroy );
+	app.post('/api/user/reset-request'   	 , UserCtrl.reset_password_request ); // request password reset
+	app.get('/api/user/reset'     				 , UserCtrl.reset_token_check ); // password change view && check
+	app.post('/api/user/reset/token'  		 , UserCtrl.reset_password );		// reset password post
+	
+	app.post('/api/user'                   , guest, UserCtrl.store ); // registar
+	app.post('/api/user/:id'   	           , admin, UserCtrl.update );
+	app.post('/api/user/:id/password'   	 , admin, UserCtrl.change_password );
+	app.delete('/api/user/:id'             , admin, UserCtrl.destroy );
 
 	
 	/**
@@ -86,5 +87,14 @@ module.exports = function(app,express){
 	 */
 	app.post('/api/upload'            , moderator, uploader.array('upload') , ApiCtrl.upload_photo  );
 	app.post('/api/upload/avatar/:id' , moderator, avatar.single('avatar')   , ApiCtrl.upload_avatar );
+
+
+	/**
+	 * API TOKENS //ApiTokenCtrl
+	 */
+	app.get('/api/tokens', ApiTokenCtrl.index );
+	app.get('/api/token/:username/:password');
+	app.post('/api/token/generate/:user_id?*/:username?*/:password?*', guest, ApiTokenCtrl.generateToken); // body|query|head > need either username|_id
+
 }
 

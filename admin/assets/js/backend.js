@@ -111,6 +111,69 @@
 				backend.request.remove_media();
 				backend.request.forgotten_password();
 				backend.request.resetPasswordWithToken();
+				backend.request.request_api_token();
+			},
+			setup:function(){
+				/**
+				 * AJAX ERROR CATCHER
+				 */
+				$( document ).ajaxError(function(err, head) {
+				  console.log('You are not authorized to do this action!')
+				  if(head.status === 403){
+				  	toastr.error("Your are not authorized to do this!","Contact the admin!");
+				  }else if(head.status === 401){
+				  	toastr.error("Unsuccessful authentication","Try again!");
+				  }else{
+				  	toastr.error("There was an error with your request","Contact the admin");
+				  }
+				});
+			},
+			request_api_token: function(){
+				$('#user-token-api-request').submit(function(e){
+					e.preventDefault();
+					e.stopPropagation();
+					var $form = $(this);
+					var $input = $(this).find("input[type='text']");
+
+					swal({   
+						title: "Authenticate!",   
+						text: "Your password",   
+						type: "input",
+						inputType: 'password',
+						showCancelButton: true,   
+						closeOnConfirm: false,   
+						animation: "slide-from-top",   
+						inputPlaceholder: "Write something" 
+					}, function(inputValue){   
+						if (inputValue === false) return false;      
+						if (inputValue === "") {     
+							swal.showInputError("You need to write something!");     
+							return false;
+						}      
+						
+						$.ajax({
+							url: '/api/token/generate',
+							type: 'POST',
+							data: { user_id: $form.data('id'), password: inputValue },
+							success:function(res, head){
+								console.log("backend.js :156", res);
+								$input.val(res.token);
+								swal("Token generated", null, "success"); 
+							},
+							error:function(head){
+								if(head.status <= 401){
+									swal("Wrong password!", "Wrong authentication data, try again", "error"); 
+								}else{
+									swal("User have a token", "User have a token yet!", "error"); 
+								}
+							}
+						})
+						
+
+						//swal("Nice!", "You wrote: " + inputValue, "success"); 
+					});
+
+				});
 			},
 			forgotten_password:function(){
 				// using flash message for now
@@ -146,14 +209,6 @@
 						$("body").find('#messages').html('Password mismatch! Try again!').removeClass('hide');
 					}
 					
-				});
-			},
-			setup:function(){
-				$( document ).ajaxError(function(err, head) {
-				  console.log('You are not authorized to do this action!')
-				  if(head.status === 403){
-				  	toastr.error("Your are not authorized to do this!","Contact the admin!");
-				  }
 				});
 			},
 			remove_media: function(){
