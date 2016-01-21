@@ -94,7 +94,7 @@ module.exports = function(app,express){
 	 */
 	app.get('/api/tokens', ApiTokenCtrl.index );
 	app.get('/api/token/:username/:password');
-	app.post('/api/token/generate/:user_id?*/:username?*/:password?*', guest, ApiTokenCtrl.generateToken); // body|query|head > need either username|_id
+	app.post('/api/token/generate/:user_id?*/:username?*/:password?*', admin, ApiTokenCtrl.generateToken); // body|query|head > need either username|_id
 
 }
 

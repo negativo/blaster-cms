@@ -137,7 +137,7 @@
 
 					swal({   
 						title: "Authenticate!",   
-						text: "Your password",   
+						text: "Type the user's password",   
 						type: "input",
 						inputType: 'password',
 						showCancelButton: true,   
@@ -158,13 +158,18 @@
 							success:function(res, head){
 								console.log("backend.js :156", res);
 								$input.val(res.token);
+								$form.find('button').fadeOut();
 								swal("Token generated", null, "success"); 
 							},
 							error:function(head){
-								if(head.status <= 401){
+								if(head.status === 401 ){
 									swal("Wrong password!", "Wrong authentication data, try again", "error"); 
-								}else{
+								}
+								if(head.status === 405 ){
 									swal("User have a token", "User have a token yet!", "error"); 
+								}
+								if(head.status === 403 ){
+									swal("Not Authorized!", null, "error"); 
 								}
 							}
 						})

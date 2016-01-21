@@ -20,14 +20,14 @@ module.exports = function(mustBeRole){
 			.exec(function(err, apitoken){
 				if(err) console.log("roles.js :19", err);
 
-				if(!apitoken) res.status(405).send('Authentication Token not valid.');
+				if(!apitoken && !req.user) res.status(405).send('Authentication Token not valid.');
 
 				if(apitoken) request_user_role = apitoken.user.role || request_user_role;
 
 				
-				var isContentMine = req.user ? (req.user._id.toString() === req.params.id && req.method != "GET") : false;
+				var isGuestIsProfilePage = req.user ? (req.user._id.toString() === req.params.id && req.method != "GET") : false;
 
-				if ( (user_power[request_user_role] >= user_power[mustBeRole]) || isContentMine ){
+				if ( (user_power[request_user_role] >= user_power[mustBeRole]) || isGuestIsProfilePage ){
 					return next();
 				} 
 				

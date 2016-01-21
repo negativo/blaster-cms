@@ -51,16 +51,18 @@
         <button type="submit" class="btn btn-primary pull-right">Submit</button>
     </form>
     <div class="clearfix"></div>
-    <form role="form" class="col-md-4" id="user-token-api-request" data-id="<%= profile._id %>">
-        <h2>Develop <small>(api token)</small></h2>
-        <hr>
-        <div class="form-group">
-            <input type="text" class="form-control" placeholder="request an api token" value="<%= !profile.apiToken ? '' : profile.apiToken.token %>" readonly>
-        </div>
-        <% if(!profile.apiToken){ %>
-            <button type="submit" class="btn btn-primary pull-right">request</button>
-        <% } %>
-    </form>
+    <% if(user.admin){ %>
+        <form role="form" class="col-md-4" id="user-token-api-request" data-id="<%= profile._id %>">
+            <h2>Develop <small>(api token)</small></h2>
+            <hr>
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="request an api token" value="<%= !profile.apiToken ? '' : profile.apiToken.token %>" readonly>
+            </div>
+            <% if(!profile.apiToken){ %>
+                <button type="submit" class="btn btn-primary pull-right">request</button>
+            <% } %>
+        </form>
+    <% } %>
     <div class="clearfix"></div>
     <div class="col-md-4">
         <h2>Delete account</h2>
