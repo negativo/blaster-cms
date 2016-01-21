@@ -15,14 +15,7 @@ var PostSchema = new Schema({
 	publishedBy:{
 		user:{ type: Schema.Types.ObjectId, ref:"User"},
 		date:{ type: Date, default: Date.now() }
-	},
-	meta:{
-		postedBy:{ type: Schema.Types.ObjectId, ref:"User" },
-		date:{ type: Date, default: Date.now() },
-		tags:Array
 	}
-	//refactor to use meta insied of publishedBy 
-	//when I have or someone have time to check all the reference..FML
 }, {
   toObject: {
   virtuals: true
@@ -72,8 +65,14 @@ PostSchema.pre('save',function(next){
 	next();
 });
 
+PostSchema.statics.setup = function(userId, callback){
+	process.emit('post_setup');
+	var Post = this;
+	new Post({ 
+		publishedBy:{ user: userId }
+	}).save(callback);
+}
 
-// Model's Methods
 PostSchema.statics.all = function (cb) {
   return this.find({ }, cb);
 }

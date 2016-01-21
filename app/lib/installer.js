@@ -43,23 +43,14 @@ var install = function(app){
 			if(err) console.log("installer.js :29", err);
 			if (err) deferred.reject({err:err, message:"error finding existing user"});
 			if(!user) {
-				new User({ username: process.env.ADMIN_USERNAME, password:  process.env.ADMIN_PASSWORD, admin:true, role:"admin" })
-				.save(function(err,user){
+				User.setup(function(err, user){					
 					if(err) deferred.reject({err:err, message:"error saving user"})
 
-					//post
-					new Post({
-						publishedBy:{
-							user:user._id,
-						}
-					}).save();
+					Post.setup(user._id);
+					Page.setup();
 					
 					// page
-					new Page({
-						publishedBy:{
-							user:user.password,
-						}
-					}).save();
+					new Page({}).save();
 
 					deferred.resolve({message:"User created", user: user});
 				});

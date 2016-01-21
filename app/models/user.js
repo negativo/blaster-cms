@@ -55,7 +55,19 @@ UserSchema
 	});
 
 
+/**
+ * MODEL METHODS
+ */
 
+UserSchema.statics.setup = function(callback){
+	process.emit('admin_setup');
+	var User = this;
+	new User({ username: process.env.ADMIN_USERNAME, 
+		password:  process.env.ADMIN_PASSWORD, 
+		admin:true, 
+		role:"admin" 
+	}).save(callback);
+}
 
 /**
  * INSTANCE METHODS

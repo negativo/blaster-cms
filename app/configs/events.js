@@ -51,6 +51,18 @@ module.exports = function(app){
 		console.log("Configurations parsed in request".cyan);
 	});
 
+	process.on("admin_setup",function(){
+		console.log("admin setup done!".inverse.yellow);
+	});
+
+	process.on("post_setup",function(){
+		console.log("post setup done!".inverse.yellow);
+	});
+
+	process.on("page_setup",function(){
+		console.log("page setup done!".inverse.yellow);
+	});
+	
 	process.on("setup_done",function(){
 		console.log("Setup done!".green);
 	});
