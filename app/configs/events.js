@@ -51,6 +51,9 @@ module.exports = function(app){
 		console.log("Configurations parsed in request".cyan);
 	});
 
+	process.on("setup_done",function(){
+		console.log("Setup done!".green);
+	});
 
 	process.on('server_configured', function(){
 		console.log("Server configurations: " + " LOADED!".inverse.green);

@@ -25,9 +25,9 @@ var check_database = function(app){
 			install(app)
 			.then(function(data){
 				app.set('is_installed', true);
-				console.log("utils.js :40", data);
+				process.emit('setup_done');
 			},function(err){
-				console.log("utils.js :42", err);
+				if(err) console.log("utils.js :42", err);
 			})
 		}
 	});
@@ -40,7 +40,7 @@ var install = function(app){
 	function createUser(){
 		var deferred = Q.defer();
 		User.findOne({"username": process.env.ADMIN_USERNAME },function(err,user){
-			console.log("installer.js :29", err);
+			if(err) console.log("installer.js :29", err);
 			if (err) deferred.reject({err:err, message:"error finding existing user"});
 			if(!user) {
 				new User({ username: process.env.ADMIN_USERNAME, password:  process.env.ADMIN_PASSWORD, admin:true, role:"admin" })
