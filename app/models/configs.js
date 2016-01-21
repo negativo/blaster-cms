@@ -11,21 +11,10 @@ var ConfigsSchema = Schema({
 	title : String,
 	subtitle : String,
 	theme : String,
-	// templates : {
-	// 	"home-template" : String,
-	// 	"page-template" : String,
-	// 	"post-template" : String
-	// },
 	home:String,
 	navigation:Array,
 	links: Array
 });
-
-
-
-/**
- * METHODS
- */
 
 
 /**
