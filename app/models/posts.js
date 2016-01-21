@@ -1,5 +1,6 @@
-var mongoose = require("mongoose");
-var toSlug = require('to-slug-case');
+var mongoose = require('mongoose');
+var URLSlugs = require('mongoose-url-slugs');
+var autopopulate = require('mongoose-autopopulate');
 
 var Schema = mongoose.Schema;
 
@@ -11,9 +12,9 @@ var PostSchema = new Schema({
 	template: { type: String, default: "post-template" },
 	type: { type:String, default: "post" },
 	tags: Array,
-	comments:[{ type: Schema.ObjectId, ref:"Comment"}],
+	comments:[{ type: Schema.ObjectId, ref:"Comment", autopopulate:true}],
 	publishedBy:{
-		user:{ type: Schema.Types.ObjectId, ref:"User"},
+		user:{ type: Schema.Types.ObjectId, ref:"User", autopopulate:true },
 		date:{ type: Date, default: Date.now() }
 	}
 }, {
@@ -24,6 +25,12 @@ var PostSchema = new Schema({
   virtuals: true 
   }
 });
+
+/**
+ * PLUGINS
+ */
+PostSchema.plugin(URLSlugs('title'));
+PostSchema.plugin(autopopulate);
 
 /**
  * MIDDLE
@@ -59,9 +66,6 @@ PostSchema
 
 PostSchema.pre('save',function(next){
 	var post = this;
-	if(post.isModified('title')){
-		post.slug = toSlug(post.title);
-	}
 	next();
 });
 
@@ -83,13 +87,7 @@ PostSchema.statics.getById = function (id, cb) {
 
 PostSchema.statics.findBySlug = function (slug, callback) {
 
-	return this.findOne({ "slug": slug })
-		.populate("publishedBy.user")
-		.populate({
-	    path: 'comments',
-	    populate: { path: 'user', model: 'User' }
-	  })
-		.exec(callback);
+	return this.findOne({ "slug": slug }).exec(callback);
 
 }
 

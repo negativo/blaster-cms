@@ -44,14 +44,15 @@
     "express-session": "^1.12.1",
     "less": "^2.5.3",
     "mongoose": "^4.1.0",
+    "mongoose-autopopulate": "^0.4.0",
+    "mongoose-url-slugs": "^0.1.4",
     "multer": "^1.1.0",
     "nodemailer": "^2.0.0",
     "passport": "^0.2.2",
     "passport-local": "^1.0.0",
     "path": "^0.11.14",
     "q": "^1.4.1",
-    "request": "^2.60.0",
-    "to-slug-case": "^0.1.2"
+    "request": "^2.60.0"
   },
   "devDependencies": {
     "grunt": "^0.4.5",

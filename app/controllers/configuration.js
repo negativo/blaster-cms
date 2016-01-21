@@ -1,7 +1,6 @@
 module.exports = function(app){
 
-	var toSlug = require('to-slug-case'),
-	fs 				 = require("fs"),
+	var fs 				 = require("fs"),
 	User       = require("../models/user"),
 	Config     = require("../models/configs"),
 	Post       = require("../models/posts"),

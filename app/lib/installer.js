@@ -48,9 +48,6 @@ var install = function(app){
 
 					Post.setup(user._id);
 					Page.setup();
-					
-					// page
-					new Page({}).save();
 
 					deferred.resolve({message:"User created", user: user});
 				});

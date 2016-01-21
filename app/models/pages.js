@@ -1,23 +1,24 @@
 var mongoose = require('mongoose');
-var toSlug = require('to-slug-case');
+var URLSlugs = require('mongoose-url-slugs');
 
 var Schema = mongoose.Schema;
 
 var PageSchema = new Schema({
+	title:{ type: String, default: 'Sample Page' },
 	slug:{ type: String, default: 'sample-page' },
-	title:{ type: String, default: 'Sample' },
 	body:{ type: String, default: 'Hi I\'m a page :)' },
 	template: { type: String, default: 'page-template' },
 	status: { type:String, default:'published'},
 	type: { type:String, default: 'page' }
 });
 
+/**
+ * PLUGINS
+ */
+PageSchema.plugin(URLSlugs('title'));
 
 PageSchema.pre('save',function(next){
 	var page = this;
-	if(page.isModified('title')){
-		page.slug = toSlug(page.title);
-	}
 	next();
 });
 
