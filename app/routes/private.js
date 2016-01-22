@@ -83,7 +83,7 @@ module.exports = function(app,express){
 	app.post('/admin/login',
 	  passport.authenticate('local', { successRedirect: '/admin/panel', failureRedirect: '/admin/login', failureFlash: true })
  	);
-		
+	
 
 }
 
