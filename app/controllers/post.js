@@ -13,6 +13,17 @@ module.exports = function(app){
 				res.json(posts);
 			});	
 		},
+		index_admin: function (req, res) {	
+			res.locals.pagename = " Posts";
+			res.locals.bodyclass = "dashboard-posts";
+			Post.find({},{ body:0 }, function(err, posts){
+				if(posts !== null && req.isAuthenticated() ) {
+					res.render("posts", { posts: posts });
+				}
+			}).sort({ "publishedBy.date": -1 });
+		},
+		index_public: function (req, res) {	
+		},
 		show: function (req, res) {
 			var slug = req.params.post;
 			Post.findBySlug( slug, function(err,post){

@@ -20,10 +20,12 @@ module.exports = function(mustBeRole){
 			.exec(function(err, apitoken){
 				if(err) console.log("roles.js :19", err);
 
-				if(!apitoken && !req.user) res.status(405).send('Authentication Token not valid.');
+
+				if(!apitoken && !req.user && user_power[mustBeRole] > 1) res.status(403).send('Unauthorized.');
 
 				if(apitoken) request_user_role = apitoken.user.role || request_user_role;
 
+				process.emit('authorization_check', request_user_role + " trying to access " + mustBeRole + " resources");
 				
 				var isGuestIsProfilePage = req.user ? (req.user._id.toString() === req.params.id && req.method != "GET") : false;
 

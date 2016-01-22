@@ -36,7 +36,6 @@ npm start use nodemon on server.js if you have problem with it you should instal
 ##ToDos
 	priority > 1 > 2 > 3 (self explanatory)
 	- [1] CSRF
-	- [2] Use child process for something??
 	- [2] File browser in tinyMCE ??
 	- [3] Reduce controllers ? 
 	- [3] Should expose a better api

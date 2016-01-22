@@ -13,6 +13,17 @@ module.exports = function(app){
 				res.json(pages);
 			});
 		},
+		index_admin: function (req, res) {	
+			res.locals.pagename = " Pages";
+			res.locals.bodyclass = "dashboard-pages";
+			Page.find({},{ body:0 }, function(err, pages){
+				if(pages !== null && req.isAuthenticated() ) {
+					res.render("pages", { pages: pages });
+				}
+			});
+		},
+		index_public: function (req, res) {	
+		},
 		show: function (req, res) {
 			var slug = req.params.page.toString();	
 			Page.findOne({ "slug": slug },function(err,page){

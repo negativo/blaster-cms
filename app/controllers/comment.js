@@ -6,11 +6,31 @@ module.exports = function(app){
 	Page = require("../models/pages"),
 	Comment = require("../models/comments");
 
+	var Q = require("q");
+
 	return {
 		index:function(req,res){
 			Comment.find({},function(err,comments){
 				if(err) res.json({err:"not found"});
 				res.json(comments);
+			});
+		},
+		index_public:function(req,res){
+			res.send("");
+		},
+		index_admin:function(req,res){
+			app.locals.pagename = " Comments";
+			app.locals.bodyclass = "dashboard-comments";
+			function getPosts(){
+				return Post.find({});
+			};
+			function getComments(){
+				return Comment.find({}).populate("user");
+			};
+			Q.all([getPosts(),getComments()])
+			.then(function(promise){
+				//console.log("private-request.js :49", promise);
+				res.render("comments", { posts: promise[0], comments: promise[1] });
 			});
 		},
 		show:function(req,res){

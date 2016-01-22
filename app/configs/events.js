@@ -6,7 +6,7 @@ module.exports = function(app){
 	 * Exceptions
 	 */
 	process.on("uncaughtException", function(err){
-		console.log("server.js :18", err.message);
+		console.log("server.js :18", err);
 	});
 
 	/**
@@ -82,6 +82,11 @@ module.exports = function(app){
 
 	process.on('server_configured', function(){
 		console.log("Server configurations: " + " LOADED!".inverse.green);
+	});
+
+
+	process.on('authorization_check', function(msg){
+		console.log(String(msg).yellow)
 	});
 
 }

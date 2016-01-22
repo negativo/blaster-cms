@@ -8,6 +8,40 @@ module.exports = function(app){
 	Comment    = require("../models/comments");
 
 	return {
+		index_configurations: function(req,res){
+			res.locals.pagename = " Configurations";
+			res.locals.bodyclass = "dashboard-configurations";
+			Config.findOne({},{ db_link:0, templates:0 }, function(err, configs){
+				if(configs !== null && req.isAuthenticated() ) {
+					Page.find({},{ body:0 },function(err, pages){
+						res.render("configurations", { configs:configs, pages: pages });
+					});
+				}
+			});
+		},
+		index_nav: function(req,res){
+			res.locals.pagename = " Navigation";
+			res.locals.bodyclass = "edit-navigation";
+			Config.findOne({},{ db_link:0, templates:0 }, function(err, configs){
+				Page.find({},{ slug:1, title:1 },function(err,pages){
+					if(configs !== null && req.isAuthenticated() ) {
+						res.render("navigation", { pages: pages, navigation:configs.navigation });
+					};
+				});
+			});
+		},
+		index_custom_css: function(req,res){
+			fs.readFile( app.locals.__root + "/themes/"+ app.get('theme') +"/css/custom.css", "utf-8", function(err,file){
+				res.locals.pagename = " Theme Edit";
+				res.locals.bodyclass = "edit-theme";
+				res.render("custom-css", { css:file });
+			});
+		},
+		index_themes: function(req,res){
+			res.locals.pagename = " Choose themes";
+			res.locals.bodyclass = "choose-themes";
+			res.render("themes", { themes: req.avaible_themes });
+		},
 		edit:function(req,res){
 			Config.findOne({}, function(err, configs){
 				configs.title = req.body.siteTitle;

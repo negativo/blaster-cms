@@ -154,7 +154,7 @@ UserSchema.statics.register_new = function(new_user) {
 	var UserModel = this;
 
 	this.findOne({ "username": new_user.username },function(err, user){
-		if(user) return res.send( new Message(null, "User Exists") );
+		if(user) return deferred.reject( new Message(null, "User Exists") );
 		new UserModel({ 
 			username: new_user.username, 
 			password: new_user.password,

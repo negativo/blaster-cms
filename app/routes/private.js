@@ -11,6 +11,7 @@ module.exports = function(app,express){
 	var ApiCtrl     = require("../controllers/api")(app);
 	var UserCtrl    = require("../controllers/user")(app);
 	var MediaCtrl   = require("../controllers/media")(app);
+	var ConfCtrl    = require("../controllers/configuration")(app);
 
 	/**
 	 * AUTHORIZATIONS
@@ -34,25 +35,25 @@ module.exports = function(app,express){
 	/**
 	 * POSTS
 	 */
-	app.get('/admin/posts'                  , PrivateCtrl.posts );
+	app.get('/admin/posts'                  , PostCtrl.index_admin );
 	app.get('/admin/post'                   , PostCtrl.create );
 	app.get('/admin/post/:id'               , PostCtrl.edit );
 
 	/**
 	 * PAGES
 	 */
-	app.get('/admin/pages'                  , PrivateCtrl.pages );
+	app.get('/admin/pages'                  , PageCtrl.index_admin );
 	app.get('/admin/page'                   , PageCtrl.create );
 	app.get('/admin/page/:id'               , PageCtrl.edit );
 
 	/**
 	 * USERS
 	 */
-	//use should be able to modify his data , need to do it
 	app.get('/admin/users'                  , admin, UserCtrl.index );
 	app.get('/admin/users/:id'              , guest, UserCtrl.show );
+	app.get('/admin/user'			              , admin, UserCtrl.create );
 
-	app.get('/admin/new-user'               , PrivateCtrl.newUser );
+	
 	app.get('/admin/register'               , PrivateCtrl.register );
 	app.get('/admin/reset-password'         , PrivateCtrl.resetPassword );
 
@@ -65,15 +66,15 @@ module.exports = function(app,express){
 	/**
 	 * COMMENTS
 	 */
-	app.get('/admin/comments'               , PrivateCtrl.comments );
+	app.get('/admin/comments'               , CommentCtrl.index_admin );
 
 	/**
 	 * CONFIGURATION && CUSTOMIZATION
 	 */
-	app.get('/admin/configurations'         , admin, PrivateCtrl.configurations );
-	app.get('/admin/navigation'             , admin, PrivateCtrl.navigation );
-	app.get('/admin/themes'                 , admin, PrivateCtrl.themes_index );
-	app.get('/admin/custom-css'             , admin, PrivateCtrl.edit_css );
+	app.get('/admin/configurations'         , admin, ConfCtrl.index_configurations );
+	app.get('/admin/navigation'             , admin, ConfCtrl.index_nav );
+	app.get('/admin/themes'                 , admin, ConfCtrl.index_themes );
+	app.get('/admin/custom-css'             , admin, ConfCtrl.index_custom_css );
 
 	/**
 	 * LOGIN

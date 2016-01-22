@@ -12,8 +12,8 @@ module.exports = function(app){
 
 	return {
 		index: function (req, res) {
-			app.locals.pagename = " Users";
-			app.locals.bodyclass = "dashboard-users";
+			res.locals.pagename = " Users";
+			res.locals.bodyclass = "dashboard-users";
 			User.find({},{ password:0 }, function(err, users){
 				if(users !== null && req.isAuthenticated() ) {
 					res.render("users", { users: users });
@@ -26,8 +26,8 @@ module.exports = function(app){
 			if(req.user._id == userId || req.user.admin){
 				User.findById( userId, {password:0}, function(err, profile){
 					if(profile !== null && req.isAuthenticated() ) {
-						app.locals.pagename= profile.username + " Profile";
-						app.locals.bodyclass = profile.username.toLowerCase() + "-profile";
+						res.locals.pagename= profile.username + " Profile";
+						res.locals.bodyclass = profile.username.toLowerCase() + "-profile";
 						res.render("profile", { profile: profile });
 					};
 				});
@@ -36,22 +36,26 @@ module.exports = function(app){
 			}
 		},
 		create:function(req,res){
-			res.send("create view");
+			res.locals.pagename = " Add new user";
+			res.locals.bodyclass = "new-user-page";
+			res.render("new-user");
 		},
 		store:function(req,res){
 			var register = req.body;
 		
 			new_user = register;
+
 			
 			User
 				.register_new(new_user)
-				.then(function(message){ return res.send(message) })
-				.fail(function(message){ return res.send(message) });
+				.then(function(message){ return res.send(message); })
+				.fail(function(message){ return res.send(message); });
+
 		},
 		destroy:function(req,res){
 			var user_id = req.body.id;
 
-			console.log("user.js :54", req.body);
+			//console.log("user.js :54", req.body);
 
 			if(req.body.deleteUserData === 'true'){
 
@@ -191,6 +195,7 @@ module.exports = function(app){
 				}
 			});
 		},
+		
 	};
 
 }
