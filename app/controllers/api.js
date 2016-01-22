@@ -35,6 +35,26 @@ module.exports = function(app){
 				res.redirect("/admin/users/"+user._id);
 			});
 		},
+		fileBrowser: function(req,res){
+			function callback(items){
+				var pattrn = /.+\.jpg/;
+				var images = [];
+				items.forEach(function(el, i){
+					if(pattrn.test(el)){
+						var source = {
+					    "imageUrl": "/uploads/" + el,
+					    "value": "/uploads/" + el,
+					  };
+					  images.push(source)
+					}
+				})
+				res.send(images);
+			}
+
+			fs.readdir(app.locals.__root + '/uploads', function(err, files){
+				callback(files);
+			});
+		},
 	};
 
 }

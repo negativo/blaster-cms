@@ -3,20 +3,20 @@ module.exports = function(app){
 	var colors = require("colors");
 
 	/**
-	 * Exceptions
+	 * NODE EXCEPTIONS
 	 */
 	process.on("uncaughtException", function(err){
 		console.log("server.js :18", err);
 	});
 
-	/**
-	 * on process exit handler
-	 */
 	process.on("exit", function(err){
 		console.log("server.js :27", "GOODBYE");
 	});
 
-	// configuration object updated
+	/**
+	 * MONGO EVENTS
+	 */
+
 	db.once("open",function(){
 		console.log("mongo connected".green);
 	});
@@ -30,9 +30,21 @@ module.exports = function(app){
 		console.log("mongo disconnected".yellow);
 	});
 
+	/**
+	 * AUTHENTICATION && AUTHORIZATION
+	 */
+
 	process.on('login_event',function(message){
 		console.log(String(message).yellow);
 	});
+
+	process.on('authorization_check', function(msg){
+		console.log(String(msg).yellow)
+	});
+
+	/**
+	 * MODEL's CRUDS
+	 */
 
 	process.on('media_removed',function(){
 		console.log("media has been removed".yellow);
@@ -54,15 +66,10 @@ module.exports = function(app){
 		console.log("comment has been removed".yellow);
 	});
 
-	process.on("configs_updated",function(configs, message){
-		app.set('configs_updated', Date.now() );
-		console.log("configuration has been updated".cyan);
-	});
 
-	process.on("configs_parsed",function(configs, message){
-		app.set('configs_parsed', Date.now() );
-		console.log("Configurations parsed in request".cyan);
-	});
+	/**
+	 * SETUPS
+	 */
 
 	process.on("admin_setup",function(){
 		console.log("admin setup done!".inverse.yellow);
@@ -80,13 +87,22 @@ module.exports = function(app){
 		console.log("Setup done!".green);
 	});
 
-	process.on('server_configured', function(){
-		console.log("Server configurations: " + " LOADED!".inverse.green);
+	/**
+	 * CONFIGURATIONS
+	 */
+
+	process.on("configs_updated",function(configs, message){
+		app.set('configs_updated', Date.now() );
+		console.log("configuration has been updated".inverse.cyan);
 	});
 
+	process.on("configs_parsed",function(configs, message){
+		app.set('configs_parsed', Date.now() );
+		console.log("Configurations parsed in request".cyan);
+	});
 
-	process.on('authorization_check', function(msg){
-		console.log(String(msg).yellow)
+	process.on('server_configured', function(){
+		console.log("Server configurations: " + " LOADED!".inverse.green);
 	});
 
 }

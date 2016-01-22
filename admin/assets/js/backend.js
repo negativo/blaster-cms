@@ -55,16 +55,21 @@
 				if ( $body.attr("class") === "edit-theme" ) backend.plugins.codemirror();
 			},
 			editor:function(){
+				// Loads a plugin from an external URL
+				tinymce.PluginManager.load('tinyvision', '/components/tinyvision/build/plugin.min.js');
+
 		    tinymce.init({
 		      selector: '#text-editor',
 				  height: 500,
 				  plugins: [
 		        "advlist autolink lists link image imagetools charmap preview anchor",
 		        "searchreplace visualblocks code fullscreen",
-		        "insertdatetime media table contextmenu paste "
+		        "insertdatetime media table contextmenu paste -tinyvision "
 			    ],
 			    toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
-		    	
+		    	tinyvision: {
+				    source: '/api/file-browser'
+				  }
 				});
 			},
 			momentjs:function(){

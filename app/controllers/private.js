@@ -37,16 +37,6 @@ module.exports = function(app){
 			res.render("login", { error: req.flash('error') });
 		},
 
-		fileBrowser: function(req,res){
-			function callback(items){
-				res.render('file-browser', {files:items});	
-			}
-			fs.readdir(app.locals.__root + '/uploads', function(err, files){
-				callback(files);
-			});
-		},
-
-
 		register: function(req,res){
 			app.locals.pagename = "Register to " + app.locals.sitename;
 			app.locals.bodyclass = "register-page";

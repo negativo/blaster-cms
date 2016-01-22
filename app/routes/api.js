@@ -87,12 +87,16 @@ module.exports = function(app,express){
 	 */
 	app.post('/api/upload'            , moderator, uploader.array('upload') , ApiCtrl.upload_photo  );
 	app.post('/api/upload/avatar/:id' , moderator, avatar.single('avatar')   , ApiCtrl.upload_avatar );
+	/**
+	 * FILE BROWSER
+	 */
+	app.get('/api/file-browser'        , ApiCtrl.fileBrowser );
 
 
 	/**
 	 * API TOKENS //ApiTokenCtrl
 	 */
-	app.get('/api/tokens', ApiTokenCtrl.index );
+	app.get('/api/tokens', admin, ApiTokenCtrl.index );
 	app.get('/api/token/:username/:password');
 	app.post('/api/token/generate/:user_id?*/:username?*/:password?*', admin, ApiTokenCtrl.generateToken); // body|query|head > need either username|_id
 

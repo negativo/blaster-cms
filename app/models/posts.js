@@ -41,7 +41,7 @@ PostSchema.pre('remove',function(next){
 
   post.comments.forEach(function(comment){
   	Comment.findById( comment._id, function(err, com){
-  		console.log("posts.js :44", com);
+  		
   		if(!err && com){
   			com.remove();
   		}
