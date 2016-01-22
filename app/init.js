@@ -30,21 +30,12 @@ exports.init = function(app,express){
 	require(app.locals.__app + "/routes/private")(app,express),	// Private
 	require(app.locals.__app + "/routes/api")(app,express);			// API
 
-
 	/**
-	 * Exceptions
+	 * EXTENDs
+	 * in /extends
 	 */
-	process.on("uncaughtException", function(err){
-		console.log("server.js :18", err.message);
-	});
-
-	/**
-	 * on process exit handler
-	 */
-	process.on("exit", function(err){
-		console.log("server.js :27", "GOODBYE");
-	});
-
+	
+	var extend = require(app.locals.__root + "/extends")(app);
 
 	/**
 	 * START SERVER
@@ -53,5 +44,10 @@ exports.init = function(app,express){
 	app.listen(app.locals.__port, function(){
 		console.log("Server up on port: " + String(app.locals.__port).inverse.green);
 	});	
+
+
+	app.get('/test',function(req,res){
+		res.send("test");
+	});
 
 }

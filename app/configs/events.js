@@ -2,6 +2,19 @@ module.exports = function(app){
 	var db = require("mongoose").connection;
 	var colors = require("colors");
 
+	/**
+	 * Exceptions
+	 */
+	process.on("uncaughtException", function(err){
+		console.log("server.js :18", err.message);
+	});
+
+	/**
+	 * on process exit handler
+	 */
+	process.on("exit", function(err){
+		console.log("server.js :27", "GOODBYE");
+	});
 
 	// configuration object updated
 	db.once("open",function(){
