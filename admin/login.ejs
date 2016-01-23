@@ -2,12 +2,14 @@
 <div class="form-container">
 	<h1><%= sitename %></h1>
 
-	<form class="login-form" action="/admin/login" method="POST">
+	
+	<form class="login-form form-group col-xm-10 col-xm-offset-1 col-md-4 col-md-offset-4" action="/admin/login" method="POST">
 		<h5><%= error %></h5>
 		<input autocomplete="off" id="username" type="text" name="username" placeholder="username">
 		<input autocomplete="off" id="password" type="password" name="password" placeholder="password">
 		<input type="submit" value="Login">
 	</form>
 	<br>
+	<div class="clearfix"></div>
 	<p style="color:black;">Forgot password? <a href="/admin/reset-password" style="color:white; text-decoration:underline; ">reset</a></p>
 </div>

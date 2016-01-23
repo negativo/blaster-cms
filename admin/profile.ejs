@@ -1,5 +1,7 @@
 <%- layout('layouts/admin-panel.ejs') -%>
+
 <% var isMyProfile = (profile._id.toString() == user._id.toString()) %>
+
 <div class="container-fluid profile-container" data-id="<%= profile._id %>">
     <h2><%= profile.username %>'s Profile</h2>
     <hr>
@@ -71,6 +73,6 @@
         <p>Are your sure? Your data cannot be restored</p>
         <button style="color:white;" class="btn btn-danger delete-user pull-right" data-id="<%= profile._id %>">DELETE ACCOUNT</button>
     </div>
-
-
 </div>
+
+<% scripts.push('user.js') %>

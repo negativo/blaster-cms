@@ -128,7 +128,8 @@ module.exports = function(app){
 			});
 		},
 		reset_password_request:function(req,res){
-			User.findOne( { email: req.body.email }, function(err, user){
+			User.findOne( { email: req.body.email.toLowerCase() }, function(err, user){
+				console.log("user.js :132", user);
 				if(err) res.send(err);
 				if(!user) {
 					req.flash('error', 'No user with this email has been found.');
@@ -151,7 +152,7 @@ module.exports = function(app){
 			});
 		},
 		reset_token_check:function(req,res){
-			User.findOne({ email: req.query.mail}, function(err,user){
+			User.findOne({ email: req.query.mail.toLowerCase()}, function(err,user){
 				if(err) res.send(err);
 
 				if( !user.resetToken) {

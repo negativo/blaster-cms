@@ -98,7 +98,7 @@ module.exports = function(app){
 		},
 		update:function(req,res){
 			var comment = req.body;
-			console.log("private-request.js :316", comment);
+			//console.log("private-request.js :316", comment);
 			Comment.findById( comment.id, function(err,updateComment){
 				updateComment.comment = comment.body;
 				updateComment.save(function(err){

@@ -33,19 +33,29 @@ module.exports = function(app, express){
 	installer.check_database(app);
 
 	/**
-	 * HELPERS FUNCTIONS
+	 * FRONTEND PUSH SCRIPTS FUNCTION
 	 */
 	app.locals.scripts = [];
 	app.locals.renderScripts =  function (all) {
 		app.locals.scripts = [];
 		if (all != undefined) {
 			return all.map(function(script) {
-				return '<script src="/admin/assets/js/' + script + '"></script>';
+				return '<script src="/admin/assets/js/modules/' + script + '"></script>';
 			}).join('\n ');
 		}else {
 			return '';
 		}
 	};
+
+	/**
+	 * UTILs functions for front end
+	 */
+	app.locals.utils = (function(){
+		String.prototype.capitalize = function() {
+		    return this.charAt(0).toUpperCase() + this.slice(1);
+		}
+	})();
+
 
 	process.emit('server_configured');
 }

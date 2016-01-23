@@ -43,163 +43,84 @@ hr {
 .form-group {
   margin-top: 15px !important;
 }
-.login-page {
+.no-nav {
   background: #0288d1 !important;
   text-align: center;
   margin: 0;
   padding: 0;
 }
-.login-page .form-container {
+.no-nav .form-container {
   display: none;
 }
-.login-page h1,
-.login-page h2,
-.login-page h3,
-.login-page h4,
-.login-page h5,
-.login-page h6 {
+.no-nav h1,
+.no-nav h2,
+.no-nav h3,
+.no-nav h4,
+.no-nav h5,
+.no-nav h6 {
   color: white;
 }
-.login-page .login-form input,
-.login-page .reset-password-form input,
-.login-page .reset-withToken-form input {
+.no-nav .input-group-addon {
+  border-radius: 0px !important;
+  border: none !important;
+  font-weight: bold !important;
+}
+.no-nav form input,
+.no-nav .login-form input {
   display: block;
+  width: 100%;
   margin: auto;
-  width: 300px;
   height: 50px;
-  border: none;
+  border: 0 !important;
+  border-radius: 0;
   outline: none;
   padding: 10px;
   text-align: center;
 }
-.login-page .login-form input::-webkit-input-placeholder,
-.login-page .reset-password-form input::-webkit-input-placeholder,
-.login-page .reset-withToken-form input::-webkit-input-placeholder {
+.no-nav form input::-webkit-input-placeholder,
+.no-nav .login-form input::-webkit-input-placeholder {
   text-align: center;
   font-weight: 500;
 }
-.login-page .login-form input::-moz-input-placeholder,
-.login-page .reset-password-form input::-moz-input-placeholder,
-.login-page .reset-withToken-form input::-moz-input-placeholder {
+.no-nav form input::-moz-input-placeholder,
+.no-nav .login-form input::-moz-input-placeholder {
   text-align: center;
   font-weight: 500;
 }
-.login-page .login-form input::-ms-input-placeholder,
-.login-page .reset-password-form input::-ms-input-placeholder,
-.login-page .reset-withToken-form input::-ms-input-placeholder {
+.no-nav form input::-ms-input-placeholder,
+.no-nav .login-form input::-ms-input-placeholder {
   text-align: center;
   font-weight: 500;
 }
-.login-page .login-form input::-o-input-placeholder,
-.login-page .reset-password-form input::-o-input-placeholder,
-.login-page .reset-withToken-form input::-o-input-placeholder {
+.no-nav form input::-o-input-placeholder,
+.no-nav .login-form input::-o-input-placeholder {
   text-align: center;
   font-weight: 500;
 }
-.login-page .login-form input::input-placeholder,
-.login-page .reset-password-form input::input-placeholder,
-.login-page .reset-withToken-form input::input-placeholder {
+.no-nav form input::input-placeholder,
+.no-nav .login-form input::input-placeholder {
   text-align: center;
   font-weight: 500;
 }
-.login-page .login-form input[type="submit"],
-.login-page .reset-password-form input[type="submit"],
-.login-page .reset-withToken-form input[type="submit"] {
+.no-nav form input[type="submit"],
+.no-nav .login-form input[type="submit"] {
+  width: 100%;
   background: #01466c !important;
   color: white;
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 1px;
 }
-.login-page .login-form input[type="submit"]:hover,
-.login-page .reset-password-form input[type="submit"]:hover,
-.login-page .reset-withToken-form input[type="submit"]:hover,
-.login-page .login-form input[type="submit"]:focus,
-.login-page .reset-password-form input[type="submit"]:focus,
-.login-page .reset-withToken-form input[type="submit"]:focus {
+.no-nav form input[type="submit"]:hover,
+.no-nav .login-form input[type="submit"]:hover,
+.no-nav form input[type="submit"]:focus,
+.no-nav .login-form input[type="submit"]:focus {
   box-shadow: inset 0 -5px 0px 0px #012539;
   transition: all ease-in 0.5s;
 }
 .navbar img {
   width: 50px;
   padding: 10px;
-}
-.register-page,
-.reset-page {
-  background: #0288d1 !important;
-  text-align: center;
-  margin: 0;
-  padding: 0;
-}
-.register-page .form-container,
-.reset-page .form-container {
-  display: none;
-}
-.register-page h1,
-.reset-page h1,
-.register-page h2,
-.reset-page h2,
-.register-page h3,
-.reset-page h3,
-.register-page h4,
-.reset-page h4,
-.register-page h5,
-.reset-page h5,
-.register-page h6,
-.reset-page h6 {
-  color: white;
-}
-.register-page .register-form input,
-.reset-page .register-form input {
-  display: block;
-  margin: auto;
-  width: 300px;
-  height: 50px;
-  border: 0 !important;
-  outline: none !important;
-  border-radius: 0;
-  padding: 10px;
-  text-align: center;
-}
-.register-page .register-form input::-webkit-input-placeholder,
-.reset-page .register-form input::-webkit-input-placeholder {
-  text-align: center;
-  font-weight: 500;
-}
-.register-page .register-form input::-moz-input-placeholder,
-.reset-page .register-form input::-moz-input-placeholder {
-  text-align: center;
-  font-weight: 500;
-}
-.register-page .register-form input::-ms-input-placeholder,
-.reset-page .register-form input::-ms-input-placeholder {
-  text-align: center;
-  font-weight: 500;
-}
-.register-page .register-form input::-o-input-placeholder,
-.reset-page .register-form input::-o-input-placeholder {
-  text-align: center;
-  font-weight: 500;
-}
-.register-page .register-form input::input-placeholder,
-.reset-page .register-form input::input-placeholder {
-  text-align: center;
-  font-weight: 500;
-}
-.register-page .register-form input[type="submit"],
-.reset-page .register-form input[type="submit"] {
-  background: #01466c !important;
-  color: white;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-.register-page .register-form input[type="submit"]:hover,
-.reset-page .register-form input[type="submit"]:hover,
-.register-page .register-form input[type="submit"]:focus,
-.reset-page .register-form input[type="submit"]:focus {
-  box-shadow: inset 0 -5px 0px 0px #012539;
-  transition: all ease-in 0.5s;
 }
 .comment {
   padding: 10px 0;

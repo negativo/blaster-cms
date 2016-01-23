@@ -63,7 +63,6 @@ module.exports = function(app){
 			if( req.params.id ){
 				var pageId = req.params.id;
 				Page.findById( pageId ,function(err,singlePage){
-					console.log("private-request.js", singlePage );
 					res.locals.pagename= singlePage.title + " edit";
 					res.locals.bodyclass = "edit-page";
 					res.locals.isNew = false;

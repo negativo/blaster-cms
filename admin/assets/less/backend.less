@@ -58,20 +58,26 @@ hr{
 }
 
 
-////////LOGIN
-.login-page{
+// FORMS LOGIN/RESETs PWD
+.no-nav{
 	.form-container{ display:none; }
 	background: @darkPrimaryColor !important;
 	text-align: center;
 	margin: 0;padding: 0;
 	h1,h2,h3,h4,h5,h6{ color:white; }
-	.login-form,.reset-password-form,.reset-withToken-form{
+	.input-group-addon{
+		border-radius: 0px !important;
+		border:none !important;
+		font-weight: bold !important;
+	}
+	form, .login-form{
 		input{
 			display: block;
+			width: 100%;
 			margin:auto;
-			width: 300px;
 			height:50px;	
-			border:none;
+			border:0 !important;
+			border-radius: 0;
 			outline:none;
 			padding:10px;
 			text-align: center;
@@ -96,6 +102,7 @@ hr{
 				font-weight: 500;
 			}
 			&[type="submit"]{
+				width: 100%;
 				background: darken(@darkPrimaryColor, 20%) !important;
 				color:white;
 				font-weight: 500;
@@ -118,57 +125,7 @@ hr{
 	.current-user-dropdown{}
 }
 ////////REGISTER
-.register-page, .reset-page{
-	.form-container{ display:none; }
-	background: @darkPrimaryColor !important;
-	text-align: center;
-	margin: 0;padding: 0;
-	h1,h2,h3,h4,h5,h6{ color:white; }
-	.register-form{
-		input{
-			display: block;
-			margin:auto;
-			width: 300px;
-			height:50px;	
-			border:0 !important;
-			outline:none !important;
-			border-radius: 0;
-			padding:10px;
-			text-align: center;
-			&::-webkit-input-placeholder{
-				text-align: center;
-				font-weight: 500;
-			}
-			&::-moz-input-placeholder{
-				text-align: center;
-				font-weight: 500;
-			}
-			&::-ms-input-placeholder{
-				text-align: center;
-				font-weight: 500;
-			}
-			&::-o-input-placeholder{
-				text-align: center;
-				font-weight: 500;
-			}
-			&::input-placeholder{
-				text-align: center;
-				font-weight: 500;
-			}
-			&[type="submit"]{
-				background: darken(@darkPrimaryColor, 20%) !important;
-				color:white;
-				font-weight: 500;
-				text-transform: uppercase;
-				letter-spacing: 1px;
-				&:hover,&:focus{
-					box-shadow: inset 0 -5px 0px 0px darken(@darkPrimaryColor, 30%);
-					transition:all ease-in 0.5s;
-				}
-			}
-		}
-	}
-}
+
 
 
 

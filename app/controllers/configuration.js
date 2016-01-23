@@ -88,17 +88,18 @@ module.exports = function(app){
 		},
 		edit_css: function(req,res){
 			console.log("configuration.js :56", "CUSTOM CSS REQUEST");
-			fs.exists(app.locals.__root + "/views/"+ app.get('theme') +"/css/custom.css", function(exists){
+			console.log("configuration.js :91", req.body);
+			fs.exists(app.locals.__root + "/themes/"+ app.get('theme') +"/css/custom.css", function(exists){
 				if(!exists){
-					fs.open(app.locals.__root + "/views/"+ app.get('theme') +"/css/custom.css","w",function(err){
-						fs.writeFile(app.locals.__root + "/views/"+ app.get('theme') +"/css/custom.css", req.body.css , function(err){
+					fs.open(app.locals.__root + "/themes/"+ app.get('theme') +"/css/custom.css","w",function(err){
+						fs.writeFile(app.locals.__root + "/themes/"+ app.get('theme') +"/css/custom.css", req.body.css , function(err){
 							if(err) return res.send(err);
 							process.emit('configs_updated');
 							res.send("success");
 						});
 					});
 				}else{
-					fs.writeFile(app.locals.__root + "/views/"+ app.get('theme') +"/css/custom.css", req.body.css , function(err){
+					fs.writeFile(app.locals.__root + "/themes/"+ app.get('theme') +"/css/custom.css", req.body.css , function(err){
 						if(err) return res.send(err);
 						process.emit('configs_updated');
 						res.send("success");

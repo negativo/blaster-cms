@@ -14,7 +14,7 @@
 			<% }; %>
 	</div>
 	<form role="form" class="col-md-6" id="navigation-form">
-		<h4 class="page-header"><small>Your Navigation</h4>
+		<h4 class="page-header"><small>Your Navigation</small></h4>
 		<div class="navigation-link-container">
 			<% for(var i=0; i< navigation.length; i++) {%>
 			   <div class="form-group navigation-link-single">
@@ -31,3 +31,11 @@
     <!-- /.container-fluid -->
 </div>
 <!-- /#page-wrapper -->
+
+<div class="form-group navigation-link-single-template hide">
+ 	<i class="fa fa-fw fa-remove remove-page-from-nav"></i>
+ 	<label for="text" contenteditable>CONTENT</label>
+ 	<input type="text" class="form-control navigation-link" value="LINK" readonly>
+</div>
+
+<% scripts.push('navigation.js') %>

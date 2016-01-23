@@ -1,5 +1,7 @@
 <%- layout('layouts/admin-panel.ejs') -%>
-<% var single = typeof single != 'undefined' ? single : ""  %>
+
+<% single = typeof single != 'undefined' ? single : ""  %>
+
 <div id="page-wrapper">
     <div class="container-fluid">  
         <%- partial("partials/editor") %>
@@ -15,12 +17,8 @@
         <% if (editor === "post"){ %>
             <h5>Tags</h5>
             <div class="col-md-6 fomr-group">
-                <input type="text" class="tags-input form-control">
+                <input type="text" class="tags-input form-control" value="<%= single.tags ? single.tags : "" %>">
                 <small> Comma separated tags</small>
-                <div class="tags">
-                    <%= single.tags ? single.tags : "" %>
-                </div>
-                
             </div>
         <% } %>
     </div>
