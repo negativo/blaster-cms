@@ -54,6 +54,17 @@ module.exports = function(grunt) {
 	  		    }]
 	  }
 	},
+
+	uglify: {
+    admin_minify: {
+      files: [{
+          expand: true,
+          cwd: 'admin/assets/src/',
+          src: '**/*.js',
+          dest: 'admin/assets/js',
+      }]
+    }
+  },
 	
 	/**
 	 * WATCHERS
@@ -82,7 +93,8 @@ module.exports = function(grunt) {
  grunt.loadNpmTasks('grunt-contrib-less');
  grunt.loadNpmTasks('grunt-contrib-cssmin');
  grunt.loadNpmTasks('grunt-contrib-watch');
+ grunt.loadNpmTasks('grunt-contrib-uglify');
 
  //register
- grunt.registerTask('default', ['less', 'cssmin']);
+ grunt.registerTask('default', ['less', 'cssmin', 'uglify']);
 };
