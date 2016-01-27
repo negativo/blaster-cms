@@ -22,8 +22,8 @@ npm start use nodemon on server.js if you have problem with it you should instal
 	npm install -g nodemon
 
 ##changelog
-	- added tinyvision filebrowser on editor
-	- cached configurations & random performance enhance
+	- extends!
+	In Extends folder you can add functionalities without breaking the main app, so update would be easier
 
 ## Known Bugs
 	You tell me!
