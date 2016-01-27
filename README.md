@@ -30,8 +30,6 @@ npm start use nodemon on server.js if you have problem with it you should instal
 
 ##ToDos
 	priority > 1 > 2 > 3 (self explanatory)
-	- [1] CSRF
-	- [2] IPs bans
-	- [3] Refactor backend.js in modules and use scripts.push in ejs to add view own script
-	- [3] add google analytics from configurations
-	- [3] Blank template && docs or I won't remember what data I pass across which public paths
+	- [1] IPs bans
+	- [2] add google analytics from configurations
+	- [3] Blank Template
