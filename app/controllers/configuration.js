@@ -1,11 +1,11 @@
 module.exports = function(app){
 
 	var fs 				 = require("fs"),
-	User       = require("../models/user"),
-	Config     = require("../models/configs"),
-	Post       = require("../models/posts"),
-	Page       = require("../models/pages"),
-	Comment    = require("../models/comments");
+	User        = require(app.locals.__app + "/models/user"),
+	Config      = require(app.locals.__app + "/models/configs"),
+	Post        = require(app.locals.__app + "/models/posts"),
+	Page        = require(app.locals.__app + "/models/pages"),
+	Comment     = require(app.locals.__app + "/models/comments");
 
 	return {
 		index_configurations: function(req,res){

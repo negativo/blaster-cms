@@ -1,8 +1,8 @@
 module.exports = function(app){
 
 
-	var User    = require("../models/user"),
-	ApiToken    = require("../models/api-token");
+	var User    = require(app.locals.__app + "/models/user"),
+	ApiToken    = require(app.locals.__app + "/models/api-token");
 
 	
 	return {

@@ -1,14 +1,14 @@
 module.exports = function(app){
 
-	var Q      = require('q'),
-	mail 			 = require('../lib/mail'),
-	User       = require("../models/user"),
-	Media       = require("../models/media"),
-	Configs    = require("../models/configs"),
-	Post       = require("../models/posts"),
-	Page       = require("../models/pages"),
-	Comment    = require("../models/comments"),
-	Message  = require("../lib/message-helper").message;
+	var Q    = require('q'),
+	mail 		 = require(app.locals.__app + '/lib/mail'),
+	User     = require( app.locals.__app + "/models/user"),
+	Media    = require( app.locals.__app + "/models/media"),
+	Configs  = require( app.locals.__app + "/models/configs"),
+	Post     = require( app.locals.__app + "/models/posts"),
+	Page     = require( app.locals.__app + "/models/pages"),
+	Comment  = require( app.locals.__app + "/models/comments"),
+	Message  = require( app.locals.__app + "/lib/message-helper").message;
 
 	return {
 		index: function (req, res) {

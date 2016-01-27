@@ -1,12 +1,11 @@
 /// TO DO NOW
-var LocalStrategy = require('passport-local').Strategy;
-var crypto = require("./crypto");
-var User = require("../models/user");
-// var FacebookStrategy = require("passport-facebook").Strategy;
-// var facebookConf    = require("./confAuth")
 
 module.exports = function(passport){
 
+  var LocalStrategy = require('passport-local').Strategy;
+  var crypto = require("./crypto");
+  var User = require("../models/user");
+  
   // serializza pure la pass
   passport.serializeUser(function(user, done) {
     var serialized = {

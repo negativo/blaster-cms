@@ -4,21 +4,21 @@
 module.exports = function(app,extend){
 	var passport      = require('passport');
 	
-	var PrivateCtrl = require('../controllers/private')(app);
-	var PageCtrl    = require("../controllers/page")(app);
-	var PostCtrl    = require("../controllers/post")(app);
-	var CommentCtrl = require("../controllers/comment")(app);
-	var ApiCtrl     = require("../controllers/api")(app);
-	var UserCtrl    = require("../controllers/user")(app);
-	var MediaCtrl   = require("../controllers/media")(app);
-	var ConfCtrl    = require("../controllers/configuration")(app);
+	var PrivateCtrl = require( app.locals.__app + '/controllers/private')(app);
+	var PageCtrl    = require( app.locals.__app + '/controllers/page')(app);
+	var PostCtrl    = require( app.locals.__app + '/controllers/post')(app);
+	var CommentCtrl = require( app.locals.__app + '/controllers/comment')(app);
+	var ApiCtrl     = require( app.locals.__app + '/controllers/api')(app);
+	var UserCtrl    = require( app.locals.__app + '/controllers/user')(app);
+	var MediaCtrl   = require( app.locals.__app + '/controllers/media')(app);
+	var ConfCtrl    = require( app.locals.__app + '/controllers/configuration')(app);
 
 	/**
 	 * AUTHORIZATIONS
 	 */
-	var guest     = require('../middlewares/roles')('guest');
-	var moderator = require('../middlewares/roles')('moderator');
-	var admin     = require('../middlewares/roles')('admin');
+	var guest     = require( app.locals.__app + '/middlewares/roles')('guest');
+	var moderator = require( app.locals.__app + '/middlewares/roles')('moderator');
+	var admin     = require( app.locals.__app + '/middlewares/roles')('admin');
 
 
 	extend.routes.private(app);

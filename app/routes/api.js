@@ -14,21 +14,21 @@ module.exports = function(app,extend){
 	var uploader    = multer({ storage: general_storage })
 	var avatar      = multer({ dest: app.locals.__root + '/uploads/avatar'});
 	
-	var PageCtrl     = require("../controllers/page")(app);
-	var PostCtrl     = require("../controllers/post")(app);
-	var CommentCtrl  = require("../controllers/comment")(app);
-	var ApiCtrl      = require("../controllers/api")(app);
-	var ConfCtrl     = require("../controllers/configuration")(app);
-	var UserCtrl     = require("../controllers/user")(app);
-	var MediaCtrl    = require("../controllers/media")(app);
-	var ApiTokenCtrl = require("../controllers/api-token")(app);
+	var PageCtrl     = require( app.locals.__app + '/controllers/page')(app);
+	var PostCtrl     = require( app.locals.__app + '/controllers/post')(app);
+	var CommentCtrl  = require( app.locals.__app + '/controllers/comment')(app);
+	var ApiCtrl      = require( app.locals.__app + '/controllers/api')(app);
+	var ConfCtrl     = require( app.locals.__app + '/controllers/configuration')(app);
+	var UserCtrl     = require( app.locals.__app + '/controllers/user')(app);
+	var MediaCtrl    = require( app.locals.__app + '/controllers/media')(app);
+	var ApiTokenCtrl = require( app.locals.__app + '/controllers/api-token')(app);
 
 	/**
 	 * AUTHORIZATIONS
 	 */
-	var guest     = require('../middlewares/roles')('guest');
-	var moderator = require('../middlewares/roles')('moderator');
-	var admin     = require('../middlewares/roles')('admin');
+	var guest     = require( app.locals.__app + '/middlewares/roles')('guest');
+	var moderator = require( app.locals.__app + '/middlewares/roles')('moderator');
+	var admin     = require( app.locals.__app + '/middlewares/roles')('admin');
 
 
 	extend.routes.api(app);
@@ -39,29 +39,29 @@ module.exports = function(app,extend){
 	/**
 	 * POST
 	 */
-	app.post("/api/post"     , moderator, PostCtrl.store );
+	app.post('/api/post'     , moderator, PostCtrl.store );
 	app.post('/api/post/:id' , moderator, PostCtrl.update );
 	app.delete('/api/post/:id' , moderator, PostCtrl.destroy );
 
 	/**
 	 * PAGE
 	 */
-	app.post("/api/page"     , moderator, PageCtrl.store   );
+	app.post('/api/page'     , moderator, PageCtrl.store   );
 	app.post('/api/page/:id' , moderator, PageCtrl.update  );
 	app.delete('/api/page/:id' , moderator, PageCtrl.destroy  );
 
 	/**
 	 * MEDIAS
 	 */
-	app.delete("/api/media/:id"     , moderator, MediaCtrl.destroy );
+	app.delete('/api/media/:id'     , moderator, MediaCtrl.destroy );
 
 	 /**
 	 * COMMENTS
 	 */
-	app.post("/api/comment"        , guest, CommentCtrl.store );
-	app.post("/api/comment/:id"    , moderator, CommentCtrl.update );
-	app.delete("/api/comment/:id"  , moderator, CommentCtrl.destroy );
-	app.post("/api/comment/reply/" , moderator, CommentCtrl.reply );
+	app.post('/api/comment'        , guest, CommentCtrl.store );
+	app.post('/api/comment/:id'    , moderator, CommentCtrl.update );
+	app.delete('/api/comment/:id'  , moderator, CommentCtrl.destroy );
+	app.post('/api/comment/reply/' , moderator, CommentCtrl.reply );
 
 	/**
 	 * USERS

@@ -2,7 +2,7 @@
 module.exports = function(app,extend){
 	var express = require('express');
 	var	dotenv   = require("dotenv").load(),
-	Configs      = require('../models/configs'),
+	Configs      = require(app.locals.__app + '/models/configs'),
 	fs           = require('fs'),
 	csrf         = require('csurf'),
 	Q            = require('q'),

@@ -1,12 +1,12 @@
 module.exports = function(app){
 
 
-	var User    = require("../models/user"),
-	Configs = require("../models/configs"),
-	Post    = require("../models/posts"),
-	Page    = require("../models/pages"),
-	Media   = require("../models/media"),
-	Comment = require("../models/comments");
+	var User    = require(app.locals.__app + "/models/user"),
+	Configs = require(app.locals.__app + "/models/configs"),
+	Post    = require(app.locals.__app + "/models/posts"),
+	Page    = require(app.locals.__app + "/models/pages"),
+	Media   = require(app.locals.__app + "/models/media"),
+	Comment = require(app.locals.__app + "/models/comments");
 	
 	return {
 		search_term: function(req,res){

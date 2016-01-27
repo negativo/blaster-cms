@@ -1,7 +1,7 @@
-var fs = require("fs");
-var Configs = require('../models/configs');
 
 module.exports = function (app) {
+	var fs = require("fs");
+	var Configs = require( app.locals.__app + '/models/configs');
 	var __root = app.locals.__root,
 			__app  = app.locals.__app,
 			locals = app.locals;
