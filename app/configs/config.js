@@ -3,7 +3,7 @@ module.exports = function(app, extend){
 	var express   = require('express');
 	var ejs_mate  = require("ejs-mate");
 	var locals    = app.locals;
-	var installer = require('../lib/installer');
+	var installer = require(app.locals.__app + '/lib/installer');
 	
 	locals.debug_mode_on = process.env.DEBUG_MODE_ON;
 	if (process.env.DEBUG_MODE_ON==='false') {

@@ -1,22 +1,22 @@
-var	dotenv   = require("dotenv").load(),
-Configs      = require('../models/configs'),
-fs           = require('fs'),
-csrf         = require('csurf'),
-Q            = require('q'),
-bodyParser   = require('body-parser'),
-cookieParser = require('cookie-parser'),
-session      = require('express-session'),
-flash 			 = require("connect-flash"),
-passport     = require('passport'),
-mongoose     = require('mongoose'),
-MongoStore	 = require('connect-mongo')(session),
-mustBe 			 = require('./roles');
 
 module.exports = function(app,extend){
 	var express = require('express');
+	var	dotenv   = require("dotenv").load(),
+	Configs      = require('../models/configs'),
+	fs           = require('fs'),
+	csrf         = require('csurf'),
+	Q            = require('q'),
+	bodyParser   = require('body-parser'),
+	cookieParser = require('cookie-parser'),
+	session      = require('express-session'),
+	flash 			 = require("connect-flash"),
+	passport     = require('passport'),
+	mongoose     = require('mongoose'),
+	MongoStore	 = require('connect-mongo')(session),
+	mustBe 			 = require(app.locals.__app + '/middlewares/roles');
 
-	var configParse = require('./config-parse')(app),
-			viewSwitcher = require('./view-switch')(app);
+	var configParse = require(app.locals.__app + '/middlewares/config-parse')(app),
+			viewSwitcher = require(app.locals.__app + '/middlewares/view-switch')(app);
 
 	var __root = app.locals.__root,
 			__app  = app.locals.__app,
