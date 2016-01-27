@@ -1,4 +1,4 @@
-module.exports = function(app,express){
+module.exports = function(app,extend){
 
 
 	var passport        = require('passport');
@@ -30,6 +30,8 @@ module.exports = function(app,express){
 	var moderator = require('../middlewares/roles')('moderator');
 	var admin     = require('../middlewares/roles')('admin');
 
+
+	extend.routes.api(app);
 
 	app.get('/api/posts'     , moderator, PostCtrl.index );
 	app.get('/api/pages'     , guest, PageCtrl.index );

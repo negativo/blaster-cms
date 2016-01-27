@@ -1,7 +1,7 @@
 
 
 
-module.exports = function(app,express){
+module.exports = function(app,extend){
 	var passport      = require('passport');
 	
 	var PrivateCtrl = require('../controllers/private')(app);
@@ -19,6 +19,9 @@ module.exports = function(app,express){
 	var guest     = require('../middlewares/roles')('guest');
 	var moderator = require('../middlewares/roles')('moderator');
 	var admin     = require('../middlewares/roles')('admin');
+
+
+	extend.routes.private(app);
 
 	app.get('/admin',function(req,res){
 		res.redirect('/admin/panel');

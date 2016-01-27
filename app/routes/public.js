@@ -1,5 +1,5 @@
 
-module.exports = function(app,express){
+module.exports = function(app,extend){
 	/**
 	 * CONTROLLERS
 	 */
@@ -8,6 +8,7 @@ module.exports = function(app,express){
 	var PublicCtrl = require("../controllers/public")(app);
 	var ApiCtrl    = require("../controllers/api")(app);
 
+	extend.routes.public(app);
 	
 	app.get("/", PublicCtrl.home_index );
 	app.get("/page/:page", PageCtrl.show );

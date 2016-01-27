@@ -10,6 +10,6 @@ module.exports = function(app){
 	var visitor = function(obj) {
     obj(app);
   };
-  return requireDirectory(module, {	visit: visitor	} );
-	
+  //return requireDirectory(module, {	visit: visitor	} );
+  return requireDirectory(module);
 }

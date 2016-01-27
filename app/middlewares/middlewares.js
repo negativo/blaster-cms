@@ -12,8 +12,8 @@ mongoose     = require('mongoose'),
 MongoStore	 = require('connect-mongo')(session),
 mustBe 			 = require('./roles');
 
-module.exports = function(app,express){
-
+module.exports = function(app,extend){
+	var express = require('express');
 
 	var configParse = require('./config-parse')(app),
 			viewSwitcher = require('./view-switch')(app);
@@ -106,6 +106,7 @@ module.exports = function(app,express){
 	});
 
 
+	extend.middlewares.middlewares(app);
 
 	
 }

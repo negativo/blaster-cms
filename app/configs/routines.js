@@ -1,5 +1,5 @@
-var fs = require('fs');
-module.exports = function(app){
+module.exports = function(app,extend){
+	var fs = require('fs');
 	
 	/**
 	 * watch for current theme file changes to update page/post custom template files in backend

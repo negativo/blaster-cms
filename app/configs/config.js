@@ -1,7 +1,8 @@
-module.exports = function(app, express){
+module.exports = function(app, extend){
 	//var	dotenv = require('dotenv').load();
-	var ejs_mate = require("ejs-mate");
-	var locals = app.locals;
+	var express   = require('express');
+	var ejs_mate  = require("ejs-mate");
+	var locals    = app.locals;
 	var installer = require('../lib/installer');
 	
 	locals.debug_mode_on = process.env.DEBUG_MODE_ON;
