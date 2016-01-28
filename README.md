@@ -8,7 +8,8 @@ Simple and light CMS framework build with plain NodeJS/express.
 ####Why
 That's what I need to bootstrap small projects.
 
-Are you tired of writing everytime a CMS for you small projects/customers ? Are you really really tired of using wordpress just to be faster and the finding that you wasting so much time with all that hooks and taxonomies?
+Are you tired of writing everytime a CMS for you small projects/customers ? Are you really really tired of using wordpress to be faster just to find yourself losing tons of time with Hooks and Taxonomies?
+
 Well I am! 
 
 I want a light and deadly simple CMS in Node.JS that I can use as an entry point for all my projects.
@@ -24,6 +25,29 @@ Everything of those functionalities are up and working in this stage of the appl
 the possibility to fix/update the main application without breaking custom logics on top of it.
 
 What more? Well, optimizing it and making it better with time is my goal now, there are plenty of Node.JS frameworks growing nowadays, so maybe I should look closely if keep going on with Express.JS or using something else (maybe strongloop), but for now I'll stick to it.
+
+###filesystem
+| folder | description |
+| --- | --- |
+| /admin | views and assets for admin dashboard [NB. /src have source JS, while /js have the uglified ones] |
+| /app | main app layer, all logic is inside here |
+| /extends | extend main layer with custom logics |
+| /public | bower assets for both public routes and administrative frontend |
+| /themes | here you can add your themes if needed to have more |
+| /uploads | all uploads go here, /avatar is for user avatars (of course, silly) |
+
+/app breakdown
+
+| /app | description |
+| --- | --- |
+| ./init.js | the main file requiring all necessary modules and starting the server [called by server.js in root folder] |
+| /configs | container configuration module and events/routines and global variables |
+| /controllers | Controllers for models and/or generic routes management |
+| /lib | helper libraries and personal modules |
+| /middlewares | application-wide middlewares and his sub modules |
+| /models | Models for MongoDB data and their custom methods |
+| /routes | routes handler modules, splitted in public, private and api;  |
+
 
 ###Contribs
 If you like it and want to contribute, I'll be glad to look at PR and general advices :)
