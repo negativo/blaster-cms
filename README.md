@@ -1,23 +1,20 @@
-# NoNameYet CMS
-tested on node 4.2.1
+# Blaster CMS
+[![bitHound Overall Score](https://www.bithound.io/github/Kirkhammetz/node-blog-cms/badges/score.svg)](https://www.bithound.io/github/Kirkhammetz/node-blog-cms)
 
-##OpenSource NodeJS CMS Framework.
-###Simple node powered CMS.
-Simple and light CMS framework build with plain NodeJS/express.
+A deadly simple, open-source and extendible Node.JS and Express.JS CMS
 
-####Why
-That's what I need to bootstrap small projects.
+### What is Blaster
 
 Are you tired of writing everytime a CMS for you small projects/customers ? Are you really really tired of using wordpress to be faster just to find yourself losing tons of time with Hooks and Taxonomies?
 
-Well I am! 
+Well I am!
 
-I want a light and deadly simple CMS in Node.JS that I can use as an entry point for all my projects.
+I wanted a light and deadly simple CMS in Node.JS that I can use as an entry point for all my projects.
 
-What I want in a CMS like this:
+What I want Blaster to have:
 - A basic dashboard that I don't have to code everytime both front and backend
 - Posts, Pages, Users, Comments system, theme switcher, navigation and social links
-- Deadly simple way to add custom logic on top of the source application [Models/Controllers/Routes/API]
+- A deadly simple way to add custom logics on top of the source application.
 - The possibilities to switch from Templating Engine to a Frontend Framework if I want.
 - An exposed API for the above frontend framework.
 
@@ -75,10 +72,9 @@ nb: if you find some problem with npm start, install nodemon globally
 - Sometimes I find 'undefined' variables in EJS views, I fixed all of 'em but somethings may be still around popping up with state mutations
 - there are old variables and structures around to refactor ( Messages module that was usefull in earlier version but not now, should be refactored out)
 
-
-
 ##ToDos
 	priority > 1 > 2 > 3 (self explanatory)
-	- [1] Generic look for data integrity and well DB relationships, better do this now before I use it in prod.
-	- [1] Docs for shared variables across views and well, generic docs for willing devs..or myself..
-	- [2] Blank Theme
+	[1] Add extensibility to admin dashboard too, maybe fetching collections name from mongo and generating dinamic views
+	[1] Generic look for data integrity and well DB relationships, better do this now before I use it in prod.
+	[2] Docs for shared variables across views and well, generic docs for willing devs..or myself..
+	[3] Blank Theme
