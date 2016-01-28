@@ -53,7 +53,7 @@ What more? Well, optimizing it and making it better with time is my goal now, th
 If you like it and want to contribute, I'll be glad to look at PR and general advices :)
 
 ###Ongoing
-All the logics I needed are there, I'm going to do some give a look at everything and refactor old structures remained here and there.
+All the logics I needed are there, I'm going to give a look at everything and refactor old structures remained here and there.
 I really should have done a TDD at start, I know, but I'm really used to debug in console/postman, but I'm playing around with mocha and I like it, I'll integrate it in the near future when I have some time.
 
 ##Installation
@@ -71,8 +71,14 @@ nb: if you find some problem with npm start, install nodemon globally
 	In Extends folder you can add functionalities without breaking the main app, so update would be easier
 
 ## Known Bugs
-	You tell me!
+- You tell me!
+- Sometimes I find 'undefined' variables in EJS views, I fixed all of 'em but somethings may be still around popping up with state mutations
+- there are old variables and structures around to refactor ( Messages module that was usefull in earlier version but not now, should be refactored out)
+
+
 
 ##ToDos
 	priority > 1 > 2 > 3 (self explanatory)
-	- [2] Blank Template
+	- [1] Generic look for data integrity and well DB relationships, better do this now before I use it in prod.
+	- [1] Docs for shared variables across views and well, generic docs for willing devs..or myself..
+	- [2] Blank Theme
