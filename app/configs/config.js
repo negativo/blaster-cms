@@ -23,8 +23,10 @@ module.exports = function(app, extend){
 	 */
 	app.set('theme',process.env.DEFAULT_THEME);
 	app.set('base_url',process.env.BASE_URL + ':' + locals.__port);
+	
 	app.engine('ejs', ejs_mate);
 	app.set('view engine', 'ejs');
+
 	app.set('views', locals.__root + '/themes/' + app.get('theme') );
 
 
