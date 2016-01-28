@@ -5,5 +5,5 @@ That's not a documentation but I'm leaving here all the things I need to remenbe
 	- social
 	- settings
 	- user
+	- analytics
 
-###Usefull endpoint
