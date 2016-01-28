@@ -49,6 +49,7 @@ module.exports = function(app){
 				configs.links = [];
 				configs.links = req.body.links;
 				configs.home = req.body.home;
+				configs.analytics = req.body.analytics;
 				configs.save(function(err){
 					if(!err) {
 						process.emit('configs_updated');

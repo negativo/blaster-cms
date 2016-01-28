@@ -35,13 +35,14 @@
 					link: $(this).val().trim()
 				}
 				getLinks.push(social);
-				console.log("backend.js", getLinks);
+				//console.log("backend.js", getLinks);
 			});
 			var settings = {
 				siteTitle: $("#site-title").val().trim(),
 				subtitle: $("#site-subtitle").val().trim(),
 				home: $("#homepage").val(),
-				links: getLinks
+				links: getLinks,
+				analytics: $('#code-editor').val().replace(new RegExp("<?.script>",'g'), '').trim()
 			};
 
 			console.log("backend.js :279", settings);

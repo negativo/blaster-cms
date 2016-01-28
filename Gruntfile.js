@@ -72,7 +72,7 @@ module.exports = function(grunt) {
 	watch:{
 		script:{
 			files:['themes/basic/less/*.less','admin/assets/less/*.less'],
-			tasks:["less","cssmin"],
+			tasks:['less','cssmin'],
 			options:{
 				spawn:false,
 				livereload:true
@@ -80,7 +80,15 @@ module.exports = function(grunt) {
 		},
 		ejs:{
 			files:['themes/basic/*.ejs','admin/*.ejs','themes/basic/partials/*.ejs','admin/partials/*.ejs'],
-			tasks:["less","cssmin"],
+			tasks:['less','cssmin'],
+			options:{
+				spawn:false,
+				livereload:true
+			}
+		},
+		js:{
+			files:['admin/assets/src/**'],
+			tasks:['less','cssmin', 'uglify'],
 			options:{
 				spawn:false,
 				livereload:true

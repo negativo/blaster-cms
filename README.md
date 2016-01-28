@@ -30,6 +30,5 @@ npm start use nodemon on server.js if you have problem with it you should instal
 
 ##ToDos
 	priority > 1 > 2 > 3 (self explanatory)
-	- [1] IPs bans
-	- [2] add google analytics from configurations
-	- [3] Blank Template
+	- [1] add google analytics from configurations
+	- [2] Blank Template

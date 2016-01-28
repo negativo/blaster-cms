@@ -64,7 +64,7 @@
 				//page/post editor
 				if ( $body.find(".editor").length ) backend.plugins.editor();
 				// code editor
-				if ( $body.attr("class") === "edit-theme" ) backend.plugins.codemirror();
+				backend.plugins.codemirror();
 			},
 			editor:function(){
 				// Loads a plugin from an external URL
@@ -97,7 +97,7 @@
 				toastr.options.closeButton = true;
 			},
 			codemirror:function(){
-				var textarea = document.getElementById('custom-css-area');
+				var textarea = document.getElementById('code-editor');
 				var editor = CodeMirror.fromTextArea(textarea, {
 			    	lineNumbers: true,
 			    	mode:"css"

@@ -28,6 +28,7 @@ module.exports = function (app) {
 				app.locals.sitename   = configs.title || 'CMS';
 				app.locals.subtitle   = configs.subtitle || '';
 				app.locals.socials    = configs.links || ''; 
+				app.locals.analytics  = configs.analytics || ''; 
 				app.set('home', configs.home || 'home-template');
 
 

@@ -108,5 +108,4 @@ module.exports = function(app,extend){
 
 	extend.middlewares.middlewares(app);
 
-	
 }

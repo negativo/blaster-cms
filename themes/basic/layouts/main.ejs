@@ -69,5 +69,9 @@
 	<script src="/components/foundation/js/foundation.min.js"></script>
 	<script src="http://momentjs.com/downloads/moment.js"></script>
 	<script src="/js/main.js"></script>
+
+	<% if(analytics){ %>
+		<script><%- analytics %></script>
+	<% } %>
 </body>
 </html>

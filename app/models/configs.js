@@ -13,7 +13,8 @@ var ConfigsSchema = Schema({
 	theme : String,
 	home:String,
 	navigation:Array,
-	links: Array
+	links: Array,
+	analytics: { type:String }
 });
 
 
