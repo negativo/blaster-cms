@@ -3,5 +3,8 @@
 	  "unused-ignores": [
 	    "grunt-*",
 	  ]
-	}
+	},
+	"ignore": [
+    "admin/assets/**",
+  ]
 }
