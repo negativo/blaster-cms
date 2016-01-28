@@ -22,6 +22,7 @@ npm start use nodemon on server.js if you have problem with it you should instal
 	npm install -g nodemon
 
 ##changelog
+	- Google Analytics
 	- extends!
 	In Extends folder you can add functionalities without breaking the main app, so update would be easier
 
@@ -30,5 +31,4 @@ npm start use nodemon on server.js if you have problem with it you should instal
 
 ##ToDos
 	priority > 1 > 2 > 3 (self explanatory)
-	- [1] add google analytics from configurations
 	- [2] Blank Template
