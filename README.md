@@ -54,13 +54,12 @@ All the logics I needed are there, I'm going to give a look at everything and re
 I really should have done a TDD at start, I know, but I'm really used to debug in console/postman, but I'm playing around with mocha and I like it, I'll integrate it in the near future when I have some time.
 
 ##Installation
-The installation get checked on server startup so give a look at .env and change you credentials
+- Rename .env.example in .env, change env variables accordingly
+- npm install
+- bower install
+- npm start
 
-	npm install
-	bower install
-	npm start
-
-nb: if you find some problem with npm start, install nodemon globally
+__nb__ if npm start fail you need to install nodemon globally
 
 ##changelog
 	- Google Analytics rendered on all public view in analytics var
